@@ -13,7 +13,7 @@ import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 reg_x, reg_y=59, 49         #One must note that python starts from 0!!!
 center= PixCoord(x=reg_x,y=reg_y)
-radius=20
+radius=1
 region = CirclePixelRegion(center, radius)
 
 fitsFile = pyfits.open('psf.fits')
