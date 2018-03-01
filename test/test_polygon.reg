@@ -1,0 +1,5 @@
+# Region file format: DS9 version 4.1
+# Filename: psf.fits
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+physical
+polygon(75.954593,74.001022,70.37296,84.606124,90.124858,89.287613,88.513267,67.582144,90.124858,62.621573,81.815308,57.535204,63.458818,62.621573,67.02398,71.489287)
