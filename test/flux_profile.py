@@ -142,7 +142,7 @@ def find_between( s, first, last ):
     except ValueError:
         return ""
 
-def mask(filename='test_circle.reg'):
+def mask(filename='test_circle.reg', image = np.ones([99,99])):
     '''
     The creat a mask with a .reg file. The pixels in the region is 0, otherwise 1.
     
@@ -155,21 +155,35 @@ def mask(filename='test_circle.reg'):
     --------
         A image.shape array. Pixels in the region is 0, otherwise 1.
     '''
-    ## Note the numpy starts from 0, especially in the center
+    ##### Note the numpy starts from 0, especially in the center,
+    ####Need to check the center, shape of the boxtype, the size?
     with open(filename, 'r') as input_file:
         reg_string=input_file.read().replace('\n', '')
+    print reg_string
     if "physicalcircle" in reg_string:
         abc=find_between(reg_string, "(", ")")
         reg_info=np.fromstring(abc, dtype=float, sep=',')
-        center, radius = reg_info[:2]-1, reg_info[2]-1
+        center, radius = reg_info[:2]-1, reg_info[2]
         region = pix_region(center, radius)
+        box = 1-region.to_mask(mode='center').data
     elif "physicalbox" in reg_string:
         abc=find_between(reg_string, "(", ")")
         reg_info=np.fromstring(abc, dtype=float, sep=',')
-        x, y = reg_info[:2] - 1
-        x_r, y_r = reg_info[2:4]/2
-        region = (np.int(x-x_r), np.int(x+x_r)+1, np.int(y-y_r), np.int(y+y_r)+1)
-    return region
+        center = reg_info[:2] - 1
+        x_r, y_r = reg_info[2:4]
+        box = np.zeros([np.int(y_r), np.int(x_r)])  #!!! need to test x and y position
+    else:
+        raise ValueError("The input reg is un-defined yet")
+    frame_size = image.shape
+    box_size = box.shape
+    a = np.int(center[0]-box_size[0]/2)
+    b = a + box_size[0]
+    c = np.int(center[1]-box_size[1]/2)
+    d = c + box_size[1]
+    mask = np.ones(frame_size)
+    mask_box_part = mask[a:b,c:d]
+    mask_box_part *= box
+    return mask
         
     
 # =============================================================================
@@ -177,7 +191,10 @@ def mask(filename='test_circle.reg'):
 # =============================================================================
 fitsFile = pyfits.open('psf.fits')
 img = fitsFile[0].data 
-region = pix_region(center=([49,49]), radius=5)
-flux_in_region(img, region)
-SB_profile(img, center=([49,49]),ifplot=False, fits_plot=False)
+#region = pix_region(center=([49,49]), radius=5)
+#flux_in_region(img, region)
+#SB_profile(img, center=([49,49]),ifplot=False, fits_plot=False)
 
+mask = mask(filename='test_circle.reg', image=img)
+plt.imshow((mask),origin='lower')
+plt.show()
