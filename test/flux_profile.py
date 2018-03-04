@@ -64,7 +64,9 @@ def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True
         fits_plot: if plot the fits file with the regions.
     Returns
     --------
-        A 1-D array of the tot_flux value of each 'grids' in the profile sampled radius.    
+        1. A 1-D array of the tot_flux value of each 'grids' in the profile sampled radius. 
+        2. The grids of each pixel radius.
+        3. The region file for each radius.
     '''
     r_grids=(np.linspace(0,1,grids+1)*radius)[1:]
     r_flux = np.empty(grids)
@@ -96,7 +98,9 @@ def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True
         plt.show()
     return r_flux, r_grids, regions
 
-def SB_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True):
+def SB_profile(image, center, radius=35, grids=20,
+               ifplot=True, fits_plot=True, if_mask=False,
+               mask_NO=1, mask_reg=['default.reg']):
     '''
     Derive the SB profile of one image start at the center.
     
@@ -112,11 +116,23 @@ def SB_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True):
     --------
         A 1-D array of the SB value of each 'grids' in the profile with the sampled radius.
     '''
-    r_flux, r_grids, regions=flux_profile(image, center, radius=radius, grids=grids, ifplot=False, fits_plot=fits_plot)
-    region_area = np.zeros([len(r_flux)])
-    for i in range(len(r_flux)):
-        circle=regions[i].to_mask(mode='exact')
-        region_area[i]=circle.data.sum()
+    if if_mask == False:
+        r_flux, r_grids, regions=flux_profile(image, center, radius=radius, grids=grids, ifplot=False, fits_plot=fits_plot)
+        region_area = np.zeros([len(r_flux)])
+        for i in range(len(r_flux)):
+            circle=regions[i].to_mask(mode='exact')
+            region_area[i]=circle.data.sum()
+    elif if_mask == True:
+        mask = np.ones(image.shape)
+        for i in range(mask_NO):
+            mask *= cr_mask(image=image, filename=mask_reg[i])
+        r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius, grids=grids, ifplot=False, fits_plot=fits_plot)
+        region_area = np.zeros([len(r_flux)])
+        for i in range(len(r_flux)):
+            circle=regions[i].to_mask(mode='exact')
+!!!!            circle_mask = mask
+            region_area[i]=circle.data.sum()
+        
     r_SB= r_flux/region_area
     if ifplot == True:
         from matplotlib.ticker import AutoMinorLocator
@@ -134,7 +150,7 @@ def SB_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True):
         plt.show()
     return r_SB, r_grids
 
-def find_between( s, first, last ):
+def string_find_between( s, first, last ):
     try:
         start = s.index( first ) + len( first )
         end = s.index( last, start )
@@ -142,7 +158,7 @@ def find_between( s, first, last ):
     except ValueError:
         return ""
 
-def mask(filename='test_circle.reg', image = np.ones([99,99])):
+def cr_mask(image, filename='test_circle.reg'):
     '''
     The creat a mask with a .reg file. The pixels in the region is 0, otherwise 1.
     
@@ -156,35 +172,34 @@ def mask(filename='test_circle.reg', image = np.ones([99,99])):
         A image.shape array. Pixels in the region is 0, otherwise 1.
     '''
     ##### Note the numpy starts from 0, especially in the center,
-    ####Need to check the center, shape of the boxtype, the size?
+    ####!!!Need to check the center, shape of the boxtype, the size?
     with open(filename, 'r') as input_file:
         reg_string=input_file.read().replace('\n', '')
-    print reg_string
+#    print reg_string
     if "physicalcircle" in reg_string:
-        abc=find_between(reg_string, "(", ")")
+        abc=string_find_between(reg_string, "(", ")")
         reg_info=np.fromstring(abc, dtype=float, sep=',')
         center, radius = reg_info[:2]-1, reg_info[2]
         region = pix_region(center, radius)
         box = 1-region.to_mask(mode='center').data
     elif "physicalbox" in reg_string:
-        abc=find_between(reg_string, "(", ")")
+        abc=string_find_between(reg_string, "(", ")")
         reg_info=np.fromstring(abc, dtype=float, sep=',')
         center = reg_info[:2] - 1
-        x_r, y_r = reg_info[2:4]
-        box = np.zeros([np.int(y_r), np.int(x_r)])  #!!! need to test x and y position
+        x_r, y_r = reg_info[2:4]  # x_r is the length of the x, y_r is the length of the y
+        box = np.zeros([np.int(x_r)+1, np.int(y_r)+1]).T
     else:
         raise ValueError("The input reg is un-defined yet")
     frame_size = image.shape
     box_size = box.shape
-    a = np.int(center[0]-box_size[0]/2)
-    b = a + box_size[0]
-    c = np.int(center[1]-box_size[1]/2)
-    d = c + box_size[1]
+    x_edge = np.int(center[1]-box_size[0]/2) #The position of the center is x-y switched.
+    y_edge = np.int(center[0]-box_size[1]/2)
     mask = np.ones(frame_size)
-    mask_box_part = mask[a:b,c:d]
+    print box.shape
+    mask_box_part = mask[x_edge:x_edge+box_size[0],y_edge: y_edge + box_size[1]]
+    print  mask_box_part.shape, box.shape
     mask_box_part *= box
     return mask
-        
     
 # =============================================================================
 # Example:
@@ -193,8 +208,8 @@ fitsFile = pyfits.open('psf.fits')
 img = fitsFile[0].data 
 #region = pix_region(center=([49,49]), radius=5)
 #flux_in_region(img, region)
-#SB_profile(img, center=([49,49]),ifplot=False, fits_plot=False)
+SB_profile(image=img, center=([49,49]),ifplot=False, fits_plot=False)
 
-mask = mask(filename='test_circle.reg', image=img)
-plt.imshow((mask),origin='lower')
-plt.show()
+#mask = cr_mask(image=img, filename='test_circle.reg')
+#plt.imshow((mask),origin='lower')
+#plt.show()
