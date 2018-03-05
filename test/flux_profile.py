@@ -46,7 +46,7 @@ def flux_in_region(image,region,mode='exact'):
         Total flux
     '''
     mask = region.to_mask(mode=mode)
-    data = mask.cutout(img)
+    data = mask.cutout(image)
     tot_flux= np.sum(mask.data * data)
     return tot_flux
 
@@ -77,7 +77,7 @@ def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True
         regions.append(region)
     if fits_plot == True:
         ax=plt.subplot(1,1,1)
-        cax=ax.imshow((image),origin='lower')#,vmin=0,vmax=1)
+        cax=ax.imshow((image),origin='lower')
         #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
         for i in range(grids):
             ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
@@ -117,23 +117,36 @@ def SB_profile(image, center, radius=35, grids=20,
         A 1-D array of the SB value of each 'grids' in the profile with the sampled radius.
     '''
     if if_mask == False:
-        r_flux, r_grids, regions=flux_profile(image, center, radius=radius, grids=grids, ifplot=False, fits_plot=fits_plot)
+        r_flux, r_grids, regions=flux_profile(image, center, radius=radius, grids=grids, ifplot=False, fits_plot=False)
         region_area = np.zeros([len(r_flux)])
         for i in range(len(r_flux)):
             circle=regions[i].to_mask(mode='exact')
-            region_area[i]=circle.data.sum()
+            edge_mask = circle.cutout(np.ones(image.shape))
+            region_area[i]=(circle.data * edge_mask).sum()
     elif if_mask == True:
         mask = np.ones(image.shape)
         for i in range(mask_NO):
             mask *= cr_mask(image=image, filename=mask_reg[i])
-        r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius, grids=grids, ifplot=False, fits_plot=fits_plot)
+        r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius, grids=grids, ifplot=False, fits_plot=False)
         region_area = np.zeros([len(r_flux)])
         for i in range(len(r_flux)):
             circle=regions[i].to_mask(mode='exact')
-!!!!            circle_mask = mask
-            region_area[i]=circle.data.sum()
-        
+            circle_mask =  circle.cutout(mask)
+            if i ==len(r_flux)-1:
+                plt.imshow(np.log10(circle_mask),origin='lower')
+                plt.show()
+            region_area[i]=(circle.data * circle_mask).sum()
     r_SB= r_flux/region_area
+    if fits_plot == True:
+        ax=plt.subplot(1,1,1)
+        if if_mask == True:
+            cax=ax.imshow(np.log10(image*mask),origin='lower')
+        elif if_mask == False:
+            cax=ax.imshow(np.log10(image),origin='lower')
+        #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
+        for i in range(grids):
+            ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
+        plt.colorbar(cax)
     if ifplot == True:
         from matplotlib.ticker import AutoMinorLocator
         minorLocator = AutoMinorLocator()
@@ -175,7 +188,6 @@ def cr_mask(image, filename='test_circle.reg'):
     ####!!!Need to check the center, shape of the boxtype, the size?
     with open(filename, 'r') as input_file:
         reg_string=input_file.read().replace('\n', '')
-#    print reg_string
     if "physicalcircle" in reg_string:
         abc=string_find_between(reg_string, "(", ")")
         reg_info=np.fromstring(abc, dtype=float, sep=',')
@@ -195,21 +207,6 @@ def cr_mask(image, filename='test_circle.reg'):
     x_edge = np.int(center[1]-box_size[0]/2) #The position of the center is x-y switched.
     y_edge = np.int(center[0]-box_size[1]/2)
     mask = np.ones(frame_size)
-    print box.shape
     mask_box_part = mask[x_edge:x_edge+box_size[0],y_edge: y_edge + box_size[1]]
-    print  mask_box_part.shape, box.shape
     mask_box_part *= box
     return mask
-    
-# =============================================================================
-# Example:
-# =============================================================================
-fitsFile = pyfits.open('psf.fits')
-img = fitsFile[0].data 
-#region = pix_region(center=([49,49]), radius=5)
-#flux_in_region(img, region)
-SB_profile(image=img, center=([49,49]),ifplot=False, fits_plot=False)
-
-#mask = cr_mask(image=img, filename='test_circle.reg')
-#plt.imshow((mask),origin='lower')
-#plt.show()
