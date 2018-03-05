@@ -11,16 +11,14 @@ Cut PSF and QSO for DIC70
 import sys
 sys.path.insert(0,'../../../py_tools')
 from cut_image import cut_center_bright, save_loc_png
-import matplotlib.pylab as plt
 import astropy.io.fits as pyfits
-import numpy as np
 ID = 'DIC70'
 
 fitsFile = pyfits.open('../swarp/coadd.fits')
 img = fitsFile[0].data 
 center_QSO = (615, 860)
 QSO = cut_center_bright(image=img, center=center_QSO, radius=50)
-pyfits.PrimaryHDU(QSO).writeto('QSO_cutout_{0}.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
 c_psf_list = [(1044, 993), (705, 842), (782, 797), (543, 704), (1238, 853), (1111, 720)]
 
 for i in range(len(c_psf_list)):

@@ -13,6 +13,7 @@ import numpy as np
 from regions import PixCoord, CirclePixelRegion 
 import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
+from matplotlib.ticker import AutoMinorLocator
 
 def pix_region(center=([49,49]), radius=5):
     '''
@@ -82,8 +83,8 @@ def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True
         for i in range(grids):
             ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
         plt.colorbar(cax)
+        plt.show()
     if ifplot == True:
-        from matplotlib.ticker import AutoMinorLocator
         minorLocator = AutoMinorLocator()
         fig, ax = plt.subplots()
         plt.plot(r_grids, r_flux, 'x-')
@@ -99,7 +100,7 @@ def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True
     return r_flux, r_grids, regions
 
 def SB_profile(image, center, radius=35, grids=20,
-               ifplot=True, fits_plot=True, if_mask=False,
+               ifplot=False, fits_plot=False, if_mask=False,
                mask_NO=1, mask_reg=['default.reg']):
     '''
     Derive the SB profile of one image start at the center.
@@ -147,8 +148,8 @@ def SB_profile(image, center, radius=35, grids=20,
         for i in range(grids):
             ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
         plt.colorbar(cax)
+        plt.show()
     if ifplot == True:
-        from matplotlib.ticker import AutoMinorLocator
         minorLocator = AutoMinorLocator()
         fig, ax = plt.subplots()
         plt.plot(r_grids, r_SB, 'x-')
@@ -162,6 +163,57 @@ def SB_profile(image, center, radius=35, grids=20,
         plt.grid(which="minor")
         plt.show()
     return r_SB, r_grids
+
+def PSF_SB_compare(psfs, masks=['default.reg'], radius=15, grids=20):
+    psfs_NO = len(psfs)
+    center = (psfs[0].shape[0]/2, psfs[0].shape[1]/2 )
+    minorLocator = AutoMinorLocator()
+    fig, ax = plt.subplots()
+    for i in range(psfs_NO):
+        if i ==0:
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, fits_plot=True)
+        else:
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids)
+        r_SB /= r_SB[0]      #normalize the curves from the central part.
+        plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
+        plt.legend()
+    ax.xaxis.set_minor_locator(minorLocator)
+    plt.tick_params(which='both', width=2)
+    plt.tick_params(which='major', length=7)
+    plt.tick_params(which='minor', length=4, color='r')
+    plt.grid()
+    ax.set_ylabel("Total Flux")
+    ax.set_xlabel("Pixels")
+    plt.grid(which="minor")
+    plt.show()
+
+def SB_compare(QSO, psfs, masks=['default.reg'], radius=15, grids=20):
+    minorLocator = AutoMinorLocator()
+    fig, ax = plt.subplots()
+    center_QSO = (QSO.shape[0]/2, QSO.shape[1]/2 )
+    r_SB, r_grids = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True)
+    r_SB /= r_SB[0]
+    plt.plot(r_grids, r_SB, 'x-', label="QSO", linewidth=3)
+    plt.legend()
+    psfs_NO = len(psfs)
+    center = (psfs[0].shape[0]/2, psfs[0].shape[1]/2)
+    for i in range(psfs_NO):
+        if i ==0:
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids)
+        else:
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids)
+        r_SB /= r_SB[0]      #normalize the curves from the central part.
+        plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
+        plt.legend()
+    ax.xaxis.set_minor_locator(minorLocator)
+    plt.tick_params(which='both', width=2)
+    plt.tick_params(which='major', length=7)
+    plt.tick_params(which='minor', length=4, color='r')
+    plt.grid()
+    ax.set_ylabel("Total Flux")
+    ax.set_xlabel("Pixels")
+    plt.grid(which="minor")
+    plt.show()
 
 def string_find_between( s, first, last ):
     try:
@@ -210,3 +262,4 @@ def cr_mask(image, filename='test_circle.reg'):
     mask_box_part = mask[x_edge:x_edge+box_size[0],y_edge: y_edge + box_size[1]]
     mask_box_part *= box
     return mask
+

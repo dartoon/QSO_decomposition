@@ -28,9 +28,9 @@ fitsFile = pyfits.open('psf.fits')
 img = fitsFile[0].data 
 #region = pix_region(center=([49,49]), radius=5)
 #flux_in_region(img, region)
-SB_profile(image=img, center=([76.582527,70.78383]),ifplot=True,
-           fits_plot=True)
-
 #SB_profile(image=img, center=([76.582527,70.78383]),ifplot=True,
-#           fits_plot=True, if_mask = True, mask_NO=2, mask_reg=['test_circle.reg', 'test_box.reg'])
+#           fits_plot=True)
+
+SB_profile(image=img, center=([76.582527,70.78383]),ifplot=True,
+           fits_plot=True, if_mask = True, mask_NO=2, mask_reg=['test_circle.reg', 'test_box.reg'])
 
