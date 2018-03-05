@@ -14,6 +14,7 @@ from regions import PixCoord, CirclePixelRegion
 import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
+from matplotlib.colors import LogNorm
 
 def pix_region(center=([49,49]), radius=5):
     '''
@@ -78,7 +79,7 @@ def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True
         regions.append(region)
     if fits_plot == True:
         ax=plt.subplot(1,1,1)
-        cax=ax.imshow((image),origin='lower')
+        cax=ax.imshow((image),origin='lower',cmap='gist_heat')
         #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
         for i in range(grids):
             ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
@@ -100,7 +101,7 @@ def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True
     return r_flux, r_grids, regions
 
 def SB_profile(image, center, radius=35, grids=20,
-               ifplot=False, fits_plot=False, if_mask=False,
+               ifplot=False, fits_plot=False, if_mask=False, mask_plot = False,
                mask_NO=1, mask_reg=['default.reg']):
     '''
     Derive the SB profile of one image start at the center.
@@ -133,17 +134,17 @@ def SB_profile(image, center, radius=35, grids=20,
         for i in range(len(r_flux)):
             circle=regions[i].to_mask(mode='exact')
             circle_mask =  circle.cutout(mask)
-            if i ==len(r_flux)-1:
-                plt.imshow(np.log10(circle_mask),origin='lower')
+            if i ==len(r_flux)-1 and mask_plot == True:
+                plt.imshow((circle_mask),origin='lower')
                 plt.show()
             region_area[i]=(circle.data * circle_mask).sum()
     r_SB= r_flux/region_area
     if fits_plot == True:
         ax=plt.subplot(1,1,1)
         if if_mask == True:
-            cax=ax.imshow(np.log10(image*mask),origin='lower')
+            cax=ax.imshow(image*mask, norm=LogNorm(),origin='lower')
         elif if_mask == False:
-            cax=ax.imshow(np.log10(image),origin='lower')
+            cax=ax.imshow(image,  norm=LogNorm(),origin='lower')
         #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
         for i in range(grids):
             ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
@@ -158,50 +159,51 @@ def SB_profile(image, center, radius=35, grids=20,
         plt.tick_params(which='major', length=7)
         plt.tick_params(which='minor', length=4, color='r')
         plt.grid()
-        ax.set_ylabel("Total Flux")
+        ax.set_ylabel("Surface Brightness")
         ax.set_xlabel("Pixels")
         plt.grid(which="minor")
         plt.show()
     return r_SB, r_grids
 
-def PSF_SB_compare(psfs, masks=['default.reg'], radius=15, grids=20):
-    psfs_NO = len(psfs)
-    center = (psfs[0].shape[0]/2, psfs[0].shape[1]/2 )
-    minorLocator = AutoMinorLocator()
-    fig, ax = plt.subplots()
-    for i in range(psfs_NO):
-        if i ==0:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, fits_plot=True)
-        else:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids)
-        r_SB /= r_SB[0]      #normalize the curves from the central part.
-        plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
-        plt.legend()
-    ax.xaxis.set_minor_locator(minorLocator)
-    plt.tick_params(which='both', width=2)
-    plt.tick_params(which='major', length=7)
-    plt.tick_params(which='minor', length=4, color='r')
-    plt.grid()
-    ax.set_ylabel("Total Flux")
-    ax.set_xlabel("Pixels")
-    plt.grid(which="minor")
-    plt.show()
+def text_in_string_list(text, string_list):
+    counts = 0
+    text_string=[]
+    for i in range(len(string_list)):
+        if text in string_list[i]:
+            counts += 1
+            text_string.append(string_list[i])
+    return counts, text_string
+            
 
-def SB_compare(QSO, psfs, masks=['default.reg'], radius=15, grids=20):
-    minorLocator = AutoMinorLocator()
-    fig, ax = plt.subplots()
-    center_QSO = (QSO.shape[0]/2, QSO.shape[1]/2 )
-    r_SB, r_grids = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True)
-    r_SB /= r_SB[0]
-    plt.plot(r_grids, r_SB, 'x-', label="QSO", linewidth=3)
-    plt.legend()
+def SB_compare(QSO, psfs, mask_list=['default.reg'], plt_which_PSF=(0,), include_QSO = True , radius=15, grids=20):
+    if include_QSO == True:
+        center_QSO = (QSO.shape[0]/2, QSO.shape[1]/2 )
+        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True)
+        r_SB_QSO /= r_SB_QSO[0]
     psfs_NO = len(psfs)
     center = (psfs[0].shape[0]/2, psfs[0].shape[1]/2)
+    for i in range(len(plt_which_PSF)):
+        j = plt_which_PSF[i]
+        msk_counts, mask_lists = text_in_string_list("PSF{0}".format(j), mask_list)
+        print "Plot for fits: PSF{0}.fits".format(j)
+        if msk_counts == 0:
+            r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True)
+        elif msk_counts >0:
+            print mask_lists
+            r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, if_mask=True,
+                                       mask_plot = True, mask_NO=msk_counts, mask_reg=mask_lists)
+    minorLocator = AutoMinorLocator()
+    fig, ax = plt.subplots(figsize=(10,7))
     for i in range(psfs_NO):
-        if i ==0:
+        msk_counts, mask_lists = text_in_string_list("PSF{0}".format(i), mask_list)
+        if i ==0 and include_QSO == True:
+                plt.plot(r_grids_QSO, r_SB_QSO, 'x-', label="QSO", linewidth=3)
+                plt.legend()
+        if msk_counts == 0:
             r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids)
-        else:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids)
+        elif msk_counts >0:
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, if_mask=True,
+                                       mask_NO=msk_counts, mask_reg=mask_lists)
         r_SB /= r_SB[0]      #normalize the curves from the central part.
         plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
         plt.legend()
@@ -210,7 +212,7 @@ def SB_compare(QSO, psfs, masks=['default.reg'], radius=15, grids=20):
     plt.tick_params(which='major', length=7)
     plt.tick_params(which='minor', length=4, color='r')
     plt.grid()
-    ax.set_ylabel("Total Flux")
+    ax.set_ylabel("Scaled Surface Brightness")
     ax.set_xlabel("Pixels")
     plt.grid(which="minor")
     plt.show()
@@ -253,6 +255,7 @@ def cr_mask(image, filename='test_circle.reg'):
         x_r, y_r = reg_info[2:4]  # x_r is the length of the x, y_r is the length of the y
         box = np.zeros([np.int(x_r)+1, np.int(y_r)+1]).T
     else:
+        print reg_string
         raise ValueError("The input reg is un-defined yet")
     frame_size = image.shape
     box_size = box.shape

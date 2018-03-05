@@ -13,6 +13,7 @@ from regions import PixCoord, CirclePixelRegion
 import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 from flux_profile import pix_region
+from matplotlib.colors import LogNorm
 
 def cut_image(image, center, radius):
     region = pix_region(center, radius=radius)
@@ -33,7 +34,7 @@ def cut_center_bright(image, center, radius):
 def save_loc_png(img, center_QSO, c_psf_list):
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
-    cax=ax.imshow(np.log10(img+0.15),origin='lower', cmap='gist_heat', interpolation='nearest', vmax=2.1)
+    cax=ax.imshow(img+0.1,origin='lower', cmap='gist_heat', norm=LogNorm(), vmin=1.e-2, vmax=5)
     QSO_box_size = 30
     QSO_reg = pix_region(center_QSO, radius= QSO_box_size)
     QSO_mask = QSO_reg.to_mask(mode='center')
@@ -45,4 +46,5 @@ def save_loc_png(img, center_QSO, c_psf_list):
         PSF_mask = PSF_reg.to_mask(mode='center')
         ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue'))
         ax.text(c_psf_list[i][0]-2*PSF_box_size, c_psf_list[i][1]+PSF_box_size, 'PSF{0}'.format(i), fontsize=15)
-        fig.savefig('QSO_PSF_loc.png')
+#    plt.colorbar(cax)
+#        fig.savefig('QSO_PSF_loc.png')

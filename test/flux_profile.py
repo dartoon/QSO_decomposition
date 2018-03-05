@@ -157,7 +157,7 @@ def SB_profile(image, center, radius=35, grids=20,
         plt.tick_params(which='major', length=7)
         plt.tick_params(which='minor', length=4, color='r')
         plt.grid()
-        ax.set_ylabel("Total Flux")
+        ax.set_ylabel("Surface brightness")
         ax.set_xlabel("Pixels")
         plt.grid(which="minor")
         plt.show()

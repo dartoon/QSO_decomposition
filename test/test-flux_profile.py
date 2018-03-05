@@ -26,11 +26,14 @@ from flux_profile import SB_profile
 
 fitsFile = pyfits.open('psf.fits')
 img = fitsFile[0].data 
-#region = pix_region(center=([49,49]), radius=5)
-#flux_in_region(img, region)
-#SB_profile(image=img, center=([76.582527,70.78383]),ifplot=True,
+region = pix_region(center=([49,49]), radius=5)
+flux_in_region(img, region)
+#SB_profile(image=img, center=([49,49]),ifplot=True,
 #           fits_plot=True)
 
-SB_profile(image=img, center=([76.582527,70.78383]),ifplot=True,
+SB_profile(image=img, center=([49,49]),ifplot=True,
            fits_plot=True, if_mask = True, mask_NO=2, mask_reg=['test_circle.reg', 'test_box.reg'])
+
+#from flux_profile import text_in_string_list
+#print text_in_string_list("QSq2O1", ['QSO0asdw', '2adQSO2asdw', 'QaskQSO1]', '2adQSO2asdw', 'QaskQSO1]'])
 
