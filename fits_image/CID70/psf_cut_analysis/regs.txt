@@ -1,6 +1,0 @@
-PSF1_1.reg
-PSF1_2.reg
-PSF2_1.reg
-PSF5_1.reg
-PSF5_2.reg
-PSF5_3.reg
