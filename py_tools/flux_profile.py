@@ -177,11 +177,14 @@ def text_in_string_list(text, string_list):
 
 def SB_compare(QSO, psfs, mask_list=['default.reg'], plt_which_PSF=(0,), include_QSO = True , radius=15, grids=20):
     if include_QSO == True:
-        center_QSO = (QSO.shape[0]/2, QSO.shape[1]/2 )
+        print "Plot for QSO:"
+        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]
+        print "center_QSO", center_QSO
         r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True)
         r_SB_QSO /= r_SB_QSO[0]
     psfs_NO = len(psfs)
-    center = (psfs[0].shape[0]/2, psfs[0].shape[1]/2)
+    center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0].max())),(2))[::-1]
+    print center
     for i in range(len(plt_which_PSF)):
         j = plt_which_PSF[i]
         msk_counts, mask_lists = text_in_string_list("PSF{0}".format(j), mask_list)
