@@ -180,3 +180,57 @@ lens_result, source_result, lens_light_result, ps_result, chain_list, param_list
 end_time = time.time()
 print(end_time - start_time, 'total time needed for computation')
 print('============ CONGRATULATION, YOUR JOB WAS SUCCESSFUL ================ ')
+
+# let's plot the output of the PSO minimizer
+from lenstronomy.Plots.output_plots import LensModelPlot
+lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
+                             lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=5)
+    
+f, axes = plt.subplots(3, 3, figsize=(16, 16), sharex=False, sharey=False)
+
+lensPlot.data_plot(ax=axes[0,0])
+lensPlot.model_plot(ax=axes[0,1])
+lensPlot.normalized_residual_plot(ax=axes[0,2], v_min=-6, v_max=6)
+
+lensPlot.decomposition_plot(ax=axes[1,0], text='Source light', source_add=True, unconvolved=True)
+lensPlot.decomposition_plot(ax=axes[1,1], text='Source light convolved', source_add=True)
+lensPlot.decomposition_plot(ax=axes[1,2], text='All components convolved', source_add=True, lens_light_add=True, point_source_add=True)
+
+lensPlot.subtract_from_data_plot(ax=axes[2,0], text='Data - Point Source', point_source_add=True)
+lensPlot.subtract_from_data_plot(ax=axes[2,1], text='Data - host galaxy', source_add=True)
+lensPlot.subtract_from_data_plot(ax=axes[2,2], text='Data - host galaxy - Point Source', source_add=True, point_source_add=True)
+
+f.tight_layout()
+#f.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0., hspace=0.05)
+plt.show()
+
+# here the (non-converged) MCMC chain of the non-linear parameters
+if not samples_mcmc == []:
+        n, num_param = np.shape(samples_mcmc)
+        plot = corner.corner(samples_mcmc, labels=param_mcmc, show_titles=True)
+        
+# this is the linear inversion. The kwargs will be updated afterwards
+image_reconstructed, _, _, _ = imageModel.image_linear_solve(kwargs_source=source_result, kwargs_ps=ps_result)
+
+# flux count in point source
+image_ps = imageModel.point_source(ps_result)
+print np.sum(image_ps)
+print ps_result
+# for point sources, the fluxes in 'point_amp' are equivalent to the flux counts in the image.
+# The only difference is the smaller cutout size in the image
+
+# flux count in host galaxy
+image_host = imageModel.source_surface_brightness(source_result)
+print np.sum(image_host)
+
+# if we only want the first component (disk in our case), we can do that
+image_disk = imageModel.source_surface_brightness(source_result, k=0)
+print np.sum(image_disk)
+
+# and if we only want the second component (buldge in our case)
+image_buldge = imageModel.source_surface_brightness(source_result, k=1)
+print np.sum(image_buldge)
+
+# to summarize
+print("quasar-to-host galaxy ratio: ", np.sum(image_ps)/np.sum(image_host))
+print("buldge-to-disk ratio:", np.sum(image_buldge)/np.sum(image_disk))
