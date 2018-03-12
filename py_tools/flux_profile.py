@@ -166,6 +166,17 @@ def SB_profile(image, center, radius=35, grids=20,
     return r_SB, r_grids
 
 def text_in_string_list(text, string_list):
+    '''
+    Parameter
+    --------
+        text: a string that could existed in the string_list
+        string_list: The list of name
+    Return
+    --------
+        counts:
+            how many items have the text,
+            The remainds in the string_list which have text.
+    '''
     counts = 0
     text_string=[]
     for i in range(len(string_list)):
@@ -220,7 +231,7 @@ def SB_compare(QSO, psfs, mask_list=['default.reg'], plt_which_PSF=(0,), include
     plt.grid(which="minor")
     plt.show()
 
-def string_find_between( s, first, last ):
+def string_find_between(s, first, last ):
     try:
         start = s.index( first ) + len( first )
         end = s.index( last, start )

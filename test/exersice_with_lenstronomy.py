@@ -112,17 +112,17 @@ kwargs_upper_source = []
 
 # Disk component, as modelled by an elliptical Sersic profile
 fixed_source.append({'n_sersic': 1})  # we fix the Sersic index to n=1 (exponential)
-kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 1, 'q': 1., 'phi_G': 0., 'center_x': 0, 'center_y': 0})
+kwargs_source_init.append({'R_sersic': 1., 'q': 1., 'phi_G': 0., 'center_x': 0, 'center_y': 0})
 kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
-kwargs_lower_source.append({'q': .5, 'phi_G': 0, 'R_sersic': 0.001, 'n_sersic': .5, 'center_x': -10, 'center_y': -10})
-kwargs_upper_source.append({'q': .5, 'phi_G': 0, 'R_sersic': 10, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
+kwargs_lower_source.append({'q': .5, 'phi_G': 0, 'R_sersic': 0.001, 'center_x': -10, 'center_y': -10})
+kwargs_upper_source.append({'q': .5, 'phi_G': 0, 'R_sersic': 10, 'center_x': 10, 'center_y': 10})
 
 # Buldge component, as modelled by a spherical Sersic profile
 fixed_source.append({'n_sersic': 4})  # we fix the Sersic index to n=4 (buldgy)
-kwargs_source_init.append({'R_sersic': .5, 'n_sersic': 4, 'center_x': 0, 'center_y': 0})
+kwargs_source_init.append({'R_sersic': .5, 'center_x': 0, 'center_y': 0})
 kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.3, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
-kwargs_lower_source.append({'R_sersic': 0.001, 'n_sersic': .5, 'center_x': -10, 'center_y': -10})
-kwargs_upper_source.append({'R_sersic': 10, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
+kwargs_lower_source.append({'R_sersic': 0.001, 'center_x': -10, 'center_y': -10})
+kwargs_upper_source.append({'R_sersic': 10, 'center_x': 10, 'center_y': 10})
 
 fixed_ps = [{}]
 kwargs_ps_init = kwargs_ps
@@ -150,11 +150,11 @@ kwargs_constraints = {'joint_center_source_light': True,  # if set to True, all 
                       'num_point_source_list': [1]
                      }
 
-kwargs_likelihood = {'check_bounds': True,
-                     'source_marg': False,
+kwargs_likelihood = {'check_bounds': True,  #Set the bonds, if exceed, reutrn "penalty"
+                     'source_marg': False,  #In likelihood_module.LikelihoodModule -- whether to fully invert the covariance matrix for marginalization
                              }
 kwargs_fixed = [[{}], fixed_source, [{}], fixed_ps]
-kwargs_data = data_class.constructor_kwargs()
+kwargs_data = data_class.constructor_kwargs() # The "dec_at_xy_0" means the dec at the (0,0) point.
 kwargs_psf = psf_class.constructor_kwargs()
 image_band = [kwargs_data, kwargs_psf, kwargs_numerics]
 multi_band_list = [image_band]
@@ -165,13 +165,28 @@ from lenstronomy.Workflow.fitting_sequence import FittingSequence
 mpi = False  # MPI possible, but not supported through that notebook.
 
 kwargs_params = [kwargs_init, kwargs_sigma, kwargs_fixed, kwargs_lower, kwargs_upper]
+# The Params for the fitting. kwargs_init: initial input. kwargs_sigma: The parameter uncertainty. kwargs_fixed: fixed parameters;
+#kwargs_lower,kwargs_upper: Lower and upper limits.
 
 fitting_seq = FittingSequence(multi_band_list, kwargs_model, kwargs_constraints, kwargs_likelihood, kwargs_params)
+'''
+Set up the FittingSequence:
+    1. multi_band_list: A 'two-folder' list including the image information dicts:
+        [kwargs_data, kwargs_psf, kwargs_numerics]
+    2. kwargs_model: model list including {'point_source_model_list', 'source_light_model_list'}.
+    3. kwargs_constraints: a constraints prior of the source position.
+    4. kwargs_likelihood. As noted above
+    5. kwargs_params:
+        A list of: [kwargs_init, kwargs_sigma, kwargs_fixed, kwargs_lower, kwargs_upper]. 
+
+'''
+
 
 fitting_kwargs_list = [
         {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 50,
          'n_iterations': 50},
-        {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 10, 'walkerRatio': 10, 'mpi': False,
+        {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 10, 'walkerRatio': 10, 'mpi': False,   ##Inputs  to CosmoHammer:
+            #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
          'sigma_scale': .1}
 ]
 
