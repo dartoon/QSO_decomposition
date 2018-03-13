@@ -13,7 +13,7 @@ from flux_profile import text_in_string_list,cr_mask
 import matplotlib.pylab as plt
 from matplotlib.colors import LogNorm
 
-def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg'],scale=3):
+def psf_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['default.reg'],scale=3):
     '''
     Produce the average for a list of psfs.
     
@@ -89,7 +89,8 @@ def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg']
 #        print sum_4ave
 #        psf_high_final = psf_high_total/sum_4ave
 #        psf_final = rebin(psf_high_final, scale = scale)
-
+    else:
+        raise ValueError("mode is not defined")
     psf_final /= psf_final.sum()
     return psf_final
         
