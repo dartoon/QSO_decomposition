@@ -11,9 +11,16 @@ import os
 import matplotlib.pyplot as plt
 import astropy.io.fits as pyfits
 import numpy as np
+from subprocess import call
+
 target=raw_input("name of the target:\n")
 folder = '../Cycle25data/{0}/'.format(target)
 suffix='_ima.fits'
+
+if os.path.exists('{0}/'.format(target)) is False:
+    os.mkdir("{0}".format(target))
+    os.mkdir("{0}/swarp".format(target))
+    
 
 for root, dirs, files in os.walk(folder):
         files=files
@@ -31,7 +38,6 @@ for i in range(len(files)):
         plt.show()
         hdu = pyfits.PrimaryHDU(flux,header=input_header)
         hdu.writeto('{0}/swarp/{1}'.format(target,files[i]),overwrite=True)
-from subprocess import call
 cmd_str1=("cp ../swarp_temp/* {0}/swarp/".format(target))
 #cmd_str2=('./auto_swap.sh')
 call(cmd_str1, shell=True)
