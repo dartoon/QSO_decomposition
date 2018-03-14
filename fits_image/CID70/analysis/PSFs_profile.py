@@ -13,7 +13,7 @@ sys.path.insert(0,'../../../py_tools')
 from cut_image import cut_center_bright, save_loc_png
 import astropy.io.fits as pyfits
 import numpy as np
-from flux_profile import SB_compare
+from flux_profile import QSO_psfs_compare
 
 psf_NO=6 # The number of the psf.
 for i in range(psf_NO):
@@ -26,13 +26,13 @@ for i in range(psf_NO):
         psf_list[i] = PSF
 #    PSFs= PSFs.append(PSF)
 
-fitsFile = pyfits.open('DIC70_cutout.fits'.format(i))
+fitsFile = pyfits.open('CID70_cutout.fits'.format(i))
 QSO = fitsFile[0].data
               
               
 #PSF_SB_compare(psf_list, radius=20, grids=20)
-SB_compare(QSO, psf_list, 
+QSO_psfs_compare(QSO, psf_list, 
            mask_list=['PSF1_1.reg', 'PSF1_2.reg', 'PSF2_1.reg', 'PSF5_1.reg', 'PSF5_2.reg', 'PSF5_3.reg'],
            plt_which_PSF=(1,2,5), include_QSO=True, radius=20, grids=20)
-#SB_compare(QSO, psf_list, include_QSO=True, radius=20, grids=20)
+#QSO_psfs_compare(QSO, psf_list, include_QSO=True, radius=20, grids=20)
 

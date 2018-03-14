@@ -186,7 +186,7 @@ def text_in_string_list(text, string_list):
     return counts, text_string
             
 
-def SB_compare(QSO, psfs, mask_list=['default.reg'], plt_which_PSF=(0,), include_QSO = True , radius=15, grids=20):
+def QSO_psfs_compare(QSO, psfs, mask_list=['default.reg'], plt_which_PSF=(0,), include_QSO = True , radius=15, grids=20):
     if include_QSO == True:
         print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]

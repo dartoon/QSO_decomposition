@@ -5,7 +5,7 @@ Created on Tue Mar 13 08:56:38 2018
 
 @author: Dartoon
 
-MCMC for CID70
+MCMC for CID1174
 """
 
 import sys
@@ -16,10 +16,12 @@ from matplotlib.colors import LogNorm
 import astropy.io.fits as pyfits
 
 from psfs_average import psf_ave
-from flux_profile import  SB_compare
+from flux_profile import  QSO_psfs_compare, flux_profile
 import glob
 
-psf_NO=6 # The number of the psf.
+ID = 'CID1174'
+
+psf_NO=7 # The number of the psf.
 for i in range(psf_NO):
     fitsFile = pyfits.open('PSF{0}.fits'.format(i))
     PSF = fitsFile[0].data
@@ -31,15 +33,10 @@ for i in range(psf_NO):
 #    PSFs= PSFs.append(PSF)
 
 mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
-psf_final_1=psf_ave(psf_list,mode = 'direct', not_count=(1,),
+psf_final=psf_ave(psf_list,mode = 'CI', not_count=(1,4,5),
                   mask_list=mask_list)
-psf_final=psf_ave(psf_list,mode = 'direct', not_count=(1,4),
-                  mask_list=mask_list)
-plt.matshow(psf_final, origin= 'low', norm=LogNorm())
-plt.colorbar()
-plt.show()
 
-QSO_im = pyfits.getdata('DIC70_cutout.fits')
+QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 
 # data specifics need to set up based on the data situation
 background_rms = 0.04  #  background noise per pixel (Gaussian)
@@ -50,6 +47,11 @@ fwhm = 0.1  # full width half max of PSF (only valid when psf_type='gaussian')
 psf_type = 'PIXEL'  # 'gaussian', 'pixel', 'NONE'
 kernel_size = len(psf_final)
 kernel = psf_final
+
+plt.matshow(psf_final, origin= 'low', norm=LogNorm())
+plt.colorbar()
+plt.show()
+flux_profile(psf_final, center = (kernel_size/2, kernel_size/2), radius= kernel_size/2 )
 
 kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
 
@@ -156,7 +158,7 @@ fitting_seq = FittingSequence(multi_band_list, kwargs_model, kwargs_constraints,
 fitting_kwargs_list = [
         {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 50,
          'n_iterations': 50},
-        {'fitting_routine': 'MCMC', 'n_burn': 20, 'n_run': 40, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
+        {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 20, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
             #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
          'sigma_scale': .1}
 ]
@@ -212,8 +214,8 @@ image_host = imageModel.source_surface_brightness(source_result)
 print np.sum(image_host)
 
 # if we only want the first component (disk in our case), we can do that
-image_disk = imageModel.source_surface_brightness(source_result, k=0)  # Don't need k=0
-print np.sum(image_disk)
+#image_disk = imageModel.source_surface_brightness(source_result, k=0)  # Don't need k=0
+#print np.sum(image_disk)
 
 ## and if we only want the second component (buldge in our case)
 #image_buldge = imageModel.source_surface_brightness(source_result, k=1)
@@ -227,7 +229,7 @@ from lenstronomy.Workflow.parameters import Param
 param = Param(kwargs_model, kwargs_constraints, kwargs_fixed_source=fixed_source, kwargs_fixed_ps=fixed_ps)
 
 mcmc_new_list = []
-labels_new = [r"Quasar flux", r"source_x", r"source_y"]
+labels_new = [r"Quasar flux", r"host_flux", r"source_x", r"source_y"]
 for i in range(len(samples_mcmc)/10):
     # transform the parameter position of the MCMC chain in a lenstronomy convention with keyword arguments #
     kwargs_lens_out, kwargs_light_source_out, kwargs_light_lens_out, kwargs_ps_out = param.getParams(samples_mcmc[i+ len(samples_mcmc)/10*9])
@@ -242,6 +244,6 @@ for i in range(len(samples_mcmc)/10):
 #    image_buldge = imageModel.source_surface_brightness(kwargs_light_source_out, k=1)
 #    flux_buldge = np.sum(image_buldge)
     kwargs_ps_out
-    mcmc_new_list.append([flux_quasar, source_x, source_y])
+    mcmc_new_list.append([flux_quasar, flux_disk, source_x, source_y])
 
 plot = corner.corner(mcmc_new_list, labels=labels_new, show_titles=True)

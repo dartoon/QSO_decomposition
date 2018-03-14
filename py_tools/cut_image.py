@@ -47,4 +47,4 @@ def save_loc_png(img, center_QSO, c_psf_list):
         ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue'))
         ax.text(c_psf_list[i][0]-2*PSF_box_size, c_psf_list[i][1]+PSF_box_size, 'PSF{0}'.format(i), fontsize=15)
 #    plt.colorbar(cax)
-#        fig.savefig('QSO_PSF_loc.png')
+    fig.savefig('QSO_PSF_loc.png')
