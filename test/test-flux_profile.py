@@ -10,8 +10,9 @@ test flux_profile.py
 import sys
 sys.path.insert(0,'../py_tools')
 import astropy.io.fits as pyfits
-from flux_profile import SB_profile, SB_compare
-    
+from flux_profile import SB_profile, QSO_psfs_compare
+
+'''  
 # =============================================================================
 # Example:
 # =============================================================================
@@ -46,4 +47,17 @@ img = fitsFile[0].data
 #Compare the original PSF with Simon's reconstruction.
 loadpsf = np.empty([1, image_ps.shape[0], image_ps.shape[1]])
 loadpsf[0] = image_ps
-SB_compare(QSO=img,psfs=loadpsf, include_QSO=True, radius=30, grids=20)
+QSO_psfs_compare(QSO=img,psfs=loadpsf, include_QSO=True, radius=30, grids=20)
+'''
+
+
+#==============================================================================
+#test .SB_compare
+#==============================================================================
+from flux_profile import total_compare
+data = pyfits.getdata('files/CID1174_cutout.fits')
+QSO = pyfits.getdata('files/model_QSO.fits') 
+host = pyfits.getdata('files/model_host.fits')
+flux_list = [data, QSO, host]
+label = ['data', 'QSO', 'host', 'model', 'residual']
+total_compare(label_list = label, flux_list = flux_list, target_ID = 'CID1174')

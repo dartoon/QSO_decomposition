@@ -15,6 +15,8 @@ import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
 from matplotlib.colors import LogNorm
+from astropy.visualization import SqrtStretch
+from astropy.visualization.mpl_normalize import ImageNormalize
 
 def pix_region(center=([49,49]), radius=5):
     '''
@@ -52,7 +54,7 @@ def flux_in_region(image,region,mode='exact'):
     tot_flux= np.sum(mask.data * data)
     return tot_flux
 
-def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True):
+def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=True, fits_plot=True):
     '''
     Derive the flux profile of one image start at the center.
     
@@ -70,7 +72,10 @@ def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True
         2. The grids of each pixel radius.
         3. The region file for each radius.
     '''
-    r_grids=(np.linspace(0,1,grids+1)*radius)[1:]
+    if gridspace == None:
+        r_grids=(np.linspace(0,1,grids+1)*radius)[1:]
+    elif gridspace == 'log':
+        r_grids=(np.logspace(-2,0,grids+1)*radius)[1:]
     r_flux = np.empty(grids)
     regions = []
     for i in range(len(r_grids)):
@@ -100,7 +105,7 @@ def flux_profile(image, center, radius=35, grids=20, ifplot=True, fits_plot=True
         plt.show()
     return r_flux, r_grids, regions
 
-def SB_profile(image, center, radius=35, grids=20,
+def SB_profile(image, center, radius=35, grids=20, gridspace = None, 
                ifplot=False, fits_plot=False, if_mask=False, mask_plot = False,
                mask_NO=1, mask_reg=['default.reg']):
     '''
@@ -119,7 +124,7 @@ def SB_profile(image, center, radius=35, grids=20,
         A 1-D array of the SB value of each 'grids' in the profile with the sampled radius.
     '''
     if if_mask == False:
-        r_flux, r_grids, regions=flux_profile(image, center, radius=radius, grids=grids, ifplot=False, fits_plot=False)
+        r_flux, r_grids, regions=flux_profile(image, center, radius=radius, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
         region_area = np.zeros([len(r_flux)])
         for i in range(len(r_flux)):
             circle=regions[i].to_mask(mode='exact')
@@ -129,7 +134,7 @@ def SB_profile(image, center, radius=35, grids=20,
         mask = np.ones(image.shape)
         for i in range(mask_NO):
             mask *= cr_mask(image=image, filename=mask_reg[i])
-        r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius, grids=grids, ifplot=False, fits_plot=False)
+        r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
         region_area = np.zeros([len(r_flux)])
         for i in range(len(r_flux)):
             circle=regions[i].to_mask(mode='exact')
@@ -279,4 +284,91 @@ def cr_mask(image, filename='test_circle.reg'):
     mask_box_part = mask[x_edge:x_edge+box_size[0],y_edge: y_edge + box_size[1]]
     mask_box_part *= box
     return mask
+
+def total_compare(label_list, flux_list, img_mask=None, pixel = 0.13 , plot_type= 4, target_ID = 'target_ID', add_background=0.0 ):
+    norm = ImageNormalize(stretch=SqrtStretch())
+    plt.figure(0, figsize=(16.75,4))
+    ax1 = plt.subplot2grid((6,4), (0,0), rowspan=6)
+    ax2 = plt.subplot2grid((6,4), (0,1), rowspan=6)
+    ax3 = plt.subplot2grid((6,4), (0,2), rowspan=6)
+    ax4 = plt.subplot2grid((6,4), (0,3), rowspan=5)
+    ax5 = plt.subplot2grid((6,4), (5,3), sharex=ax4)
+    c_ax1 = ax1.imshow(flux_list[0] + add_background,origin='lower',cmap='Greys', norm=norm, vmax = flux_list[0].max()/5 )
+    clim=c_ax1.properties()['clim']
+    frame_size = len(flux_list[0])
+    ax1.set_ylabel(target_ID, fontsize=15)
+    ax1.text(frame_size*0.05, frame_size*0.9, label_list[0],
+         fontsize=20)
+    ax2.imshow(flux_list[1] + flux_list[2] + add_background,origin='lower',cmap='Greys', norm=norm, clim=clim)
+    pos2_o = ax2.get_position() # get the original position
+    pos2 = [pos2_o.x0 -0.03, pos2_o.y0, pos2_o.width, pos2_o.height]
+    ax2.set_position(pos2) # set a new position
+    ax2.text(frame_size*0.05, frame_size*0.9, label_list[-2],
+         fontsize=20)
+    ax3.imshow(flux_list[0]-(flux_list[1]+flux_list[2]),origin='lower',cmap='Greys', norm=norm, clim=clim)
+    ax3.text(frame_size*0.05, frame_size*0.9, label_list[-1],
+         fontsize=20)
+    pos3_o = ax3.get_position() # get the original position
+    pos3 = [pos3_o.x0 -0.06, pos3_o.y0, pos3_o.width, pos3_o.height]
+    ax3.set_position(pos3) # set a new position
+#    f.colorbar(ax1_c, ax=ax1.ravel().tolist())
+#    plt.colorbar(c_ax1)
+    make_ticklabels_invisible(plt.gcf())
+    for i in range(len(flux_list)-1):
+        if i == 0:
+            model_flux = flux_list[i+1] +0  # Don't share a same space
+        else:
+            model_flux += flux_list[2]
+    model_flux = flux_list[1] + flux_list[2]
+
+    label_SB_list = [label_list[0], label_list[-2], label_list[1], label_list[2]] 
+    flux_SB_list = [flux_list[0], model_flux, flux_list[1], flux_list[2]] 
+    zp = 26.4524
+    for i in range(len(label_SB_list)):
+        center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
+        r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 40)
+        r_mag = - 2.5 * np.log10(r_SB) + zp
+        ax4.plot(r_grids, r_mag, 'x-', label=label_SB_list[i])
+    ax4.set_xscale('log')
+    ax4.invert_yaxis()
+    ax4.set_ylabel('$\mu$(mag, pixel$^{-2}$)', fontsize=12)
+    plt.gca().invert_yaxis()
+#    ax.invert_yaxis()
+#    plt.invert_yaxis()
+    ax4.legend()
+    pos4_o = ax4.get_position() # get the original position
+    pos4 = [pos4_o.x0 -0.04, pos4_o.y0 -0.01, pos4_o.width, pos4_o.height]
+    ax4.set_position(pos4) # set a new position
+
+    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= 40)[0])
+    r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= 40)[0])
+    ax5.plot(r_grids, r_mag_0-r_mag_1, 'ro')   
+    ax5.set_ylabel('$\Delta\mu$', fontsize=15)
+    ax5.set_xlabel('pixel scale', fontsize=15)
+    ax5.set_xscale('log')
+    x = np.linspace(-100, 150, 400)
+    y = x * 0
+    ax5.plot(x, y, 'k--')  
+    plt.xlim([r_grids.min()* 0.7,r_grids.max() + 10])
+    plt.ylim([-1,1])
+    pos5_o = ax5.get_position() # get the original position
+    pos5 = [pos5_o.x0 -0.04, pos5_o.y0 +0.01, pos5_o.width, pos5_o.height]
+    ax5.set_position(pos5) # set a new position
+                    
+    plt.show()
+#
+#def data_model_compare(label_list, flux_list, fig = None):
+#    center = len(flux_list[0])/2, len(flux_list[0])/2
+#    for i in range(len(label_list)):
+#        r_SB, r_grids = SB_profile(flux_list, center)
+#        fig.plot(r_grids, r_SB, 'x-', label="label_list{0}".format(i))
+#        fig.legend()
+    
+   
+def make_ticklabels_invisible(fig):
+    for i, ax in enumerate(fig.axes):
+#        ax.text(0.5, 0.5, "ax%d" % (i+1), va="center", ha="center")
+        if i !=3 and i !=4:
+            for tl in ax.get_xticklabels() + ax.get_yticklabels():
+                tl.set_visible(False)
 
