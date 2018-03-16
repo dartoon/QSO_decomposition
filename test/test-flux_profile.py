@@ -35,7 +35,7 @@ img = fitsFile[0].data
 #           fits_plot=True)
 
 #SB_profile(image=img, center=([49,49]),ifplot=True,
-#           fits_plot=True, if_mask = True, mask_NO=2, mask_reg=['test_circle.reg', 'test_box.reg'])
+#           fits_plot=True, mask_reg=['test_circle.reg', 'test_box.reg'])
 
 
 #SB_profile(image=psf_cons, center=([40,40]),ifplot=True,
@@ -60,4 +60,6 @@ QSO = pyfits.getdata('files/model_QSO.fits')
 host = pyfits.getdata('files/model_host.fits')
 flux_list = [data, QSO, host]
 label = ['data', 'QSO', 'host', 'model', 'residual']
-total_compare(label_list = label, flux_list = flux_list, target_ID = 'CID1174')
+import glob
+mask_list = glob.glob("files/QSO*.reg")   # Read *.reg files in a list.
+total_compare(label_list = label, flux_list = flux_list, target_ID = 'CID1174', data_mask_list = mask_list)

@@ -106,8 +106,8 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=True
     return r_flux, r_grids, regions
 
 def SB_profile(image, center, radius=35, grids=20, gridspace = None, 
-               ifplot=False, fits_plot=False, if_mask=False, mask_plot = False,
-               mask_NO=1, mask_reg=['default.reg']):
+               ifplot=False, fits_plot=False,
+               mask_list=None, mask_plot = False):
     '''
     Derive the SB profile of one image start at the center.
     
@@ -123,17 +123,19 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
     --------
         A 1-D array of the SB value of each 'grids' in the profile with the sampled radius.
     '''
-    if if_mask == False:
+    if mask_list == None:
         r_flux, r_grids, regions=flux_profile(image, center, radius=radius, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
         region_area = np.zeros([len(r_flux)])
         for i in range(len(r_flux)):
             circle=regions[i].to_mask(mode='exact')
             edge_mask = circle.cutout(np.ones(image.shape))
             region_area[i]=(circle.data * edge_mask).sum()
-    elif if_mask == True:
+    elif mask_list != None:
         mask = np.ones(image.shape)
-        for i in range(mask_NO):
-            mask *= cr_mask(image=image, filename=mask_reg[i])
+        for i in range(len(mask_list)):
+            mask *= cr_mask(image=image, filename=mask_list[i])
+#        plt.imshow(mask, origin='low')
+#        plt.show()
         r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
         region_area = np.zeros([len(r_flux)])
         for i in range(len(r_flux)):
@@ -146,9 +148,9 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
     r_SB= r_flux/region_area
     if fits_plot == True:
         ax=plt.subplot(1,1,1)
-        if if_mask == True:
+        if mask_list != None:
             cax=ax.imshow(image*mask, norm=LogNorm(),origin='lower')
-        elif if_mask == False:
+        elif mask_list == None:
             cax=ax.imshow(image,  norm=LogNorm(),origin='lower')
         #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
         for i in range(grids):
@@ -191,7 +193,7 @@ def text_in_string_list(text, string_list):
     return counts, text_string
             
 
-def QSO_psfs_compare(QSO, psfs, mask_list=['default.reg'], plt_which_PSF=(0,), include_QSO = True , radius=15, grids=20):
+def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True , radius=15, grids=20):
     if include_QSO == True:
         print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]
@@ -209,8 +211,8 @@ def QSO_psfs_compare(QSO, psfs, mask_list=['default.reg'], plt_which_PSF=(0,), i
             r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True)
         elif msk_counts >0:
             print mask_lists
-            r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, if_mask=True,
-                                       mask_plot = True, mask_NO=msk_counts, mask_reg=mask_lists)
+            r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True,
+                                       mask_plot = True, mask_list=mask_lists)
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
     for i in range(psfs_NO):
@@ -221,8 +223,8 @@ def QSO_psfs_compare(QSO, psfs, mask_list=['default.reg'], plt_which_PSF=(0,), i
         if msk_counts == 0:
             r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids)
         elif msk_counts >0:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, if_mask=True,
-                                       mask_NO=msk_counts, mask_reg=mask_lists)
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids,
+                                       mask_list=mask_lists)
         r_SB /= r_SB[0]      #normalize the curves from the central part.
         plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
         plt.legend()
@@ -285,7 +287,9 @@ def cr_mask(image, filename='test_circle.reg'):
     mask_box_part *= box
     return mask
 
-def total_compare(label_list, flux_list, img_mask=None, pixel = 0.13 , plot_type= 4, target_ID = 'target_ID', add_background=0.0 ):
+def total_compare(label_list, flux_list, img_mask=None,
+                  pixel = 0.13 , plot_type= 4, target_ID = 'target_ID',
+                  add_background=0.0, data_mask_list = None):
     norm = ImageNormalize(stretch=SqrtStretch())
     plt.figure(0, figsize=(16.75,4))
     ax1 = plt.subplot2grid((6,4), (0,0), rowspan=6)
@@ -326,21 +330,23 @@ def total_compare(label_list, flux_list, img_mask=None, pixel = 0.13 , plot_type
     zp = 26.4524
     for i in range(len(label_SB_list)):
         center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
-        r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 40)
+        if label_SB_list[i] == 'data':
+            print data_mask_list
+            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 40, mask_list=data_mask_list)
+        else:
+            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 40, mask_list=None)
         r_mag = - 2.5 * np.log10(r_SB) + zp
         ax4.plot(r_grids, r_mag, 'x-', label=label_SB_list[i])
     ax4.set_xscale('log')
     ax4.invert_yaxis()
     ax4.set_ylabel('$\mu$(mag, pixel$^{-2}$)', fontsize=12)
     plt.gca().invert_yaxis()
-#    ax.invert_yaxis()
-#    plt.invert_yaxis()
     ax4.legend()
     pos4_o = ax4.get_position() # get the original position
     pos4 = [pos4_o.x0 -0.04, pos4_o.y0 -0.01, pos4_o.width, pos4_o.height]
     ax4.set_position(pos4) # set a new position
 
-    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= 40)[0])
+    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= 40, mask_list=data_mask_list)[0])
     r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= 40)[0])
     ax5.plot(r_grids, r_mag_0-r_mag_1, 'ro')   
     ax5.set_ylabel('$\Delta\mu$', fontsize=15)
@@ -354,7 +360,6 @@ def total_compare(label_list, flux_list, img_mask=None, pixel = 0.13 , plot_type
     pos5_o = ax5.get_position() # get the original position
     pos5 = [pos5_o.x0 -0.04, pos5_o.y0 +0.01, pos5_o.width, pos5_o.height]
     ax5.set_position(pos5) # set a new position
-                    
     plt.show()
 #
 #def data_model_compare(label_list, flux_list, fig = None):
