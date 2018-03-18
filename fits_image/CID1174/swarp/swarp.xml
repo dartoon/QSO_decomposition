@@ -16,12 +16,12 @@
   <PARAM name="Soft_Auth" datatype="char" arraysize="*" ucd="meta.bib.author;meta.software" value="Emmanuel Bertin"/>
   <PARAM name="Soft_Ref" datatype="char" arraysize="*" ucd="meta.bib.bibcode;meta.software" value="2002ASPC..281..228B"/>
   <PARAM name="NThreads" datatype="int" ucd="meta.number;meta.software" value="8"/>
-  <PARAM name="Date" datatype="char" arraysize="*" ucd="time.event.end;meta.software" value="2018-03-01"/>
-  <PARAM name="Time" datatype="char" arraysize="*" ucd="time.event.end;meta.software" value="17:27:00"/>
-  <PARAM name="Duration" datatype="float" ucd="time.event;meta.software" value="2" unit="s"/>
+  <PARAM name="Date" datatype="char" arraysize="*" ucd="time.event.end;meta.software" value="2018-03-13"/>
+  <PARAM name="Time" datatype="char" arraysize="*" ucd="time.event.end;meta.software" value="18:13:35"/>
+  <PARAM name="Duration" datatype="float" ucd="time.event;meta.software" value="1" unit="s"/>
   <PARAM name="User" datatype="char" arraysize="*" ucd="meta.curation" value="dartoon"/>
   <PARAM name="Host" datatype="char" arraysize="*" ucd="meta.curation" value="(null)"/>
-  <PARAM name="Path" datatype="char" arraysize="*" ucd="meta.dataset" value="/home/dartoon/QSO_decomposition/Fits_image/CID70/swarp"/>
+  <PARAM name="Path" datatype="char" arraysize="*" ucd="meta.dataset" value="/home/dartoon/QSO_decomposition/fits_image/CID1174/swarp"/>
   <PARAM name="Image_Name" datatype="char" arraysize="*" ucd="obs.image;meta.fits" value="coadd.fits"/>
   <PARAM name="Weight_Name" datatype="char" arraysize="*" ucd="obs.image;meta.fits" value="coadd.weight.fits"/>
   <PARAM name="NOverlap_Max" datatype="int" ucd="meta.number;stat.max;obs.image" value="6"/>
@@ -65,52 +65,52 @@
    <FIELD name="COOSYS" datatype="char" arraysize="*" ucd="meta.code;pos"/>
    <DATA><TABLEDATA>
     <TR>
-     <TD>1</TD><TD>idnl14xxq_ima.fits</TD><TD>idnl14xxq_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
-     <TD>0</TD><TD>2018-03-01</TD><TD>17:26:58</TD><TD>0</TD>
-     <TD>2.28142</TD><TD>0.0958824</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
+     <TD>1</TD><TD>idnl09uyq_ima.fits</TD><TD>idnl09uyq_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
+     <TD>0</TD><TD>2018-03-13</TD><TD>18:13:34</TD><TD>0</TD>
+     <TD>2.26935</TD><TD>0.0949894</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
      <TD>BACKGROUND</TD><TD>1e+30</TD><TD>0</TD><TD>F</TD>
      <TD>0</TD><TD>50000</TD><TD>0</TD><TD>1</TD>
-     <TD>1</TD><TD>150.4005825 2.26516697</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
+     <TD>1</TD><TD>150.2875818 1.952857055</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
     </TR>
     <TR>
-     <TD>2</TD><TD>idnl14xyq_ima.fits</TD><TD>idnl14xyq_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
-     <TD>0</TD><TD>2018-03-01</TD><TD>17:26:59</TD><TD>1</TD>
-     <TD>2.28586</TD><TD>0.0960078</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
+     <TD>2</TD><TD>idnl09uzq_ima.fits</TD><TD>idnl09uzq_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
+     <TD>0</TD><TD>2018-03-13</TD><TD>18:13:34</TD><TD>0</TD>
+     <TD>2.24424</TD><TD>0.0960783</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
      <TD>BACKGROUND</TD><TD>0</TD><TD>0</TD><TD>F</TD>
      <TD>0</TD><TD>50000</TD><TD>0</TD><TD>1</TD>
-     <TD>1</TD><TD>150.3991593 2.265486936</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
+     <TD>1</TD><TD>150.2861767 1.953159245</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
     </TR>
     <TR>
-     <TD>3</TD><TD>idnl14y0q_ima.fits</TD><TD>idnl14y0q_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
-     <TD>0</TD><TD>2018-03-01</TD><TD>17:26:59</TD><TD>0</TD>
-     <TD>2.33312</TD><TD>0.0967665</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
+     <TD>3</TD><TD>idnl09v1q_ima.fits</TD><TD>idnl09v1q_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
+     <TD>0</TD><TD>2018-03-13</TD><TD>18:13:34</TD><TD>0</TD>
+     <TD>2.26734</TD><TD>0.0957699</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
      <TD>BACKGROUND</TD><TD>0</TD><TD>0</TD><TD>F</TD>
      <TD>0</TD><TD>50000</TD><TD>0</TD><TD>1</TD>
-     <TD>1</TD><TD>150.3977717 2.265771349</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
+     <TD>1</TD><TD>150.2847716 1.953443658</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
     </TR>
     <TR>
-     <TD>4</TD><TD>idnl14y2q_ima.fits</TD><TD>idnl14y2q_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
-     <TD>0</TD><TD>2018-03-01</TD><TD>17:26:59</TD><TD>0</TD>
-     <TD>2.2925</TD><TD>0.0960867</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
+     <TD>4</TD><TD>idnl09v3q_ima.fits</TD><TD>idnl09v3q_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
+     <TD>0</TD><TD>2018-03-13</TD><TD>18:13:34</TD><TD>0</TD>
+     <TD>2.26359</TD><TD>0.0967101</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
      <TD>BACKGROUND</TD><TD>0</TD><TD>0</TD><TD>F</TD>
      <TD>0</TD><TD>50000</TD><TD>0</TD><TD>1</TD>
-     <TD>1</TD><TD>150.3963486 2.266091312</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
+     <TD>1</TD><TD>150.2833487 1.953763621</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
     </TR>
     <TR>
-     <TD>5</TD><TD>idnl14y4q_ima.fits</TD><TD>idnl14y4q_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
-     <TD>0</TD><TD>2018-03-01</TD><TD>17:26:59</TD><TD>0</TD>
-     <TD>2.31097</TD><TD>0.0974959</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
+     <TD>5</TD><TD>idnl09v5q_ima.fits</TD><TD>idnl09v5q_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
+     <TD>0</TD><TD>2018-03-13</TD><TD>18:13:35</TD><TD>1</TD>
+     <TD>2.27893</TD><TD>0.0963154</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
      <TD>BACKGROUND</TD><TD>0</TD><TD>0</TD><TD>F</TD>
      <TD>0</TD><TD>50000</TD><TD>0</TD><TD>1</TD>
-     <TD>1</TD><TD>150.394961 2.266375723</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
+     <TD>1</TD><TD>150.2819436 1.954048031</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
     </TR>
     <TR>
-     <TD>6</TD><TD>idnl14y6q_ima.fits</TD><TD>idnl14y6q_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
-     <TD>0</TD><TD>2018-03-01</TD><TD>17:26:59</TD><TD>0</TD>
-     <TD>2.28085</TD><TD>0.0958835</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
+     <TD>6</TD><TD>idnl09v7q_ima.fits</TD><TD>idnl09v7q_ima.weight.fits</TD><TD>F</TD><TD>(null)</TD>
+     <TD>0</TD><TD>2018-03-13</TD><TD>18:13:35</TD><TD>0</TD>
+     <TD>2.30341</TD><TD>0.0965522</TD><TD>T</TD><TD>AUTO</TD><TD>128</TD><TD>3</TD><TD>0</TD>
      <TD>BACKGROUND</TD><TD>0</TD><TD>0</TD><TD>F</TD>
      <TD>0</TD><TD>50000</TD><TD>0</TD><TD>1</TD>
-     <TD>1</TD><TD>150.3935378 2.266695683</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
+     <TD>1</TD><TD>150.2805385 1.954350217</TD><TD>0.127985</TD><TD>2000</TD><TD>2000</TD><TD>ICRS</TD>
     </TR>
    </TABLEDATA></DATA>
   </TABLE>
@@ -138,7 +138,7 @@
    <PARAM name="Projection_Type" datatype="char" arraysize="*" ucd="meta;pos;obs.param" value="TAN"/>
    <PARAM name="Projection_Err" datatype="float" arraysize="1" ucd="pos.angDistance;stat.max;obs.param" value="0.001" unit="pix"/>
    <PARAM name="Center_Type" datatype="char" arraysize="*" ucd="meta.code;pos;obs.param" value="ALL"/>
-   <PARAM name="Center" datatype="double" arraysize="2" ucd="pos;obs.param" value="    150.3970246     2.265966882" unit="pix"/>
+   <PARAM name="Center" datatype="double" arraysize="2" ucd="pos;obs.param" value="    150.2840246     1.953639191" unit="pix"/>
    <PARAM name="PixelScale_Type" datatype="char" arraysize="*" ucd="meta.code;pos;obs.param" value="MEDIAN"/>
    <PARAM name="Pixel_Scale" datatype="float" arraysize="1" ucd="instr.scale;instr.pixel;obs.param" value="0"/>
    <PARAM name="Image_Size" datatype="int" arraysize="1" ucd="instr.scale;instr.pixel;obs.param" value="0"/>

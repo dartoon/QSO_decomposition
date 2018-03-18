@@ -45,7 +45,6 @@ SB_profile(image=img, center=([40,40]),ifplot=True,
 from flux_profile import text_in_string_list
 print text_in_string_list("QSq2O1", ['QSO0asdw', '2adQSO2asdw', 'QaskQSO1]', '2adQSO2asdw', 'QaskQSO1]'])
 
-'''
 #==============================================================================
 #test .total_compare
 #==============================================================================
@@ -58,4 +57,3 @@ label = ['data', 'QSO', 'host', 'model', 'residual']
 import glob
 mask_list = glob.glob("files/QSO*.reg")   # Read *.reg files in a list.
 total_compare(label_list = label, flux_list = flux_list, target_ID = 'CID1174', data_mask_list = mask_list)
-'''
