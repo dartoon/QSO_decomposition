@@ -33,7 +33,7 @@ for i in range(psf_NO):
 #    PSFs= PSFs.append(PSF)
 
 mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
-psf_final=psf_ave(psf_list,mode = 'CI', not_count=(1,4,5),
+psf_final=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,5,6),
                   mask_list=mask_list)
 
 QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))

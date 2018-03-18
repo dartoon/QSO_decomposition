@@ -12,4 +12,5 @@
 
 2. Load the star.reg and see which is star and which is QSO. Selecting the QSO and PSF candidates. Run the cutout.py template in folder "target/analysis" to cut out the PSF and QSO. This will get the .png image with PSF id and QSO position labeled.
 
+# Analysis the PSF with QSO. Select PSFs and average. MCMC fitting. Get results.
 3. Use
