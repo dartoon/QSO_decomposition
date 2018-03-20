@@ -54,7 +54,7 @@ def flux_in_region(image,region,mode='exact'):
     tot_flux= np.sum(mask.data * data)
     return tot_flux
 
-def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=True, fits_plot=True):
+def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=False, fits_plot=False):
     '''
     Derive the flux profile of one image start at the center.
     

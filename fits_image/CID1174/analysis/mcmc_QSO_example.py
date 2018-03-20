@@ -51,7 +51,7 @@ kernel = psf_final
 plt.matshow(psf_final, origin= 'low', norm=LogNorm())
 plt.colorbar()
 plt.show()
-flux_profile(psf_final, center = (kernel_size/2, kernel_size/2), radius= kernel_size/2 )
+flux_profile(psf_final, center = (kernel_size/2, kernel_size/2), radius= kernel_size/2, ifplot=True, fits_plot=True)
 
 kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
 
