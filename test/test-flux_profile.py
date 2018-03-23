@@ -27,7 +27,6 @@ mask = cr_mask(image=img, filename='test_circle.reg')
 plt.imshow((mask),origin='lower')
 plt.show()
 
-
 fitsFile = pyfits.open('psf.fits')
 img = fitsFile[0].data 
 region = pix_region(center=([49,49]), radius=5)

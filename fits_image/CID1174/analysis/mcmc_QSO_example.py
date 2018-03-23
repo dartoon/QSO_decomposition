@@ -33,7 +33,7 @@ for i in range(psf_NO):
 #    PSFs= PSFs.append(PSF)
 
 mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
-psf_final=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,5,6),
+psf_final, psf_std=psf_ave(psf_list,mode = 'CI', not_count=(1,4,5),
                   mask_list=mask_list)
 
 QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
@@ -54,6 +54,7 @@ plt.show()
 flux_profile(psf_final, center = (kernel_size/2, kernel_size/2), radius= kernel_size/2, ifplot=True, fits_plot=True)
 
 kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
+kwargs_numerics.get('psf_error_map', False)     #Turn on the PSF error map
 
 # lens model choicers (lenstronomy requires the instances of them, but we can keep them empty)
 fixed_lens = [{}]
@@ -144,6 +145,9 @@ kwargs_likelihood = {'check_bounds': True,  #Set the bonds, if exceed, reutrn "p
                              }
 kwargs_data = data_class.constructor_kwargs() # The "dec_at_xy_0" means the dec at the (0,0) point.
 kwargs_psf = psf_class.constructor_kwargs()
+kwargs_psf['psf_error_map'] = psf_std
+
+
 image_band = [kwargs_data, kwargs_psf, kwargs_numerics]
 multi_band_list = [image_band]
 

@@ -203,15 +203,16 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
     psfs_NO = len(psfs)
     center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0].max())),(2))[::-1]
     print center
-    for i in range(len(plt_which_PSF)):
-        j = plt_which_PSF[i]
-        msk_counts, mask_lists = text_in_string_list("PSF{0}".format(j), mask_list)
-        print "Plot for fits: PSF{0}.fits".format(j)
-        if msk_counts == 0:
-            r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True)
-        elif msk_counts >0:
-            print mask_lists
-            r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True,
+    if plt_which_PSF != None:
+        for i in range(len(plt_which_PSF)):
+            j = plt_which_PSF[i]
+            msk_counts, mask_lists = text_in_string_list("PSF{0}".format(j), mask_list)
+            print "Plot for fits: PSF{0}.fits".format(j)
+            if msk_counts == 0:
+                r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True)
+            elif msk_counts >0:
+                print mask_lists
+                r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True,
                                        mask_plot = True, mask_list=mask_lists)
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
@@ -228,6 +229,41 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
         r_SB /= r_SB[0]      #normalize the curves from the central part.
         plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
         plt.legend()
+    ax.xaxis.set_minor_locator(minorLocator)
+    plt.tick_params(which='both', width=2)
+    plt.tick_params(which='major', length=7)
+    plt.tick_params(which='minor', length=4, color='r')
+    plt.grid()
+    ax.set_ylabel("Scaled Surface Brightness")
+    ax.set_xlabel("Pixels")
+    plt.grid(which="minor")
+    plt.show()
+
+def profiles_compare(prf_list, scal_list,
+                     radius = 15, grids = 20):
+    '''
+    Compare the profile between different profile (prf?). One can set the scal to uniformize the resolution.
+    Note that the SB center from the center of the image; Not allow mask yet.
+    Parameter
+    --------
+        prf_list: profile list of the arraies
+        scal_list: a list for the scaled value for the resultion, default as zero, i.e. same resolution.
+    Return
+    --------
+        A plot of SB comparison.
+    '''
+    minorLocator = AutoMinorLocator()
+    fig, ax = plt.subplots(figsize=(10,7))
+    prf_NO = len(prf_list)
+    for i in range(prf_NO):
+        center = np.reshape(np.asarray(np.where(prf_list[i]== prf_list[i].max())),(2))[::-1]
+        scale = scal_list[i]
+        r_SB, r_grids = SB_profile(prf_list[i], center, radius=radius*scale, grids=grids)
+        r_SB /= r_SB[0]      #normalize the curves from the central part.
+        r_grids /= scale
+        plt.plot(r_grids, r_SB, 'x-', label="prf_list{0}".format(i))
+        plt.legend()
+        
     ax.xaxis.set_minor_locator(minorLocator)
     plt.tick_params(which='both', width=2)
     plt.tick_params(which='major', length=7)
