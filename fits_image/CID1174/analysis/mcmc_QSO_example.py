@@ -48,9 +48,9 @@ psf_type = 'PIXEL'  # 'gaussian', 'pixel', 'NONE'
 kernel_size = len(psf_final)
 kernel = psf_final
 
-plt.matshow(psf_final, origin= 'low', norm=LogNorm())
-plt.colorbar()
-plt.show()
+#plt.matshow(psf_final, origin= 'low', norm=LogNorm())
+#plt.colorbar()
+#plt.show()
 flux_profile(psf_final, center = (kernel_size/2, kernel_size/2), radius= kernel_size/2, ifplot=True, fits_plot=True)
 
 kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
@@ -146,7 +146,6 @@ kwargs_likelihood = {'check_bounds': True,  #Set the bonds, if exceed, reutrn "p
 kwargs_data = data_class.constructor_kwargs() # The "dec_at_xy_0" means the dec at the (0,0) point.
 kwargs_psf = psf_class.constructor_kwargs()
 kwargs_psf['psf_error_map'] = psf_std
-
 
 image_band = [kwargs_data, kwargs_psf, kwargs_numerics]
 multi_band_list = [image_band]

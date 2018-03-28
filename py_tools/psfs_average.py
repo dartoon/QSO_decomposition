@@ -72,9 +72,9 @@ def psf_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['default.reg
         for i in range(psf_NO):
             if psfs_l_msk[i].sum() != 0:
                 weights[i] = np.sqrt(np.sum(psfs_l_msk[i]))  # set weight based on their intensity (SNR)
-                print psfs_l_msk[i].sum()
+                print "Sum flux for PSF",i , ":", psfs_l_msk[i].sum()
                 psfs_l_msk[i] /= psfs_l_msk[i].sum()  # scale the image to a same level
-        print weights
+        print "The final weights for doing the average:\n", weights
 #        print abs(psfs_l_msk[3]).min()
         psfs_msk2nan=np.where(np.isclose(psfs_l_msk,0, rtol=1e-10, atol=1e-09), np.nan, psfs_l_msk)
         cleaned_psfs = np.ma.masked_array(psfs_msk2nan,np.isnan(psfs_msk2nan))
@@ -128,7 +128,7 @@ def psf_shift_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['defau
                   mask_list=mask_list)
     psf_final, psf_final_std = psf_init_ave, psf_std
     for iters in range(num_iter):
-        print "!!!!!iters is ", iters
+#        print "!!!!!iters is ", iters
         shifted_psf_list = np.zeros_like(psfs_list)
         for i in range(len(psfs_list)):
             fitted_PSF = psfs_list[i]
