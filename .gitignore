@@ -26,7 +26,8 @@ ompiled source #
 *.log
 *.sql
 *.sqlitei
-*.fits
+Cycle25data/*
+*_ima.fits
 
 # OS generated files #
 ######################
