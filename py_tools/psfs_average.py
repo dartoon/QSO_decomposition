@@ -13,7 +13,7 @@ from flux_profile import text_in_string_list,cr_mask
 import matplotlib.pylab as plt
 from matplotlib.colors import LogNorm
 
-def psf_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['default.reg'],scale=3):
+def psf_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['default.reg']):
     '''
     Produce the average for a list of psfs.
     
@@ -88,6 +88,8 @@ def psf_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['default.reg
         psf_std = np.sqrt(psf_variance)
         psf_std /= psf_ave.sum()
         psf_ave /= psf_ave.sum()
+        psf_std = psf_std.data
+        psf_ave = psf_ave.data
     #### The PSF are found not very necessary to be shiftted. !!!! Note the high_CI is not ready --- high_res. mask is not OK.
 #    if mode == 'high_CI':
 #        psfs_high_list = np.empty([psf_NO, psfs_list[0].shape[0]*scale, psfs_list[0].shape[1]*scale])
@@ -107,7 +109,45 @@ def psf_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['default.reg
     
     return psf_ave, psf_std
 
-    
+def psf_shift_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['default.reg'], count_psf_std = True, num_iter=1):
+    '''
+    Shifted the PSF to the center by fitting with the init_ave_PSF--- So that the final averaged PSF could be in the center (sharper).
+    Parameter
+    --------
+        Similar to psf_ave()
+        count_psf_std: Whether consider the psf_std when doing the PSF fitting.
+        num_iter: is the numbers for doing the interation.
+        
+    Return
+    --------
+        A averaged PSF.
+    '''
+    from fit_psf_pos import fit_psf_pos
+    from lenstronomy.Util.kernel_util import de_shift_kernel
+    psf_init_ave, psf_std=psf_ave(psfs_list,mode = mode, not_count=not_count,
+                  mask_list=mask_list)
+    psf_final, psf_final_std = psf_init_ave, psf_std
+    for iters in range(num_iter):
+        print "!!!!!iters is ", iters
+        shifted_psf_list = np.zeros_like(psfs_list)
+        for i in range(len(psfs_list)):
+            fitted_PSF = psfs_list[i]
+            print "fiting PSF", i
+            if count_psf_std == True:
+                ra_image, dec_image = fit_psf_pos(fitted_PSF, psf_final, psf_final_std)
+            else:
+                ra_image, dec_image = fit_psf_pos(fitted_PSF, psf_final)
+            print ra_image, dec_image
+            if abs(ra_image)>0.3 or abs(dec_image)>0.3:
+                print "Warning, the fitted ra_image, dec_image for psf", i ,'is too large!!!:', ra_image, dec_image 
+            shifted_psf_list[i] = de_shift_kernel(fitted_PSF, -ra_image, -dec_image)
+            plt.imshow(shifted_psf_list[i], norm = LogNorm(),origin='low')
+            plt.show()
+        psf_final, psf_final_std=psf_ave(shifted_psf_list,mode = mode, not_count=not_count,
+                mask_list=mask_list)
+    return psf_final, psf_final_std
+
+
 def rebin(image, scale=3):         
     '''
     Rebin a image to lower resolution 

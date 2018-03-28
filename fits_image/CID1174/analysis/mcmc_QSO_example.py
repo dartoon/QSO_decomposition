@@ -56,19 +56,19 @@ flux_profile(psf_final, center = (kernel_size/2, kernel_size/2), radius= kernel_
 kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
 kwargs_numerics.get('psf_error_map', False)     #Turn on the PSF error map
 
-# lens model choicers (lenstronomy requires the instances of them, but we can keep them empty)
-fixed_lens = [{}]
-kwargs_lens_init = [{}]
-kwargs_lens_sigma = [{}]
-kwargs_lower_lens = [{}]
-kwargs_upper_lens = [{}]
-
-# lens light model choices (lenstronomy requires the instances of them, but we can keep them empty)
-fixed_lens_light = [{}]
-kwargs_lens_light_init = [{}]
-kwargs_lens_light_sigma = [{}]
-kwargs_lower_lens_light = [{}]
-kwargs_upper_lens_light = [{}]
+## lens model choicers (lenstronomy requires the instances of them, but we can keep them empty)
+#fixed_lens = [{}]
+#kwargs_lens_init = [{}]
+#kwargs_lens_sigma = [{}]
+#kwargs_lower_lens = [{}]
+#kwargs_upper_lens = [{}]
+#
+## lens light model choices (lenstronomy requires the instances of them, but we can keep them empty)
+#fixed_lens_light = [{}]
+#kwargs_lens_light_init = [{}]
+#kwargs_lens_light_sigma = [{}]
+#kwargs_lower_lens_light = [{}]
+#kwargs_upper_lens_light = [{}]
 
 # here are the options for the host galaxy fitting
 fixed_source = []

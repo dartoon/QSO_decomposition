@@ -252,6 +252,7 @@ def profiles_compare(prf_list, scal_list,
     --------
         A plot of SB comparison.
     '''
+    from matplotlib.ticker import AutoMinorLocator
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
     prf_NO = len(prf_list)
