@@ -13,7 +13,7 @@ from flux_profile import text_in_string_list,cr_mask
 import matplotlib.pylab as plt
 from matplotlib.colors import LogNorm
 
-def psf_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['default.reg']):
+def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg']):
     '''
     Produce the average for a list of psfs.
     

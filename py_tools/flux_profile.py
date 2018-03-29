@@ -75,7 +75,7 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
     if gridspace == None:
         r_grids=(np.linspace(0,1,grids+1)*radius)[1:]
     elif gridspace == 'log':
-        r_grids=(np.logspace(-2,0,grids+1)*radius)[1:]
+        r_grids=(np.logspace(-2,0,grids+1)*radius)[1:]  #starts from rad 0.5 pixel
     r_flux = np.empty(grids)
     regions = []
     for i in range(len(r_grids)):
@@ -101,6 +101,9 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
         plt.grid()
         ax.set_ylabel("Total Flux")
         ax.set_xlabel("Pixels")
+        if gridspace == 'log':
+            ax.set_xscale('log')
+            plt.xlim(0.5, ) 
         plt.grid(which="minor")
         plt.show()
     return r_flux, r_grids, regions
@@ -168,6 +171,9 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
         plt.grid()
         ax.set_ylabel("Surface Brightness")
         ax.set_xlabel("Pixels")
+        if gridspace == 'log':
+            ax.set_xscale('log')
+            plt.xlim(0.5, ) 
         plt.grid(which="minor")
         plt.show()
     return r_SB, r_grids
@@ -193,26 +199,26 @@ def text_in_string_list(text, string_list):
     return counts, text_string
             
 
-def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True , radius=15, grids=20):
+def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , radius=15, grids=20):
     if include_QSO == True:
         print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]
-        print "center_QSO", center_QSO
-        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True)
+        print "center_QSO:", center_QSO
+        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
         r_SB_QSO /= r_SB_QSO[0]
     psfs_NO = len(psfs)
     center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0].max())),(2))[::-1]
-    print center
+    print "center_PSF:", center
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):
             j = plt_which_PSF[i]
             msk_counts, mask_lists = text_in_string_list("PSF{0}".format(j), mask_list)
             print "Plot for fits: PSF{0}.fits".format(j)
             if msk_counts == 0:
-                r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True)
+                r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
             elif msk_counts >0:
                 print mask_lists
-                r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True,
+                r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
                                        mask_plot = True, mask_list=mask_lists)
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
@@ -222,9 +228,9 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
                 plt.plot(r_grids_QSO, r_SB_QSO, 'x-', label="QSO", linewidth=3)
                 plt.legend()
         if msk_counts == 0:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids)
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace)
         elif msk_counts >0:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids,
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace,
                                        mask_list=mask_lists)
         r_SB /= r_SB[0]      #normalize the curves from the central part.
         plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
@@ -236,10 +242,14 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
     plt.grid()
     ax.set_ylabel("Scaled Surface Brightness")
     ax.set_xlabel("Pixels")
+    if gridspace == 'log':
+        ax.set_xscale('log')
+        plt.xlim(0.5, ) 
     plt.grid(which="minor")
     plt.show()
+    return fig
 
-def profiles_compare(prf_list, scal_list,
+def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None ,
                      radius = 15, grids = 20):
     '''
     Compare the profile between different profile (prf?). One can set the scal to uniformize the resolution.
@@ -259,10 +269,15 @@ def profiles_compare(prf_list, scal_list,
     for i in range(prf_NO):
         center = np.reshape(np.asarray(np.where(prf_list[i]== prf_list[i].max())),(2))[::-1]
         scale = scal_list[i]
-        r_SB, r_grids = SB_profile(prf_list[i], center, radius=radius*scale, grids=grids)
+        r_SB, r_grids = SB_profile(prf_list[i], center, radius=radius*scale, grids=grids, gridspace=gridspace)
         r_SB /= r_SB[0]      #normalize the curves from the central part.
         r_grids /= scale
-        plt.plot(r_grids, r_SB, 'x-', label="prf_list{0}".format(i))
+        if prf_name_list == None:
+            plt.plot(r_grids, r_SB, 'x-', label="prf_list{0}".format(i))
+        elif len(prf_name_list)==len(prf_list):
+            plt.plot(r_grids, r_SB, 'x-', label=prf_name_list[i])
+        else:
+            raise ValueError("The profile name is not in right length")
         plt.legend()
         
     ax.xaxis.set_minor_locator(minorLocator)
@@ -272,6 +287,9 @@ def profiles_compare(prf_list, scal_list,
     plt.grid()
     ax.set_ylabel("Scaled Surface Brightness")
     ax.set_xlabel("Pixels")
+    if gridspace == 'log':
+        ax.set_xscale('log')
+        plt.xlim(0.5, ) 
     plt.grid(which="minor")
     plt.show()
 
@@ -368,7 +386,7 @@ def total_compare(label_list, flux_list, img_mask=None,
     for i in range(len(label_SB_list)):
         center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
         if label_SB_list[i] == 'data':
-            print data_mask_list
+            print "data_mask_list,:",data_mask_list
             r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 40, mask_list=data_mask_list)
         else:
             r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 40, mask_list=None)

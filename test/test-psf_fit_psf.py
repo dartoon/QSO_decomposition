@@ -58,7 +58,7 @@ plt.imshow(psf_final, origin = 'low', norm=LogNorm())
 plt.show()
 prf_list = [psf_init_ave,psf_final]
 scal_list = [1,1]
-from flux_profile import QSO_psfs_compare, profiles_compare
+from flux_profile import QSO_psfs_compare
 
 profiles_compare(prf_list, scal_list)
 
