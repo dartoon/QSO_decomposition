@@ -25,7 +25,7 @@ c_psf_list = [(???, ???), (???, ???), (???, ???), (???, ???), (???, ???)]
 for i in range(len(c_psf_list)):
     PSF = cut_center_bright(image=img, center=c_psf_list[i], radius=20)
     pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(i),overwrite=True)
-save_loc_png(img,center_QSO,c_psf_list)
+save_loc_png(img,center_QSO,c_psf_list, ID=ID)
 
 ##Check and find that the brightest point of PSF1.fits are not at the center.
 #PSF = cut_image(image=img, center=(705, 843), radius=20)

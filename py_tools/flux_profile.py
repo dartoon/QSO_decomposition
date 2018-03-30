@@ -349,9 +349,12 @@ def total_compare(label_list, flux_list, img_mask=None,
     if facility == 'F140w':
         zp = 26.4524
         delatPixel = 0.13
+    elif facility == 'F125w':
+        zp = 26.2303
+        delatPixel = 0.13
         
     norm = ImageNormalize(stretch=SqrtStretch())
-    plt.figure(0, figsize=(16.75,4))
+    f = plt.figure(0, figsize=(16.75,4))
     ax1 = plt.subplot2grid((6,4), (0,0), rowspan=6)
     ax2 = plt.subplot2grid((6,4), (0,1), rowspan=6)
     ax3 = plt.subplot2grid((6,4), (0,2), rowspan=6)
@@ -434,6 +437,7 @@ def total_compare(label_list, flux_list, img_mask=None,
     pos5 = [pos5_o.x0 -0.04, pos5_o.y0 +0.01, pos5_o.width, pos5_o.height]
     ax5.set_position(pos5) # set a new position
     plt.show()
+    return f
 #
 #def data_model_compare(label_list, flux_list, fig = None):
 #    center = len(flux_list[0])/2, len(flux_list[0])/2

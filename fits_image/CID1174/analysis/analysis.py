@@ -57,7 +57,7 @@ from fit_qso import fit_qso
 #                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True)
 
 print "by psf_ave_wght"
-source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_wght,
+source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_wght, psf_std = psf_std_wght,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
                                                        deep_seed = False)
 plt.show()
@@ -91,9 +91,9 @@ data = QSO_im[cut:-cut,cut:-cut]
 QSO = image_ps
 host = image_host
 flux_list = [data, QSO, host]
-label = ['data', 'QSO', 'host', 'model', 'Residual']
+label = ['data', 'QSO', 'host', 'model', 'residual']
 import glob
 mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
 total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
               data_mask_list = mask_list, data_cut = cut, facility = 'F140w')
-
+fig.savefig("SB_profile_{0}.pdf".format(ID))
