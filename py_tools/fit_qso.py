@@ -11,7 +11,8 @@ from matplotlib.pylab import plt
 import numpy as np
 import corner
 
-def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04, exp_time = 2400., image_plot = True, corner_plot=True, flux_ratio_plot=True):
+def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04,
+            exp_time = 2400., image_plot = True, corner_plot=True, flux_ratio_plot=True, deep_seed = False):
     '''
     A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
     
@@ -23,6 +24,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         source_params: The prior for the source. Default is given.
         background_rms: default as 0.04
         exp_time: default at 2400.
+        deep_seed: if Ture, more mcmc steps will be performed.
             
     Return
     --------
@@ -137,7 +139,16 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
 
     fitting_seq = FittingSequence(multi_band_list, kwargs_model, kwargs_constraints, kwargs_likelihood, kwargs_params)
     
-    fitting_kwargs_list = [
+    if deep_seed == False:
+        fitting_kwargs_list = [
+            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 50,
+             'n_iterations': 50},
+            {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 20, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
+               #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
+            'sigma_scale': .1}
+            ]
+    elif deep_seed == True:
+         fitting_kwargs_list = [
             {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 50,
              'n_iterations': 50},
             {'fitting_routine': 'MCMC', 'n_burn': 30, 'n_run': 30, 'walkerRatio': 100, 'mpi': False,   ##Inputs  to CosmoHammer:

@@ -110,7 +110,8 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
 
 def SB_profile(image, center, radius=35, grids=20, gridspace = None, 
                ifplot=False, fits_plot=False,
-               mask_list=None, mask_plot = False):
+               mask_list=None, mask_plot = False,
+               mask_cut = 0.):
     '''
     Derive the SB profile of one image start at the center.
     
@@ -136,7 +137,7 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
     elif mask_list != None:
         mask = np.ones(image.shape)
         for i in range(len(mask_list)):
-            mask *= cr_mask(image=image, filename=mask_list[i])
+            mask *= cr_mask(image=image, filename=mask_list[i], mask_reg_cut = mask_cut)
 #        plt.imshow(mask, origin='low')
 #        plt.show()
         r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
@@ -301,7 +302,7 @@ def string_find_between(s, first, last ):
     except ValueError:
         return ""
 
-def cr_mask(image, filename='test_circle.reg'):
+def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
     '''
     The creat a mask with a .reg file. The pixels in the region is 0, otherwise 1.
     
@@ -321,13 +322,13 @@ def cr_mask(image, filename='test_circle.reg'):
     if "physicalcircle" in reg_string:
         abc=string_find_between(reg_string, "(", ")")
         reg_info=np.fromstring(abc, dtype=float, sep=',')
-        center, radius = reg_info[:2]-1, reg_info[2]
+        center, radius = reg_info[:2]-1 - mask_reg_cut, reg_info[2]
         region = pix_region(center, radius)
         box = 1-region.to_mask(mode='center').data
     elif "physicalbox" in reg_string:
         abc=string_find_between(reg_string, "(", ")")
         reg_info=np.fromstring(abc, dtype=float, sep=',')
-        center = reg_info[:2] - 1
+        center = reg_info[:2] - 1 - mask_reg_cut
         x_r, y_r = reg_info[2:4]  # x_r is the length of the x, y_r is the length of the y
         box = np.zeros([np.int(x_r)+1, np.int(y_r)+1]).T
     else:
@@ -343,8 +344,12 @@ def cr_mask(image, filename='test_circle.reg'):
     return mask
 
 def total_compare(label_list, flux_list, img_mask=None,
-                  pixel = 0.13 , plot_type= 4, target_ID = 'target_ID',
-                  add_background=0.0, data_mask_list = None):
+                  facility = 'F140w' , plot_type= 4, target_ID = 'target_ID',
+                  add_background=0.0, data_mask_list = None, data_cut = 0.):
+    if facility == 'F140w':
+        zp = 26.4524
+        delatPixel = 0.13
+        
     norm = ImageNormalize(stretch=SqrtStretch())
     plt.figure(0, figsize=(16.75,4))
     ax1 = plt.subplot2grid((6,4), (0,0), rowspan=6)
@@ -358,17 +363,25 @@ def total_compare(label_list, flux_list, img_mask=None,
     ax1.set_ylabel(target_ID, fontsize=15)
     ax1.text(frame_size*0.05, frame_size*0.9, label_list[0],
          fontsize=20)
+    scale_bar(ax1, frame_size, dist=1/delatPixel, text='1"')
+    coordinate_arrows(ax1, frame_size, arrow_size=0.03)
+    
     ax2.imshow(flux_list[1] + flux_list[2] + add_background,origin='lower',cmap='Greys', norm=norm, clim=clim)
     pos2_o = ax2.get_position() # get the original position
     pos2 = [pos2_o.x0 -0.03, pos2_o.y0, pos2_o.width, pos2_o.height]
     ax2.set_position(pos2) # set a new position
     ax2.text(frame_size*0.05, frame_size*0.9, label_list[-2],
          fontsize=20)
+    scale_bar(ax2, frame_size, dist=1/delatPixel, text='1"')
+    coordinate_arrows(ax2, frame_size, arrow_size=0.03)
+    
     ax3.imshow(flux_list[0]-(flux_list[1]+flux_list[2]),origin='lower',cmap='Greys', norm=norm, clim=clim)
     ax3.text(frame_size*0.05, frame_size*0.9, label_list[-1],
          fontsize=20)
     pos3_o = ax3.get_position() # get the original position
     pos3 = [pos3_o.x0 -0.06, pos3_o.y0, pos3_o.width, pos3_o.height]
+    scale_bar(ax3, frame_size, dist=1/delatPixel, text='1"')
+    coordinate_arrows(ax3, frame_size, arrow_size=0.03)
     ax3.set_position(pos3) # set a new position
 #    f.colorbar(ax1_c, ax=ax1.ravel().tolist())
 #    plt.colorbar(c_ax1)
@@ -381,17 +394,19 @@ def total_compare(label_list, flux_list, img_mask=None,
     model_flux = flux_list[1] + flux_list[2]
 
     label_SB_list = [label_list[0], label_list[-2], label_list[1], label_list[2]] 
-    flux_SB_list = [flux_list[0], model_flux, flux_list[1], flux_list[2]] 
-    zp = 26.4524
+    flux_SB_list = [flux_list[0], model_flux, flux_list[1], flux_list[2]]
     for i in range(len(label_SB_list)):
         center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
         if label_SB_list[i] == 'data':
             print "data_mask_list,:",data_mask_list
-            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 40, mask_list=data_mask_list)
+            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 20, grids = 40, mask_list=data_mask_list, mask_cut = data_cut)
         else:
-            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 40, mask_list=None)
-        r_mag = - 2.5 * np.log10(r_SB) + zp
-        ax4.plot(r_grids, r_mag, 'x-', label=label_SB_list[i])
+            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 20, mask_list=None)
+        r_mag = - 2.5 * np.log10(r_SB) + zp 
+        if label_SB_list[i] == 'data':
+            ax4.plot(r_grids * delatPixel, r_mag, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
+        else:
+            ax4.plot(r_grids * delatPixel, r_mag, '-', label=label_SB_list[i])
     ax4.set_xscale('log')
     ax4.invert_yaxis()
     ax4.set_ylabel('$\mu$(mag, pixel$^{-2}$)', fontsize=12)
@@ -401,16 +416,19 @@ def total_compare(label_list, flux_list, img_mask=None,
     pos4 = [pos4_o.x0 -0.04, pos4_o.y0 -0.01, pos4_o.width, pos4_o.height]
     ax4.set_position(pos4) # set a new position
 
-    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= 40, mask_list=data_mask_list)[0])
-    r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= 40)[0])
-    ax5.plot(r_grids, r_mag_0-r_mag_1, 'ro')   
+    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= 20, mask_list=data_mask_list, mask_cut = data_cut)[0])
+    r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= 20)[0])
+    ax5.plot(r_grids*delatPixel, r_mag_0-r_mag_1, 'ro')   
     ax5.set_ylabel('$\Delta\mu$', fontsize=15)
-    ax5.set_xlabel('pixel scale', fontsize=15)
+    ax5.set_xlabel('arcsec', fontsize=15)
     ax5.set_xscale('log')
+    ax5.set_xticks([0.1, 0.2, 0.5, 1, 3])
+    import matplotlib
+    ax5.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
     x = np.linspace(-100, 150, 400)
     y = x * 0
     ax5.plot(x, y, 'k--')  
-    plt.xlim([r_grids.min()* 0.7,r_grids.max() + 10])
+    plt.xlim([(r_grids*delatPixel).min()* 0.7,(r_grids*delatPixel).max() + 1])
     plt.ylim([-1,1])
     pos5_o = ax5.get_position() # get the original position
     pos5 = [pos5_o.x0 -0.04, pos5_o.y0 +0.01, pos5_o.width, pos5_o.height]
@@ -424,7 +442,6 @@ def total_compare(label_list, flux_list, img_mask=None,
 #        fig.plot(r_grids, r_SB, 'x-', label="label_list{0}".format(i))
 #        fig.legend()
     
-   
 def make_ticklabels_invisible(fig):
     for i, ax in enumerate(fig.axes):
 #        ax.text(0.5, 0.5, "ax%d" % (i+1), va="center", ha="center")
@@ -432,3 +449,33 @@ def make_ticklabels_invisible(fig):
             for tl in ax.get_xticklabels() + ax.get_yticklabels():
                 tl.set_visible(False)
 
+def coordinate_arrows(ax, d, color='black', arrow_size=0.02):
+    d0 = d / 12.
+    p0 = d / 12.
+    pt = d / 7.
+    deltaPix = 1
+    ra0, dec0 = (d - d0) / deltaPix, d0 / deltaPix
+    xx_, yy_ = ra0, dec0
+    xx_ra, yy_ra = (ra0 - p0, dec0)
+    xx_dec, yy_dec = (ra0, dec0 + p0)
+    xx_ra_t, yy_ra_t = (ra0 - pt, dec0)
+    xx_dec_t, yy_dec_t = (ra0, dec0 + pt)
+
+    ax.arrow(xx_ * deltaPix, yy_ * deltaPix, (xx_ra - xx_) * deltaPix, (yy_ra - yy_) * deltaPix,
+             head_width=arrow_size * d, head_length=arrow_size * d, fc=color, ec=color, linewidth=1.2)
+    ax.text(xx_ra_t * deltaPix, yy_ra_t * deltaPix, "E", color=color, fontsize=12, ha='center')
+    ax.arrow(xx_ * deltaPix, yy_ * deltaPix, (xx_dec - xx_) * deltaPix, (yy_dec - yy_) * deltaPix,
+             head_width=arrow_size * d, head_length=arrow_size * d, fc
+             =color, ec=color, linewidth=1.2)
+    ax.text(xx_dec_t * deltaPix, yy_dec_t * deltaPix, "N", color=color, fontsize=12, ha='center')
+    
+def scale_bar(ax, d, dist=1/0.13, text='1"', color='black', flipped=False):
+    if flipped:
+        p0 = d - d / 15. - dist
+        p1 = d / 15.
+        ax.plot([p0, p0 + dist], [p1, p1], linewidth=2, color=color)
+        ax.text(p0 + dist / 2., p1 + 0.02 * d, text, fontsize=15, color=color, ha='center')
+    else:
+        p0 = d / 15.
+        ax.plot([p0, p0 + dist], [p0, p0], linewidth=2, color=color)
+        ax.text(p0 + dist / 2., p0 + 0.02 * d, text, fontsize=15, color=color, ha='center')
