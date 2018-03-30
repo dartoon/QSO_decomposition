@@ -416,6 +416,8 @@ def total_compare(label_list, flux_list, img_mask=None,
     pos4 = [pos4_o.x0 -0.04, pos4_o.y0 -0.01, pos4_o.width, pos4_o.height]
     ax4.set_position(pos4) # set a new position
 
+    x = np.linspace(1.e-4, 100, 2)
+    y = x * 0
     r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= 20, mask_list=data_mask_list, mask_cut = data_cut)[0])
     r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= 20)[0])
     ax5.plot(r_grids*delatPixel, r_mag_0-r_mag_1, 'ro')   
@@ -425,8 +427,6 @@ def total_compare(label_list, flux_list, img_mask=None,
     ax5.set_xticks([0.1, 0.2, 0.5, 1, 3])
     import matplotlib
     ax5.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-    x = np.linspace(-100, 150, 400)
-    y = x * 0
     ax5.plot(x, y, 'k--')  
     plt.xlim([(r_grids*delatPixel).min()* 0.7,(r_grids*delatPixel).max() + 1])
     plt.ylim([-1,1])

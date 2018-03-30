@@ -28,6 +28,8 @@ ompiled source #
 *.sqlitei
 Cycle25data/*
 *_ima.fits
+coadd*fits
+*.xml
 
 # OS generated files #
 ######################
