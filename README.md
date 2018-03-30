@@ -13,4 +13,7 @@
 2. Load the star.reg and see which is star and which is QSO. Selecting the QSO and PSF candidates. Run the cutout.py template in folder "target/analysis" to cut out the PSF and QSO. This will get the .png image with PSF id and QSO position labeled.
 
 # Analysis the PSF with QSO. Select PSFs and average. MCMC fitting. Get results.
-3. Use
+3. Use the template from CID1174/analysis/analysis.py. One can:
+		? Compare the stars profiles with the QSO.
+		? Doing the the average by 1.directly or 2. weighted by root-square of the star_sum_flux
+		? Fitting the image. 
