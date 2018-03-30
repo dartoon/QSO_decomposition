@@ -1,7 +1,7 @@
 # QSO_decomposition
 
     "''
-    With this task, we can do the QSO decomposition. These are inclduing
+    With this task, we can do the QSO decomposition. These are including:
     1. Giving the HST image, and doing the SWarp.
     2. Quickly the cut out and label the PSF.
     3. Do the SB compare. 
