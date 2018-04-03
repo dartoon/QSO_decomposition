@@ -46,6 +46,10 @@ psf_ave_dirt, psf_std_dirt=psf_ave(psf_list,mode = 'direct', not_count=(5,6),
 psf_ave_wght, psf_std_wght=psf_ave(psf_list,mode = 'CI', not_count=(5,6),
                   mask_list=mask_list)
 
+pyfits.PrimaryHDU(psf_ave_wght).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+
+'''
 prf_list = [QSO_im,psf_ave_dirt, psf_ave_wght]
 scal_list = [1,1,1]
 prf_name_list = ['QSO', 'PSF_ave_direct', 'PSF_ave_by_wght']
@@ -98,4 +102,4 @@ total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
               data_mask_list = mask_list, data_cut = cut, facility = 'F140w')
 fig.savefig("SB_profile_{0}.pdf".format(ID))
 
-print result
+print result'''

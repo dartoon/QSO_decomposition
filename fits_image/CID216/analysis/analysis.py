@@ -48,6 +48,12 @@ psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(5,7,8),
 #psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(?,?),
 #                  mask_list=mask_list)
 #
+
+pyfits.PrimaryHDU(psf_ave_pa).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(psf_std_pa).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+
+
+'''
 prf_list = [QSO_im,psf_ave_pa]
 scal_list = [1,1,1]
 prf_name_list = ['QSO', 'PSF average']
@@ -104,3 +110,4 @@ mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
 fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
               data_mask_list = mask_list, data_cut = cut, facility = filt)
 fig.savefig("SB_profile_{0}.pdf".format(ID))
+'''

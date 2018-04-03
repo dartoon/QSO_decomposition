@@ -52,6 +52,9 @@ scal_list = [1,1,1]
 prf_name_list = ['QSO', 'Plan a', 'Plan b']
 profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
+pyfits.PrimaryHDU(psf_ave_wght).writeto('../../PSF_legacy/{0}_PSF'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std'.format(ID),overwrite=True)
+
 from fit_qso import fit_qso
 print "Plan a"
 source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, background_rms=0.038, psf_std = psf_std_pa,
