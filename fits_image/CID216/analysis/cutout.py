@@ -5,15 +5,16 @@ Created on Mon Mar  5 14:04:02 2018
 
 @author: Dartoon
 
-Cut PSF and QSO for ???
+Cut PSF and QSO for CID216
 """
 #import numpy as np
 import sys
 sys.path.insert(0,'../../../py_tools')
 from cut_image import cut_image, cut_center_bright, save_loc_png, grab_pos
 import astropy.io.fits as pyfits
-ID = '???'
+ID = 'CID216'
 
+#c_psf_list = [(408, 632), (583, 1065), (618, 705), (692, 530), (702, 1229), (957,723), (1038,833), (1165,1115), (1209,444)]
 filename= 'stars_and_QSO.reg'
 c_psf_list = grab_pos(filename)
 print c_psf_list

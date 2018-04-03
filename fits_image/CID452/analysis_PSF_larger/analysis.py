@@ -35,21 +35,21 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 # Compare the profile and derive the Average image
 #==============================================================================
 cut = 20      #cut_range
-#fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-##                 plt_which_PSF=(0,1,2,3,4,5,6,7),
-#                 mask_list=mask_list,
-#                 include_QSO=True, radius=len(psf_list[0])/2, grids=20,
-#                 gridspace= 'log')
+fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
+#                 plt_which_PSF=(0,1,2,3,4,5,6,7),
+                 mask_list=mask_list,
+                 include_QSO=True, radius=len(psf_list[0])/2, grids=20,
+                 gridspace= 'log')
 
-psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(7,),
-                  mask_list=mask_list)
+#psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(7,),
+#                  mask_list=mask_list)
 
 psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,6,7),
                   mask_list=mask_list)
 
-prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
-scal_list = [1,1,1]
-prf_name_list = ['QSO', 'Plan a', 'Plan b']
+prf_list = [QSO_im, psf_ave_pb]
+scal_list = [1,1]
+prf_name_list = ['QSO', 'Plan b']
 profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
 from fit_qso import fit_qso
@@ -85,19 +85,19 @@ elif filt == 'F125w':
     zp = 26.2303
 result['host_mag'] = - 2.5 * np.log10(result['host_amp']) + zp 
 result=roundme(result)
-#print "The host flux is ~:", image_host.sum()/(image_ps.sum() + image_host.sum())
+print "The host flux is ~:", image_host.sum()/(image_ps.sum() + image_host.sum())
 
-##==============================================================================
-##Plot the images for adopting in the paper
-##==============================================================================
-#from flux_profile import total_compare
-#data = QSO_im[cut:-cut,cut:-cut]
-#QSO = image_ps
-#host = image_host
-#flux_list = [data, QSO, host]
-#label = ['data', 'QSO', 'host', 'model', 'residual']
-#import glob
-#mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
-#fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
-#              data_mask_list = mask_list, data_cut = cut, facility = filt)
-#fig.savefig("SB_profile_{0}.pdf".format(ID))
+#==============================================================================
+#Plot the images for adopting in the paper
+#==============================================================================
+from flux_profile import total_compare
+data = QSO_im[cut:-cut,cut:-cut]
+QSO = image_ps
+host = image_host
+flux_list = [data, QSO, host]
+label = ['data', 'QSO', 'host', 'model', 'residual']
+import glob
+mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
+fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
+              data_mask_list = mask_list, data_cut = cut, facility = filt)
+fig.savefig("SB_profile_{0}.pdf".format(ID))

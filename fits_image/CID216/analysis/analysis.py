@@ -5,7 +5,7 @@ Created on Thu Mar 29 20:17:41 2018
 
 @author: Dartoon
 
-On the analysis of CID452
+On the analysis of CID216
 """
 import numpy as np
 import astropy.io.fits as pyfits
@@ -17,8 +17,8 @@ from psfs_average import psf_ave
 from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
 
-ID = 'CID452'
-filt = 'F125w'
+ID = 'CID216'
+filt = 'F140w'
 
 # =============================================================================
 # Read PSF and QSO image
@@ -31,36 +31,39 @@ for i in range(len(psf_name_list)):
 mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
 QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 
+
 #==============================================================================
 # Compare the profile and derive the Average image
 #==============================================================================
 cut = 20      #cut_range
-#fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-##                 plt_which_PSF=(0,1,2,3,4,5,6,7),
-#                 mask_list=mask_list,
-#                 include_QSO=True, radius=len(psf_list[0])/2, grids=20,
-#                 gridspace= 'log')
+fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
+#                 plt_which_PSF=(0,1,2,3,4,5,6,7,8),
+                 mask_list=mask_list,
+                 include_QSO=True, radius=len(psf_list[0])/2, grids=20,
+                 gridspace= 'log')
 
-psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(7,),
+psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(5,7,8),
                   mask_list=mask_list)
-
-psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,6,7),
-                  mask_list=mask_list)
-
-prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
+#
+#psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(?,?),
+#                  mask_list=mask_list)
+#
+prf_list = [QSO_im,psf_ave_pa]
 scal_list = [1,1,1]
-prf_name_list = ['QSO', 'Plan a', 'Plan b']
+prf_name_list = ['QSO', 'PSF average']
 profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
-from fit_qso import fit_qso
-#print "Plan a"
-#source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, background_rms=0.038, psf_std = psf_std_pa,
-#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True)
 
-print "Plan b"
-source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
+from fit_qso import fit_qso
+print "Plan a"
+source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, background_rms=0.041, psf_std = psf_std_pa,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       deep_seed = False)
+                                                       fixcenter= False)
+
+#print "Plan b"
+#source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
+#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
+#                                                       deep_seed = False)
 plt.show()
 #=============================================================================
 # Translate the e1, e2 to phi_G and q
@@ -79,7 +82,7 @@ del result['e2']
 result['QSO_amp'] = ps_result[0]['point_amp'][0]
 result['host_amp'] = image_host.sum()
 result['host_flux_ratio_percent']= image_host.sum()/(image_ps.sum() + image_host.sum())*100
-if filt == 'F160w':
+if filt == 'F140w':
     zp = 26.4524
 elif filt == 'F125w':
     zp = 26.2303
@@ -90,14 +93,14 @@ result=roundme(result)
 ##==============================================================================
 ##Plot the images for adopting in the paper
 ##==============================================================================
-#from flux_profile import total_compare
-#data = QSO_im[cut:-cut,cut:-cut]
-#QSO = image_ps
-#host = image_host
-#flux_list = [data, QSO, host]
-#label = ['data', 'QSO', 'host', 'model', 'residual']
-#import glob
-#mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
-#fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
-#              data_mask_list = mask_list, data_cut = cut, facility = filt)
-#fig.savefig("SB_profile_{0}.pdf".format(ID))
+from flux_profile import total_compare
+data = QSO_im[cut:-cut,cut:-cut]
+QSO = image_ps
+host = image_host
+flux_list = [data, QSO, host]
+label = ['data', 'QSO', 'host', 'model', 'residual']
+import glob
+mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
+fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
+              data_mask_list = mask_list, data_cut = cut, facility = filt)
+fig.savefig("SB_profile_{0}.pdf".format(ID))

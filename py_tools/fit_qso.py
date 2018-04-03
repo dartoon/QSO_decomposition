@@ -12,7 +12,8 @@ import numpy as np
 import corner
 
 def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04,
-            exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True, flux_ratio_plot=True, deep_seed = False):
+            exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
+            flux_ratio_plot=True, deep_seed = False, fixcenter = True):
     '''
     A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
     
@@ -120,8 +121,8 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
                     }
     # numerical options and fitting sequences
     
-    kwargs_constraints = {'joint_center_source_light': True,  # if set to True, all the components in the host galaxy will have a shared center
-                          'fix_to_point_source_list': [True, True],  # this results in a shared center of the host galaxy with the point source (quasar)
+    kwargs_constraints = {'joint_center_source_light': fixcenter,  # if set to True, all the components in the host galaxy will have a shared center
+                          'fix_to_point_source_list': [fixcenter],  # this results in a shared center of the host galaxy with the point source (quasar)
                           'num_point_source_list': [1]
                           }
     

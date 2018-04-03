@@ -35,7 +35,10 @@ def cut_center_bright(image, center, radius):
 def save_loc_png(img, center_QSO, c_psf_list,ID=None):
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
-    cax=ax.imshow(img,origin='lower', cmap='gist_heat', norm=LogNorm(), vmin=1.e-2, vmax=2.2)
+    import copy, matplotlib
+    my_cmap = copy.copy(matplotlib.cm.get_cmap('gist_heat')) # copy the default cmap
+    my_cmap.set_bad('black')
+    cax=ax.imshow(img,origin='lower', cmap=my_cmap, norm=LogNorm(), vmin=1.e-2, vmax=2.2)
     QSO_box_size = 30
     QSO_reg = pix_region(center_QSO, radius= QSO_box_size)
     QSO_mask = QSO_reg.to_mask(mode='center')
@@ -53,3 +56,26 @@ def save_loc_png(img, center_QSO, c_psf_list,ID=None):
     if not ID == None:
         ax.text(len(img)*0.05, len(img)*0.8, ID,color='white', fontsize=30)
     fig.savefig('QSO_PSF_loc.pdf')
+    
+def grab_pos(filename):
+    '''
+    Grab all the positions of the QSO and stars from a region name. The last one are always the QSO.
+    '''
+    with open(filename, 'r') as input_file:
+        reg_string=input_file.read()
+    string_list=reg_string.split('\n')
+    pos_string = []
+    for i in range(len(string_list)):
+        string = string_find_between(string_list[i],"(", ",78")
+        if string.split(',')[0] != '':
+            pos_list = [float(j) for j in string.split(',')]
+            pos_string.append(pos_list)
+    return np.asarray(pos_string)
+    
+def string_find_between(s, first, last ):
+    try:
+        start = s.index( first ) + len( first )
+        end = s.index( last, start )
+        return s[start:end]
+    except ValueError:
+        return ""

@@ -12,16 +12,20 @@ import numpy as np
 import sys
 sys.path.insert(0,'../py_tools')
 import matplotlib.pylab as plt
-
-import astropy.io.fits as pyfits
-fitsFile = pyfits.open('psf.fits')
-img = fitsFile[0].data 
-
-from cut_image import cut_image, cut_center_bright
-box = cut_image(image=img, center=(49, 55), radius=10)
-plt.imshow(box, origin='low')
-plt.show()
-
-box = cut_center_bright(image=img, center=(49, 55), radius=10)
-plt.imshow(box, origin='low')
-plt.show()
+#
+#import astropy.io.fits as pyfits
+#fitsFile = pyfits.open('psf.fits')
+#img = fitsFile[0].data 
+#
+#from cut_image import cut_image, cut_center_bright
+#box = cut_image(image=img, center=(49, 55), radius=10)
+#plt.imshow(box, origin='low')
+#plt.show()
+#
+#box = cut_center_bright(image=img, center=(49, 55), radius=10)
+#plt.imshow(box, origin='low')
+#plt.show()
+#
+#from cut_image import grab_pos
+#filename= 'stars_and_QSO.reg'
+#test = grab_pos(filename)

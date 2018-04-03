@@ -53,14 +53,15 @@ prf_name_list = ['QSO', 'Plan a', 'Plan b']
 profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
 from fit_qso import fit_qso
-#print "Plan a"
-#source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, background_rms=0.038, psf_std = psf_std_pa,
-#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True)
-
-print "Plan b"
-source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
+print "Plan a"
+source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, background_rms=0.038, psf_std = psf_std_pa,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       deep_seed = False)
+                                                       fixcenter=True)
+
+#print "Plan b"
+#source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
+#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
+#                                                       deep_seed = False)
 plt.show()
 #=============================================================================
 # Translate the e1, e2 to phi_G and q
@@ -79,7 +80,7 @@ del result['e2']
 result['QSO_amp'] = ps_result[0]['point_amp'][0]
 result['host_amp'] = image_host.sum()
 result['host_flux_ratio_percent']= image_host.sum()/(image_ps.sum() + image_host.sum())*100
-if filt == 'F160w':
+if filt == 'F140w':
     zp = 26.4524
 elif filt == 'F125w':
     zp = 26.2303

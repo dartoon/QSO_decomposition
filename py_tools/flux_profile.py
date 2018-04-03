@@ -226,7 +226,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
     for i in range(psfs_NO):
         msk_counts, mask_lists = text_in_string_list("PSF{0}".format(i), mask_list)
         if i ==0 and include_QSO == True:
-                plt.plot(r_grids_QSO, r_SB_QSO, 'x-', label="QSO", linewidth=3)
+                plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5)
                 plt.legend()
         if msk_counts == 0:
             r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace)
