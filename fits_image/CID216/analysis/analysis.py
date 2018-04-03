@@ -49,22 +49,26 @@ psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(5,7,8),
 #                  mask_list=mask_list)
 #
 
-pyfits.PrimaryHDU(psf_ave_pa).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_std_pa).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_ave_pa).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_std_pa).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+
+PSF_1174 = pyfits.getdata("../../PSF_legacy/CID1174_PSF.fits")
+PSF_1174_std = pyfits.getdata("../../PSF_legacy/CID1174_PSF_std.fits")
+PSF_452= pyfits.getdata("../../PSF_legacy/CID452_PSF.fits")
+PSF_452_std = pyfits.getdata("../../PSF_legacy/CID452_PSF_std.fits")
 
 
-'''
-prf_list = [QSO_im,psf_ave_pa]
-scal_list = [1,1,1]
-prf_name_list = ['QSO', 'PSF average']
+prf_list = [QSO_im,psf_ave_pa, PSF_1174, PSF_452]
+scal_list = [1,1,1,1]
+prf_name_list = ['QSO_CID216', 'PSF_CID216', 'PSF_CID1174', 'PSF_CID452']
 profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
-
+'''
 from fit_qso import fit_qso
 print "Plan a"
-source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, background_rms=0.041, psf_std = psf_std_pa,
+source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=PSF_452, background_rms=0.041, #psf_std = PSF_adopt_std,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       fixcenter= False)
+                                                       fixcenter= True)
 
 #print "Plan b"
 #source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
