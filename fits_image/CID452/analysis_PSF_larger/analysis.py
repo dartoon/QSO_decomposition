@@ -56,16 +56,21 @@ pyfits.PrimaryHDU(psf_ave_pb).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID)
 pyfits.PrimaryHDU(psf_std_pb).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 
 
-'''
 from fit_qso import fit_qso
 #print "Plan a"
 #source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, background_rms=0.038, psf_std = psf_std_pa,
 #                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True)
 
-print "Plan b"
-source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
-                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       deep_seed = False)
+#print "Plan b"
+#source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
+#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
+#                                                       deep_seed = False)
+
+#psf_psf6 = pyfits.getdata('PSF6.fits')
+#print "Use PSF6 only"
+#source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_psf6, background_rms=0.038,
+#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True)
+#                     
 plt.show()
 #=============================================================================
 # Translate the e1, e2 to phi_G and q
@@ -105,4 +110,4 @@ import glob
 mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
 fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
               data_mask_list = mask_list, data_cut = cut, facility = filt)
-fig.savefig("SB_profile_{0}.pdf".format(ID))'''
+#fig.savefig("SB_profile_{0}.pdf".format(ID))
