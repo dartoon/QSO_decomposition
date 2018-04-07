@@ -5,7 +5,7 @@ Created on Thu Mar 29 20:17:41 2018
 
 @author: Dartoon
 
-On the analysis of CID216
+On the analysis of CID70
 """
 import numpy as np
 import astropy.io.fits as pyfits
@@ -17,7 +17,7 @@ from psfs_average import psf_ave
 from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
 
-ID = 'CID216'
+ID = 'CID70'
 filt = 'F140w'
 
 # =============================================================================
@@ -37,38 +37,33 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 #==============================================================================
 cut = 20      #cut_range
 fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-#                 plt_which_PSF=(0,1,2,3,4,5,6,7,8),
+#                 plt_which_PSF=(0,1,2,3,4,5,6,7),
                  mask_list=mask_list,
                  include_QSO=True, radius=len(psf_list[0])/2, grids=20,
                  gridspace= 'log')
 
-psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(5,7,8),
-                  mask_list=mask_list)
-#
-#psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(?,?),
+#psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(?,?),
 #                  mask_list=mask_list)
-#
-
-#pyfits.PrimaryHDU(psf_ave_pa).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-#pyfits.PrimaryHDU(psf_std_pa).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+psf_70, psf_70_std=psf_ave(psf_list,mode = 'CI', not_count=(0,1),
+                  mask_list=mask_list)
 
 PSF_1174 = pyfits.getdata("../../PSF_legacy/CID1174_PSF.fits")
 PSF_1174_std = pyfits.getdata("../../PSF_legacy/CID1174_PSF_std.fits")
 PSF_452= pyfits.getdata("../../PSF_legacy/CID452_PSF.fits")
 PSF_452_std = pyfits.getdata("../../PSF_legacy/CID452_PSF_std.fits")
 
-
-prf_list = [QSO_im,psf_ave_pa, PSF_1174, PSF_452]
+prf_list = [QSO_im,psf_70,PSF_1174, PSF_452]
 scal_list = [1,1,1,1]
-prf_name_list = ['QSO_CID216', 'PSF_CID216', 'PSF_CID1174', 'PSF_CID452']
+prf_name_list = ['QSO_CID70','PSF_70_field' , 'PSF_1174_field', 'PSF_452_field']
 profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
-'''
+#pyfits.PrimaryHDU(psf_ave_wght).writeto('../../PSF_legacy/{0}_PSF'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std'.format(ID),overwrite=True)
 from fit_qso import fit_qso
 print "Plan a"
-source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=PSF_452, background_rms=0.041, #psf_std = PSF_adopt_std,
+source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=PSF_452, background_rms=0.041, #psf_std = PSF_1174_std,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       fixcenter= True)
+                                                       fixcenter=True)
 
 #print "Plan b"
 #source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
@@ -80,7 +75,6 @@ plt.show()
 #==============================================================================
 import lenstronomy.Util.param_util as param_util
 source_result[0]['phi_G'], source_result[0]['q'] = param_util.ellipticity2phi_q(source_result[0]['e1'], source_result[0]['e2'])
-
 #==============================================================================
 # Save the result
 #==============================================================================
@@ -114,4 +108,3 @@ mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
 fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
               data_mask_list = mask_list, data_cut = cut, facility = filt)
 fig.savefig("SB_profile_{0}.pdf".format(ID))
-'''
