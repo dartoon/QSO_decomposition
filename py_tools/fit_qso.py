@@ -223,4 +223,4 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
             kwargs_ps_out
             mcmc_new_list.append([flux_quasar, flux_disk, source_x, source_y])
         plot = corner.corner(mcmc_new_list, labels=labels_new, show_titles=True)
-    return source_result, ps_result, image_ps, image_host
+    return source_result, ps_result, image_ps, image_host, data_class.C_D

@@ -18,7 +18,6 @@ from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
 
 ID = 'CID1174'
-
 # =============================================================================
 # Read PSF and QSO image
 # =============================================================================
@@ -49,21 +48,22 @@ psf_ave_wght, psf_std_wght=psf_ave(psf_list,mode = 'CI', not_count=(5,6),
 pyfits.PrimaryHDU(psf_ave_wght).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
 pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 
-'''
 prf_list = [QSO_im,psf_ave_dirt, psf_ave_wght]
 scal_list = [1,1,1]
 prf_name_list = ['QSO', 'PSF_ave_direct', 'PSF_ave_by_wght']
 profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
 from fit_qso import fit_qso
+fixcenter = True
 #print "by psf_ave_dirt"
-#source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[20:-20,20:-20], psf_ave=psf_ave_dirt, #psf_std = psf_std_dirt,
-#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True)
-#
+#source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_dirt, #psf_std = psf_std_dirt,
+#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
+#                                                       fixcenter=fixcenter)
+
 print "by psf_ave_wght"
-source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_wght, psf_std = psf_std_wght,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_wght, psf_std = psf_std_wght,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       deep_seed = False)
+                                                       deep_seed = False, fixcenter= fixcenter)
 plt.show()
 #==============================================================================
 # Translate the e1, e2 to phi_G and q
@@ -84,8 +84,15 @@ result['host_amp'] = image_host.sum()
 result['host_flux_ratio_percent']= image_host.sum()/(image_ps.sum() + image_host.sum())*100
 zp = 26.4524
 result['host_mag'] = - 2.5 * np.log10(result['host_amp']) + zp 
-result=roundme(result)
 #print "The host flux is ~:", image_host.sum()/(image_ps.sum() + image_host.sum())
+
+
+# =============================================================================
+# Save QSO position to result if not fix center
+# =============================================================================
+if fixcenter == False:
+    result['qso_x'] = ps_result[0]['ra_image'][0]
+    result['qso_y'] = ps_result[0]['dec_image'][0]
 
 ##==============================================================================
 ##Plot the images for adopting in the paper
@@ -102,4 +109,15 @@ total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
               data_mask_list = mask_list, data_cut = cut, facility = 'F140w')
 fig.savefig("SB_profile_{0}.pdf".format(ID))
 
-print result'''
+# =============================================================================
+# Calculate reduced Chisq and save to result
+# =============================================================================
+from flux_profile import cr_mask_img
+QSO_mask = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut = cut)
+chiq_map = ((QSO_im[cut:-cut,cut:-cut]-image_ps-image_host)/np.sqrt(data_C_D))**2 * QSO_mask
+pixels=len(data_C_D)**2 - (1-QSO_mask).sum()
+reduced_Chisq = chiq_map.sum()/pixels
+result['redu_Chisq'] = reduced_Chisq
+
+result=roundme(result)
+print result

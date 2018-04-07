@@ -302,6 +302,15 @@ def string_find_between(s, first, last ):
     except ValueError:
         return ""
 
+def cr_mask_img(image, mask_list, mask_reg_cut = 0.):
+    '''
+    Creat a mask image given a mask_list
+    '''
+    mask = np.ones(image.shape)
+    for i in range(len(mask_list)):
+        mask *= cr_mask(image=image, filename=mask_list[i],mask_reg_cut=mask_reg_cut)
+    return mask
+
 def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
     '''
     The creat a mask with a .reg file. The pixels in the region is 0, otherwise 1.
