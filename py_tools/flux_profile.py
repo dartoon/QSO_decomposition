@@ -200,7 +200,12 @@ def text_in_string_list(text, string_list):
     return counts, text_string
             
 
-def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , radius=15, grids=20):
+def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , radius=15, grids=20, norm_p = 0):
+    """
+    Plot the QSO and PSFs SB compare.
+    ------
+    norm_p : normalized position. If norm_p = 'no', means no normalizaion.
+    """
     if include_QSO == True:
         print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]
@@ -233,7 +238,12 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
         elif msk_counts >0:
             r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace,
                                        mask_list=mask_lists)
-        r_SB /= r_SB[0]      #normalize the curves from the central part.
+#        if isinstance(norm,int):
+        if norm_p == 0:
+            r_SB /= r_SB[0]      #normalize the curves from the central part.
+        elif norm_p == -1:
+            r_SB /= r_SB[-1] / 0.1      #normalize the curves from the central part.
+#           print r_SB[-1]
         plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
         plt.legend()
     ax.xaxis.set_minor_locator(minorLocator)
@@ -241,7 +251,10 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
     plt.tick_params(which='major', length=7)
     plt.tick_params(which='minor', length=4, color='r')
     plt.grid()
-    ax.set_ylabel("Scaled Surface Brightness")
+    if isinstance(norm_p,int):
+        ax.set_ylabel("Scaled Surface Brightness")
+    else:
+        ax.set_ylabel("Surface Brightness")
     ax.set_xlabel("Pixels")
     if gridspace == 'log':
         ax.set_xscale('log')
