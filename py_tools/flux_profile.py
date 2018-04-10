@@ -74,8 +74,12 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
     '''
     if gridspace == None:
         r_grids=(np.linspace(0,1,grids+1)*radius)[1:]
+        diff = 0.5 - r_grids[0]
+        r_grids += diff             #starts from pixel 0.5
     elif gridspace == 'log':
-        r_grids=(np.logspace(-2,0,grids+1)*radius)[1:]  #starts from rad 0.5 pixel
+        r_grids=(np.logspace(-2,0,grids+1)*radius)[1:]
+        diff = 0.5 - r_grids[0]
+        r_grids += diff             #starts from pixel 0.5
     r_flux = np.empty(grids)
     regions = []
     for i in range(len(r_grids)):
@@ -200,18 +204,22 @@ def text_in_string_list(text, string_list):
     return counts, text_string
             
 
-def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , radius=15, grids=20, norm_p = 0):
+def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , radius=15, grids=20, norm_pix = 3):
     """
     Plot the QSO and PSFs SB compare.
     ------
-    norm_p : normalized position. If norm_p = 'no', means no normalizaion.
+    norm_pix : normalized position. If norm_pix = 'no', means no normalizaion.
     """
     if include_QSO == True:
         print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]
         print "center_QSO:", center_QSO
         r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
-        r_SB_QSO /= r_SB_QSO[0]
+        if isinstance(norm_pix,int):
+            count = r_grids_QSO <= norm_pix
+            idx = count.sum()-1
+#            print "idx:",idx
+            r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves from the central part.
     psfs_NO = len(psfs)
     center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0].max())),(2))[::-1]
     print "center_PSF:", center
@@ -238,12 +246,12 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
         elif msk_counts >0:
             r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace,
                                        mask_list=mask_lists)
-#        if isinstance(norm,int):
-        if norm_p == 0:
-            r_SB /= r_SB[0]      #normalize the curves from the central part.
-        elif norm_p == -1:
-            r_SB /= r_SB[-1] / 0.1      #normalize the curves from the central part.
-#           print r_SB[-1]
+        if isinstance(norm_pix,int):
+            count = r_grids <= norm_pix
+            idx = count.sum() -1
+#            print "idx:",idx
+            r_SB /= r_SB[idx]      #normalize the curves from the central part.
+        print r_grids[idx]
         plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
         plt.legend()
     ax.xaxis.set_minor_locator(minorLocator)
@@ -251,7 +259,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
     plt.tick_params(which='major', length=7)
     plt.tick_params(which='minor', length=4, color='r')
     plt.grid()
-    if isinstance(norm_p,int):
+    if isinstance(norm_pix,int):
         ax.set_ylabel("Scaled Surface Brightness")
     else:
         ax.set_ylabel("Surface Brightness")
