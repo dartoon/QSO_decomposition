@@ -35,7 +35,7 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 # Compare the profile and derive the Average image
 #==============================================================================
 cut = 20      #cut_range
-fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
+QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
 #                 plt_which_PSF=(0,1,2,3,4,5,6,7),
                  mask_list=mask_list,
                  include_QSO=True, grids=30,
@@ -50,13 +50,20 @@ psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(?,?),
 prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
 scal_list = [1,1,1]
 prf_name_list = ['QSO', 'Plan a', 'Plan b']
-profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, radius=len(psf_list[0])/2)
+profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
 pyfits.PrimaryHDU(psf_ave_wght).writeto('../../PSF_legacy/{0}_PSF'.format(ID),overwrite=True)
 pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std'.format(ID),overwrite=True)
 
 from fit_qso import fit_qso
-fixcenter = True
+
+if_fix_c = input("If fix the center?: \n1 fix, 0 relax")
+if if_fix_c == 1:
+    fixcenter = True
+elif if_fix_c == 0:
+    fixcenter = False
+else:
+    raise ValueError("fix center input wrong")
 print "Plan a"
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, background_rms=0.038, psf_std = psf_std_pa,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
@@ -89,7 +96,6 @@ if filt == 'F140w':
 elif filt == 'F125w':
     zp = 26.2303
 result['host_mag'] = - 2.5 * np.log10(result['host_amp']) + zp 
-result=roundme(result)
 #print "The host flux is ~:", image_host.sum()/(image_ps.sum() + image_host.sum())
 
 # =============================================================================
@@ -110,9 +116,12 @@ flux_list = [data, QSO, host]
 label = ['data', 'QSO', 'host', 'model', 'residual']
 import glob
 mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
-total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
+fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
               data_mask_list = mask_list, data_cut = cut, facility = 'F140w')
-fig.savefig("SB_profile_{0}.pdf".format(ID))
+
+ifsave = input('Save image?: 1 save or 0 not save')
+if ifsave==1:
+    fig.savefig("SB_profile_{0}.pdf".format(ID))
 
 # =============================================================================
 # Calculate reduced Chisq and save to result

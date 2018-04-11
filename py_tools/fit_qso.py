@@ -173,11 +173,11 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     image_ps = imageModel.point_source(ps_result)
     image_host = imageModel.source_surface_brightness(source_result)
     # let's plot the output of the PSO minimizer
-    from lenstronomy.Plots.output_plots import LensModelPlot
-    lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
+    if image_plot:
+        from lenstronomy.Plots.output_plots import LensModelPlot
+        lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
                                  lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=5)
     
-    if image_plot:
         f, axes = plt.subplots(3, 3, figsize=(16, 16), sharex=False, sharey=False)
         lensPlot.data_plot(ax=axes[0,0])
         lensPlot.model_plot(ax=axes[0,1])
@@ -221,6 +221,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
             #    image_buldge = imageModel.source_surface_brightness(kwargs_light_source_out, k=1)
             #    flux_buldge = np.sum(image_buldge)
             kwargs_ps_out
-            mcmc_new_list.append([flux_quasar, flux_disk, source_x, source_y])
+            if flux_disk>0:
+                mcmc_new_list.append([flux_quasar, flux_disk, source_x, source_y])
         plot = corner.corner(mcmc_new_list, labels=labels_new, show_titles=True)
     return source_result, ps_result, image_ps, image_host, data_class.C_D

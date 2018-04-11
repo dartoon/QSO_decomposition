@@ -36,25 +36,23 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 #==============================================================================
 cut = 20      #cut_range
 fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-#                 plt_which_PSF=(0,1,2,3,4,5,6,7),
+                 plt_which_PSF=(7,),
                  mask_list=mask_list,
-                 include_QSO=True, radius=len(psf_list[0])/2, grids=20,
-                 gridspace= 'log')
+                 include_QSO=False, grids=30, norm_pix = 3, gridspace = 'log')
 
 psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(7,),
                   mask_list=mask_list)
 
-psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,6,7),
+psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(0,4,5,6,7),
                   mask_list=mask_list)
 
-prf_list = [QSO_im, psf_ave_pb]
-scal_list = [1,1]
-prf_name_list = ['QSO', 'Plan b']
+prf_list = [QSO_im, psf_ave_pa, psf_ave_pb]
+scal_list = [1,1,1]
+prf_name_list = ['QSO','Plan a' , 'Plan b']
 profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
-#pyfits.PrimaryHDU(psf_ave_pb).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-#pyfits.PrimaryHDU(psf_std_pb).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
-
+pyfits.PrimaryHDU(psf_ave_pb).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(psf_std_pb).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 
 from fit_qso import fit_qso
 fixcenter = True
@@ -67,13 +65,6 @@ print "Plan b"
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
                                                        deep_seed = False,fixcenter = fixcenter)
-
-#psf_psf6 = pyfits.getdata('PSF6.fits')
-#print "Use PSF6 only"
-#source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_psf6, background_rms=0.038,
-#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-#                                                       fixcenter = fixcenter)
-                     
 plt.show()
 #=============================================================================
 # Translate the e1, e2 to phi_G and q
@@ -117,7 +108,7 @@ flux_list = [data, QSO, host]
 label = ['data', 'QSO', 'host', 'model', 'residual']
 import glob
 mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
-total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
+fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
               data_mask_list = mask_list, data_cut = cut, facility = 'F140w')
 fig.savefig("SB_profile_{0}.pdf".format(ID))
 

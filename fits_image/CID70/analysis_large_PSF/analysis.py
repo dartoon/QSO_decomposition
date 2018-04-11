@@ -39,9 +39,7 @@ cut = 20      #cut_range
 fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
 #                 plt_which_PSF=(0,1,2,3,4,5,6,7),
                  mask_list=mask_list,
-                 include_QSO=True, radius=len(psf_list[0])/2, grids=20,
-                 gridspace= 'log')
-
+                 include_QSO=True, grids=30)#,                 gridspace= 'log')
 #psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(?,?),
 #                  mask_list=mask_list)
 psf_70, psf_70_std=psf_ave(psf_list,mode = 'CI', not_count=(0,1),
@@ -51,19 +49,25 @@ PSF_1174 = pyfits.getdata("../../PSF_legacy/CID1174_PSF.fits")
 PSF_1174_std = pyfits.getdata("../../PSF_legacy/CID1174_PSF_std.fits")
 PSF_452= pyfits.getdata("../../PSF_legacy/CID452_PSF.fits")
 PSF_452_std = pyfits.getdata("../../PSF_legacy/CID452_PSF_std.fits")
+PSF_216= pyfits.getdata("../../PSF_legacy/CID216_PSF.fits")
+PSF_216_std = pyfits.getdata("../../PSF_legacy/CID216_PSF_std.fits")
 
-prf_list = [QSO_im,psf_70,PSF_1174, PSF_452]
-scal_list = [1,1,1,1]
-prf_name_list = ['QSO_CID70','PSF_70_field' , 'PSF_1174_field', 'PSF_452_field']
+
+prf_list = [QSO_im,psf_70,PSF_1174, PSF_452,PSF_216]
+scal_list = [1,1,1,1,1]
+prf_name_list = ['QSO_CID70','PSF_70_field' , 'PSF_1174_field', 'PSF_452_field', 'PSF_216_field']
 profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
 
 #pyfits.PrimaryHDU(psf_ave_wght).writeto('../../PSF_legacy/{0}_PSF'.format(ID),overwrite=True)
 #pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std'.format(ID),overwrite=True)
+
 from fit_qso import fit_qso
+
+fixcenter = False
 print "Plan a"
-source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=PSF_452, background_rms=0.041, #psf_std = PSF_1174_std,
+source_result, ps_result, image_ps, image_host,data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=PSF_452, background_rms=0.041, #psf_std = PSF_452_std,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       fixcenter=True)
+                                                       fixcenter=fixcenter)
 
 #print "Plan b"
 #source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
@@ -75,6 +79,7 @@ plt.show()
 #==============================================================================
 import lenstronomy.Util.param_util as param_util
 source_result[0]['phi_G'], source_result[0]['q'] = param_util.ellipticity2phi_q(source_result[0]['e1'], source_result[0]['e2'])
+
 #==============================================================================
 # Save the result
 #==============================================================================
@@ -94,6 +99,13 @@ result['host_mag'] = - 2.5 * np.log10(result['host_amp']) + zp
 result=roundme(result)
 #print "The host flux is ~:", image_host.sum()/(image_ps.sum() + image_host.sum())
 
+# =============================================================================
+# Save QSO position to result if not fix center
+# =============================================================================
+if fixcenter == False:
+    result['qso_x'] = ps_result[0]['ra_image'][0]
+    result['qso_y'] = ps_result[0]['dec_image'][0]
+
 ##==============================================================================
 ##Plot the images for adopting in the paper
 ##==============================================================================
@@ -106,5 +118,18 @@ label = ['data', 'QSO', 'host', 'model', 'residual']
 import glob
 mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
 fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
-              data_mask_list = mask_list, data_cut = cut, facility = filt)
-fig.savefig("SB_profile_{0}.pdf".format(ID))
+              data_mask_list = mask_list, data_cut = cut, facility = 'F140w')
+#fig.savefig("SB_profile_{0}.pdf".format(ID))
+
+# =============================================================================
+# Calculate reduced Chisq and save to result
+# =============================================================================
+from flux_profile import cr_mask_img
+QSO_mask = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut = cut)
+chiq_map = ((QSO_im[cut:-cut,cut:-cut]-image_ps-image_host)/np.sqrt(data_C_D))**2 * QSO_mask
+pixels=len(data_C_D)**2 - (1-QSO_mask).sum()
+reduced_Chisq = chiq_map.sum()/pixels
+result['redu_Chisq'] = reduced_Chisq
+
+result=roundme(result)
+print result

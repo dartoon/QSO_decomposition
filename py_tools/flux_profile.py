@@ -222,8 +222,8 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
         if isinstance(norm_pix,int):
             count = r_grids_QSO <= norm_pix
             idx = count.sum()-1
-#            print "idx:",idx
-            r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves from the central part.
+            print "idx:",idx
+            r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves
     psfs_NO = len(psfs)
     center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0].max())),(2))[::-1]
     print "center_PSF:", center
@@ -237,7 +237,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
             elif msk_counts >0:
                 print mask_lists
                 r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
-                                       mask_plot = True, mask_list=mask_lists)
+                                       mask_plot = False, mask_list=mask_lists)
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
     for i in range(psfs_NO):
@@ -254,7 +254,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
             count = r_grids <= norm_pix
             idx = count.sum() -1
 #            print "idx:",idx
-            r_SB /= r_SB[idx]      #normalize the curves from the central part.
+            r_SB /= r_SB[idx]      #normalize the curves
 #        print r_grids[idx]
         plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
         plt.legend()
@@ -276,7 +276,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
     return fig
 
 def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None ,
-                     radius = 15, grids = 20):
+                     grids = 20,  norm_pix = 3):
     '''
     Compare the profile between different profile (prf?). One can set the scal to uniformize the resolution.
     Note that the SB center from the center of the image; Not allow mask yet.
@@ -288,6 +288,11 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
     --------
         A plot of SB comparison.
     '''
+    if gridspace == None:
+        radius = 6
+    elif gridspace == 'log':
+        radius = len(prf_list[0])/2
+    
     from matplotlib.ticker import AutoMinorLocator
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
@@ -296,7 +301,12 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
         center = np.reshape(np.asarray(np.where(prf_list[i]== prf_list[i].max())),(2))[::-1]
         scale = scal_list[i]
         r_SB, r_grids = SB_profile(prf_list[i], center, radius=radius*scale, grids=grids, gridspace=gridspace)
-        r_SB /= r_SB[0]      #normalize the curves from the central part.
+        
+        if isinstance(norm_pix,int):
+            count = r_grids <= norm_pix
+            idx = count.sum() -1
+#            print "idx:",idx
+            r_SB /= r_SB[idx]      #normalize the curves
         r_grids /= scale
         if prf_name_list == None:
             plt.plot(r_grids, r_SB, 'x-', label="prf_list{0}".format(i))

@@ -34,10 +34,9 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 #==============================================================================
 cut = 20      #cut_range
 fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-#                 plt_which_PSF=(0,1,2,3,4,5,6),
+                 plt_which_PSF=(1,),
                  mask_list=mask_list,
-                 include_QSO=False, radius=len(psf_list[0])/2, grids=20,
-                 gridspace= 'log')
+                 include_QSO=False, grids=30, gridspace= 'log')
 
 psf_ave_dirt, psf_std_dirt=psf_ave(psf_list,mode = 'direct', not_count=(5,6),
                   mask_list=mask_list)
@@ -45,8 +44,8 @@ psf_ave_dirt, psf_std_dirt=psf_ave(psf_list,mode = 'direct', not_count=(5,6),
 psf_ave_wght, psf_std_wght=psf_ave(psf_list,mode = 'CI', not_count=(5,6),
                   mask_list=mask_list)
 
-pyfits.PrimaryHDU(psf_ave_wght).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_ave_wght).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 
 prf_list = [QSO_im,psf_ave_dirt, psf_ave_wght]
 scal_list = [1,1,1]
@@ -105,9 +104,9 @@ flux_list = [data, QSO, host]
 label = ['data', 'QSO', 'host', 'model', 'residual']
 import glob
 mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
-total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
+fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
               data_mask_list = mask_list, data_cut = cut, facility = 'F140w')
-fig.savefig("SB_profile_{0}.pdf".format(ID))
+#fig.savefig("SB_profile_{0}.pdf".format(ID))
 
 # =============================================================================
 # Calculate reduced Chisq and save to result
