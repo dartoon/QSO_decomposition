@@ -204,12 +204,16 @@ def text_in_string_list(text, string_list):
     return counts, text_string
             
 
-def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , radius=15, grids=20, norm_pix = 3):
+def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , grids=30, norm_pix = 3):
     """
     Plot the QSO and PSFs SB compare.
     ------
     norm_pix : normalized position. If norm_pix = 'no', means no normalizaion.
     """
+    if gridspace == None:
+        radius = 6
+    elif gridspace == 'log':
+        radius = len(psfs[0])/2
     if include_QSO == True:
         print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]
@@ -251,7 +255,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
             idx = count.sum() -1
 #            print "idx:",idx
             r_SB /= r_SB[idx]      #normalize the curves from the central part.
-        print r_grids[idx]
+#        print r_grids[idx]
         plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
         plt.legend()
     ax.xaxis.set_minor_locator(minorLocator)
