@@ -150,8 +150,11 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
             circle=regions[i].to_mask(mode='exact')
             circle_mask =  circle.cutout(mask)
             if i ==len(r_flux)-1 and mask_plot == True:
+#                print "plt circle_mask"
                 plt.imshow((circle_mask),origin='lower')
                 plt.show()
+#                plt.imshow((circle.data),origin='lower') #The circle data is zero at outer circle area is zero
+#                plt.show()
             region_area[i]=(circle.data * circle_mask).sum()
     r_SB= r_flux/region_area
     if fits_plot == True:
@@ -233,10 +236,10 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
             msk_counts, mask_lists = text_in_string_list("PSF{0}".format(j), mask_list)
             print "Plot for fits: PSF{0}.fits".format(j)
             if msk_counts == 0:
-                r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
+                SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
             elif msk_counts >0:
                 print mask_lists
-                r_SB, r_grids = SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
+                SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
                                        mask_plot = False, mask_list=mask_lists)
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))

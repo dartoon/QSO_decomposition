@@ -35,7 +35,7 @@ SB_profile(image=img, center=([49,49]),ifplot=True,
            fits_plot=True)
 
 SB_profile(image=img, center=([49,49]),ifplot=True,
-           fits_plot=True, mask_list=['test_circle.reg', 'test_box.reg'])
+           fits_plot=True, mask_list=['test_circle.reg', 'test_box.reg'], mask_plot=True)
 
 
 SB_profile(image=img, center=([40,40]),ifplot=True,
