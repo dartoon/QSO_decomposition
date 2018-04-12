@@ -389,13 +389,13 @@ def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
 
 def total_compare(label_list, flux_list, img_mask=None,
                   facility = 'F140w' , plot_type= 4, target_ID = 'target_ID',
-                  add_background=0.0, data_mask_list = None, data_cut = 0.):
+                  add_background=0.0, data_mask_list = None, data_cut = 0.,plot_compare=False):
     if facility == 'F140w':
         zp = 26.4524
-        delatPixel = 0.13
+        delatPixel = 0.127985
     elif facility == 'F125w':
         zp = 26.2303
-        delatPixel = 0.13
+        delatPixel = 0.127985
         
     norm = ImageNormalize(stretch=SqrtStretch())
     f = plt.figure(0, figsize=(16.75,4))
@@ -480,7 +480,8 @@ def total_compare(label_list, flux_list, img_mask=None,
     pos5_o = ax5.get_position() # get the original position
     pos5 = [pos5_o.x0 -0.04, pos5_o.y0 +0.01, pos5_o.width, pos5_o.height]
     ax5.set_position(pos5) # set a new position
-    plt.show()
+    if plot_compare == True:
+        plt.show()
     return f
 #
 #def data_model_compare(label_list, flux_list, fig = None):

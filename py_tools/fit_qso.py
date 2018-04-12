@@ -40,7 +40,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     background_rms = background_rms  #  background noise per pixel (Gaussian)
     exp_time = exp_time  #  exposure time (arbitrary units, flux per pixel is in units #photons/exp_time unit)
     numPix = len(QSO_im)  #  cutout pixel size
-    deltaPix = 0.13  #  pixel size in arcsec (area per pixel = deltaPix**2)
+    deltaPix = 0.127985  #  pixel size in arcsec (area per pixel = deltaPix**2)
     fwhm = 0.1  # full width half max of PSF (only valid when psf_type='gaussian')
     psf_type = 'PIXEL'  # 'gaussian', 'pixel', 'NONE'
     kernel_size = len(psf_ave)
@@ -60,12 +60,13 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         
         # Disk component, as modelled by an elliptical Sersic profile
         fixed_source.append({})  # we fix the Sersic index to n=1 (exponential)
-        kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 1, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
         if fix_n == None:
+            kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 1, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
             kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.001, 'n_sersic': .3, 'center_x': -10, 'center_y': -10})
             kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 10, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
         elif fix_n is not None:
+            kwargs_source_init.append({'R_sersic': 1., 'n_sersic': fix_n, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
             kwargs_source_sigma.append({'n_sersic_sigma': 0.001, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.001, 'n_sersic': fix_n, 'center_x': -10, 'center_y': -10})
             kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 10, 'n_sersic': fix_n, 'center_x': 10, 'center_y': 10})
@@ -224,4 +225,5 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
             if flux_disk>0:
                 mcmc_new_list.append([flux_quasar, flux_disk, source_x, source_y])
         plot = corner.corner(mcmc_new_list, labels=labels_new, show_titles=True)
+    plt.show()
     return source_result, ps_result, image_ps, image_host, data_class.C_D
