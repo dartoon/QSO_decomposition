@@ -41,6 +41,7 @@ SB_profile(image=img, center=([49,49]),ifplot=True,
 SB_profile(image=img, center=([40,40]),ifplot=True,
            fits_plot=True)
 
+
 from flux_profile import text_in_string_list
 print text_in_string_list("QSq2O1", ['QSO0asdw', '2adQSO2asdw', 'QaskQSO1]', '2adQSO2asdw', 'QaskQSO1]'])
 
@@ -56,3 +57,29 @@ label = ['data', 'QSO', 'host', 'model', 'residual']
 import glob
 mask_list = glob.glob("files/QSO*.reg")   # Read *.reg files in a list.
 total_compare(label_list = label, flux_list = flux_list, target_ID = 'CID1174', data_mask_list = mask_list)
+
+# =============================================================================
+# Test if_annuli works
+# =============================================================================
+r_SB_0, r_grids_0 = SB_profile(image=img, center=([49,49]),ifplot=True,
+           fits_plot=True, mask_list=['test_circle.reg', 'test_box.reg'], mask_plot=True)
+
+r_SB_1, r_grids_1 = SB_profile(image=img, center=([49,49]),ifplot=True,
+           fits_plot=False, mask_list=['test_circle.reg', 'test_box.reg'], mask_plot=False, if_annuli=True)
+
+QSO =  pyfits.getdata('files/CID1174_cutout.fits')
+psf_name_list = glob.glob("files/PSF*.fits")   # Read *.reg files in a list.
+psf_list = []
+for i in range(len(psf_name_list)):
+    psf_get = pyfits.getdata('files/PSF{0}.fits'.format(i))
+    psf_list.append(psf_get)
+cut=20
+QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
+#                 plt_which_PSF=(6,),
+                 mask_list=mask_list,
+                 include_QSO=False, grids=30, norm_pix = 3, gridspace = 'log', if_annuli=False)  #also can test gridspace = None
+
+QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
+#                 plt_which_PSF=(6,),
+                 mask_list=mask_list,
+                 include_QSO=False, grids=30, norm_pix = 3, gridspace = 'log', if_annuli=True)  #also can test gridspace = None

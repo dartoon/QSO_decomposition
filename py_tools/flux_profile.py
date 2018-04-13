@@ -115,7 +115,7 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
 def SB_profile(image, center, radius=35, grids=20, gridspace = None, 
                ifplot=False, fits_plot=False,
                mask_list=None, mask_plot = False,
-               mask_cut = 0.):
+               mask_cut = 0., if_annuli= False):
     '''
     Derive the SB profile of one image start at the center.
     
@@ -156,7 +156,12 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
 #                plt.imshow((circle.data),origin='lower') #The circle data is zero at outer circle area is zero
 #                plt.show()
             region_area[i]=(circle.data * circle_mask).sum()
-    r_SB= r_flux/region_area
+    if if_annuli ==False:
+        r_SB= r_flux/region_area
+    elif if_annuli == True:
+        r_SB = np.zeros_like(r_flux)
+        r_SB[0] = r_flux[0]/region_area[0]
+        r_SB[1:] = (r_flux[1:]-r_flux[:-1]) / (region_area[1:]-region_area[:-1])
     if fits_plot == True:
         ax=plt.subplot(1,1,1)
         if mask_list != None:
@@ -207,7 +212,7 @@ def text_in_string_list(text, string_list):
     return counts, text_string
             
 
-def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , grids=30, norm_pix = 3):
+def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , grids=30, norm_pix = 3, if_annuli=False):
     """
     Plot the QSO and PSFs SB compare.
     ------
@@ -221,7 +226,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
         print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]
         print "center_QSO:", center_QSO
-        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
+        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace, if_annuli=if_annuli)
         if isinstance(norm_pix,int):
             count = r_grids_QSO <= norm_pix
             idx = count.sum()-1
@@ -249,9 +254,9 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
                 plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5)
                 plt.legend()
         if msk_counts == 0:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace)
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli)
         elif msk_counts >0:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace,
+            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
                                        mask_list=mask_lists)
         if isinstance(norm_pix,int):
             count = r_grids <= norm_pix

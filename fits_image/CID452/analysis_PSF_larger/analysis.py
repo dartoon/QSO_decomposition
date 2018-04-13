@@ -36,10 +36,11 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 #==============================================================================
 cut = 20      #cut_range
 fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-                 plt_which_PSF=(7,),
+#                 plt_which_PSF=(7,),
                  mask_list=mask_list,
-                 include_QSO=False, grids=30, norm_pix = 3, gridspace = 'log')
+                 include_QSO=False, grids=30, norm_pix = 3, gridspace = 'log', if_annuli=True)
 
+'''
 psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(7,),
                   mask_list=mask_list)
 
@@ -109,3 +110,4 @@ fit_result.write(repr(result) + "\n")
 
 
 fit_result.close()
+'''

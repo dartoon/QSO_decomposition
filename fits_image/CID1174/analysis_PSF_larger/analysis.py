@@ -38,7 +38,7 @@ fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
                  plt_which_PSF=(1,),
                  mask_list=mask_list,
                  include_QSO=False, grids=30, gridspace= 'log')
-'''
+
 psf_ave_dirt, psf_std_dirt=psf_ave(psf_list,mode = 'direct', not_count=(5,6),
                   mask_list=mask_list)
 
@@ -93,4 +93,3 @@ fit_result.write("#fit with averaged PSF by 'CI', relax center: \n")
 fit_result.write(repr(result)+ "\n")
 
 fit_result.close()
-'''
