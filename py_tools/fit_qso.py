@@ -13,7 +13,7 @@ import corner
 
 def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04,
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
-            flux_ratio_plot=True, deep_seed = False, fixcenter = True):
+            flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None):
     '''
     A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
     
@@ -61,15 +61,15 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         # Disk component, as modelled by an elliptical Sersic profile
         fixed_source.append({})  # we fix the Sersic index to n=1 (exponential)
         if fix_n == None:
-            kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 1, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
+            kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 4, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
             kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
-            kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.001, 'n_sersic': .3, 'center_x': -10, 'center_y': -10})
-            kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 10, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
+            kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': .3, 'center_x': -10, 'center_y': -10})
+            kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
         elif fix_n is not None:
             kwargs_source_init.append({'R_sersic': 1., 'n_sersic': fix_n, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
             kwargs_source_sigma.append({'n_sersic_sigma': 0.001, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
-            kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.001, 'n_sersic': fix_n, 'center_x': -10, 'center_y': -10})
-            kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 10, 'n_sersic': fix_n, 'center_x': 10, 'center_y': 10})
+            kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': fix_n, 'center_x': -10, 'center_y': -10})
+            kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': fix_n, 'center_x': 10, 'center_y': 10})
         ## Buldge component, as modelled by a spherical Sersic profile
         #fixed_source.append({'n_sersic': 4})  # we fix the Sersic index to n=4 (buldgy)
         #kwargs_source_init.append({'R_sersic': .5, 'n_sersic': 4, 'center_x': 0, 'center_y': 0})
@@ -113,7 +113,10 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     
     ### Make simulation:
     from lenstronomy.ImSim.image_model import ImageModel
-    kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
+    if QSO_msk is None:
+        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
+    else:
+        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False, 'mask': QSO_msk}
     imageModel = ImageModel(data_class, psf_class, source_model_class=lightModel,
                                     point_source_class=pointSource, kwargs_numerics=kwargs_numerics)
     

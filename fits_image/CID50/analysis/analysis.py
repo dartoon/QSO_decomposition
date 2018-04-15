@@ -47,6 +47,10 @@ for i in range(2):
                                                include_QSO=if_QSO_l[i], 
                                                gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
             fig_psf_com.savefig('PSFsvsQSO{0}_{1}_annu{2}.pdf'.format(i,['xlog','xlin'][j],k))
+            if i==1 and k==1:
+                plt.show()
+            else:
+                plt.close()
 
 psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(9,6,7,3),
                   mask_list=mask_list)
@@ -59,10 +63,12 @@ scal_list = [1,1,1]
 prf_name_list = ['QSO', 'Plan a', 'Plan b']
 fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = None,if_annuli=True)
 fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
+plt.show()
 
+'''
 pyfits.PrimaryHDU(psf_ave_pb).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
 pyfits.PrimaryHDU(psf_std_pb).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
-'''
+
 # =============================================================================
 # Doing the fitting
 # =============================================================================

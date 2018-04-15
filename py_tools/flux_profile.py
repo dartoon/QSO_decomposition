@@ -213,7 +213,7 @@ def text_in_string_list(text, string_list):
             
 
 def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
-                     include_QSO = True, gridspace = None , grids=30, norm_pix = 3,
+                     include_QSO = True, gridspace = None , grids=30, norm_pix = 3.0,
                      if_annuli=False):
     """
     Plot the QSO and PSFs SB compare.
@@ -229,7 +229,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]
         print "center_QSO:", center_QSO
         r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace, if_annuli=if_annuli)
-        if isinstance(norm_pix,int):
+        if isinstance(norm_pix,int) or isinstance(norm_pix,float):
             count = r_grids_QSO <= norm_pix
             idx = count.sum()-1
             print "idx:",idx
@@ -240,7 +240,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):
             j = plt_which_PSF[i]
-            msk_counts, mask_lists = text_in_string_list("PSF{0}".format(j), mask_list)
+            msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(j), mask_list)
             print "Plot for fits: PSF{0}.fits".format(j)
             if msk_counts == 0:
                 SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
@@ -251,7 +251,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
     for i in range(psfs_NO):
-        msk_counts, mask_lists = text_in_string_list("PSF{0}".format(i), mask_list)
+        msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), mask_list)
         if i ==0 and include_QSO == True:
                 plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5)
                 plt.legend()
@@ -260,11 +260,15 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
         elif msk_counts >0:
             r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
                                        mask_list=mask_lists)
-        if isinstance(norm_pix,int):
+        if isinstance(norm_pix,int) or isinstance(norm_pix,float):
             count = r_grids <= norm_pix
             idx = count.sum() -1
 #            print "idx:",idx
             r_SB /= r_SB[idx]      #normalize the curves
+        if gridspace == None:
+            plt.text(0.25,r_SB[0],i)
+        elif gridspace == 'log':
+            plt.text(0.40,r_SB[0],i)
 #        print r_grids[idx]
         plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
         plt.legend()
@@ -280,9 +284,9 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     ax.set_xlabel("Pixels")
     if gridspace == 'log':
         ax.set_xscale('log')
-        plt.xlim(0.5, ) 
+        plt.xlim(0.4, ) 
     plt.grid(which="minor")
-#    plt.show()
+#    plt.close() 
     return fig
 
 def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None ,
@@ -338,7 +342,7 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
         ax.set_xscale('log')
         plt.xlim(0.5, ) 
     plt.grid(which="minor")
-    plt.show()
+#    plt.close() 
     return fig
 
 

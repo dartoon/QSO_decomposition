@@ -1,0 +1,5 @@
+# Region file format: DS9 version 4.1
+# Filename: PSF4.fits
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+physical
+box(5.1032525,11.161058,8.8748814,20.684828,0)

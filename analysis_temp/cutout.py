@@ -31,7 +31,7 @@ for i in range(len(c_psf_list[:-1])):
     count += 1
     
 extra_psfs = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx],[xxx,xxx]])
-for i in range(len(extra_psfs[:-1])):
+for i in range(len(extra_psfs)):
     PSF = cut_center_bright(image=img, center=extra_psfs[i], radius=30)
     pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(count),overwrite=True)
     count += 1

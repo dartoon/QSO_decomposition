@@ -46,7 +46,11 @@ for i in range(2):
                                                mask_list=mask_list, grids=30,
                                                include_QSO=if_QSO_l[i], 
                                                gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
-            fig_psf_com.savefig('PSFvsQSO{0}_{1}_annu{2}.pdf'.format(i,['xlog','xlin'][j],k))
+            fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
+            if i==1 and k==1:
+                plt.show()
+            else:
+                plt.close()
 
 psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(xxx,xxx),
                   mask_list=mask_list)
@@ -57,9 +61,9 @@ psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(xxx,xxx),
 prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
 scal_list = [1,1,1]
 prf_name_list = ['QSO', 'Plan a', 'Plan b']
-fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
+fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log',if_annuli=)
 fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
-
+plt.show()
 
 pyfits.PrimaryHDU(psf_ave_wght).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
 pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
@@ -69,6 +73,9 @@ pyfits.PrimaryHDU(psf_std_wght).writeto('../../PSF_legacy/{0}_PSF_std.fits'.form
 # =============================================================================
 from fit_qso import fit_qso
 from transfer_to_result import transfer_to_result
+#from flux_profile import cr_mask_img
+#mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
+#QSO_msk = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut=20)
 
 fit_result = open('fit_result.txt','w') 
 
@@ -77,11 +84,12 @@ background_rms = xxx
 print "by plan a"
 fixcenter = True
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, psf_std = psf_std_pa,background_rms=background_rms,
-                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
+                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,QSO_msk = QSO_msk,
                                                        fixcenter=fixcenter)
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, savepng=True, plot_compare= True)  #If want to save this image
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID,
+                            QSO_msk = "QSO_msk*.reg", plot_compare= True, savepng=False)  #If want to save this image
 fit_result.write("#fit with plan a, ave with 'CI': \n")
 fit_result.write(repr(result) + "\n")
 ##############################Fit
@@ -89,10 +97,10 @@ print "by plan b"
 fixcenter = True
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, psf_std = psf_std_pb,background_rms=background_rms,
                                                        source_params=None, image_plot = False, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter)
+                                                       deep_seed = False, fixcenter= fixcenter,QSO_msk = QSO_msk)
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = "QSO_msk*.reg")
 fit_result.write("#fit with plan b, ave with 'CI': \n")
 fit_result.write(repr(result) + "\n")
 
@@ -101,10 +109,10 @@ print "by plan b, fix n == 1:"
 fixcenter = True
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, psf_std = psf_std_pb,background_rms=background_rms,
                                                        source_params=None, image_plot = False, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter, fix_n = 1.)
+                                                       deep_seed = False, fixcenter= fixcenter, fix_n = 1.,QSO_msk = QSO_msk)
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = "QSO_msk*.reg")
 fit_result.write("#fit with plan b, ave with 'CI', fix n == 1: \n")
 fit_result.write(repr(result) + "\n")
 
@@ -113,10 +121,10 @@ print "by plan b, relax center"
 fixcenter = False
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, psf_std = psf_std_pb,background_rms=background_rms,
                                                        source_params=None, image_plot = False, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = True, fixcenter= fixcenter)
+                                                       deep_seed = True, fixcenter= fixcenter,QSO_msk = QSO_msk)
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = "QSO_msk*.reg")
 fit_result.write("#fit with plan b, ave with 'CI', relax center: \n")
 fit_result.write(repr(result) + "\n")
 fit_result.close()
