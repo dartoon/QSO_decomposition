@@ -1,0 +1,4 @@
+#fit with plan b, ave with 'CI', fix n == 1: 
+{'n_sersic': 1.0, 'host_mag': nan, 'qso_y': 0.058, 'qso_x': 0.056, 'center_x': 0.064, 'QSO_amp': 1261.89, 'q': 0.695, 'redu_Chisq': 84.773, 'I0_sersic': -12843.35, 'center_y': 0.055, 'host_amp': -472.905, 'phi_G': -1.484, 'R_sersic': 0.029, 'host_flux_ratio_percent': -63.006}
+#fit with plan b, ave with 'CI', relax center: 
+{'n_sersic': 4.158, 'host_mag': nan, 'qso_y': 0.061, 'qso_x': 0.052, 'center_x': 0.127, 'QSO_amp': 826.334, 'q': 0.269, 'redu_Chisq': 92.146, 'I0_sersic': -0.065, 'center_y': 0.001, 'host_amp': -93.964, 'phi_G': 1.117, 'R_sersic': 1.983, 'host_flux_ratio_percent': -13.319}

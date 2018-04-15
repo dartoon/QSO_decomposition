@@ -212,7 +212,9 @@ def text_in_string_list(text, string_list):
     return counts, text_string
             
 
-def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO = True, gridspace = None , grids=30, norm_pix = 3, if_annuli=False):
+def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
+                     include_QSO = True, gridspace = None , grids=30, norm_pix = 3,
+                     if_annuli=False):
     """
     Plot the QSO and PSFs SB compare.
     ------
@@ -280,11 +282,11 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None, include_QSO 
         ax.set_xscale('log')
         plt.xlim(0.5, ) 
     plt.grid(which="minor")
-    plt.show()
+#    plt.show()
     return fig
 
 def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None ,
-                     grids = 20,  norm_pix = 3):
+                     grids = 20,  norm_pix = 3, if_annuli=False):
     '''
     Compare the profile between different profile (prf?). One can set the scal to uniformize the resolution.
     Note that the SB center from the center of the image; Not allow mask yet.
@@ -308,7 +310,8 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
     for i in range(prf_NO):
         center = np.reshape(np.asarray(np.where(prf_list[i]== prf_list[i].max())),(2))[::-1]
         scale = scal_list[i]
-        r_SB, r_grids = SB_profile(prf_list[i], center, radius=radius*scale, grids=grids, gridspace=gridspace)
+        r_SB, r_grids = SB_profile(prf_list[i], center, radius=radius*scale,
+                                   grids=grids, gridspace=gridspace,if_annuli=if_annuli)
         
         if isinstance(norm_pix,int):
             count = r_grids <= norm_pix
@@ -336,6 +339,8 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
         plt.xlim(0.5, ) 
     plt.grid(which="minor")
     plt.show()
+    return fig
+
 
 def string_find_between(s, first, last ):
     try:
