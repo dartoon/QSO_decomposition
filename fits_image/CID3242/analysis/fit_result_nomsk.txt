@@ -1,0 +1,6 @@
+#fit with plan b, ave with 'CI': 
+{'n_sersic': 0.465, 'host_mag': 21.63, 'center_x': 0.05, 'QSO_amp': 288.235, 'q': 0.618, 'redu_Chisq': 15.133, 'I0_sersic': 0.032, 'center_y': 0.006, 'host_amp': 84.922, 'phi_G': -1.095, 'R_sersic': 2.985, 'host_flux_ratio_percent': 22.673}
+#fit with plan b, ave with 'CI', fix n == 1: 
+{'n_sersic': 1.0, 'host_mag': 21.692, 'center_x': 0.05, 'QSO_amp': 287.072, 'q': 0.708, 'redu_Chisq': 15.301, 'I0_sersic': 0.022, 'center_y': 0.006, 'host_amp': 80.164, 'phi_G': -1.019, 'R_sersic': 2.999, 'host_flux_ratio_percent': 21.765}
+#fit with plan b, ave with 'CI', relax center: 
+{'n_sersic': 3.696, 'host_mag': 22.182, 'qso_y': 0.006, 'qso_x': 0.05, 'center_x': -0.257, 'QSO_amp': 285.893, 'q': 0.445, 'redu_Chisq': 14.988, 'I0_sersic': 0.014, 'center_y': -0.279, 'host_amp': 51.053, 'phi_G': -0.465, 'R_sersic': 2.987, 'host_flux_ratio_percent': 15.086}
