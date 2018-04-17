@@ -61,7 +61,7 @@ psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(xxx,xxx),
 prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
 scal_list = [1,1,1]
 prf_name_list = ['QSO', 'Plan a', 'Plan b']
-fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log',if_annuli=)
+fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log',if_annuli=True)
 fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 plt.show()
 

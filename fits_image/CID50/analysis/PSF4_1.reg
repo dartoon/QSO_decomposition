@@ -2,4 +2,4 @@
 # Filename: PSF4.fits
 global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
 physical
-box(30.949529,52.892979,37.000481,16.419734,0)
+box(30.88368,53.020398,36.868782,16.674573,0)

@@ -226,7 +226,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
         radius = len(psfs[0])/2
     if include_QSO == True:
         print "Plot for QSO:"
-        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO.max())),(2))[::-1]
+        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[20:40,20:40].max())),(2))[::-1]
         print "center_QSO:", center_QSO
         r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace, if_annuli=if_annuli)
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
@@ -235,7 +235,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
             print "idx:",idx
             r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves
     psfs_NO = len(psfs)
-    center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0].max())),(2))[::-1]
+    center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0][20:40,20:40].max())),(2))[::-1]
     print "center_PSF:", center
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):

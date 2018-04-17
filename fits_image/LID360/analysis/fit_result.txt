@@ -1,0 +1,2 @@
+#fit with plan b, ave with 'CI': 
+{'n_sersic': 4.596, 'host_mag': 21.979, 'qso_y': 0.007, 'qso_x': 0.034, 'center_x': -0.495, 'QSO_amp': 573.122, 'q': 0.331, 'redu_Chisq': 25.017, 'I0_sersic': 0.036, 'center_y': 0.287, 'host_amp': 61.592, 'phi_G': 0.856, 'R_sersic': 2.129, 'host_flux_ratio_percent': 9.761}

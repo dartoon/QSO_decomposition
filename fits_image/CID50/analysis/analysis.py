@@ -41,21 +41,25 @@ if_annuli_l = [False, True]
 for i in range(2):
     for j in range(2):
         for k in range(2):
+            pltpsf = None
+            if i+j+k ==0:
+                pltpsf=(4,5)
             fig_psf_com = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-#                                               plt_which_PSF=(0,1,2,3,4,5,6,7,8,9),
+                                               plt_which_PSF=pltpsf,
                                                mask_list=mask_list, grids=30,
                                                include_QSO=if_QSO_l[i], 
                                                gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
-            fig_psf_com.savefig('PSFsvsQSO{0}_{1}_annu{2}.pdf'.format(i,['xlog','xlin'][j],k))
+#            fig_psf_com.savefig('PSFsvsQSO{0}_{1}_annu{2}.pdf'.format(i,['xlog','xlin'][j],k))
             if i==1 and k==1:
                 plt.show()
             else:
                 plt.close()
 
-psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(9,6,7,3),
+'''
+psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(3,6,7,9),
                   mask_list=mask_list)
 
-psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(0,9,6,7,3,2,1,8),
+psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(1,2,3,6,7,8,9),
                   mask_list=mask_list)
 
 prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
@@ -65,9 +69,9 @@ fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_l
 fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 plt.show()
 
-'''
-pyfits.PrimaryHDU(psf_ave_pb).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_std_pb).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+
+#pyfits.PrimaryHDU(psf_ave_pb).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_std_pb).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 
 # =============================================================================
 # Doing the fitting

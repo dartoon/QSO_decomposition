@@ -32,7 +32,7 @@ def cut_center_bright(image, center, radius):
     cut_c_b = cut_image(image=image, center=center, radius=radius)
     return cut_c_b
  
-def save_loc_png(img, center_QSO, c_psf_list,extra_psfs=None,ID=None):
+def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None):
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
     import copy, matplotlib
@@ -46,14 +46,15 @@ def save_loc_png(img, center_QSO, c_psf_list,extra_psfs=None,ID=None):
     ax.add_patch(QSO_mask.bbox.as_patch(facecolor='none', edgecolor='white', linewidth=2))
     PSF_box_size = 20
     count=0
-    for i in range(len(c_psf_list)):
-        PSF_reg = pix_region(c_psf_list[i], radius= PSF_box_size)
-        PSF_mask = PSF_reg.to_mask(mode='center')
-        ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue', linewidth=2))
-        ax.text(c_psf_list[i][0]-2*PSF_box_size, c_psf_list[i][1]+2*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=15)
-        ax.xaxis.set_visible(False)
-        ax.yaxis.set_visible(False)
-        count += 1
+    if c_psf_list is not None:
+        for i in range(len(c_psf_list)):
+            PSF_reg = pix_region(c_psf_list[i], radius= PSF_box_size)
+            PSF_mask = PSF_reg.to_mask(mode='center')
+            ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue', linewidth=2))
+            ax.text(c_psf_list[i][0]-2*PSF_box_size, c_psf_list[i][1]+2*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=15)
+            ax.xaxis.set_visible(False)
+            ax.yaxis.set_visible(False)
+            count += 1
 #    plt.colorbar(cax)
     if extra_psfs is not None:
         for i in range(len(extra_psfs)):
