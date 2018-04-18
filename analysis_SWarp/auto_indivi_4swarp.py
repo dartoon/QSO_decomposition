@@ -38,7 +38,7 @@ for i in range(len(files)):
         plt.show()
         hdu = pyfits.PrimaryHDU(flux,header=input_header)
         hdu.writeto('{0}/swarp/{1}'.format(target,files[i]),overwrite=True)
-cmd_str1=("cp ../swarp_temp/* {0}/swarp/".format(target))
+cmd_str1=("cp ../temp_swarp/* {0}/swarp/".format(target))
 #cmd_str2=('./auto_swap.sh')
 call(cmd_str1, shell=True)
 #call("cd {0}/swarp/".format(target), shell=True)
