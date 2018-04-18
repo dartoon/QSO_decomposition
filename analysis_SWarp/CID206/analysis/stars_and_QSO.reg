@@ -1,0 +1,12 @@
+# Region file format: DS9 version 4.1
+# Filename: coadd.fits
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+image
+circle(939.30064,264.22978,78.134007) # width=2
+circle(379.60635,547.46661,78.134007) # width=2
+circle(1391.6086,592.23914,78.134007) # width=2
+circle(1129.6117,724.28203,78.134007) # width=2
+circle(637.38729,841.64113,78.134007) # width=2
+circle(673.93178,889.38023,78.134007) # width=2
+circle(678.99201,956.96675,78.134007) # width=2
+circle(1000.8623,925.08614,78.134007) # color=red width=3

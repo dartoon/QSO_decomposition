@@ -1,6 +1,0 @@
-#fit with averaged PSF by 'direct': 
-{'n_sersic': 0.861, 'host_mag': 21.729, 'center_x': 0.06, 'QSO_amp': 162.072, 'q': 0.817, 'redu_Chisq': 4.409, 'I0_sersic': 0.607, 'center_y': -0.031, 'host_amp': 77.534, 'phi_G': 1.014, 'R_sersic': 0.48, 'host_flux_ratio_percent': 32.574}
-#fit with averaged PSF by 'CI': 
-{'n_sersic': 1.045, 'host_mag': 21.698, 'center_x': 0.056, 'QSO_amp': 159.04, 'q': 0.828, 'redu_Chisq': 3.883, 'I0_sersic': 0.531, 'center_y': -0.024, 'host_amp': 79.775, 'phi_G': 1.025, 'R_sersic': 0.496, 'host_flux_ratio_percent': 33.485}
-#fit with averaged PSF by 'CI', relax center: 
-{'n_sersic': 3.855, 'host_mag': 21.317, 'qso_y': -0.024, 'qso_x': 0.047, 'center_x': 0.121, 'QSO_amp': 143.809, 'q': 0.774, 'redu_Chisq': 3.958, 'I0_sersic': 0.275, 'center_y': -0.027, 'host_amp': 113.247, 'phi_G': 0.904, 'R_sersic': 0.637, 'host_flux_ratio_percent': 44.079}

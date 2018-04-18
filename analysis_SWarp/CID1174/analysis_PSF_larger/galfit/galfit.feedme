@@ -1,0 +1,59 @@
+
+===============================================================================
+# IMAGE and GALFIT CONTROL PARAMETERS
+A) ../CID1174_cutout.fits            # Input data image (FITS file)
+B) imgblock.fits       # Output data image block
+C) none                # Sigma image name (made from data if blank or "none") 
+D) ../../../PSF_legacy/CID1174_PSF.fits   #        # Input PSF image and (optional) diffusion kernel
+E) 1                   # PSF fine sampling factor relative to data 
+F) none                # Bad pixel mask (FITS image or ASCII coord list)
+G) none                # File with parameter constraints (ASCII file) 
+H) 20    81   20    81   # Image region to fit (xmin xmax ymin ymax)
+I) 60    60          # Size of the convolution box (x y)
+J) 6.4524              # Magnitude photometric zeropoint 
+K) 0.13  0.13        # Plate scale (dx dy)    [arcsec per pixel]
+O) regular             # Display type (regular, curses, both)
+P) 0                   # Choose: 0=optimize, 1=model, 2=imgblock, 3=subcomps
+
+# INITIAL FITTING PARAMETERS
+#
+#   For object type, the allowed functions are: 
+#       nuker, sersic, expdisk, devauc, king, psf, gaussian, moffat, 
+#       ferrer, powsersic, sky, and isophote. 
+#  
+#   Hidden parameters will only appear when they're specified:
+#       C0 (diskyness/boxyness), 
+#       Fn (n=integer, Azimuthal Fourier Modes),
+#       R0-R10 (PA rotation, for creating spiral structures).
+# 
+# -----------------------------------------------------------------------------
+#   par)    par value(s)    fit toggle(s)    # parameter description 
+# -----------------------------------------------------------------------------
+
+# Component number: 1
+ 0) psf                    #  Component type
+ 1) 49.6813  49.8148  1 1  #  Position x, y 
+ 3) 21.5000     1          #  Integrated magnitude 
+ 4) 0.0000      0          #     ----- 
+ 5) 0.0000      0          #     ----- 
+ 6) 0.0000      0          #     ----- 
+ 7) 0.0000      0          #     ----- 
+ 8) 0.0000      0          #     ----- 
+ 9) 1.0000      -1         #  Axis ratio (b/a)  
+10) 0.0000      -1         #  Position angle (PA) [deg: Up=0, Left=90]
+ Z) 0                      #  Skip this model in output image?  (yes=1, no=0)
+
+# Component number: 2
+ 0) sersic                 #  Component type
+ 1) 50.1009  49.7031  1 1  #  Position x, y
+ 3) 21.6765     1          #  Integrated magnitude 
+ 4) 2.5207      1          #  R_e (effective radius)   [pix]
+ 5) 1.6020      1          #  Sersic index n (de Vaucouleurs n=4) 
+ 6) 0.0000      0          #     ----- 
+ 7) 0.0000      0          #     ----- 
+ 8) 0.0000      0          #     ----- 
+ 9) 0.7866      1          #  Axis ratio (b/a)  
+10) 50.1410     1          #  Position angle (PA) [deg: Up=0, Left=90]
+ Z) 0                      #  Skip this model in output image?  (yes=1, no=0)
+
+================================================================================
