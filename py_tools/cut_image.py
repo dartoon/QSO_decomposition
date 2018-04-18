@@ -70,7 +70,7 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None):
         ax.text(len(img)*0.05, len(img)*0.8, ID,color='white', fontsize=30)
     fig.savefig('QSO_PSF_loc.pdf')
     
-def grab_pos(filename):
+def grab_pos(filename,reg_ty='swarp'):
     '''
     Grab all the positions of the QSO and stars from a region name. The last one are always the QSO.
     '''
@@ -79,7 +79,10 @@ def grab_pos(filename):
     string_list=reg_string.split('\n')
     pos_string = []
     for i in range(len(string_list)):
-        string = string_find_between(string_list[i],"(", ",78")
+        if reg_ty == 'swarp':
+            string = string_find_between(string_list[i],"(", ",78.134039")
+        elif reg_ty == 'org':
+            string = string_find_between(string_list[i],"(", ",77.972708")
         if string.split(',')[0] != '':
             pos_list = [float(j) for j in string.split(',')]
             pos_string.append(pos_list)

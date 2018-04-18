@@ -214,7 +214,7 @@ def text_in_string_list(text, string_list):
 
 def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
                      include_QSO = True, gridspace = None , grids=30, norm_pix = 3.0,
-                     if_annuli=False):
+                     if_annuli=False,plt_QSO=False):
     """
     Plot the QSO and PSFs SB compare.
     ------
@@ -228,7 +228,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
         print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[20:40,20:40].max())),(2))[::-1]
         print "center_QSO:", center_QSO
-        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace, if_annuli=if_annuli)
+        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=plt_QSO, gridspace=gridspace, if_annuli=if_annuli)
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
             count = r_grids_QSO <= norm_pix
             idx = count.sum()-1

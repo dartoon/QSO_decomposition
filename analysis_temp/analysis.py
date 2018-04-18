@@ -41,10 +41,17 @@ if_annuli_l = [False, True]
 for i in range(2):
     for j in range(2):
         for k in range(2):
+            plt_which_PSF = None
+            plt_QSO = False
+            if i+k+j == 0:
+                plt_which_PSF = (0,1,2,3,4,5,6)
+            if i==1 and j+k ==0:
+                plt_QSO = True
             fig_psf_com = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-#                                               plt_which_PSF=(0,1,2,3,4,5,6,7,8,9),
+#                                               plt_which_PSF=plt_which_PSF,
                                                mask_list=mask_list, grids=30,
                                                include_QSO=if_QSO_l[i], 
+                                               plt_QSO = plt_QSO,
                                                gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
             fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
             if i==1 and k==1:
@@ -76,7 +83,7 @@ from transfer_to_result import transfer_to_result
 #from flux_profile import cr_mask_img
 #mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
 #QSO_msk = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut=20)
-
+QSO_msk =None
 fit_result = open('fit_result.txt','w') 
 
 background_rms = xxx
