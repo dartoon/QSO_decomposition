@@ -26,7 +26,6 @@ ompiled source #
 *.log
 *.sql
 *.sqlitei
-Cycle25data/*
 *_ima.fits
 coadd*fits
 *.xml
@@ -40,3 +39,8 @@ coadd*fits
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+################
+# The folders #
+Cycle25data/*
+analysis_Astro_drz/*/astrodrz/*

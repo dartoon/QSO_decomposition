@@ -214,19 +214,22 @@ def text_in_string_list(text, string_list):
 
 def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
                      include_QSO = True, gridspace = None , grids=30, norm_pix = 3.0,
-                     if_annuli=False,plt_QSO=False):
+                     if_annuli=False,plt_QSO=False,astrodrz=False):
     """
     Plot the QSO and PSFs SB compare.
     ------
     norm_pix : normalized position. If norm_pix = 'no', means no normalizaion.
     """
-    if gridspace == None:
+    if gridspace == None and astrodrz==False:
         radius = 6
+    elif gridspace == None and astrodrz==True:
+        radius = 8
     elif gridspace == 'log':
         radius = len(psfs[0])/2
+    frame_mid = len(QSO)/2
     if include_QSO == True:
         print "Plot for QSO:"
-        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[20:40,20:40].max())),(2))[::-1]
+        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[frame_mid-20:frame_mid+20,frame_mid-20:frame_mid+20].max())),(2))[::-1]
         print "center_QSO:", center_QSO
         r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=plt_QSO, gridspace=gridspace, if_annuli=if_annuli)
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
@@ -235,7 +238,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
             print "idx:",idx
             r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves
     psfs_NO = len(psfs)
-    center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0][20:40,20:40].max())),(2))[::-1]
+    center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0][frame_mid-20:frame_mid+20,frame_mid-20:frame_mid+20].max())),(2))[::-1]
     print "center_PSF:", center
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):
@@ -290,7 +293,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     return fig
 
 def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None ,
-                     grids = 20,  norm_pix = 3, if_annuli=False):
+                     grids = 20,  norm_pix = 3, if_annuli=False, astrodrz=False):
     '''
     Compare the profile between different profile (prf?). One can set the scal to uniformize the resolution.
     Note that the SB center from the center of the image; Not allow mask yet.
@@ -302,8 +305,10 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
     --------
         A plot of SB comparison.
     '''
-    if gridspace == None:
+    if gridspace == None and astrodrz==False:
         radius = 6
+    elif gridspace == None and astrodrz==True:
+        radius = 8
     elif gridspace == 'log':
         radius = len(prf_list[0])/2
     
@@ -317,7 +322,7 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
         r_SB, r_grids = SB_profile(prf_list[i], center, radius=radius*scale,
                                    grids=grids, gridspace=gridspace,if_annuli=if_annuli)
         
-        if isinstance(norm_pix,int):
+        if isinstance(norm_pix,int) or isinstance(norm_pix,float):
             count = r_grids <= norm_pix
             idx = count.sum() -1
 #            print "idx:",idx
@@ -406,13 +411,17 @@ def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
 
 def total_compare(label_list, flux_list, img_mask=None,
                   facility = 'F140w' , plot_type= 4, target_ID = 'target_ID',
-                  add_background=0.0, data_mask_list = None, data_cut = 0.,plot_compare=False):
+                  add_background=0.0, data_mask_list = None, data_cut = 0.,plot_compare=False,
+                  drz06=False):
     if facility == 'F140w':
         zp = 26.4524
-        delatPixel = 0.127985
     elif facility == 'F125w':
         zp = 26.2303
+    
+    if drz06 == False:
         delatPixel = 0.127985
+    elif drz06 == True:
+        delatPixel = 0.0642
         
     norm = ImageNormalize(stretch=SqrtStretch())
     f = plt.figure(0, figsize=(16.75,4))

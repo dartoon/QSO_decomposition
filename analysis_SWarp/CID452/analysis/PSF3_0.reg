@@ -1,5 +1,5 @@
 # Region file format: DS9 version 4.1
-# Filename: PSF3.fits
+# Filename: /home/dartoon/QSO_decomposition/fits_image/CID452/analysis_PSF_larger/PSF3.fits
 global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
 physical
-box(39.204894,27.41723,4.0712866,5.1106049,0)
+circle(49.250131,36.652695,4.1773844)

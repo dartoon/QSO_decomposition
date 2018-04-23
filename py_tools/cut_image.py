@@ -32,19 +32,31 @@ def cut_center_bright(image, center, radius):
     cut_c_b = cut_image(image=image, center=center, radius=radius)
     return cut_c_b
  
-def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None):
+def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,reg_ty=None):
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
     import copy, matplotlib
     my_cmap = copy.copy(matplotlib.cm.get_cmap('gist_heat')) # copy the default cmap
     my_cmap.set_bad('black')
-    cax=ax.imshow(img,origin='lower', cmap=my_cmap, norm=LogNorm(), vmin=1.e-2, vmax=2.2)
-    QSO_box_size = 30
+    if reg_ty == None:
+        vmax = 2.2
+        vmin = 1.e-2
+    elif reg_ty == 'astrodrz_06':
+        vmax = 2.1 
+        vmin = 1.e-3
+    cax=ax.imshow(img,origin='lower', cmap=my_cmap, norm=LogNorm(), vmin=vmin, vmax=vmax)
+    if reg_ty == None:
+        QSO_box_size = 30
+    elif reg_ty == 'astrodrz_06':
+        QSO_box_size = 60
     QSO_reg = pix_region(center_QSO, radius= QSO_box_size)
     QSO_mask = QSO_reg.to_mask(mode='center')
     ax.text(center_QSO[0]-2*QSO_box_size, center_QSO[1]+1.5*QSO_box_size, 'QSO',color='white', fontsize=20)
     ax.add_patch(QSO_mask.bbox.as_patch(facecolor='none', edgecolor='white', linewidth=2))
-    PSF_box_size = 20
+    if reg_ty == None:
+        PSF_box_size = 20
+    elif reg_ty == 'astrodrz_06':
+        PSF_box_size = 40
     count=0
     if c_psf_list is not None:
         for i in range(len(c_psf_list)):
@@ -83,6 +95,8 @@ def grab_pos(filename,reg_ty='swarp'):
             string = string_find_between(string_list[i],"(", ",78.134039")
         elif reg_ty == 'org':
             string = string_find_between(string_list[i],"(", ",77.972708")
+        elif reg_ty == 'astrodrz_06':
+            string = string_find_between(string_list[i],"(", ",155.76324")
         if string.split(',')[0] != '':
             pos_list = [float(j) for j in string.split(',')]
             pos_string.append(pos_list)

@@ -16,7 +16,6 @@ sys.path.insert(0,'../../../py_tools')
 from psfs_average import psf_ave
 from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
-
 ID = 'CID216'
 filt = 'F140w'
 
@@ -36,10 +35,31 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 # Compare the profile and derive the Average image
 #==============================================================================
 cut = 20      #cut_range
-fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-#                 plt_which_PSF=(0,1,2,3,4,5,6,7,8),
-                 mask_list=mask_list,
-                 include_QSO=True, grids=30)#, gridspace= 'log')
+if_QSO_l = [False, True]
+gridsp_l = ['log', None]
+if_annuli_l = [False, True] 
+for i in range(2):
+    for j in range(2):
+        for k in range(2):
+            plt_which_PSF = None
+            plt_QSO = False
+            if i+k+j == 0:
+                plt_which_PSF = (0,1,2,3,4,5,6,7,8)
+            if i==1 and j+k ==0:
+                plt_QSO = True
+            fig_psf_com = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
+                                               plt_which_PSF=plt_which_PSF,
+                                               mask_list=mask_list, grids=30,
+                                               include_QSO=if_QSO_l[i], 
+                                               plt_QSO = plt_QSO,
+                                               gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
+#            fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
+            if i==1 and k==1:
+                plt.show()
+            else:
+                plt.close()
+#                
+'''
 psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(1,2,3,8),
                   mask_list=mask_list)
 
@@ -57,7 +77,8 @@ PSF_452_std = pyfits.getdata("../../PSF_legacy/CID452_PSF_std.fits")
 prf_list = [QSO_im,psf_ave_pa, PSF_1174, PSF_452]
 scal_list = [1,1,1,1]
 prf_name_list = ['QSO_CID216', 'Plan a', 'PSF_CID1174', 'PSF_CID452']
-profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
+fig_pro_compare=profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log',if_annuli=True)
+#fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 
 from fit_qso import fit_qso
 from transfer_to_result import transfer_to_result
@@ -123,3 +144,4 @@ fit_result.write("#fit with plan a, ave with 'CI', relax center: \n")
 fit_result.write(repr(result) + "\n")
 
 fit_result.close()
+'''

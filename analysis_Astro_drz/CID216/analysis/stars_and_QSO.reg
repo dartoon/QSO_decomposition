@@ -1,0 +1,14 @@
+# Region file format: DS9 version 4.1
+# Filename: ../astrodrz/f160w_drz.fits[SCI]
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+image
+circle(2327.4227,973.13598,155.76324) # width=2
+circle(1298.4382,1140.1078,155.76324) # width=2
+circle(727.34322,1350.3917,155.76324) # width=2
+circle(1151.6024,1494.9383,155.76324) # width=2
+circle(1832.5447,1527.1804,155.76324) # width=2
+circle(1985.5456,1750.7005,155.76324) # width=2
+circle(1087.7154,2207.7106,155.76324) # width=2
+circle(2241.6654,2306.156,155.76324) # width=2
+circle(1323.6626,2527.6498,155.76324) # width=2
+circle(1573.6184,1185.7465,155.76324) # color=red width=3

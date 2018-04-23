@@ -35,69 +35,97 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 # Compare the profile and derive the Average image
 #==============================================================================
 cut = 20      #cut_range
-#fig = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-##                 plt_which_PSF=(0,1,2,3,4,5,6,7),
-#                 mask_list=mask_list,
-#                 include_QSO=True, radius=len(psf_list[0])/2, grids=20,
-#                 gridspace= 'log')
-
+if_QSO_l = [False, True]
+gridsp_l = ['log', None]
+if_annuli_l = [False, True] 
+for i in range(2):
+    for j in range(2):
+        for k in range(2):
+            plt_which_PSF = None
+            plt_QSO = False
+            if i+k+j == 0:
+                plt_which_PSF = (0,1,2,3,4,5,6,7)
+            if i==1 and j+k ==0:
+                plt_QSO = True
+            fig_psf_com = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
+                                               plt_which_PSF=plt_which_PSF,
+                                               mask_list=mask_list, grids=30,
+                                               include_QSO=if_QSO_l[i], 
+                                               plt_QSO = plt_QSO,
+                                               gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
+#            fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
+            if i==1 and k==1:
+                plt.show()
+            else:
+                plt.close()
+'''
 psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(7,),
                   mask_list=mask_list)
 
-psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,6,7),
+psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(0,4,5,6,7),
                   mask_list=mask_list)
 
-prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
+prf_list = [QSO_im, psf_ave_pa, psf_ave_pb]
 scal_list = [1,1,1]
-prf_name_list = ['QSO', 'Plan a', 'Plan b']
-profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log')
+prf_name_list = ['QSO','Plan a' , 'Plan b']
+profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list, gridspace = 'log',if_annuli=True)
+
+#pyfits.PrimaryHDU(psf_ave_pb).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_std_pb).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 
 from fit_qso import fit_qso
-#print "Plan a"
-#source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, background_rms=0.038, psf_std = psf_std_pa,
-#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True)
+from transfer_to_result import transfer_to_result
 
-print "Plan b"
-source_result, ps_result, image_ps, image_host=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, background_rms=0.038, psf_std = psf_std_pb,
-                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       deep_seed = False)
-plt.show()
-#=============================================================================
-# Translate the e1, e2 to phi_G and q
-#==============================================================================
-import lenstronomy.Util.param_util as param_util
-source_result[0]['phi_G'], source_result[0]['q'] = param_util.ellipticity2phi_q(source_result[0]['e1'], source_result[0]['e2'])
+fit_result = open('fit_result.txt','w') 
 
-#==============================================================================
-# Save the result
-#==============================================================================
-from roundme import roundme
-import copy
-result = copy.deepcopy(source_result[0])
-del result['e1']
-del result['e2']
-result['QSO_amp'] = ps_result[0]['point_amp'][0]
-result['host_amp'] = image_host.sum()
-result['host_flux_ratio_percent']= image_host.sum()/(image_ps.sum() + image_host.sum())*100
-if filt == 'F160w':
-    zp = 26.4524
-elif filt == 'F125w':
-    zp = 26.2303
-result['host_mag'] = - 2.5 * np.log10(result['host_amp']) + zp 
-result=roundme(result)
-#print "The host flux is ~:", image_host.sum()/(image_ps.sum() + image_host.sum())
+##############################Fit
+print "by plan a"
+fixcenter = True
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pa, psf_std = psf_std_pa,background_rms=0.038,
+                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
+                                                       fixcenter=fixcenter)
+result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],
+                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, savepng=True, plot_compare= True)
+fit_result.write("#fit with plan a, ave with 'CI': \n")
+fit_result.write(repr(result) + "\n")
+##############################Fit
+print "by plan b"
+fixcenter = True
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, psf_std = psf_std_pb,background_rms=0.038,
+                                                       source_params=None, image_plot = False, corner_plot=False, flux_ratio_plot=True,
+                                                       deep_seed = False, fixcenter= fixcenter)
+result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],
+                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
+fit_result.write("#fit with plan b, ave with 'CI': \n")
+fit_result.write(repr(result) + "\n")
 
-##==============================================================================
-##Plot the images for adopting in the paper
-##==============================================================================
-#from flux_profile import total_compare
-#data = QSO_im[cut:-cut,cut:-cut]
-#QSO = image_ps
-#host = image_host
-#flux_list = [data, QSO, host]
-#label = ['data', 'QSO', 'host', 'model', 'residual']
-#import glob
-#mask_list = glob.glob("QSO*.reg")   # Read *.reg files in a list.
-#fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
-#              data_mask_list = mask_list, data_cut = cut, facility = filt)
-#fig.savefig("SB_profile_{0}.pdf".format(ID))
+##############################Fit
+print "by plan b, fix n == 1:"
+fixcenter = True
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, psf_std = psf_std_pb,background_rms=0.038,
+                                                       source_params=None, image_plot = False, corner_plot=False, flux_ratio_plot=True,
+                                                       deep_seed = False, fixcenter= fixcenter, fix_n = 1.)
+result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],
+                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
+fit_result.write("#fit with plan b, ave with 'CI', fix n == 1: \n")
+fit_result.write(repr(result) + "\n")
+
+##############################Fit
+print "by plan b, relax center"
+fixcenter = False
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_ave_pb, psf_std = psf_std_pb,background_rms=0.038,
+                                                       source_params=None, image_plot = False, corner_plot=False, flux_ratio_plot=True,
+                                                       deep_seed = True, fixcenter= fixcenter)
+result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],
+                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
+fit_result.write("#fit with plan b, ave with 'CI', relax center: \n")
+fit_result.write(repr(result) + "\n")
+
+
+
+fit_result.close()
+'''

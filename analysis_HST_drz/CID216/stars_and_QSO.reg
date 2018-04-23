@@ -1,0 +1,14 @@
+# Region file format: DS9 version 4.1
+# Filename: idnl03010_drz.fits[SCI]
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+image
+circle(160.87298,622.94716,77.972708) # width=2
+circle(647.20762,812.12066,77.972708) # width=2
+circle(946.98405,866.37017,77.972708) # width=2
+circle(800.6342,696.30645,77.972708) # width=2
+circle(515.03126,509.53559,77.972708) # width=2
+circle(505.76164,374.25944,77.972708) # width=2
+circle(1009.1382,405.00386,77.972708) # width=2
+circle(536.26544,69.594908,77.972708) # width=2
+circle(988.5585,207.0721,77.972708) # width=2
+circle(540.06867,722.57442,77.972708) # color=red width=3

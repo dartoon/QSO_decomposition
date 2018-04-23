@@ -10,7 +10,7 @@ Transfer the fit to a result dict
 import numpy as np
 def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
                        data_C_D, cut, filt, fixcenter,ID, plot_compare=False, savepng=False,
-                       QSO_msk = "QSO_msk*.reg"):
+                       QSO_msk = "QSO_msk*.reg",drz06=False):
     #==============================================================================
     # Translate the e1, e2 to phi_G and q
     #==============================================================================
@@ -53,8 +53,8 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     import glob
     mask_list = glob.glob(QSO_msk)   # Read *.reg files in a list.
 #    print "mask_list,muhahah", mask_list
-    fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID,
-                  data_mask_list = mask_list, data_cut = cut, facility = 'F140w', plot_compare = plot_compare)
+    fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID, drz06=drz06,
+                  data_mask_list = mask_list, data_cut = cut, facility = filt, plot_compare = plot_compare)
     if savepng == True:
         fig.savefig("SB_profile_{0}.pdf".format(ID))
     

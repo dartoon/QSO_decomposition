@@ -28,7 +28,7 @@ pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
 count=0
 psf_list = copy.deepcopy(c_psf_list[:-1])
 psf_list = psf_list[psf_list[:,0].argsort()[::-1]]
-psf_list[[3,4]] = psf_list[[4,3]]
+#psf_list[[3,4]] = psf_list[[4,3]]
 for i in range(len(psf_list)):
     PSF = cut_center_bright(image=img, center=psf_list[i], radius=30)
     pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(count),overwrite=True)

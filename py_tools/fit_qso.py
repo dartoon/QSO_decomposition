@@ -11,7 +11,7 @@ from matplotlib.pylab import plt
 import numpy as np
 import corner
 
-def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04,
+def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04, drz06 = False,
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
             flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None):
     '''
@@ -40,7 +40,10 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     background_rms = background_rms  #  background noise per pixel (Gaussian)
     exp_time = exp_time  #  exposure time (arbitrary units, flux per pixel is in units #photons/exp_time unit)
     numPix = len(QSO_im)  #  cutout pixel size
-    deltaPix = 0.127985  #  pixel size in arcsec (area per pixel = deltaPix**2)
+    if drz06 ==False:
+        deltaPix = 0.127985  #  pixel size in arcsec (area per pixel = deltaPix**2)
+    elif drz06 == True:
+        deltaPix = 0.0642
     fwhm = 0.1  # full width half max of PSF (only valid when psf_type='gaussian')
     psf_type = 'PIXEL'  # 'gaussian', 'pixel', 'NONE'
     kernel_size = len(psf_ave)
