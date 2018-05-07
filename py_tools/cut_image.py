@@ -44,11 +44,16 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,reg_ty
     elif reg_ty == 'astrodrz_06':
         vmax = 2.1 
         vmin = 1.e-3
+    elif reg_ty == 'acs':
+        vmax = 2.1 
+        vmin = 1.e-3
     cax=ax.imshow(img,origin='lower', cmap=my_cmap, norm=LogNorm(), vmin=vmin, vmax=vmax)
     if reg_ty == None:
         QSO_box_size = 30
     elif reg_ty == 'astrodrz_06':
         QSO_box_size = 60
+    elif reg_ty == 'acs':
+        QSO_box_size = 100
     QSO_reg = pix_region(center_QSO, radius= QSO_box_size)
     QSO_mask = QSO_reg.to_mask(mode='center')
     ax.text(center_QSO[0]-2*QSO_box_size, center_QSO[1]+1.5*QSO_box_size, 'QSO',color='white', fontsize=20)
@@ -57,6 +62,8 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,reg_ty
         PSF_box_size = 20
     elif reg_ty == 'astrodrz_06':
         PSF_box_size = 40
+    elif reg_ty == 'acs':
+        PSF_box_size = 60        
     count=0
     if c_psf_list is not None:
         for i in range(len(c_psf_list)):
@@ -97,6 +104,8 @@ def grab_pos(filename,reg_ty='swarp'):
             string = string_find_between(string_list[i],"(", ",77.972708")
         elif reg_ty == 'astrodrz_06':
             string = string_find_between(string_list[i],"(", ",155.76324")
+        elif reg_ty == 'acs':
+            string = string_find_between(string_list[i],"(", ",333.33335")        
         if string.split(',')[0] != '':
             pos_list = [float(j) for j in string.split(',')]
             pos_string.append(pos_list)

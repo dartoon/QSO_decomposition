@@ -1,0 +1,4 @@
+#fit with PSF by Plan b: 
+{'n_sersic': 5.0, 'host_mag': 21.947, 'center_x': 0.009, 'QSO_amp': 78.185, 'q': 0.675, 'redu_Chisq': 5.276, 'I0_sersic': 0.22, 'center_y': 0.008, 'host_amp': 39.693, 'phi_G': 0.494, 'R_sersic': 0.1, 'host_flux_ratio_percent': 33.631}
+#fit with PSF by Plan b, relax center: 
+{'n_sersic': 4.128, 'host_mag': 21.861, 'qso_y': 0.013, 'qso_x': 0.011, 'center_x': -0.0, 'QSO_amp': 73.705, 'q': 0.62, 'redu_Chisq': 4.926, 'I0_sersic': 0.031, 'center_y': -0.03, 'host_amp': 42.966, 'phi_G': -1.493, 'R_sersic': 0.168, 'host_flux_ratio_percent': 35.999}

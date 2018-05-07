@@ -412,16 +412,20 @@ def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
 def total_compare(label_list, flux_list, img_mask=None,
                   facility = 'F140w' , plot_type= 4, target_ID = 'target_ID',
                   add_background=0.0, data_mask_list = None, data_cut = 0.,plot_compare=False,
-                  drz06=False):
+                  pix_sz = 'swarp'):
     if facility == 'F140w':
         zp = 26.4524
     elif facility == 'F125w':
         zp = 26.2303
+    elif facility == 'acs':
+        zp = 25.94333
     
-    if drz06 == False:
+    if pix_sz == 'swarp':
         delatPixel = 0.127985
-    elif drz06 == True:
+    elif pix_sz == 'drz06':
         delatPixel = 0.0642
+    elif pix_sz == 'acs':
+        delatPixel = 0.03
         
     norm = ImageNormalize(stretch=SqrtStretch())
     f = plt.figure(0, figsize=(16.75,4))
