@@ -1,8 +1,8 @@
 #fit with PSF by Plan a: 
-{'n_sersic': 2.156, 'host_mag': 21.383, 'center_x': 0.015, 'QSO_amp': 180.226, 'q': 0.687, 'redu_Chisq': 0.729, 'I0_sersic': 0.032, 'center_y': 0.01, 'host_amp': 106.621, 'phi_G': -0.797, 'R_sersic': 1.131, 'host_flux_ratio_percent': 37.136}
+{'n_sersic': 2.682, 'host_mag': 21.234, 'center_x': -0.028, 'QSO_amp': 178.165, 'q': 0.521, 'redu_Chisq': 0.681, 'I0_sersic': 0.008, 'center_y': -0.029, 'host_amp': 122.229, 'phi_G': -0.845, 'R_sersic': 2.963, 'host_flux_ratio_percent': 40.777}
 #fit with PSF by Plan a, relax center: 
-{'n_sersic': 2.394, 'host_mag': 21.37, 'qso_y': 0.011, 'qso_x': 0.014, 'center_x': 0.043, 'QSO_amp': 180.335, 'q': 0.708, 'redu_Chisq': 0.729, 'I0_sersic': 0.027, 'center_y': -0.055, 'host_amp': 107.893, 'phi_G': -0.767, 'R_sersic': 1.186, 'host_flux_ratio_percent': 37.386}
+{'n_sersic': 2.888, 'host_mag': 21.322, 'qso_y': -0.028, 'qso_x': -0.026, 'center_x': -0.22, 'QSO_amp': 180.543, 'q': 0.493, 'redu_Chisq': 0.674, 'I0_sersic': 0.008, 'center_y': -0.162, 'host_amp': 112.741, 'phi_G': -0.932, 'R_sersic': 3.0, 'host_flux_ratio_percent': 38.507}
 #fit with PSF by Plan b: 
-{'n_sersic': 2.512, 'host_mag': 21.287, 'center_x': 0.021, 'QSO_amp': 174.983, 'q': 0.655, 'redu_Chisq': 0.729, 'I0_sersic': 0.02, 'center_y': 0.017, 'host_amp': 116.428, 'phi_G': -0.803, 'R_sersic': 1.523, 'host_flux_ratio_percent': 39.994}
+{'n_sersic': 1.257, 'host_mag': 21.35, 'center_x': -0.034, 'QSO_amp': 181.779, 'q': 0.348, 'redu_Chisq': 0.883, 'I0_sersic': 0.013, 'center_y': -0.029, 'host_amp': 109.881, 'phi_G': -0.898, 'R_sersic': 3.0, 'host_flux_ratio_percent': 37.69}
 #fit with PSF by Plan b, relax center: 
-{'n_sersic': 3.4, 'host_mag': 21.22, 'qso_y': 0.019, 'qso_x': 0.02, 'center_x': 0.066, 'QSO_amp': 175.368, 'q': 0.671, 'redu_Chisq': 0.727, 'I0_sersic': 0.01, 'center_y': -0.081, 'host_amp': 123.857, 'phi_G': -0.756, 'R_sersic': 2.208, 'host_flux_ratio_percent': 41.384}
+{'n_sersic': 1.116, 'host_mag': 21.325, 'qso_y': -0.03, 'qso_x': -0.034, 'center_x': -0.123, 'QSO_amp': 182.548, 'q': 0.355, 'redu_Chisq': 0.88, 'I0_sersic': 0.014, 'center_y': 0.253, 'host_amp': 112.422, 'phi_G': -0.859, 'R_sersic': 2.95, 'host_flux_ratio_percent': 37.979}

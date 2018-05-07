@@ -35,40 +35,40 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 # Compare the profile and derive the Average image
 #==============================================================================
 cut = 40      #cut_range
-#if_QSO_l = [False, True]
-#gridsp_l = ['log', None]
-#if_annuli_l = [False, True] 
-#for i in range(2):
-#    for j in range(2):
-#        for k in range(2):
-#            plt_which_PSF = None
-#            plt_QSO = False
-##            if i+k+j == 0:
-##                plt_which_PSF = (0,1,2,3,4,5)
-#            if i==1 and j+k ==0:
-#                plt_QSO = True
-#            fig_psf_com = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
-#                                               plt_which_PSF=plt_which_PSF,
-#                                               mask_list=mask_list, grids=40,
-#                                               include_QSO=if_QSO_l[i], 
-#                                               plt_QSO = plt_QSO, norm_pix = 4.0, astrodrz = True,
-#                                               gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
-#            fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
-#            if i==1 and k==1:
-#                plt.show()
-#            else:
-#                plt.close()
+if_QSO_l = [False, True]
+gridsp_l = ['log', None]
+if_annuli_l = [False, True] 
+for i in range(2):
+    for j in range(2):
+        for k in range(2):
+            plt_which_PSF = None
+            plt_QSO = False
+#            if i+k+j == 0:
+#                plt_which_PSF = (0,1,2,3,4,5)
+            if i==1 and j+k ==0:
+                plt_QSO = True
+            fig_psf_com = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
+                                               plt_which_PSF=plt_which_PSF,
+                                               mask_list=mask_list, grids=40,
+                                               include_QSO=if_QSO_l[i], 
+                                               plt_QSO = plt_QSO, norm_pix = 6.0, astrodrz = True,
+                                               gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
+            fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
+            if i==1 and k==1:
+                plt.show()
+            else:
+                plt.close()
 
-psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(3,5),
+psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(3,4),
                   mask_list=mask_list)
 
-psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(3,),
+psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(3,4,5),
                   mask_list=mask_list)
 
 prf_list = [QSO_im,psf_a, psf_b]
 scal_list = [1,1,1]
 prf_name_list = ['QSO', 'Plan a', 'Plan b']
-fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 3.0,
+fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 6.0,
                                    gridspace = 'log',if_annuli=True,astrodrz=True)
 fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 plt.show()
@@ -86,13 +86,12 @@ from transfer_to_result import transfer_to_result
 QSO_msk =None
 fit_result = open('fit_result.txt','w') 
 background_rms = 0.01
-
 ##############################Fit
 print "by psf_a"
 fixcenter = True
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, #psf_std = psf_a_std,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       deep_seed = True, fixcenter=fixcenter, drz06=True)
+                                                       deep_seed = False, fixcenter=fixcenter, drz06=True)
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut], drz06=True,
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
                             cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
@@ -102,9 +101,9 @@ fit_result.write(repr(result) + "\n")
 ##############################Fit
 print "by psf_a, relax center"
 fixcenter = False
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, #psf_std = psf_a_std,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = True, fixcenter= fixcenter, drz06=True)
+                                                       deep_seed = False, fixcenter= fixcenter, drz06=True)
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],drz06=True,
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
                             cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)
@@ -115,7 +114,7 @@ print "by psf_b"
 fixcenter = True
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = True, fixcenter= fixcenter, drz06=True)
+                                                       deep_seed = False, fixcenter= fixcenter, drz06=True)
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],drz06=True,
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
                             cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, savepng=True, plot_compare= True)
@@ -126,7 +125,7 @@ print "by psf_b, relax center"
 fixcenter = False
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = True, fixcenter= fixcenter, drz06=True)
+                                                       deep_seed = False, fixcenter= fixcenter, drz06=True)
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],drz06=True,
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
                             cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)

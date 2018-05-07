@@ -19,7 +19,7 @@ ID = 'CID70'
 #c_psf_list = grab_pos(filename,reg_ty = 'astrodrz_06')
 #print c_psf_list
 
-fitsFile = pyfits.open('../astrodrz/f160w_drz.fits')
+fitsFile = pyfits.open('../astrodrz/final_drz.fits')
 img = fitsFile[1].data  #- (-0.003)  # check the back grounp
 center_QSO = np.array([1172,1805])
 QSO = cut_center_bright(image=img, center=center_QSO, radius=100)

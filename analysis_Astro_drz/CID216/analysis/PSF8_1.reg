@@ -2,4 +2,4 @@
 # Filename: /home/dartoon/QSO_decomposition/analysis_Astro_drz/CID216/analysis/PSF8.fits
 global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
 physical
-box(80.396174,14.811987,11.442348,14.791327,0)
+box(79.69847,15.928314,12.837756,17.023981,0)

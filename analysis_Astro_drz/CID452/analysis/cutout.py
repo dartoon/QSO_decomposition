@@ -19,8 +19,8 @@ filename= 'stars_and_QSO.reg'
 c_psf_list = grab_pos(filename,reg_ty = 'astrodrz_06')
 #print c_psf_list
 
-fitsFile = pyfits.open('../astrodrz/f160w_drz.fits')
-img = fitsFile[1].data  - (-0.001)  # check the back ground, is negative. Need to be better drizzled.
+fitsFile = pyfits.open('../astrodrz/final_drz.fits')
+img = fitsFile[1].data - (-0.002) # check the back ground, is negative. Need to be better drizzled.
 center_QSO = c_psf_list[-1]
 QSO = cut_center_bright(image=img, center=center_QSO, radius=100)
 pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
