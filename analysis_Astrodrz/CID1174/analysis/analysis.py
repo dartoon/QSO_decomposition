@@ -16,7 +16,7 @@ sys.path.insert(0,'../../../py_tools')
 from psfs_average import psf_ave
 from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
-'''
+
 ID = 'CID1174'
 filt = 'F140w'
 
@@ -71,9 +71,9 @@ fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_l
                                    gridspace = 'log',if_annuli=True,astrodrz=True)
 fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 plt.show()
-'''
-#pyfits.PrimaryHDU(psf_b).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-#pyfits.PrimaryHDU(psf_b_std).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+
+pyfits.PrimaryHDU(psf_b).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(psf_b_std).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 # =============================================================================
 # Doing the fitting
 # =============================================================================
@@ -83,53 +83,53 @@ from transfer_to_result import transfer_to_result
 #mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
 #QSO_msk = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut=20)
 QSO_msk =None
-#fit_result = open('#fit_result.txt','w') 
+fit_result = open('fit_result.txt','w') 
 background_rms = 0.01
 
 ##############################Fit
 print "by psf_a"
 fixcenter = True
-#source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
-#                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-#                                                       deep_seed = False, fixcenter=fixcenter, background_rms=background_rms, pix_sz = 'drz06')
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
+                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
+                                                       deep_seed = True, fixcenter=fixcenter, background_rms=background_rms, pix_sz = 'drz06')
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut], pix_sz = 'drz06',
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID,plot_compare= True)
-#fit_result.write("#fit with PSF by Plan a: \n")
-#fit_result.write(repr(result) + "\n")
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
+fit_result.write("#fit with PSF by Plan a: \n")
+fit_result.write(repr(result) + "\n")
 
 ##############################Fit
-#print "by psf_a, relax center"
-#fixcenter = False
-#source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
-#                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-#                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
-#result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
-#                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-#                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)
-##fit_result.write("#fit with PSF by Plan a, relax center: \n")
-##fit_result.write(repr(result)+ "\n")
-###############################Fit
-#print "by psf_b"
-#fixcenter = True
-#source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
-#                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-#                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
-#result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
-#                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-#                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, savepng=True, plot_compare= True)
-##fit_result.write("#fit with PSF by Plan b: \n")
-##fit_result.write(repr(result) + "\n")
-###############################Fit
-#print "by psf_b, relax center"
-#fixcenter = False
-#source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
-#                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-#                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
-#result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
-#                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-#                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)
-#fit_result.write("#fit with PSF by Plan b, relax center: \n")
-#fit_result.write(repr(result)+ "\n")
+print "by psf_a, relax center"
+fixcenter = False
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
+                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
+                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
+                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)
+fit_result.write("#fit with PSF by Plan a, relax center: \n")
+fit_result.write(repr(result)+ "\n")
+##############################Fit
+print "by psf_b"
+fixcenter = True
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
+                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
+                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
+                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, savepng=True, plot_compare= True)
+fit_result.write("#fit with PSF by Plan b: \n")
+fit_result.write(repr(result) + "\n")
+##############################Fit
+print "by psf_b, relax center"
+fixcenter = False
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
+                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
+                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
+                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)
+fit_result.write("#fit with PSF by Plan b, relax center: \n")
+fit_result.write(repr(result)+ "\n")
 
-#fit_result.close()
+fit_result.close()
