@@ -214,7 +214,7 @@ def text_in_string_list(text, string_list):
 
 def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
                      include_QSO = True, gridspace = None , grids=30, norm_pix = 3.0,
-                     if_annuli=False,plt_QSO=False,astrodrz=False):
+                     if_annuli=False,plt_QSO=False,astrodrz=False, not_plt=()):
     """
     Plot the QSO and PSFs SB compare.
     ------
@@ -228,18 +228,19 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
         radius = len(psfs[0])/2
     frame_mid = len(QSO)/2
     if include_QSO == True:
-        print "Plot for QSO:"
+        if plt_QSO ==True:
+            print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[frame_mid-20:frame_mid+20,frame_mid-20:frame_mid+20].max())),(2))[::-1]
-        print "center_QSO:", center_QSO
+#        print "center_QSO:", center_QSO
         r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=plt_QSO, gridspace=gridspace, if_annuli=if_annuli)
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
             count = r_grids_QSO <= norm_pix
             idx = count.sum()-1
-            print "idx:",idx
+#            print "idx:",idx
             r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves
     psfs_NO = len(psfs)
     center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0][frame_mid-20:frame_mid+20,frame_mid-20:frame_mid+20].max())),(2))[::-1]
-    print "center_PSF:", center
+#    print "center_PSF:", center
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):
             j = plt_which_PSF[i]
@@ -273,8 +274,9 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
         elif gridspace == 'log':
             plt.text(0.40,r_SB[0],i)
 #        print r_grids[idx]
-        plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
-        plt.legend()
+        if i not in not_plt:
+            plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
+            plt.legend()
     ax.xaxis.set_minor_locator(minorLocator)
     plt.tick_params(which='both', width=2)
     plt.tick_params(which='major', length=7)
@@ -490,7 +492,7 @@ def total_compare(label_list, flux_list, img_mask=None,
     plt.gca().invert_yaxis()
     ax4.legend()
     pos4_o = ax4.get_position() # get the original position
-    pos4 = [pos4_o.x0 -0.04, pos4_o.y0 -0.01, pos4_o.width, pos4_o.height]
+    pos4 = [pos4_o.x0 -0.04, pos4_o.y0 + 0.08, pos4_o.width, pos4_o.height*0.9]
     ax4.set_position(pos4) # set a new position
 
     x = np.linspace(1.e-4, 100, 2)
@@ -502,13 +504,14 @@ def total_compare(label_list, flux_list, img_mask=None,
     ax5.set_xlabel('arcsec', fontsize=15)
     ax5.set_xscale('log')
     ax5.set_xticks([0.1, 0.2, 0.5, 1, 3])
+    ax5.set_yticks([-1.0, -0.5, 0., 0.5, 1.0])
     import matplotlib
     ax5.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
     ax5.plot(x, y, 'k--')  
     plt.xlim([(r_grids*delatPixel).min()* 0.7,(r_grids*delatPixel).max() + 1])
     plt.ylim([-1,1])
     pos5_o = ax5.get_position() # get the original position
-    pos5 = [pos5_o.x0 -0.04, pos5_o.y0 +0.01, pos5_o.width, pos5_o.height]
+    pos5 = [pos5_o.x0 -0.04, pos5_o.y0, pos5_o.width, pos5_o.height*2]
     ax5.set_position(pos5) # set a new position
     if plot_compare == True:
         plt.show()

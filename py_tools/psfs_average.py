@@ -70,6 +70,31 @@ def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg']
     elif mode == 'CI':
         weights = np.zeros(psf_NO)
         for i in range(psf_NO):
+            box_c = len(psfs_l_msk[i])/2
+            box_r = len(psfs_l_msk[i])/6
+            if psfs_l_msk[i].sum() != 0:
+                weights[i] = np.sqrt(np.sum(psfs_l_msk[i][box_c-box_r:box_c+box_r,box_c-box_r:box_c+box_r]))  # set weight based on their intensity (SNR)
+                print "Sum flux for PSF center",i , ":", psfs_l_msk[i][box_c-box_r:box_c+box_r,box_c-box_r:box_c+box_r].sum()
+                psfs_l_msk[i] /= weights[i] **2  # scale the image to a same level
+        print "The final weights for doing the average:\n", weights
+#        print abs(psfs_l_msk[3]).min()
+        psfs_msk2nan=np.where(np.isclose(psfs_l_msk,0, rtol=1e-10, atol=1e-09), np.nan, psfs_l_msk)
+        cleaned_psfs = np.ma.masked_array(psfs_msk2nan,np.isnan(psfs_msk2nan))
+#        plt.imshow(cleaned_psfs.mask[5],origin = 'low')
+#        plt.show()
+        psf_ave = np.ma.average(cleaned_psfs,axis=0,weights=weights)
+        diffs = (psfs_l_msk-psf_ave)**2
+        diffs_msk2nan=np.where(np.isclose(psfs_l_msk,0, rtol=1e-10, atol=1e-09), np.nan, diffs)
+        cleaned_diffs = np.ma.masked_array(diffs_msk2nan,np.isnan(diffs_msk2nan))
+        psf_variance = np.ma.average(cleaned_diffs, weights=weights,axis=0)
+        psf_std = np.sqrt(psf_variance)
+        psf_std /= psf_ave.sum()
+        psf_ave /= psf_ave.sum()
+        psf_std = psf_std.data
+        psf_ave = psf_ave.data
+    elif mode == 'CI_tot':
+        weights = np.zeros(psf_NO)
+        for i in range(psf_NO):
             if psfs_l_msk[i].sum() != 0:
                 weights[i] = np.sqrt(np.sum(psfs_l_msk[i]))  # set weight based on their intensity (SNR)
                 print "Sum flux for PSF",i , ":", psfs_l_msk[i].sum()
