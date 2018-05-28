@@ -69,7 +69,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
             kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 4, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
             kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': .3, 'center_x': -10, 'center_y': -10})
-            kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
+            kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': 7., 'center_x': 10, 'center_y': 10})
         elif fix_n is not None:
             kwargs_source_init.append({'R_sersic': 1., 'n_sersic': fix_n, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
             kwargs_source_sigma.append({'n_sersic_sigma': 0.001, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
@@ -192,8 +192,8 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         lensPlot.model_plot(ax=axes[0,1])
         lensPlot.normalized_residual_plot(ax=axes[0,2], v_min=-6, v_max=6)
         
-        lensPlot.decomposition_plot(ax=axes[1,0], text='Source light', source_add=True, unconvolved=True)
-        lensPlot.decomposition_plot(ax=axes[1,1], text='Source light convolved', source_add=True)
+        lensPlot.decomposition_plot(ax=axes[1,0], text='Host galaxy', source_add=True, unconvolved=True)
+        lensPlot.decomposition_plot(ax=axes[1,1], text='Host galaxy convolved', source_add=True)
         lensPlot.decomposition_plot(ax=axes[1,2], text='All components convolved', source_add=True, lens_light_add=True, point_source_add=True)
         
         lensPlot.subtract_from_data_plot(ax=axes[2,0], text='Data - Point Source', point_source_add=True)
