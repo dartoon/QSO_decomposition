@@ -12,7 +12,7 @@ import astropy.io.fits as pyfits
 import matplotlib.pylab as plt
 import glob
 import sys
-sys.path.insert(0,'../../../py_tools')
+sys.path.insert(0,'../../py_tools')
 from psfs_average import psf_ave
 from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
@@ -60,12 +60,12 @@ cut = 40      #cut_range
 #                plt.close()
 
 
-#psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(4,7),
-#                  mask_list=mask_list)
-#
-#psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(0,1,5,6,7,8),
-#                  mask_list=mask_list)
-#
+psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(4,7),
+                  mask_list=mask_list)
+
+psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(0,1,5,6,7,8),
+                  mask_list=mask_list)
+
 #prf_list = [QSO_im,psf_a, psf_b]
 #scal_list = [1,1,1]
 #prf_name_list = ['QSO', 'Plan a', 'Plan b']

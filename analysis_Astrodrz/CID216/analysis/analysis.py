@@ -74,8 +74,8 @@ fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_l
 fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 plt.show()
 
-pyfits.PrimaryHDU(psf_b).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_b_std).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b_std).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 # =============================================================================
 # Doing the fitting
 # =============================================================================
