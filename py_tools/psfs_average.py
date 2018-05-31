@@ -121,14 +121,21 @@ def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg']
         psf_std = psf_std.data
         psf_ave = psf_ave.data
     elif mode == 'mid':
+        weights = np.zeros(psf_NO)        
+        for i in range(psf_NO):
+            box_c = len(psfs_l_msk[i])/2
+            box_r = len(psfs_l_msk[i])/6
+            if psfs_l_msk[i].sum() != 0:
+                weights[i] = np.sqrt(np.sum(psfs_l_msk[i][box_c-box_r:box_c+box_r,box_c-box_r:box_c+box_r]))  # set weight based on their intensity (SNR)
+                psfs_l_msk[i] /= weights[i] **2  # scale the image to a same level
         sz = len(psfs_l_msk[0])
         psf_ave = np.zeros_like(psfs_l_msk[0])
-        plt.imshow(psfs_l_msk[1],norm=LogNorm())
         for i in range(sz):
             for j in range(sz):
                 psf_cell = psfs_l_msk[:,i,j]
                 psf_cell = psf_cell[psf_cell!=0.]  # Delete the non-zeros.
                 psf_ave[i,j] = median(psf_cell)
+        psf_ave /= psf_ave.sum()        
     #### The PSF are found not very necessary to be shiftted. !!!! Note the high_CI is not ready --- high_res. mask is not OK.
 #    if mode == 'high_CI':
 #        psfs_high_list = np.empty([psf_NO, psfs_list[0].shape[0]*scale, psfs_list[0].shape[1]*scale])

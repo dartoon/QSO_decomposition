@@ -12,7 +12,7 @@ import astropy.io.fits as pyfits
 import matplotlib.pylab as plt
 import glob
 import sys
-sys.path.insert(0,'../../../py_tools')
+sys.path.insert(0,'../../py_tools')
 from psfs_average import psf_ave
 from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
@@ -73,8 +73,8 @@ fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_l
 fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 plt.show()
 
-pyfits.PrimaryHDU(psf_b).writeto('../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_b_std).writeto('../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b).writeto('../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b_std).writeto('../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 
 # =============================================================================
 # Doing the fitting

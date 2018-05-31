@@ -40,7 +40,7 @@ count=0
 #psf_list_IR = copy.deepcopy(IR_psf_list[:-1])
 psf_list_IR = np.array([[2006,2058],[1334,1766],[1484,1674],[1002,1484],[2388,1784],[2140,1522]])
 flux_IR = np.zeros(len(psf_list_IR))
-flux_QSO_IR = 297.698   # Use the value as taking by plan b
+flux_QSO_IR = 297.456   # Use the value as taking by plan b
 for i in range(len(psf_list_IR)):
     PSF, center = cut_center_bright(image=img_IR, center=psf_list_IR[i], radius=60, return_center=True)
     region = pix_region(center=center, radius=12)    # take the radius = 12
@@ -100,4 +100,4 @@ for i in range(len(PSF2QSO_IR)):
         mag_acs_corrs[i] = mag_acs[PSF_corrsp]
 QSO_mags = np.array([mag_QSO_IR,mag_QSO_acs])
 QSO_star_color(img_IR, QSO_pos_IR, QSO_mags, psf_list_IR, mag_IR, mag_acs_corrs,
-               mag_diff, ID=ID, reg_ty='astrodrz_06')
+               mag_diff, ID=ID, reg_ty='astrodrz_06', ifsave=True)

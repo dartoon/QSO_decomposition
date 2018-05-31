@@ -90,7 +90,7 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,reg_ty
     if ifsave == True:
         fig.savefig('QSO_PSF_loc.pdf')
     
-def QSO_star_mag(img, center_QSO, QSO_mag, psf_list,mag, ID=None, reg_ty='astrodrz_06', ifsave=True):
+def QSO_star_mag(img, center_QSO, QSO_mag, psf_list,mag, ID=None, reg_ty='astrodrz_06', ifsave=False):
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
     import copy, matplotlib
@@ -132,7 +132,7 @@ def QSO_star_mag(img, center_QSO, QSO_mag, psf_list,mag, ID=None, reg_ty='astrod
     if ifsave == True:
         fig.savefig('PSF_mag.pdf')
         
-def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1, mag_diff, ID, reg_ty='astrodrz_06', ifsave=True):
+def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1, mag_diff, ID, reg_ty='astrodrz_06', ifsave=False):
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
     import copy, matplotlib
