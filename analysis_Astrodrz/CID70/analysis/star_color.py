@@ -20,7 +20,7 @@ from flux_profile import pix_region,flux_in_region
 import copy
 import astropy.io.fits as pyfits
 
-ID = 'CID216'
+ID = 'CID70'
 # =============================================================================
 # ### Information for the IR band
 # =============================================================================
@@ -30,17 +30,17 @@ if filt == 'F140w':
 elif filt == 'F125w':
     zp_IR = 26.2303
 deltaPix_IR = 0.0642
-filename_0= 'stars_and_QSO.reg'
-IR_psf_list = grab_pos(filename_0,reg_ty = 'astrodrz_06')
+#filename_0= 'stars_and_QSO.reg'
+#IR_psf_list = grab_pos(filename_0,reg_ty = 'astrodrz_06')
 
 fitsFile = pyfits.open('../astrodrz/final_drz.fits')
 img_IR = fitsFile[1].data # check the back grounp
-QSO_pos_IR = IR_psf_list[-1]
+QSO_pos_IR = np.array([1172,1805])#IR_psf_list[-1]
 count=0
-psf_list_IR = copy.deepcopy(IR_psf_list[:-1])
-psf_list_IR = psf_list_IR[psf_list_IR[:,1].argsort()]
+#psf_list_IR = copy.deepcopy(IR_psf_list[:-1])
+psf_list_IR = np.array([[2006,2058],[1334,1766],[1484,1674],[1002,1484],[2388,1784],[2140,1522]])
 flux_IR = np.zeros(len(psf_list_IR))
-flux_QSO_IR = 5.585   # Use the value as taking by plan b
+flux_QSO_IR = 297.698   # Use the value as taking by plan b
 for i in range(len(psf_list_IR)):
     PSF, center = cut_center_bright(image=img_IR, center=psf_list_IR[i], radius=60, return_center=True)
     region = pix_region(center=center, radius=12)    # take the radius = 12
@@ -63,8 +63,14 @@ QSO_pos_acs = acs_psf_list[-1]
 count=0
 psf_list_acs = copy.deepcopy(acs_psf_list[:-1])
 psf_list_acs = psf_list_acs[psf_list_acs[:,0].argsort()]
+extra_psfs = np.array([[2628,2317],[3661,2722],[4778,3545]])
+psf_list_acs = np.vstack((psf_list_acs, extra_psfs))
+
 flux_acs = np.zeros(len(psf_list_acs))
-flux_QSO_acs = 16.274 # Use the value as taking by plan b
+_, center = cut_center_bright(image=img_acs, center=QSO_pos_acs, radius=60, return_center=True)
+region = pix_region(center=center, radius=16)  # take the radius = 16
+flux_QSO_acs = flux_in_region(img_acs,region=region,mode='exact') # Use the value by directly measure from the data.
+
 for i in range(len(psf_list_acs)):
     PSF, center = cut_center_bright(image=img_acs, center=psf_list_acs[i], radius=60, return_center=True)
     region = pix_region(center=center, radius=16)  # take the radius = 16

@@ -26,8 +26,14 @@ def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg']
             'direcity':
                 directly do the average of the scaled PSF 
             'CI':
-                Consider Intensity of the PSF. (weighted by the root-square of the intensity),
-                ---as the noise of PSF is most related to the Poission noise. The SNR of the image is related to root-square of the image.
+                Consider center (1/3 region) Intensity of the PSF. (weighted by
+                the root-square of the intensity),---as the noise of PSF is most
+                related to the Poission noise.The SNR of the image is related to
+                root-square of the image.
+            'CI_tot'    
+                Silimar to CI, but use the total flux.
+            'mid'
+                Select the median value. But, four PSFs were recommed to load.
         no_count:
             The serial No. of psf which not considered.
         mask_list: 
@@ -38,7 +44,6 @@ def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg']
     '''
     ### masked PSF give the region.
     psf_NO = len(psfs_list)
-    
     psfs_l_msk = np.ones_like(psfs_list)  # To load the PSF plus masked area 
     for i in range(psf_NO):
         if i in not_count:
@@ -115,6 +120,15 @@ def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg']
         psf_ave /= psf_ave.sum()
         psf_std = psf_std.data
         psf_ave = psf_ave.data
+    elif mode == 'mid':
+        sz = len(psfs_l_msk[0])
+        psf_ave = np.zeros_like(psfs_l_msk[0])
+        plt.imshow(psfs_l_msk[1],norm=LogNorm())
+        for i in range(sz):
+            for j in range(sz):
+                psf_cell = psfs_l_msk[:,i,j]
+                psf_cell = psf_cell[psf_cell!=0.]  # Delete the non-zeros.
+                psf_ave[i,j] = median(psf_cell)
     #### The PSF are found not very necessary to be shiftted. !!!! Note the high_CI is not ready --- high_res. mask is not OK.
 #    if mode == 'high_CI':
 #        psfs_high_list = np.empty([psf_NO, psfs_list[0].shape[0]*scale, psfs_list[0].shape[1]*scale])
@@ -131,8 +145,18 @@ def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg']
 #        psf_final = rebin(psf_high_final, scale = scale)
     else:
         raise ValueError("mode is not defined")
+    if mode == 'mid':
+        return psf_ave
+    else:
+        return psf_ave, psf_std
+
     
-    return psf_ave, psf_std
+def median(l):
+    l = sorted(l)
+    if len(l)%2==1:  
+        return l[len(l)/2];  
+    else:  
+        return (l[len(l)/2-1]+l[len(l)/2])/2.0;     
 
 def psf_shift_ave(psfs_list, not_count=None, mode = 'direct',  mask_list=['default.reg'], count_psf_std = True, num_iter=1):
     '''

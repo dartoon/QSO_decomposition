@@ -20,7 +20,7 @@ from flux_profile import pix_region,flux_in_region
 import copy
 import astropy.io.fits as pyfits
 
-ID = 'CID216'
+ID = 'CID1174'
 # =============================================================================
 # ### Information for the IR band
 # =============================================================================
@@ -40,7 +40,7 @@ count=0
 psf_list_IR = copy.deepcopy(IR_psf_list[:-1])
 psf_list_IR = psf_list_IR[psf_list_IR[:,1].argsort()]
 flux_IR = np.zeros(len(psf_list_IR))
-flux_QSO_IR = 5.585   # Use the value as taking by plan b
+flux_QSO_IR = 146.409   # Use the value as taking by plan b
 for i in range(len(psf_list_IR)):
     PSF, center = cut_center_bright(image=img_IR, center=psf_list_IR[i], radius=60, return_center=True)
     region = pix_region(center=center, radius=12)    # take the radius = 12
@@ -64,7 +64,7 @@ count=0
 psf_list_acs = copy.deepcopy(acs_psf_list[:-1])
 psf_list_acs = psf_list_acs[psf_list_acs[:,0].argsort()]
 flux_acs = np.zeros(len(psf_list_acs))
-flux_QSO_acs = 16.274 # Use the value as taking by plan b
+flux_QSO_acs = 78.51 # Use the value as taking by plan a, this is realiable for CID1174 ACS fits.
 for i in range(len(psf_list_acs)):
     PSF, center = cut_center_bright(image=img_acs, center=psf_list_acs[i], radius=60, return_center=True)
     region = pix_region(center=center, radius=16)  # take the radius = 16

@@ -151,7 +151,7 @@ def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1, mag_diff, ID,
     ax.imshow(img,origin='lower', cmap=my_cmap, norm=LogNorm(), vmin=vmin, vmax=vmax)
     QSO_reg = pix_region(QSO_pos, radius= QSO_box_size)
     QSO_mask = QSO_reg.to_mask(mode='center')
-    ax.text(QSO_pos[0]-4*QSO_box_size, QSO_pos[1]+2.6*QSO_box_size, 'QSO:',color='white', fontsize=13)
+    ax.text(QSO_pos[0]-4*QSO_box_size, QSO_pos[1]+2.6*QSO_box_size, 'QSO',color='white', fontsize=13)
     ax.text(QSO_pos[0]-1*QSO_box_size, QSO_pos[1]+3.6*QSO_box_size, '{0}'.format(round(QSO_mags[0],2)),color='yellow', fontsize=13)
     ax.text(QSO_pos[0]-1*QSO_box_size, QSO_pos[1]+2.6*QSO_box_size, '{0}'.format(round(QSO_mags[1],2)),color='c', fontsize=13)
     ax.text(QSO_pos[0]-1*QSO_box_size, QSO_pos[1]+1.6*QSO_box_size, '{0}'.format(round(QSO_mags[0]-QSO_mags[1],2)),color='white', fontsize=13)
@@ -161,7 +161,7 @@ def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1, mag_diff, ID,
         PSF_reg = pix_region(psf_list[i], radius= PSF_box_size)
         PSF_mask = PSF_reg.to_mask(mode='center')
         ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue', linewidth=2))
-        ax.text(psf_list[i][0]-4*PSF_box_size, psf_list[i][1]+2*PSF_box_size, 'PSF{0}:'.format(count),color='white', fontsize=13)
+        ax.text(psf_list[i][0]-4*PSF_box_size, psf_list[i][1]+2*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=13)
         ax.text(psf_list[i][0]-1*PSF_box_size, psf_list[i][1]+3*PSF_box_size, '{0}'.format(round(mag_0[i],2)),color='yellow', fontsize=13)
         ax.text(psf_list[i][0]-1*PSF_box_size, psf_list[i][1]+2*PSF_box_size, '{0}'.format(round(mag_1[i],2)),color='c', fontsize=13)
         ax.text(psf_list[i][0]-1*PSF_box_size, psf_list[i][1]+1*PSF_box_size, '{0}'.format(round(mag_diff[i],2)),color='white', fontsize=13)
@@ -171,7 +171,7 @@ def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1, mag_diff, ID,
     if not ID == None:
         ax.text(len(img)*0.05, len(img)*0.8, ID,color='white', fontsize=30)
     if ifsave == True:
-        fig.savefig('PSF_mag.pdf')
+        fig.savefig('PSF_color.pdf')
     
 def grab_pos(filename,reg_ty='swarp'):
     '''

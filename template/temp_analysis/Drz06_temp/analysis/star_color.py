@@ -20,11 +20,11 @@ from flux_profile import pix_region,flux_in_region
 import copy
 import astropy.io.fits as pyfits
 
-ID = 'CID216'
+ID = 'XXX'
 # =============================================================================
 # ### Information for the IR band
 # =============================================================================
-filt = 'F140w'
+filt = 'XXX'
 if filt == 'F140w':
     zp_IR = 26.4524
 elif filt == 'F125w':
@@ -39,8 +39,16 @@ QSO_pos_IR = IR_psf_list[-1]
 count=0
 psf_list_IR = copy.deepcopy(IR_psf_list[:-1])
 psf_list_IR = psf_list_IR[psf_list_IR[:,1].argsort()]
+#extra_psfs_IR = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx]])
+#psf_list_IR = np.vstack((psf_list_IR, extra_psfs_IR))
 flux_IR = np.zeros(len(psf_list_IR))
-flux_QSO_IR = 5.585   # Use the value as taking by plan b
+flux_QSO_IR = np.nan   # Use the value as taking by plan b
+# =============================================================================
+#======= If need to cal. the QSO flux from the image.=============================
+# _, center = cut_center_bright(image=img_IR, center=QSO_pos_IR, radius=60, return_center=True)
+# region = pix_region(center=center, radius=16)  # take the radius = 16
+# flux_QSO_IR = flux_in_region(img_IR,region=region,mode='exact') #297.698   # Use the value as taking by plan b
+# =============================================================================
 for i in range(len(psf_list_IR)):
     PSF, center = cut_center_bright(image=img_IR, center=psf_list_IR[i], radius=60, return_center=True)
     region = pix_region(center=center, radius=12)    # take the radius = 12
@@ -63,8 +71,16 @@ QSO_pos_acs = acs_psf_list[-1]
 count=0
 psf_list_acs = copy.deepcopy(acs_psf_list[:-1])
 psf_list_acs = psf_list_acs[psf_list_acs[:,0].argsort()]
+#extra_psfs_acs = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx]])
+#psf_list_acs = np.vstack((psf_list_acs, extra_psfs_acs))
 flux_acs = np.zeros(len(psf_list_acs))
-flux_QSO_acs = 16.274 # Use the value as taking by plan b
+flux_QSO_acs = np.nan  # Use the value as taking by plan b
+# =============================================================================
+#======= f need to cal. the QSO flux from the image.=============================
+# _, center = cut_center_bright(image=img_acs, center=QSO_pos_acs, radius=60, return_center=True)
+# region = pix_region(center=center, radius=16)  # take the radius = 16
+# flux_QSO_acs = flux_in_region(img_acs,region=region,mode='exact') # Use the value by directly measure from the data.
+# =============================================================================
 for i in range(len(psf_list_acs)):
     PSF, center = cut_center_bright(image=img_acs, center=psf_list_acs[i], radius=60, return_center=True)
     region = pix_region(center=center, radius=16)  # take the radius = 16
