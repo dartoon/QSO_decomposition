@@ -38,7 +38,7 @@ img_IR = fitsFile[1].data # check the back grounp
 QSO_pos_IR = IR_psf_list[-1]
 count=0
 psf_list_IR = copy.deepcopy(IR_psf_list[:-1])
-psf_list_IR = psf_list_IR[psf_list_IR[:,1].argsort()]
+psf_list_IR = psf_list_IR[psf_list_IR[:,0].argsort()]
 flux_IR = np.zeros(len(psf_list_IR))
 flux_QSO_IR = 144.611   # Use the value as taking by plan b
 for i in range(len(psf_list_IR)):
