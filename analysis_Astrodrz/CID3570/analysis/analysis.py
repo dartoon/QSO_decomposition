@@ -65,16 +65,16 @@ psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(2,4,5,6),
 psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(0,1,3,5),
                   mask_list=mask_list)
 
-prf_list = [QSO_im,psf_a, psf_b]
-scal_list = [1,1,1]
-prf_name_list = ['QSO', 'Plan a', 'Plan b']
-fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
-                                   gridspace = 'log',if_annuli=True,astrodrz=True)
-fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
-plt.show()
+#prf_list = [QSO_im,psf_a, psf_b]
+#scal_list = [1,1,1]
+#prf_name_list = ['QSO', 'Plan a', 'Plan b']
+#fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
+#                                   gridspace = 'log',if_annuli=True,astrodrz=True)
+#fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
+#plt.show()
 
-pyfits.PrimaryHDU(psf_b).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_b_std).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b_std).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 
 # =============================================================================
 # Doing the fitting

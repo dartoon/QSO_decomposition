@@ -72,7 +72,7 @@ scal_list = [1,1,1,1]
 prf_name_list = ['QSO', 'Plan a', 'Plan b', 'Plan b median']
 fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 6.0,
                                    gridspace = 'log',if_annuli=True,astrodrz=True)
-fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
+#fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 plt.show()
 
 #pyfits.PrimaryHDU(psf_b).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)

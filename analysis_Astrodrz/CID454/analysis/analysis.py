@@ -59,11 +59,11 @@ cut = 40      #cut_range
 #            else:
 #                plt.close()
 
-#psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(2,3,6,8,7,9,10),
-#                  mask_list=mask_list)
-#
-#psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(1,2,3,4,5,6,8,10),
-#                  mask_list=mask_list)
+psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(2,3,6,8,7,9,10),
+                  mask_list=mask_list)
+
+psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(1,2,3,4,5,6,8,10),
+                  mask_list=mask_list)
 #
 #prf_list = [QSO_im,psf_a, psf_b]
 #scal_list = [1,1,1]

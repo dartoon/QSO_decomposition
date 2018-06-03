@@ -95,7 +95,7 @@ print "by psf_a"
 fixcenter = True
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std, QSO_msk = QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter=fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+                                                       deep_seed = True, fixcenter=fixcenter,background_rms=background_rms, pix_sz = 'drz06')
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut], pix_sz = 'drz06',
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
                             cut=cut, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = "QSO_msk*.reg")
@@ -107,7 +107,7 @@ print "by psf_a, relax center"
 fixcenter = False
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std, QSO_msk = QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
                             cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False,QSO_msk = "QSO_msk*.reg")
@@ -118,7 +118,7 @@ print "by psf_b"
 fixcenter = True
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std, QSO_msk = QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
                             cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, savepng=True, plot_compare= True,QSO_msk = "QSO_msk*.reg")
@@ -129,7 +129,7 @@ print "by psf_b, relax center"
 fixcenter = False
 source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std, QSO_msk = QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
                             cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False,QSO_msk = "QSO_msk*.reg")
