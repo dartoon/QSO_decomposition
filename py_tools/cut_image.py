@@ -90,6 +90,66 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,reg_ty
     if ifsave == True:
         fig.savefig('QSO_PSF_loc.pdf')
     
+   
+def save_other_target(img, center_QSO, other_target,target_name,c_psf_list,extra_psfs,ID=None,reg_ty=None,ifsave=True):
+    fig = plt.figure(figsize=(15,15))
+    ax=fig.add_subplot(1,1,1)
+    import copy, matplotlib
+    my_cmap = copy.copy(matplotlib.cm.get_cmap('gist_heat')) # copy the default cmap
+    my_cmap.set_bad('black')
+    if reg_ty == None:
+        vmax = 2.2
+        vmin = 1.e-2
+        QSO_box_size = 30
+        PSF_box_size = 20
+    elif reg_ty == 'astrodrz_06':
+        vmax = 2.1 
+        vmin = 1.e-3
+        QSO_box_size = 60
+        PSF_box_size = 40
+    elif reg_ty == 'acs':
+        vmax = 2.1 
+        vmin = 1.e-3
+        QSO_box_size = 100
+        PSF_box_size = 60 
+    cax=ax.imshow(img,origin='lower', cmap=my_cmap, norm=LogNorm(), vmin=vmin, vmax=vmax)
+    QSO_reg = pix_region(center_QSO, radius= QSO_box_size)
+    QSO_mask = QSO_reg.to_mask(mode='center')
+    ax.text(center_QSO[0]-2*QSO_box_size, center_QSO[1]+1.5*QSO_box_size, 'QSO',color='white', fontsize=20)
+    ax.add_patch(QSO_mask.bbox.as_patch(facecolor='none', edgecolor='white', linewidth=2))
+#   setting for other target
+    target_reg = pix_region(other_target, radius= PSF_box_size)
+    target_mask = target_reg.to_mask(mode='center')
+    ax.add_patch(target_mask.bbox.as_patch(facecolor='none', edgecolor='white', linewidth=2))
+    ax.text(other_target[0]-5*PSF_box_size, other_target[1]+2*PSF_box_size, '{0}'.format(target_name),color='white', fontsize=15)
+    ax.xaxis.set_visible(False)
+    ax.yaxis.set_visible(False)
+#    plt.colorbar(cax)
+    count = 0
+    if c_psf_list is not None:
+        for i in range(len(c_psf_list)):
+            PSF_reg = pix_region(c_psf_list[i], radius= PSF_box_size)
+            PSF_mask = PSF_reg.to_mask(mode='center')
+            ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue', linewidth=2))
+            ax.text(c_psf_list[i][0]-2*PSF_box_size, c_psf_list[i][1]+2*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=15)
+            ax.xaxis.set_visible(False)
+            ax.yaxis.set_visible(False)
+            count += 1
+    if extra_psfs is not None:
+        for i in range(len(extra_psfs)):
+            PSF_reg = pix_region(extra_psfs[i], radius= PSF_box_size)
+            PSF_mask = PSF_reg.to_mask(mode='center')
+            ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='yellow', linewidth=2))
+            ax.text(extra_psfs[i][0]-2*PSF_box_size, extra_psfs[i][1]+2*PSF_box_size, 'PSF{0}?'.format(count),color='white', fontsize=15)
+            ax.xaxis.set_visible(False)
+            ax.yaxis.set_visible(False)
+            count += 1
+#    plt.colorbar(cax)
+    if not ID == None:
+        ax.text(len(img)*0.05, len(img)*0.8, ID,color='white', fontsize=30)
+    if ifsave == True:
+        fig.savefig('QSO_PSF_loc.pdf')
+    
 def QSO_star_mag(img, center_QSO, QSO_mag, psf_list,mag, ID=None, reg_ty='astrodrz_06', ifsave=False):
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
