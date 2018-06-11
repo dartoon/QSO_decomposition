@@ -30,9 +30,9 @@ sersic_re = float(lines[42][4:12]) * deltaPix
 sersic_n = float(lines[43][4:11])
 
 import astropy.io.fits as pyfits
-gal_data = pyfits.open('imgblock_QSO.fits')[1].data.copy()
-gal_bestfit = pyfits.open('imgblock_QSO.fits')[2].data.copy()
-gal_residual = pyfits.open('imgblock_QSO.fits')[3].data.copy()
+gal_data = pyfits.open('imgblock_QSO-PSF.fits')[1].data.copy()
+gal_bestfit = pyfits.open('imgblock_QSO-PSF.fits')[2].data.copy()
+gal_residual = pyfits.open('imgblock_QSO-PSF.fits')[3].data.copy()
 
 sersic_mag = -2.5 * np.log10(gal_bestfit.sum()) + zp
 
@@ -40,7 +40,8 @@ noise_map = pyfits.getdata('noise_level.fits')
 chiq_map = (gal_residual/noise_map)**2
 pixels=len(noise_map)**2
 reduced_Chisq = chiq_map.sum()/pixels 
-
+noise_boost = pyfits.getdata('noise_boost.fits')
+                            
 lenstronomy_redisual = pyfits.open('plan_b_residual.fits')[0].data.copy()
 print  "{0}\t{1}\t{2}\t{3}".format(sersic_mag, sersic_n, sersic_re,
         reduced_Chisq)
@@ -67,7 +68,9 @@ ax2.set_position(pos2) # set a new position
 ax2.text(frame_size*0.05, frame_size*0.9, 'Galfit best-fit', fontsize=15,color='w',backgroundcolor='k')
 ax2.get_xaxis().set_visible(False)
 ax2.get_yaxis().set_visible(False)
-ax3.imshow((gal_data-gal_bestfit),origin='lower',cmap=my_cmap, norm=LogNorm(),  clim=clim)
+res = (gal_data-gal_bestfit)
+res[noise_boost==10**5] = 100
+ax3.imshow(res,origin='lower',cmap=my_cmap, norm=LogNorm(),  clim=clim)
 ax3.text(frame_size*0.05, frame_size*0.9, 'Residual', fontsize=15,color='w',backgroundcolor='k')
 pos3_o = ax3.get_position() # get the original position
 pos3 = [pos3_o.x0 -0.14, pos3_o.y0, pos3_o.width, pos3_o.height]

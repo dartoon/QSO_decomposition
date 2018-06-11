@@ -3,7 +3,7 @@
 # IMAGE and GALFIT CONTROL PARAMETERS
 A) plan_b_QSO-PSF.fits            # Input data image (FITS file)
 B) imgblock_QSO-PSF.fits       # Output data image block
-C) noise_level.fits                # Sigma image name (made from data if blank or "none") 
+C) noise_boost.fits                # Sigma image name (made from data if blank or "none") 
 D) PSF_b.fits   #        # Input PSF image and (optional) diffusion kernel
 E) 1                   # PSF fine sampling factor relative to data 
 F) none                # Bad pixel mask (FITS image or ASCII coord list)
