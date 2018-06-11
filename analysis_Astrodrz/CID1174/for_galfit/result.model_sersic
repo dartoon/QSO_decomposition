@@ -1,17 +1,17 @@
 
-#  Input menu file: galfit_QSO.feedme
+#  Input menu file: galfit_model_sersic.feedme
 
-#  Chi^2/nu = 5.468,  Chi^2 = 80007.328,  Ndof = 14631
+#  Chi^2/nu = 0.001,  Chi^2 = 10.663,  Ndof = 14634
 
 ================================================================================
 # IMAGE and GALFIT CONTROL PARAMETERS
-A) QSO.fits            # Input data image (FITS file)
-B) imgblock_QSO.fits      # Output data image block
-C) noise_level.fits      # Sigma image name (made from data if blank or "none") 
+A) plan_b_model_sersic.fits      # Input data image (FITS file)
+B) imgblock_sersic.fits      # Output data image block
+C) none                # Sigma image name (made from data if blank or "none") 
 D) PSF_b.fits          # Input PSF image and (optional) diffusion kernel
 E) 1                   # PSF fine sampling factor relative to data 
 F) none                # Bad pixel mask (FITS image or ASCII coord list)
-G) n_reg               # File with parameter constraints (ASCII file) 
+G) none                # File with parameter constraints (ASCII file) 
 H) 1    121  1    121  # Image region to fit (xmin xmax ymin ymax)
 I) 121    121          # Size of the convolution box (x y)
 J) 26.452              # Magnitude photometric zeropoint 
@@ -38,28 +38,15 @@ P) 0                   # Choose: 0=optimize, 1=model, 2=imgblock, 3=subcomps
 
 # Component number: 1
  0) sersic                 #  Component type
- 1) 60.2884  60.8287  1 1  #  Position x, y
- 3) 20.6826     1          #  Integrated magnitude 
- 4) 1.6600      1          #  R_e (effective radius)   [pix]
- 5) 7.0000      1          #  Sersic index n (de Vaucouleurs n=4) 
+ 1) 60.4864  60.5898  1 1  #  Position x, y
+ 3) 20.7691     1          #  Integrated magnitude 
+ 4) 35.1713     1          #  R_e (effective radius)   [pix]
+ 5) 5.3116      1          #  Sersic index n (de Vaucouleurs n=4) 
  6) 0.0000      0          #     ----- 
  7) 0.0000      0          #     ----- 
  8) 0.0000      0          #     ----- 
- 9) 0.8463      1          #  Axis ratio (b/a)  
-10) 75.8942     1          #  Position angle (PA) [deg: Up=0, Left=90]
- Z) 0                      #  Skip this model in output image?  (yes=1, no=0)
-
-# Component number: 2
- 0) psf                    #  Component type
- 1) 61.3352  59.8817  1 1  #  Position x, y 
- 3) 22.5606     1          #  Integrated magnitude 
- 4) 0.0000      0          #     ----- 
- 5) 0.0000      0          #     ----- 
- 6) 0.0000      0          #     ----- 
- 7) 0.0000      0          #     ----- 
- 8) 0.0000      0          #     ----- 
- 9) 1.0000      -1         #  Axis ratio (b/a)  
-10) 0.0000      -1         #  Position angle (PA) [deg: Up=0, Left=90]
+ 9) 0.6306      1          #  Axis ratio (b/a)  
+10) 48.1509     1          #  Position angle (PA) [deg: Up=0, Left=90]
  Z) 0                      #  Skip this model in output image?  (yes=1, no=0)
 
 ================================================================================
