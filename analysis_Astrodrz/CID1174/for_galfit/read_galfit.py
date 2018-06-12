@@ -7,7 +7,6 @@ Created on Mon Jun 11 12:03:26 2018
 """
 
 import numpy as np
-import os
 filt = 'F140w'
 pix_sz = 'drz06'
 
@@ -23,7 +22,7 @@ if pix_sz == 'drz06':
 elif pix_sz == 'acs':
     deltaPix = 0.03
 
-filename = 'galfit.01' 
+filename = 'result_QSO-PSF_boost_noise' 
 fit_out = open('{0}'.format(filename),'r')
 lines = fit_out.readlines()
 sersic_re = float(lines[42][4:12]) * deltaPix
@@ -33,18 +32,31 @@ import astropy.io.fits as pyfits
 gal_data = pyfits.open('imgblock_QSO-PSF.fits')[1].data.copy()
 gal_bestfit = pyfits.open('imgblock_QSO-PSF.fits')[2].data.copy()
 gal_residual = pyfits.open('imgblock_QSO-PSF.fits')[3].data.copy()
-
-sersic_mag = -2.5 * np.log10(gal_bestfit.sum()) + zp
+gal_flux = gal_bestfit.sum()
+sersic_mag = -2.5 * np.log10(gal_flux) + zp
 
 noise_map = pyfits.getdata('noise_level.fits')
 chiq_map = (gal_residual/noise_map)**2
 pixels=len(noise_map)**2
 reduced_Chisq = chiq_map.sum()/pixels 
-noise_boost = pyfits.getdata('noise_boost.fits')
                             
-lenstronomy_redisual = pyfits.open('plan_b_residual.fits')[0].data.copy()
-print  "{0}\t{1}\t{2}\t{3}".format(sersic_mag, sersic_n, sersic_re,
+#noise_boost = pyfits.getdata('noise_boost.fits')
+      
+if len(lines)>60:                    
+    gal_com2_type = lines[52][4:7]
+    gal_com2_mag = float(lines[54][4:11])
+    psf_flux = 10.**(-0.4*(gal_com2_mag-zp))
+
+#lenstronomy_redisual = pyfits.open('plan_b_residual.fits')[0].data.copy()
+if len(lines)<60:
+    print "sersic_mag, sersic_n, sersic_re,reduced_Chisq \n"
+    print  "{0}\t{1}\t{2}\t{3}".format(sersic_mag, sersic_n, sersic_re,
         reduced_Chisq)
+elif len(lines)>60:
+    print "sersic_mag, sersic_n, sersic_re,reduced_Chisq, percent \n"
+    print  "{0}\t{1}\t{2}\t{3}\t{4}%".format(sersic_mag, sersic_n, sersic_re,
+        reduced_Chisq, gal_flux/(gal_flux+psf_flux)*100)
+
 import copy
 import matplotlib.pylab as plt
 from matplotlib.colors import LogNorm
@@ -69,7 +81,7 @@ ax2.text(frame_size*0.05, frame_size*0.9, 'Galfit best-fit', fontsize=15,color='
 ax2.get_xaxis().set_visible(False)
 ax2.get_yaxis().set_visible(False)
 res = (gal_data-gal_bestfit)
-res[noise_boost==10**5] = 100
+#res[noise_boost==10**5] = 100
 ax3.imshow(res,origin='lower',cmap=my_cmap, norm=LogNorm(),  clim=clim)
 ax3.text(frame_size*0.05, frame_size*0.9, 'Residual', fontsize=15,color='w',backgroundcolor='k')
 pos3_o = ax3.get_position() # get the original position

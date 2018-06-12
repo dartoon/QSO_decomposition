@@ -442,6 +442,8 @@ def total_compare(label_list, flux_list, img_mask=None,
     ax1.set_ylabel(target_ID, fontsize=15)
     ax1.text(frame_size*0.05, frame_size*0.9, label_list[0],
          fontsize=20)
+    ax1.get_xaxis().set_visible(False)
+    ax1.get_yaxis().set_visible(False)
     scale_bar(ax1, frame_size, dist=1/delatPixel, text='1"')
     coordinate_arrows(ax1, frame_size, arrow_size=0.03)
     
@@ -453,6 +455,8 @@ def total_compare(label_list, flux_list, img_mask=None,
          fontsize=20)
     scale_bar(ax2, frame_size, dist=1/delatPixel, text='1"')
     coordinate_arrows(ax2, frame_size, arrow_size=0.03)
+    ax2.get_xaxis().set_visible(False)
+    ax2.get_yaxis().set_visible(False)
     
     ax3.imshow(flux_list[0]-(flux_list[1]+flux_list[2]),origin='lower',cmap='Greys', norm=norm, clim=clim)
     ax3.text(frame_size*0.05, frame_size*0.9, label_list[-1],
@@ -462,6 +466,8 @@ def total_compare(label_list, flux_list, img_mask=None,
     scale_bar(ax3, frame_size, dist=1/delatPixel, text='1"')
     coordinate_arrows(ax3, frame_size, arrow_size=0.03)
     ax3.set_position(pos3) # set a new position
+    ax3.get_xaxis().set_visible(False)
+    ax3.get_yaxis().set_visible(False)
 #    f.colorbar(ax1_c, ax=ax1.ravel().tolist())
 #    plt.colorbar(c_ax1)
     make_ticklabels_invisible(plt.gcf())
