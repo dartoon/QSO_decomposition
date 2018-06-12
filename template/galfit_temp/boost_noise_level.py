@@ -15,6 +15,6 @@ import copy
 noise_map = pyfits.open('noise_level.fits')[0].data.copy()
 
 noise_bost = copy.deepcopy(noise_map)
-noise_bost[noise_bost>0.025] = 10**5
+noise_bost[noise_bost>0.019] = 10**5
 plt.imshow(noise_bost)          
-pyfits.PrimaryHDU(noise_bost).writeto('noise_boost_s.fits',overwrite=True)
+pyfits.PrimaryHDU(noise_bost).writeto('noise_boost.fits',overwrite=True)

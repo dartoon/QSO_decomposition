@@ -22,17 +22,17 @@ if pix_sz == 'drz06':
 elif pix_sz == 'acs':
     deltaPix = 0.03
 
-filename = 'result_QSO' 
-fit_out = open('{0}'.format(filename),'r')
+filename_0 = 'result_QSO' 
+fit_out = open('{0}'.format(filename_0),'r')
 lines = fit_out.readlines()
 sersic_re = float(lines[42][4:12]) * deltaPix
 sersic_n = float(lines[43][4:11])
 
 import astropy.io.fits as pyfits
-filename2 = 'imgblock_QSO.fits'
-gal_data = pyfits.open(filename2)[1].data.copy()
-gal_bestfit = pyfits.open(filename2)[2].data.copy()
-gal_residual = pyfits.open(filename2)[3].data.copy()
+filename_1 = 'imgblock_QSO.fits' 
+gal_data = pyfits.open(filename_1)[1].data.copy()
+gal_bestfit = pyfits.open(filename_1)[2].data.copy()
+gal_residual = pyfits.open(filename_1)[3].data.copy()
 gal_flux = gal_bestfit.sum()
 sersic_mag = -2.5 * np.log10(gal_flux) + zp
 
@@ -41,7 +41,7 @@ chiq_map = (gal_residual/noise_map)**2
 pixels=len(noise_map)**2
 reduced_Chisq = chiq_map.sum()/pixels 
                             
-#noise_boost = pyfits.getdata('noise_boost_s.fits')
+#noise_boost = pyfits.getdata('noise_boost.fits')
       
 if len(lines)>60:                    
     gal_com2_type = lines[52][4:7]

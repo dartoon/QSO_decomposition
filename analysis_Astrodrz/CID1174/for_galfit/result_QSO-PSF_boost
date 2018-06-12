@@ -1,13 +1,13 @@
 
 #  Input menu file: galfit_QSO-PSF.feedme
 
-#  Chi^2/nu = 5.544,  Chi^2 = 81136.406,  Ndof = 14634
+#  Chi^2/nu = 4.175,  Chi^2 = 61112.387,  Ndof = 14636
 
 ================================================================================
 # IMAGE and GALFIT CONTROL PARAMETERS
 A) plan_b_QSO-PSF.fits      # Input data image (FITS file)
-B) imgblock_QSO-PSF.fits      # Output data image block
-C) noise_level.fits      # Sigma image name (made from data if blank or "none") 
+B) imgblock_QSO-PSF_boost.fits      # Output data image block
+C) noise_boost.fits      # Sigma image name (made from data if blank or "none") 
 D) PSF_b.fits          # Input PSF image and (optional) diffusion kernel
 E) 1                   # PSF fine sampling factor relative to data 
 F) none                # Bad pixel mask (FITS image or ASCII coord list)
@@ -38,15 +38,15 @@ P) 0                   # Choose: 0=optimize, 1=model, 2=imgblock, 3=subcomps
 
 # Component number: 1
  0) sersic                 #  Component type
- 1) 60.8865  61.0851  1 1  #  Position x, y
- 3) 21.1121     1          #  Integrated magnitude 
- 4) 13.0225     1          #  R_e (effective radius)   [pix]
- 5) 5.3837      1          #  Sersic index n (de Vaucouleurs n=4) 
+ 1) 60.8865  61.0851  0 0  #  Position x, y
+ 3) 21.7755     1          #  Integrated magnitude 
+ 4) 8.9816      1          #  R_e (effective radius)   [pix]
+ 5) 0.9200      1          #  Sersic index n (de Vaucouleurs n=4) 
  6) 0.0000      0          #     ----- 
  7) 0.0000      0          #     ----- 
  8) 0.0000      0          #     ----- 
- 9) 0.7076      1          #  Axis ratio (b/a)  
-10) 58.9511     1          #  Position angle (PA) [deg: Up=0, Left=90]
+ 9) 0.8034      1          #  Axis ratio (b/a)  
+10) 74.7401     1          #  Position angle (PA) [deg: Up=0, Left=90]
  Z) 0                      #  Skip this model in output image?  (yes=1, no=0)
 
 ================================================================================

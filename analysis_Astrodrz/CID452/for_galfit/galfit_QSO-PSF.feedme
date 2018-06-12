@@ -2,12 +2,12 @@
 ===============================================================================
 # IMAGE and GALFIT CONTROL PARAMETERS
 A) plan_b_QSO-PSF.fits            # Input data image (FITS file)
-B) imgblock_QSO-PSF_boost_s.fits       # Output data image block
-C) noise_boost_s.fits                # Sigma image name (made from data if blank or "none") 
+B) imgblock_QSO-PSF.fits       # Output data image block
+C) noise_level.fits                # Sigma image name (made from data if blank or "none") 
 D) PSF_b.fits   #        # Input PSF image and (optional) diffusion kernel
 E) 1                   # PSF fine sampling factor relative to data 
 F) none                # Bad pixel mask (FITS image or ASCII coord list)
-G) n_reg                # File with parameter constraints (ASCII file) 
+G) none                # File with parameter constraints (ASCII file) 
 H) 0    121   0    121   # Image region to fit (xmin xmax ymin ymax)
 I) 121    121          # Size of the convolution box (x y)
 J) 26.4524              # Magnitude photometric zeropoint 
@@ -32,9 +32,9 @@ P) 0                   # Choose: 0=optimize, 1=model, 2=imgblock, 3=subcomps
 
 # Component number: 1
  0) sersic                 #  Component type
- 1) 60.8865  61.0851  0 0  #  Position x, y
- 3) 20.7691     1          #  Integrated magnitude 
- 4) 35.1713     1          #  R_e (effective radius)   [pix]
+ 1) 61.4343  60.8609  1 1  #  Position x, y
+ 3) 21.4340     1          #  Integrated magnitude 
+ 4) 1.2391     1          #  R_e (effective radius)   [pix]
  5) 5.3116      1          #  Sersic index n (de Vaucouleurs n=4) 
  6) 0.0000      0          #     ----- 
  7) 0.0000      0          #     ----- 

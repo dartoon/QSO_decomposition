@@ -1,7 +1,7 @@
 
 #  Input menu file: galfit_QSO-PSF.feedme
 
-#  Chi^2/nu = 5.544,  Chi^2 = 81136.406,  Ndof = 14634
+#  Chi^2/nu = 1.453,  Chi^2 = 21270.156,  Ndof = 14634
 
 ================================================================================
 # IMAGE and GALFIT CONTROL PARAMETERS
@@ -38,15 +38,15 @@ P) 0                   # Choose: 0=optimize, 1=model, 2=imgblock, 3=subcomps
 
 # Component number: 1
  0) sersic                 #  Component type
- 1) 60.8865  61.0851  1 1  #  Position x, y
- 3) 21.1121     1          #  Integrated magnitude 
- 4) 13.0225     1          #  R_e (effective radius)   [pix]
- 5) 5.3837      1          #  Sersic index n (de Vaucouleurs n=4) 
+ 1) 60.8401  62.1392  1 1  #  Position x, y
+ 3) 21.4926     1          #  Integrated magnitude 
+ 4) 17.4060     1          #  R_e (effective radius)   [pix]
+ 5) 7.0000      1          #  Sersic index n (de Vaucouleurs n=4) 
  6) 0.0000      0          #     ----- 
  7) 0.0000      0          #     ----- 
  8) 0.0000      0          #     ----- 
- 9) 0.7076      1          #  Axis ratio (b/a)  
-10) 58.9511     1          #  Position angle (PA) [deg: Up=0, Left=90]
+ 9) 0.6798      1          #  Axis ratio (b/a)  
+10) 50.9136     1          #  Position angle (PA) [deg: Up=0, Left=90]
  Z) 0                      #  Skip this model in output image?  (yes=1, no=0)
 
 ================================================================================
