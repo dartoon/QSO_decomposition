@@ -38,7 +38,11 @@ def cut_center_bright(image, center, radius, return_center=False):
     if return_center==True:
         return cut_c_b, center
  
-def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,reg_ty=None,ifsave=True):
+def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,
+                 reg_ty=None,ifsave=True, label_shift_NO=(), shift_where=None):
+    '''
+    label shift_where: 1,2,3,4 --- up, right, down, left
+    '''
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
     import copy, matplotlib
@@ -65,12 +69,20 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,reg_ty
     ax.text(center_QSO[0]-2*QSO_box_size, center_QSO[1]+1.5*QSO_box_size, 'QSO',color='white', fontsize=20)
     ax.add_patch(QSO_mask.bbox.as_patch(facecolor='none', edgecolor='white', linewidth=2))
     count=0
+    count_shift = 0
     if c_psf_list is not None:
         for i in range(len(c_psf_list)):
             PSF_reg = pix_region(c_psf_list[i], radius= PSF_box_size)
             PSF_mask = PSF_reg.to_mask(mode='center')
             ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue', linewidth=2))
-            ax.text(c_psf_list[i][0]-2*PSF_box_size, c_psf_list[i][1]+2*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=15)
+            if count not in label_shift_NO:
+                ax.text(c_psf_list[i][0]-2*PSF_box_size, c_psf_list[i][1]+2*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=15)
+            else:
+                if count in label_shift_NO:
+                    shift = shift_label_index(shift_where[count_shift])
+                    ax.text(c_psf_list[i][0]+shift[0]*PSF_box_size, c_psf_list[i][1]+shift[1]*PSF_box_size,
+                            'PSF{0}'.format(count),color='white', fontsize=15)
+                    count_shift += 1
             ax.xaxis.set_visible(False)
             ax.yaxis.set_visible(False)
             count += 1
@@ -80,7 +92,15 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,reg_ty
             PSF_reg = pix_region(extra_psfs[i], radius= PSF_box_size)
             PSF_mask = PSF_reg.to_mask(mode='center')
             ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='yellow', linewidth=2))
-            ax.text(extra_psfs[i][0]-2*PSF_box_size, extra_psfs[i][1]+2*PSF_box_size, 'PSF{0}?'.format(count),color='white', fontsize=15)
+            if count not in label_shift_NO:
+                ax.text(extra_psfs[i][0]-2*PSF_box_size, extra_psfs[i][1]+2*PSF_box_size, 'PSF{0}?'.format(count),color='white', fontsize=15)
+            else:
+                if count in label_shift_NO:
+                    shift = shift_label_index(shift_where[count_shift])
+                    print extra_psfs[i][0], shift[0]*PSF_box_size
+                    ax.text(extra_psfs[i][0]+shift[0]*PSF_box_size, extra_psfs[i][1]+shift[1]*PSF_box_size,
+                            'PSF{0}?'.format(count),color='white', fontsize=15)
+                    count_shift += 1
             ax.xaxis.set_visible(False)
             ax.yaxis.set_visible(False)
             count += 1
@@ -89,8 +109,17 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,reg_ty
         ax.text(len(img)*0.05, len(img)*0.8, ID,color='white', fontsize=30)
     if ifsave == True:
         fig.savefig('QSO_PSF_loc.pdf')
+
+def shift_label_index(s):
+    if s==1:
+        return np.array([-2, 2])
+    elif s==2:
+        return np.array([1, -1])
+    elif s==3:
+        return np.array([-2, -3])
+    elif s==4:
+        return np.array([-6, -1])    
     
-   
 def save_other_target(img, center_QSO, other_target,target_name,c_psf_list,extra_psfs,ID=None,reg_ty=None,ifsave=True):
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
