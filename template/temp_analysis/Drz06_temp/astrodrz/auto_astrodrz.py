@@ -1,3 +1,4 @@
+ #source activate iraf27
  #!/usr/bin/env python
 import drizzlepac
 from drizzlepac import astrodrizzle

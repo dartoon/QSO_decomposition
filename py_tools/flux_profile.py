@@ -115,7 +115,7 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
 def SB_profile(image, center, radius=35, grids=20, gridspace = None, 
                ifplot=False, fits_plot=False,
                mask_list=None, mask_plot = False,
-               mask_cut = 0., if_annuli= False):
+               mask_cut = 0., if_annuli= False, msk_image=None):
     '''
     Derive the SB profile of one image start at the center.
     
@@ -127,6 +127,7 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
         grids: The number of points to sample the flux with default equals to 20;
         ifplot: if plot the profile
         fits_plot: if plot the fits file with the regions.
+        msk_image: if not is not one, will use this image as mask.
     Returns
     --------
         A 1-D array of the SB value of each 'grids' in the profile with the sampled radius.
@@ -140,8 +141,11 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
             region_area[i]=(circle.data * edge_mask).sum()
     elif mask_list != None:
         mask = np.ones(image.shape)
-        for i in range(len(mask_list)):
-            mask *= cr_mask(image=image, filename=mask_list[i], mask_reg_cut = mask_cut)
+        if msk_image is None:
+            for i in range(len(mask_list)):
+                mask *= cr_mask(image=image, filename=mask_list[i], mask_reg_cut = mask_cut)
+        else:
+            mask = msk_image
 #        plt.imshow(mask, origin='low')
 #        plt.show()
         r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
@@ -220,12 +224,13 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     ------
     norm_pix : normalized position. If norm_pix = 'no', means no normalizaion.
     """
+    psfs_not_none = [x for x in psfs if x is not None][0]
     if gridspace == None and astrodrz==False:
         radius = 6
     elif gridspace == None and astrodrz==True:
         radius = 8
     elif gridspace == 'log':
-        radius = len(psfs[0])/2
+        radius = len(psfs_not_none)/2
     frame_mid = len(QSO)/2
     if include_QSO == True:
         if plt_QSO ==True:
@@ -239,7 +244,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
 #            print "idx:",idx
             r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves
     psfs_NO = len(psfs)
-    center = np.reshape(np.asarray(np.where(psfs[0]== psfs[0][frame_mid-20:frame_mid+20,frame_mid-20:frame_mid+20].max())),(2))[::-1]
+    center = np.reshape(np.asarray(np.where(psfs_not_none== psfs_not_none[frame_mid-20:frame_mid+20,frame_mid-20:frame_mid+20].max())),(2))[::-1]
 #    print "center_PSF:", center
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):
@@ -255,28 +260,29 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
     for i in range(psfs_NO):
-        msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), mask_list)
-        if i ==0 and include_QSO == True:
-                plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5)
+        if psfs[i] is not None:
+            msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), mask_list)
+            if i ==0 and include_QSO == True:
+                    plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5)
+                    plt.legend()
+            if msk_counts == 0:
+                r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli)
+            elif msk_counts >0:
+                r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
+                                           mask_list=mask_lists)
+            if isinstance(norm_pix,int) or isinstance(norm_pix,float):
+                count = r_grids <= norm_pix
+                idx = count.sum() -1
+#                print "idx:",idx
+                r_SB /= r_SB[idx]      #normalize the curves
+            if gridspace == None:
+                plt.text(0.25,r_SB[0],i)
+            elif gridspace == 'log':
+                plt.text(0.40,r_SB[0],i)
+#            print r_grids[idx]
+            if i not in not_plt:
+                plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
                 plt.legend()
-        if msk_counts == 0:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli)
-        elif msk_counts >0:
-            r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
-                                       mask_list=mask_lists)
-        if isinstance(norm_pix,int) or isinstance(norm_pix,float):
-            count = r_grids <= norm_pix
-            idx = count.sum() -1
-#            print "idx:",idx
-            r_SB /= r_SB[idx]      #normalize the curves
-        if gridspace == None:
-            plt.text(0.25,r_SB[0],i)
-        elif gridspace == 'log':
-            plt.text(0.40,r_SB[0],i)
-#        print r_grids[idx]
-        if i not in not_plt:
-            plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
-            plt.legend()
     ax.xaxis.set_minor_locator(minorLocator)
     plt.tick_params(which='both', width=2)
     plt.tick_params(which='major', length=7)
@@ -361,13 +367,22 @@ def string_find_between(s, first, last ):
     except ValueError:
         return ""
 
-def cr_mask_img(image, mask_list, mask_reg_cut = 0.):
+def cr_mask_img(image, mask_list, mask_reg_cut = 0., cut_org=False):
     '''
     Creat a mask image given a mask_list
+        if set cut_org=True, the input image don't need to be cutout (e.g. QSO[cut,cut...]).
     '''
-    mask = np.ones(image.shape)
-    for i in range(len(mask_list)):
-        mask *= cr_mask(image=image, filename=mask_list[i],mask_reg_cut=mask_reg_cut)
+    if cut_org ==False:
+        mask = np.ones(image.shape)
+        for i in range(len(mask_list)):
+            mask *= cr_mask(image=image, filename=mask_list[i],mask_reg_cut=mask_reg_cut)
+    elif cut_org ==True:
+        cut = mask_reg_cut
+        mask_org = np.ones(image.shape)
+        for i in range(len(mask_list)):
+            mask_org *= cr_mask(image=image, filename=mask_list[i])
+        mask = np.ones(image[cut:-cut,cut:-cut].shape)
+        mask = mask_org[cut:-cut,cut:-cut]
     return mask
 
 def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
@@ -411,10 +426,10 @@ def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
     mask_box_part *= box
     return mask
 
-def total_compare(label_list, flux_list, img_mask=None,
+def total_compare(label_list, flux_list,
                   facility = 'F140w' , plot_type= 4, target_ID = 'target_ID',
                   add_background=0.0, data_mask_list = None, data_cut = 0.,plot_compare=False,
-                  pix_sz = 'swarp'):
+                  pix_sz = 'swarp', msk_image=None):
     if facility == 'F140w':
         zp = 26.4524
     elif facility == 'F125w':
@@ -483,8 +498,10 @@ def total_compare(label_list, flux_list, img_mask=None,
     for i in range(len(label_SB_list)):
         center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
         if label_SB_list[i] == 'data':
-            print "data_mask_list,:",data_mask_list
-            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 20, grids = 40, mask_list=data_mask_list, mask_cut = data_cut)
+            print "data_mask_lists:\t", data_mask_list
+            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log',
+                                       radius= 20, grids = 40, mask_list=data_mask_list,
+                                       mask_cut = data_cut, msk_image=msk_image)
         else:
             r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 20, mask_list=None)
         r_mag = - 2.5 * np.log10(r_SB) + zp 
@@ -503,7 +520,9 @@ def total_compare(label_list, flux_list, img_mask=None,
 
     x = np.linspace(1.e-4, 100, 2)
     y = x * 0
-    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= 20, mask_list=data_mask_list, mask_cut = data_cut)[0])
+    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log',
+                                        radius= 20, mask_list=data_mask_list, mask_cut = data_cut,
+                                        msk_image=msk_image)[0])
     r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= 20)[0])
     ax5.plot(r_grids*delatPixel, r_mag_0-r_mag_1, 'ro')   
     ax5.set_ylabel('$\Delta\mu$', fontsize=15)

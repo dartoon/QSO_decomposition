@@ -44,6 +44,9 @@ def psf_ave(psfs_list, not_count=(), mode = 'direct',  mask_list=['default.reg']
     '''
     ### masked PSF give the region.
     psf_NO = len(psfs_list)
+    for i in range (psf_NO):
+        if psfs_list[i] is None:
+            psfs_list[i] = np.zeros_like([x for x in psfs_list if x is not None][0])
     psfs_l_msk = np.ones_like(psfs_list)  # To load the PSF plus masked area 
     for i in range(psf_NO):
         if i in not_count:

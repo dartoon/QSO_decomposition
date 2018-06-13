@@ -233,7 +233,7 @@ def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1, mag_diff, ID,
     if ifsave == True:
         fig.savefig('PSF_color.pdf')
     
-def grab_pos(filename,reg_ty='swarp'):
+def grab_pos(filename, reg_ty='swarp', QSO_reg_return = False):
     '''
     Grab all the positions of the QSO and stars from a region name. The last one are always the QSO.
     '''
@@ -253,7 +253,16 @@ def grab_pos(filename,reg_ty='swarp'):
         if string.split(',')[0] != '':
             pos_list = [float(j) for j in string.split(',')]
             pos_string.append(pos_list)
-    return np.asarray(pos_string)
+    for i in range(1,len(string_list)):
+        if 'red' in string_list[i]:
+            count_QSO = i
+        if '(' in string_list[i] and '(' not in string_list[i-1]:
+            count_reg = i
+    QSO_loc = count_QSO - count_reg
+    if QSO_reg_return == True:
+        return np.asarray(pos_string), QSO_loc
+    elif QSO_reg_return == False:
+        return np.asarray(pos_string)
     
 def string_find_between(s, first, last ):
     try:

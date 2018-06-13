@@ -10,7 +10,7 @@ Transfer the fit to a result dict
 import numpy as np
 def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
                        data_C_D, cut, filt, fixcenter,ID, plot_compare=False, savepng=False,
-                       QSO_msk = "QSO_msk*.reg",pix_sz = 'swarp'):
+                       QSO_msk = "QSO_msk*.reg",pix_sz = 'swarp', QSO_msk_image = None):
     #==============================================================================
     # Translate the e1, e2 to phi_G and q
     #==============================================================================
@@ -56,7 +56,8 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     mask_list = glob.glob(QSO_msk)   # Read *.reg files in a list.
 #    print "mask_list,muhahah", mask_list
     fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID, pix_sz=pix_sz,
-                  data_mask_list = mask_list, data_cut = cut, facility = filt, plot_compare = plot_compare)
+                  data_mask_list = mask_list, data_cut = cut, facility = filt,
+                  plot_compare = plot_compare, msk_image = QSO_msk_image)
     if savepng == True:
         fig.savefig("SB_profile_{0}.pdf".format(ID))
     
@@ -64,7 +65,10 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     # Calculate reduced Chisq and save to result
     # =============================================================================
     from flux_profile import cr_mask_img
-    QSO_mask = cr_mask_img(data, mask_list, mask_reg_cut = cut)
+    if QSO_msk_image is None:
+        QSO_mask = cr_mask_img(data, mask_list, mask_reg_cut = cut)
+    else:
+        QSO_mask = QSO_msk_image
     chiq_map = ((data-image_ps-image_host)/np.sqrt(data_C_D))**2 * QSO_mask
     pixels=len(data_C_D)**2 - (1-QSO_mask).sum()
     reduced_Chisq = chiq_map.sum()/pixels

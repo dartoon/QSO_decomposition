@@ -18,12 +18,12 @@ from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
 
 ID = 'LID1538'
-filt = '140w'
+filt = 'F140w'
 
 # =============================================================================
 # Read PSF and QSO image
 # =============================================================================
-#psf_name_list = glob.glob("PSF*.fits")   # Read *.reg files in a list.
+psf_name_list = glob.glob("PSF*.fits")   # Read *.reg files in a list.
 psf_list = []
 for i in range(len(psf_name_list)):
     psf_get = pyfits.getdata('PSF{0}.fits'.format(i))
@@ -63,7 +63,10 @@ for i in range(2):
 psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(0,5,8),
                   mask_list=mask_list)
 
-psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,5,6,8),
+#psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,5,6,8),
+#                  mask_list=mask_list)
+
+psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(0,3,4,5,6,8),
                   mask_list=mask_list)
 
 prf_list = [QSO_im,psf_a, psf_b]#,psf_list[2],psf_list[3], psf_list[7]]
@@ -73,69 +76,68 @@ fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_l
                                    gridspace = 'log',if_annuli=True,astrodrz=True)
 #fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 plt.show()
-pyfits.PrimaryHDU(psf_a).writeto('PSF_plan_a.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_a_std).writeto('PSF_plan_a_std.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_b).writeto('PSF_plan_b.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_b_std).writeto('PSF_plan_b_std.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_a).writeto('PSF_plan_a.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_a_std).writeto('PSF_plan_a_std.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b).writeto('PSF_plan_b.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b_std).writeto('PSF_plan_b_std.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(psf_b).writeto('../../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(psf_b_std).writeto('../../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
 
-'''
 # =============================================================================
 # Doing the fitting
 # =============================================================================
 from fit_qso import fit_qso
 from transfer_to_result import transfer_to_result
-#from flux_profile import cr_mask_img
-#mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
-#QSO_msk = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut=cut)
-QSO_msk =None
+from flux_profile import cr_mask_img
+mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
+QSO_msk = cr_mask_img(QSO_im, mask_list, mask_reg_cut=cut, cut_org=True)
 fit_result = open('fit_result.txt','w') 
-background_rms = 0.01
+background_rms = 0.007
 
 ##############################Fit
 print "by psf_a"
 fixcenter = True
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std, QSO_msk=QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter=fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+                                                       deep_seed = True, fixcenter=fixcenter,background_rms=background_rms, pix_sz = 'drz06')
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut], pix_sz = 'drz06',
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, QSO_msk_image=QSO_msk)
 fit_result.write("#fit with PSF by Plan a: \n")
 fit_result.write(repr(result) + "\n")
 
 ##############################Fit
 print "by psf_a, relax center"
 fixcenter = False
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std, QSO_msk=QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False, QSO_msk_image=QSO_msk)
 fit_result.write("#fit with PSF by Plan a, relax center: \n")
 fit_result.write(repr(result)+ "\n")
 ##############################Fit
 print "by psf_b"
 fixcenter = True
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std, QSO_msk=QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, savepng=True, plot_compare= True)
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, savepng=True, plot_compare= True, QSO_msk_image=QSO_msk)
 fit_result.write("#fit with PSF by Plan b: \n")
 fit_result.write(repr(result) + "\n")
 ##############################Fit
 print "by psf_b, relax center"
 fixcenter = False
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std, QSO_msk=QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
+                                                       deep_seed = True, fixcenter= fixcenter,background_rms=background_rms, pix_sz = 'drz06')
 result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'drz06',
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)
+                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False, QSO_msk_image=QSO_msk)
 fit_result.write("#fit with PSF by Plan b, relax center: \n")
 fit_result.write(repr(result)+ "\n")
 
 fit_result.close()
-'''
