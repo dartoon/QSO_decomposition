@@ -33,7 +33,7 @@ P) 0                   # Choose: 0=optimize, 1=model, 2=imgblock, 3=subcomps
 # Component number: 1
  0) sersic                 #  Component type
  1) 60.4864  60.5898  1 1  #  Position x, y
- 3) 20.2765     1          #  Integrated magnitude 
+ 3) 21.2765     1          #  Integrated magnitude 
  4) 35.5760     1          #  R_e (effective radius)   [pix]
  5) 5.3116      1          #  Sersic index n (de Vaucouleurs n=4) 
  6) 0.0000      0          #     ----- 

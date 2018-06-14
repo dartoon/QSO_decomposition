@@ -22,7 +22,7 @@ if pix_sz == 'drz06':
 elif pix_sz == 'acs':
     deltaPix = 0.03
 
-filename = 'result_QSO' 
+filename = 'result_QSO_02' 
 fit_out = open('{0}'.format(filename),'r')
 lines = fit_out.readlines()
 sersic_re = float(lines[42][4:12]) * deltaPix
@@ -45,7 +45,7 @@ reduced_Chisq = chiq_map.sum()/pixels
 if len(lines)>60:                    
     gal_com2_type = lines[52][4:7]
     gal_com2_mag = float(lines[54][4:11])
-    psf_flux = 10.**(-0.4*(gal_com2_mag-zp))
+    psf_flux = 10.**(-0.4*(gal_com2_mag-26.452))
 
 #lenstronomy_redisual = pyfits.open('plan_b_residual.fits')[0].data.copy()
 if len(lines)<60:

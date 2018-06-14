@@ -7,7 +7,7 @@ Created on Mon Jun 11 12:03:26 2018
 """
 
 import numpy as np
-filt = 'F140w'
+filt = 'xxx'
 pix_sz = 'drz06'
 
 if filt == 'F140w':
@@ -37,7 +37,14 @@ gal_flux = gal_bestfit.sum()
 sersic_mag = -2.5 * np.log10(gal_flux) + zp
 
 noise_map = pyfits.getdata('noise_level.fits')
+
 chiq_map = (gal_residual/noise_map)**2
+
+##IF have QSO mask:
+#QSO_msk = pyfits.getdata('QSO_msk.fits')
+#chiq_map = (gal_residual/noise_map)**2
+#chiq_map = chiq_map * (1-QSO_msk)
+
 pixels=len(noise_map)**2
 reduced_Chisq = chiq_map.sum()/pixels 
                             
@@ -46,7 +53,7 @@ reduced_Chisq = chiq_map.sum()/pixels
 if len(lines)>60:                    
     gal_com2_type = lines[52][4:7]
     gal_com2_mag = float(lines[54][4:11])
-    psf_flux = 10.**(-0.4*(gal_com2_mag-zp))
+    psf_flux = 10.**(-0.4*(gal_com2_mag-26.452))
 
 #lenstronomy_redisual = pyfits.open('plan_b_residual.fits')[0].data.copy()
 if len(lines)<60:

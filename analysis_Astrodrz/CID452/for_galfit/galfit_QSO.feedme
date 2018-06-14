@@ -47,5 +47,5 @@ P) 0                   # Choose: 0=optimize, 1=model, 2=imgblock, 3=subcomps
  0) psf                    #  object type
  1) 61.3271  60.8081  1 1    #  Position x, y 
  3) 22.1600     1          #  Integrated magnitude 
- Z) 0                      #  Skip this model in output image?  (yes=1, no=0)
+ Z) 1                      #  Skip this model in output image?  (yes=1, no=0)
 ================================================================================

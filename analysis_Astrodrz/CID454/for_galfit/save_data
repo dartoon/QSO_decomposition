@@ -1,0 +1,10 @@
+import os
+os.mkdir('../for_galfit')
+pyfits.PrimaryHDU(QSO_im[cut:-cut,cut:-cut]).writeto('../for_galfit/QSO.fits',overwrite=True)
+pyfits.PrimaryHDU(psf_b).writeto('../for_galfit/PSF_b.fits',overwrite=True)
+pyfits.PrimaryHDU(image_ps).writeto('../for_galfit/plan_b_point_source.fits',overwrite=True)
+pyfits.PrimaryHDU(image_host).writeto('../for_galfit/plan_b_model_sersic.fits',overwrite=True)
+pyfits.PrimaryHDU(np.sqrt(data_C_D)).writeto('../for_galfit/noise_level.fits',overwrite=True)
+pyfits.PrimaryHDU(QSO_im[cut:-cut,cut:-cut]-image_ps).writeto('../for_galfit/plan_b_QSO-PSF.fits',overwrite=True)
+pyfits.PrimaryHDU(QSO_im[cut:-cut,cut:-cut]-image_ps-image_host).writeto('../for_galfit/plan_b_residual.fits',overwrite=True)
+#pyfits.PrimaryHDU(QSO_msk).writeto('../for_galfit/QSO_msk.fits',overwrite=True)

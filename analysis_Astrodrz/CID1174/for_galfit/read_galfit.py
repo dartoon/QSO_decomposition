@@ -22,7 +22,7 @@ if pix_sz == 'drz06':
 elif pix_sz == 'acs':
     deltaPix = 0.03
 
-filename = 'result_QSO' 
+filename = 'galfit.02' 
 fit_out = open('{0}'.format(filename),'r')
 lines = fit_out.readlines()
 sersic_re = float(lines[42][4:12]) * deltaPix
