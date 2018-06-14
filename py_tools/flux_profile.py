@@ -260,11 +260,11 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
     for i in range(psfs_NO):
+        if i ==0 and include_QSO == True:
+            plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5)
+            plt.legend()
         if psfs[i] is not None:
             msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), mask_list)
-            if i ==0 and include_QSO == True:
-                    plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5)
-                    plt.legend()
             if msk_counts == 0:
                 r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli)
             elif msk_counts >0:

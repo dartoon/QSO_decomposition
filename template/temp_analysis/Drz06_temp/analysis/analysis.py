@@ -27,7 +27,7 @@ psf_name_list = glob.glob("PSF*.fits")   # Read *.reg files in a list.
 psf_list = []
 
 #if not count PSF?, just name the file to not_count_PSF?.fits and +1 in the following line.
-for i in range(len(psf_name_list)+1):
+for i in range(len(psf_name_list)):
     if 'PSF{0}.fits'.format(i) in psf_name_list:
         psf_get = pyfits.getdata('PSF{0}.fits'.format(i))
         psf_list.append(psf_get)
