@@ -221,7 +221,9 @@ def QSO_star_mag(img, center_QSO, QSO_mag, psf_list,mag, ID=None, reg_ty='astrod
     if ifsave == True:
         fig.savefig('PSF_mag.pdf')
         
-def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1, mag_diff, ID, reg_ty='astrodrz_06', ifsave=False):
+def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1,
+                   mag_diff, ID, reg_ty='astrodrz_06', ifsave=False,
+                   label_shift_NO=(),shift_where=None):
     fig = plt.figure(figsize=(15,15))
     ax=fig.add_subplot(1,1,1)
     import copy, matplotlib
@@ -246,16 +248,28 @@ def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1, mag_diff, ID,
     ax.text(QSO_pos[0]-1*QSO_box_size, QSO_pos[1]+1.6*QSO_box_size, '{0}'.format(round(QSO_mags[0]-QSO_mags[1],2)),color='white', fontsize=13)
     ax.add_patch(QSO_mask.bbox.as_patch(facecolor='none', edgecolor='white', linewidth=2))
     count=0
+    count_shift = 0
     for i in range(len(psf_list)):
         PSF_reg = pix_region(psf_list[i], radius= PSF_box_size)
         PSF_mask = PSF_reg.to_mask(mode='center')
-        ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue', linewidth=2))
-        ax.text(psf_list[i][0]-4*PSF_box_size, psf_list[i][1]+2*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=13)
-        ax.text(psf_list[i][0]-1*PSF_box_size, psf_list[i][1]+3*PSF_box_size, '{0}'.format(round(mag_0[i],2)),color='yellow', fontsize=13)
-        ax.text(psf_list[i][0]-1*PSF_box_size, psf_list[i][1]+2*PSF_box_size, '{0}'.format(round(mag_1[i],2)),color='c', fontsize=13)
-        ax.text(psf_list[i][0]-1*PSF_box_size, psf_list[i][1]+1*PSF_box_size, '{0}'.format(round(mag_diff[i],2)),color='white', fontsize=13)
-        ax.xaxis.set_visible(False)
-        ax.yaxis.set_visible(False)
+        if count not in label_shift_NO:
+            ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue', linewidth=2))
+            ax.text(psf_list[i][0]-4*PSF_box_size, psf_list[i][1]+2*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=13)
+            ax.text(psf_list[i][0]-1*PSF_box_size, psf_list[i][1]+3*PSF_box_size, '{0}'.format(round(mag_0[i],2)),color='yellow', fontsize=13)
+            ax.text(psf_list[i][0]-1*PSF_box_size, psf_list[i][1]+2*PSF_box_size, '{0}'.format(round(mag_1[i],2)),color='c', fontsize=13)
+            ax.text(psf_list[i][0]-1*PSF_box_size, psf_list[i][1]+1*PSF_box_size, '{0}'.format(round(mag_diff[i],2)),color='white', fontsize=13)
+            ax.xaxis.set_visible(False)
+            ax.yaxis.set_visible(False)
+        elif count in label_shift_NO:
+            shift = shift_label_index(shift_where[count_shift])        
+            ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='blue', linewidth=2))
+            ax.text(psf_list[i][0]+shift[0]*PSF_box_size, psf_list[i][1]+shift[1]*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=13)
+            ax.text(psf_list[i][0]+(shift[0]+3)*PSF_box_size, psf_list[i][1]+(shift[1]+1)*PSF_box_size, '{0}'.format(round(mag_0[i],2)),color='yellow', fontsize=13)
+            ax.text(psf_list[i][0]+(shift[0]+3)*PSF_box_size, psf_list[i][1]+(shift[1]+0)*PSF_box_size, '{0}'.format(round(mag_1[i],2)),color='c', fontsize=13)
+            ax.text(psf_list[i][0]+(shift[0]+3)*PSF_box_size, psf_list[i][1]+(shift[1]-1)*PSF_box_size, '{0}'.format(round(mag_diff[i],2)),color='white', fontsize=13)
+            ax.xaxis.set_visible(False)
+            ax.yaxis.set_visible(False)
+            count_shift += 1
         count += 1
     if not ID == None:
         ax.text(len(img)*0.05, len(img)*0.8, ID,color='white', fontsize=30)
@@ -282,13 +296,13 @@ def grab_pos(filename, reg_ty='swarp', QSO_reg_return = False):
         if string.split(',')[0] != '':
             pos_list = [float(j) for j in string.split(',')]
             pos_string.append(pos_list)
-    for i in range(1,len(string_list)):
-        if 'red' in string_list[i]:
-            count_QSO = i
-        if '(' in string_list[i] and '(' not in string_list[i-1]:
-            count_reg = i
-    QSO_loc = count_QSO - count_reg
     if QSO_reg_return == True:
+        for i in range(1,len(string_list)):
+            if 'red' in string_list[i]:
+                count_QSO = i
+            if '(' in string_list[i] and '(' not in string_list[i-1]:
+                count_reg = i
+        QSO_loc = count_QSO - count_reg
         return np.asarray(pos_string), QSO_loc
     elif QSO_reg_return == False:
         return np.asarray(pos_string)

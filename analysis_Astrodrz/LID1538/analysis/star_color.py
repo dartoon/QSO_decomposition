@@ -20,11 +20,11 @@ from flux_profile import pix_region,flux_in_region
 import copy
 import astropy.io.fits as pyfits
 
-ID = 'XXX'
+ID = 'LID1538'
 # =============================================================================
 # ### Information for the IR band
 # =============================================================================
-filt = 'XXX'
+filt = 'F140w'
 if filt == 'F140w':
     zp_IR = 26.4524
 elif filt == 'F125w':
@@ -35,14 +35,14 @@ IR_psf_list = grab_pos(filename_0,reg_ty = 'astrodrz_06')
 
 fitsFile = pyfits.open('../astrodrz/final_drz.fits')
 img_IR = fitsFile[1].data # check the back grounp
-QSO_pos_IR = IR_psf_list[-1]
+QSO_pos_IR = np.array([1539,1210])
 count=0
-psf_list_IR = copy.deepcopy(IR_psf_list[:-1])
-psf_list_IR = psf_list_IR[psf_list_IR[:,1].argsort()]
-#extra_psfs_IR = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx]])
-#psf_list_IR = np.vstack((psf_list_IR, extra_psfs_IR))
+psf_list_IR = copy.deepcopy(IR_psf_list)
+psf_list_IR = psf_list_IR[psf_list_IR[:,0].argsort()]
+extra_psfs_IR = extra_psfs = np.array([[737,1641],[1159,1110],[2054,1959],[2327,981],[1818,370]])
+psf_list_IR = np.vstack((psf_list_IR, extra_psfs_IR))
 flux_IR = np.zeros(len(psf_list_IR))
-flux_QSO_IR = np.nan   # Use the value as taking by plan b
+flux_QSO_IR = 93.776   # Use the value as taking by plan b
 # =============================================================================
 #======= If need to cal. the QSO flux from the image.=============================
 # _, center = cut_center_bright(image=img_IR, center=QSO_pos_IR, radius=60, return_center=True)
@@ -65,16 +65,17 @@ zp_acs = 25.94333
 deltaPix_acs = 0.03
 filename_1= '../../../analysis_ACS/{0}/{0}.reg'.format(ID)
 acs_psf_list = grab_pos(filename_1,reg_ty = 'acs')
+acs_psf_list[[0,-1]] = acs_psf_list[[-1,0]]
 fitsFile = pyfits.open('../../../Cycle25data/ACS_data/{0}_acs_I_mosaic_180mas_sci.fits'.format(ID))
 img_acs = fitsFile[0].data  #- (-0.003)  # check the back grounp
 QSO_pos_acs = acs_psf_list[-1]
 count=0
 psf_list_acs = copy.deepcopy(acs_psf_list[:-1])
 psf_list_acs = psf_list_acs[psf_list_acs[:,0].argsort()]
-#extra_psfs_acs = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx]])
-#psf_list_acs = np.vstack((psf_list_acs, extra_psfs_acs))
+extra_psfs_acs = extra_psfs = np.array([[1277,3936],[2187,2797],[4106,4619],[4682,2523],[3585,1218],[4423,4082]])
+psf_list_acs = np.vstack((psf_list_acs, extra_psfs_acs))
 flux_acs = np.zeros(len(psf_list_acs))
-flux_QSO_acs = np.nan  # Use the value as taking by plan b
+flux_QSO_acs = 92.305  # Use the value as taking by plan b
 # =============================================================================
 #======= f need to cal. the QSO flux from the image.=============================
 # _, center = cut_center_bright(image=img_acs, center=QSO_pos_acs, radius=60, return_center=True)

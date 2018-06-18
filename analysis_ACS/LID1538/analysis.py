@@ -23,7 +23,7 @@ filt = 'acs'
 # =============================================================================
 # Read PSF and QSO image
 # =============================================================================
-#psf_name_list = glob.glob("PSF*.fits")   # Read *.reg files in a list.
+psf_name_list = glob.glob("PSF*.fits")   # Read *.reg files in a list.
 psf_list = []
 for i in range(len(psf_name_list)):
     psf_get = pyfits.getdata('PSF{0}.fits'.format(i))
@@ -62,7 +62,10 @@ for i in range(2):
 psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(1,4,8,9),
                   mask_list=mask_list)
 
-psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,5,7,8,9),
+#psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(0,1,4,5,7,8,9),  # For star burst
+#                  mask_list=mask_list)
+
+psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(1,3,4,6,7,8,9),
                   mask_list=mask_list)
 
 prf_list = [QSO_im,psf_a, psf_b]
@@ -73,11 +76,14 @@ fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_l
 fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
 plt.show()
 
-pyfits.PrimaryHDU(psf_a).writeto('PSF_ACS_plan_a.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_a_std).writeto('PSF_ACS_plan_a_std.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_b).writeto('PSF_ACS_plan_b.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(psf_b_std).writeto('PSF_ACS_plan_b_std.fits'.format(ID),overwrite=True)
-'''
+#pyfits.PrimaryHDU(psf_a).writeto('PSF_ACS_plan_a.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_a_std).writeto('PSF_ACS_plan_a_std.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b).writeto('PSF_ACS_plan_b.fits'.format(ID),overwrite=True)
+#pyfits.PrimaryHDU(psf_b_std).writeto('PSF_ACS_plan_b_std.fits'.format(ID),overwrite=True)
+
+pyfits.PrimaryHDU(psf_b).writeto('../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(psf_b_std).writeto('../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
+
 # =============================================================================
 # Doing the fitting
 # =============================================================================
@@ -88,7 +94,7 @@ from transfer_to_result import transfer_to_result
 #QSO_msk = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut=20)
 QSO_msk =None
 fit_result = open('fit_result.txt','w') 
-background_rms = 0.0027
+background_rms = 0.0028
 
 ##############################Fit
 print "by psf_a"
@@ -141,4 +147,3 @@ fit_result.write("#fit with PSF by Plan b, relax center: \n")
 fit_result.write(repr(result)+ "\n")
 
 fit_result.close()
-'''

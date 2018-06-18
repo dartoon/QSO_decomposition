@@ -26,8 +26,12 @@ filt = 'acs'
 psf_name_list = glob.glob("PSF*.fits")   # Read *.reg files in a list.
 psf_list = []
 for i in range(len(psf_name_list)):
-    psf_get = pyfits.getdata('PSF{0}.fits'.format(i))
-    psf_list.append(psf_get)
+    if 'PSF{0}.fits'.format(i) in psf_name_list:
+        psf_get = pyfits.getdata('PSF{0}.fits'.format(i))
+        psf_list.append(psf_get)
+    else:
+        psf_list.append(None)
+        
 mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
 QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 
@@ -83,7 +87,7 @@ from fit_qso import fit_qso
 from transfer_to_result import transfer_to_result
 #from flux_profile import cr_mask_img
 #mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
-#QSO_msk = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut=20)
+#QSO_msk = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut=cut)
 QSO_msk =None
 fit_result = open('fit_result.txt','w') 
 background_rms = 0.0027
@@ -91,7 +95,7 @@ background_rms = 0.0027
 ##############################Fit
 print "by psf_a"
 fixcenter = True
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,QSO_msk=QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
                                                        deep_seed = False, fixcenter=fixcenter, background_rms=background_rms,exp_time = 2028.,
                                                        pix_sz = 'acs')
@@ -104,7 +108,7 @@ fit_result.write(repr(result) + "\n")
 ##############################Fit
 print "by psf_a, relax center"
 fixcenter = False
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,QSO_msk=QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
                                                        deep_seed = False, fixcenter= fixcenter, background_rms=background_rms,exp_time = 2028.,
                                                        pix_sz = 'acs')
@@ -116,7 +120,7 @@ fit_result.write(repr(result)+ "\n")
 ##############################Fit
 print "by psf_b"
 fixcenter = True
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,QSO_msk=QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
                                                        deep_seed = False, fixcenter= fixcenter, background_rms=background_rms,exp_time = 2028.,
                                                        pix_sz = 'acs')
@@ -128,7 +132,7 @@ fit_result.write(repr(result) + "\n")
 ##############################Fit
 print "by psf_b, relax center"
 fixcenter = False
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,QSO_msk=QSO_msk,
                                                        source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
                                                        deep_seed = False, fixcenter= fixcenter,background_rms=background_rms,exp_time = 2028.,
                                                        pix_sz = 'acs')

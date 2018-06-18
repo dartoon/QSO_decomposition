@@ -16,16 +16,16 @@ import astropy.io.fits as pyfits
 ID = 'xxx'
 
 filename= '{0}.reg'.format(ID)
-c_psf_list = grab_pos(filename,reg_ty = 'acs')
+c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'acs', QSO_reg_return=True)
 #print c_psf_list
 
 fitsFile = pyfits.open('../../Cycle25data/ACS_data/{0}_acs_I_mosaic_180mas_sci.fits'.format(ID))
 img = fitsFile[0].data  #- (-0.003)  # check the back grounp
-center_QSO = c_psf_list[-1]
+center_QSO = c_psf_list[QSO_loc]
 QSO = cut_center_bright(image=img, center=center_QSO, radius=100)
 #pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
 count=0
-psf_list = copy.deepcopy(c_psf_list[:-1])
+psf_list = np.delete(c_psf_list, (QSO_loc), axis=0)
 psf_list = psf_list[psf_list[:,0].argsort()]
 #psf_list[[3,4]] = psf_list[[4,3]]
 for i in range(len(psf_list)):
