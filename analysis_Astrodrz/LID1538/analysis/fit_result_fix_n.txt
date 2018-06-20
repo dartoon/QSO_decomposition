@@ -1,0 +1,8 @@
+#fix center, fix n as 4: 
+{'n_sersic': 4.0, 'host_mag': 20.922, 'center_x': 0.004, 'QSO_amp': 85.319, 'q': 0.687, 'redu_Chisq': 7.745, 'I0_sersic': 4.54, 'center_y': -0.018, 'host_amp': 163.045, 'phi_G': -0.256, 'R_sersic': 0.1, 'host_flux_ratio_percent': 89.462}
+#relax center, fix n as 4: 
+{'n_sersic': 4.0, 'host_mag': 21.171, 'qso_y': -0.024, 'qso_x': 0.035, 'center_x': -0.063, 'QSO_amp': 132.858, 'q': 0.791, 'redu_Chisq': 4.383, 'I0_sersic': 0.13, 'center_y': 0.0, 'host_amp': 129.617, 'phi_G': -0.181, 'R_sersic': 0.393, 'host_flux_ratio_percent': 45.284}
+#fix center, fix n as 1.5: 
+{'n_sersic': 1.5, 'host_mag': 21.301, 'center_x': 0.005, 'QSO_amp': 125.477, 'q': 0.702, 'redu_Chisq': 4.251, 'I0_sersic': 1.628, 'center_y': -0.017, 'host_amp': 114.934, 'phi_G': -0.236, 'R_sersic': 0.17, 'host_flux_ratio_percent': 46.71}
+#relax center, fix n as 1.5: 
+{'n_sersic': 1.5, 'host_mag': 21.46, 'qso_y': -0.018, 'qso_x': 0.017, 'center_x': -0.035, 'QSO_amp': 142.278, 'q': 0.726, 'redu_Chisq': 4.177, 'I0_sersic': 1.116, 'center_y': -0.011, 'host_amp': 99.332, 'phi_G': -0.237, 'R_sersic': 0.188, 'host_flux_ratio_percent': 42.209}

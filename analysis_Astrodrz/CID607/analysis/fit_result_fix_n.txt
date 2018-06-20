@@ -1,0 +1,4 @@
+#fix center, fix n as 4: 
+{'n_sersic': 4.0, 'host_mag': 21.957, 'center_x': 0.029, 'QSO_amp': 191.974, 'q': 0.505, 'redu_Chisq': 2.076, 'I0_sersic': 0.041, 'center_y': 0.041, 'host_amp': 51.222, 'phi_G': 0.205, 'R_sersic': 0.698, 'host_flux_ratio_percent': 21.128}
+#fix center, fix n as 1.5: 
+{'n_sersic': 1.5, 'host_mag': 22.241, 'center_x': 0.029, 'QSO_amp': 196.407, 'q': 0.538, 'redu_Chisq': 2.075, 'I0_sersic': 0.065, 'center_y': 0.041, 'host_amp': 39.425, 'phi_G': 0.203, 'R_sersic': 0.57, 'host_flux_ratio_percent': 16.68}
