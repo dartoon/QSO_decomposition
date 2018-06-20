@@ -23,7 +23,6 @@ def getMag(Sersic,filt,deltaPix=0.0624):
     re = Sersic['R_sersic']/deltaPix
     k = 2.*n-1./3+4./(405.*n)+46/(25515.*n**2)
     cnts = (re**2)*Sersic['I0_sersic']*exp(k)*n*(k**(-2*n))*gamma(2*n)*2*pi
-#    print 'conts_getmag', cnts
     mag=-2.5*log10(cnts) + zp
     return mag
 
