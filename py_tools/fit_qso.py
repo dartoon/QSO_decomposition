@@ -13,7 +13,7 @@ import corner
 
 def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04, pix_sz = 'swarp',
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
-            flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None):
+            flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None, QSO_std=None):
     '''
     A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
     
@@ -139,6 +139,9 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
                          'source_marg': False,  #In likelihood_module.LikelihoodModule -- whether to fully invert the covariance matrix for marginalization
                                  }
     kwargs_data = data_class.constructor_kwargs() # The "dec_at_xy_0" means the dec at the (0,0) point.
+    if QSO_std is not None:
+        kwargs_data['noise_map'] = QSO_std
+    
     kwargs_psf = psf_class.constructor_kwargs()
     if psf_std is not None:
         kwargs_psf['psf_error_map'] = psf_std
@@ -172,7 +175,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     
     import time
     start_time = time.time()
-    lens_result, source_result, lens_light_result, ps_result, chain_list, param_list, samples_mcmc, param_mcmc, dist_mcmc = fitting_seq.fit_sequence(fitting_kwargs_list)
+    lens_result, source_result, lens_light_result, ps_result, cosmo_temp, chain_list, param_list, samples_mcmc, param_mcmc, dist_mcmc = fitting_seq.fit_sequence(fitting_kwargs_list)
     end_time = time.time()
     print(end_time - start_time, 'total time needed for computation')
     print('============ CONGRATULATION, YOUR JOB WAS SUCCESSFUL ================ ')
@@ -218,7 +221,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         
         # transform the parameter position of the MCMC chain in a lenstronomy convention with keyword arguments #
         for i in range(len(samples_mcmc)/10):
-            kwargs_lens_out, kwargs_light_source_out, kwargs_light_lens_out, kwargs_ps_out = param.getParams(samples_mcmc[i+ len(samples_mcmc)/10*9])
+            kwargs_lens_out, kwargs_light_source_out, kwargs_light_lens_out, kwargs_ps_out, kwargs_cosmo = param.getParams(samples_mcmc[i+ len(samples_mcmc)/10*9])
             image_reconstructed, _, _, _ = imageModel.image_linear_solve(kwargs_source=kwargs_light_source_out, kwargs_ps=kwargs_ps_out)
             
             image_ps = imageModel.point_source(kwargs_ps_out)
@@ -240,7 +243,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
 
 def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04, pix_sz = 'swarp',
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
-            flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None):
+            flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None,QSO_std=None):
     '''
     A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
     
@@ -280,7 +283,7 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
     
     kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
     if psf_std is not None:
-        kwargs_numerics.get('psf_error_map', psf_std)     #Turn on the PSF error map
+        kwargs_numerics.get('psf_error_map', True)     #Turn on the PSF error map
     
     if source_params is None:
         # here are the options for the host galaxy fitting
@@ -360,6 +363,9 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
                          'source_marg': False,  #In likelihood_module.LikelihoodModule -- whether to fully invert the covariance matrix for marginalization
                                  }
     kwargs_data = data_class.constructor_kwargs() # The "dec_at_xy_0" means the dec at the (0,0) point.
+    if QSO_std is not None:
+        kwargs_data['noise_map'] = QSO_std
+        
     kwargs_psf = psf_class.constructor_kwargs()
     if psf_std is not None:
         kwargs_psf['psf_error_map'] = psf_std
@@ -393,7 +399,7 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
     
     import time
     start_time = time.time()
-    lens_result, source_result, lens_light_result, ps_result, chain_list, param_list, samples_mcmc, param_mcmc, dist_mcmc = fitting_seq.fit_sequence(fitting_kwargs_list)
+    lens_result, source_result, lens_light_result, ps_result, cosmo_temp, chain_list, param_list, samples_mcmc, param_mcmc, dist_mcmc = fitting_seq.fit_sequence(fitting_kwargs_list)
     end_time = time.time()
     print(end_time - start_time, 'total time needed for computation')
     print('============ CONGRATULATION, YOUR JOB WAS SUCCESSFUL ================ ')
@@ -439,7 +445,7 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
         
         # transform the parameter position of the MCMC chain in a lenstronomy convention with keyword arguments #
         for i in range(len(samples_mcmc)):
-            kwargs_lens_out, kwargs_light_source_out, kwargs_light_lens_out, kwargs_ps_out = param.getParams(samples_mcmc[i])
+            kwargs_lens_out, kwargs_light_source_out, kwargs_light_lens_out, kwargs_ps_out, kwargs_cosmo = param.getParams(samples_mcmc[i])
             image_reconstructed, _, _, _ = imageModel.image_linear_solve(kwargs_source=kwargs_light_source_out, kwargs_ps=kwargs_ps_out)
             
             image_ps = imageModel.point_source(kwargs_ps_out)
