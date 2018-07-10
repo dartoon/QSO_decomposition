@@ -231,11 +231,11 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
         radius = 8
     elif gridspace == 'log':
         radius = len(psfs_not_none)/2
-    frame_mid = len(QSO)/2
+    frm_qrt = int(len(QSO)/2.5)
     if include_QSO == True:
         if plt_QSO ==True:
             print "Plot for QSO:"
-        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[frame_mid-20:frame_mid+20,frame_mid-20:frame_mid+20].max())),(2))[::-1]
+        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max())),(2))[::-1]
 #        print "center_QSO:", center_QSO
         r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=plt_QSO, gridspace=gridspace, if_annuli=if_annuli)
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
@@ -244,7 +244,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
 #            print "idx:",idx
             r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves
     psfs_NO = len(psfs)
-    center = np.reshape(np.asarray(np.where(psfs_not_none== psfs_not_none[frame_mid-20:frame_mid+20,frame_mid-20:frame_mid+20].max())),(2))[::-1]
+    center = np.reshape(np.asarray(np.where(psfs_not_none== psfs_not_none[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max())),(2))[::-1]
 #    print "center_PSF:", center
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):

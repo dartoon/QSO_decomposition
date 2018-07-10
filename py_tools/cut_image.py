@@ -28,7 +28,7 @@ def cut_center_bright(image, center, radius, return_center=False):
     temp_center = np.asarray(center)
     radius = radius
     img_test = cut_image(image=image, center=temp_center, radius=radius)
-    frm_qrt = len(img_test)/4
+    frm_qrt = int(len(img_test)/2.5)
     test_center =  np.asarray(np.where(img_test == img_test[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max()))[:,0]
     center_shift = np.array((test_center- radius))[::-1]
     center = (temp_center + center_shift)
@@ -59,6 +59,11 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,
         QSO_box_size = 60
         PSF_box_size = 40
     elif reg_ty == 'acs':
+        vmax = 2.1 
+        vmin = 1.e-3
+        QSO_box_size = 100
+        PSF_box_size = 60 
+    elif reg_ty == 'flt':
         vmax = 2.1 
         vmin = 1.e-3
         QSO_box_size = 100
@@ -276,7 +281,7 @@ def QSO_star_color(img, QSO_pos, QSO_mags, psf_list, mag_0, mag_1,
     if ifsave == True:
         fig.savefig('PSF_color.pdf')
     
-def grab_pos(filename, reg_ty='swarp', QSO_reg_return = False):
+def grab_pos(filename, reg_ty='swarp', QSO_reg_return = False,reg_NO=None):
     '''
     Grab all the positions of the QSO and stars from a region name. The last one are always the QSO.
     '''
@@ -292,7 +297,11 @@ def grab_pos(filename, reg_ty='swarp', QSO_reg_return = False):
         elif reg_ty == 'astrodrz_06':
             string = string_find_between(string_list[i],"(", ",155.76324")
         elif reg_ty == 'acs':
-            string = string_find_between(string_list[i],"(", ",333.33335")        
+            string = string_find_between(string_list[i],"(", ",333.33335")
+        elif reg_ty == 'flt':
+            string = string_find_between(string_list[i],"(", ",73.834478")     
+        elif reg_ty == None:
+            string = string_find_between(string_list[i],"(", ",{0}".format(reg_NO))     
         if string.split(',')[0] != '':
             pos_list = [float(j) for j in string.split(',')]
             pos_string.append(pos_list)
