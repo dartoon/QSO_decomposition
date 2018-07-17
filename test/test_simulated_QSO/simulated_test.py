@@ -45,8 +45,7 @@ center_y = 0.02
 # quasar brightness (as measured as the sum of pixel values)
 total_flux = 300.
 
-sim_n,ini_n, host_ratio = 1., 2., 0.5
-
+#sim_n,ini_n, host_ratio = 1., 2., 0.5
 
 point_amp = total_flux * (1-host_ratio)
 from lenstronomy.PointSource.point_source import PointSource
@@ -137,13 +136,13 @@ result = transfer_to_result(data=image,
                             cut=0, filt='F140w', fixcenter=True,ID=ID,
                             QSO_msk = 'QSO_msk*.reg', plot_compare= True, tag=None) 
 print 'total_flux:', round(image_noisy.sum(),2)
-print 'host_total_flux: ',round(image_host_sim.sum(),2),'%\npoint source flux: ',round(image_ps_sim.sum(),2)
+print 'host_total_flux: ',round(image_host_sim.sum(),2),'\npoint source flux: ',round(image_ps_sim.sum(),2)
 del result['host_mag'], result['q'], result['phi_G'],result['amp'],result['center_x'], result['center_y']
 #del result['redu_Chisq']
 print 'Sim_n:', sim_n, 'ini_n:', ini_n, 'input_host_ratio:', round(host_ratio*100,1), '%\nfit_result:\n', result
 
 import glob
-filename = 'test.txt'
+filename = 'Sn_{0}_In_{1}_Rato_{2}.txt'.format(int(sim_n),int(ini_n),int(host_ratio*10))
 if_file = glob.glob(filename)   
 if if_file == []:
     f =  open(filename,'w') 
@@ -151,7 +150,9 @@ elif if_file is not []:
     f = open(filename,"r+")
     f.read()
 f.write("========================================")    
-f.write("\nSim_n: "+repr(sim_n)+ ' ini_n: '+repr(ini_n)+ ' input_host_ratio: '+repr(round(host_ratio*100,1))+"%\nfit_result:\n"+repr(result))
+f.write("\nSim_n: "+repr(sim_n)+ ' ini_n: '+repr(ini_n)+ ' input_host_ratio: '+repr(round(host_ratio*100,1))+'%')
+f.write("\ntotal_flux: "+repr(round(image_noisy.sum(),2))+ ' host_flux: '+repr(round(image_host_sim.sum(),2))+ ' point_source_flux: '+repr(round(image_ps_sim.sum(),2)))
+f.write("\nfit_result:\n"+repr(result))
 f.close()
 f=open(filename,"r+")
 f.read()
