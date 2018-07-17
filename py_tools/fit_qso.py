@@ -13,7 +13,8 @@ import corner
 
 def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04, pix_sz = 'swarp',
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
-            flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None, QSO_std=None):
+            flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None, QSO_std=None,
+            tag = None, no_MCMC= False):
     '''
     A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
     
@@ -26,6 +27,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         background_rms: default as 0.04
         exp_time: default at 2400.
         deep_seed: if Ture, more mcmc steps will be performed.
+        tag: The name tag for save the plot
             
     Return
     --------
@@ -83,6 +85,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         #kwargs_lower_source.append({'R_sersic': 0.001, 'n_sersic': .5, 'center_x': -10, 'center_y': -10})
         #kwargs_upper_source.append({'R_sersic': 10, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
         source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
+        print source_params
     else:
         source_params = source_params
 
@@ -159,20 +162,23 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     
     if deep_seed == False:
         fitting_kwargs_list = [
-            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 50,
-             'n_iterations': 50},
+            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 0.8, 'n_particles': 100,
+             'n_iterations': 100},
             {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 20, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
                #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
             'sigma_scale': .1}
             ]
     elif deep_seed == True:
          fitting_kwargs_list = [
-            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 50,
-             'n_iterations': 50},
-            {'fitting_routine': 'MCMC', 'n_burn': 30, 'n_run': 30, 'walkerRatio': 100, 'mpi': False,   ##Inputs  to CosmoHammer:
+            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 80,
+             'n_iterations': 100},
+            {'fitting_routine': 'MCMC', 'n_burn': 30, 'n_run': 30, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
                #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
             'sigma_scale': .1}
             ]
+    if no_MCMC == True:
+        fitting_kwargs_list = [fitting_kwargs_list[0],
+                               ]        
     
     import time
     start_time = time.time()
@@ -206,6 +212,8 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         
         f.tight_layout()
         #f.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0., hspace=0.05)
+        if tag is not None:
+            f.savefig('{0}_fitted_image.pdf'.format(tag))
         plt.show()
         
     if corner_plot:
@@ -213,10 +221,14 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         if not samples_mcmc == []:
            n, num_param = np.shape(samples_mcmc)
            plot = corner.corner(samples_mcmc, labels=param_mcmc, show_titles=True)
+           if tag is not None:
+               plot.savefig('{0}_para_corner.pdf'.format(tag))
+           plt.show()
+           
         
     if flux_ratio_plot:
         from lenstronomy.Workflow.parameters import Param
-        param = Param(kwargs_model, kwargs_constraints, kwargs_fixed_source=fixed_source, kwargs_fixed_ps=fixed_ps)
+        param = Param(kwargs_model, kwargs_constraints, kwargs_fixed_source=source_params[2], kwargs_fixed_ps=fixed_ps)
         mcmc_new_list = []
         labels_new = [r"Quasar flux", r"host_flux", r"source_x", r"source_y"]
         
@@ -237,11 +249,13 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
             if flux_disk>0:
                 mcmc_new_list.append([flux_quasar, flux_disk, source_x, source_y])
         plot = corner.corner(mcmc_new_list, labels=labels_new, show_titles=True)
-    plt.show()
+        if tag is not None:
+            plot.savefig('{0}_HOSTvsQSO_corner.pdf'.format(tag))
+        plt.show()
     return source_result, ps_result, image_ps, image_host, data_class.C_D
 
 
-
+"""
 def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04, pix_sz = 'swarp',
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
             flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None,QSO_std=None):
@@ -463,7 +477,7 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
         plot = corner.corner(mcmc_new_list, labels=labels_new, show_titles=True)
     plt.show()
     return source_result, ps_result, image_ps, image_host, data_class.C_D
-
+"""
 
 
 def fit_single_host(QSO_im, psf_ave, background_rms=0.04, pix_sz = 'swarp',

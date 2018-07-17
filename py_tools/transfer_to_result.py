@@ -9,8 +9,9 @@ Transfer the fit to a result dict
 """
 import numpy as np
 def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
-                       data_C_D, cut, filt, fixcenter,ID, plot_compare=False, savepng=False,
-                       QSO_msk = "QSO_msk*.reg",pix_sz = 'swarp', QSO_msk_image = None):
+                       data_C_D, cut, filt, fixcenter,ID, plot_compare=False,
+                       QSO_msk = "QSO_msk*.reg",pix_sz = 'swarp', QSO_msk_image = None,
+                       tag=None):
     #==============================================================================
     # Translate the e1, e2 to phi_G and q
     #==============================================================================
@@ -58,8 +59,9 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID, pix_sz=pix_sz,
                   data_mask_list = mask_list, data_cut = cut, facility = filt,
                   plot_compare = plot_compare, msk_image = QSO_msk_image)
-    if savepng == True:
-        fig.savefig("SB_profile_{0}.pdf".format(ID))
+    if tag is not None:
+        fig.savefig("{0}_SB_profile.pdf".format(tag))
+    fig.show()
     
     # =============================================================================
     # Calculate reduced Chisq and save to result
