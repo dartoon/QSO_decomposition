@@ -67,12 +67,13 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         fixed_source.append({})  # we fix the Sersic index to n=1 (exponential)
         if fix_n == None:
             kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
-            kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+            kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -10, 'center_y': -10})
             kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 10, 'center_y': 10})
         elif fix_n is not None:
+            fixed_source.append({'n_sersic': fix_n})
             kwargs_source_init.append({'R_sersic': 1., 'n_sersic': fix_n, 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
-            kwargs_source_sigma.append({'n_sersic_sigma': 0.001, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+            kwargs_source_sigma.append({'n_sersic_sigma': 0.001, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': fix_n, 'center_x': -10, 'center_y': -10})
             kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': fix_n, 'center_x': 10, 'center_y': 10})
         ## Buldge component, as modelled by a spherical Sersic profile
@@ -87,7 +88,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
 
     center_x = 0.0
     center_y = 0.0
-    point_amp = QSO_im.sum()
+    point_amp = QSO_im.sum()/2.
     
     fixed_ps = [{}]
     kwargs_ps = [{'ra_image': [center_x], 'dec_image': [center_y], 'point_amp': [point_amp]}]
@@ -296,13 +297,13 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
 #         Disk component, as modelled by an elliptical Sersic profile
         fixed_source.append({'n_sersic': 1})  # we fix the Sersic index to n=1 (exponential)
         kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 1, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
-        kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+        kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
         kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': .3, 'center_x': -10, 'center_y': -10})
         kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
 #         Buldge component, as modelled by a spherical Sersic profile
         fixed_source.append({'n_sersic': 4})  # we fix the Sersic index to n=4 (buldgy)
         kwargs_source_init.append({'R_sersic': .3, 'n_sersic': 4, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
-        kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.3, 'ellipse_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+        kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.3, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
         kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': .5, 'center_x': -10, 'center_y': -10})
         kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
         source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
@@ -311,7 +312,7 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
 
     center_x = 0.0
     center_y = 0.0
-    point_amp = QSO_im.sum()
+    point_amp = QSO_im.sum()/2.
     
     fixed_ps = [{}]
     kwargs_ps = [{'ra_image': [center_x], 'dec_image': [center_y], 'point_amp': [point_amp]}]
@@ -462,3 +463,146 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
         plot = corner.corner(mcmc_new_list, labels=labels_new, show_titles=True)
     plt.show()
     return source_result, ps_result, image_ps, image_host, data_class.C_D
+
+
+
+def fit_single_host(QSO_im, psf_ave, background_rms=0.04, pix_sz = 'swarp',
+            exp_time = 2400., QSO_msk=None, QSO_std=None):
+    '''
+    A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
+    
+    Parameter
+    --------
+        QSO_im: An array of the QSO image.
+        psf_ave: The psf image.
+        psf_std: The psf noise, optional.
+        source_params: The prior for the source. Default is given.
+        background_rms: default as 0.04
+        exp_time: default at 2400.
+        deep_seed: if Ture, more mcmc steps will be performed.
+            
+    Return
+    --------
+        Will output the fitted image (Set image_plot = True), the corner_plot and the flux_ratio_plot.
+        source_result, ps_result, image_ps, image_host
+    
+    To do
+    --------
+        
+    '''
+    # data specifics need to set up based on the data situation
+    background_rms = background_rms  #  background noise per pixel (Gaussian)
+    exp_time = exp_time  #  exposure time (arbitrary units, flux per pixel is in units #photons/exp_time unit)
+    numPix = len(QSO_im)  #  cutout pixel size
+    if pix_sz == 'swarp' :
+        deltaPix = 0.127985  #  pixel size in arcsec (area per pixel = deltaPix**2)
+    elif pix_sz == 'drz06':
+        deltaPix = 0.0642
+    elif pix_sz == 'acs':
+        deltaPix = 0.03
+    fwhm = 0.1  # full width half max of PSF (only valid when psf_type='gaussian')
+    psf_type = 'PIXEL'  # 'gaussian', 'pixel', 'NONE'
+    kernel_size = len(psf_ave)
+    kernel = psf_ave
+    
+    kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
+    
+    #==============================================================================
+    #Doing the QSO fitting 
+    #==============================================================================
+    from lenstronomy.SimulationAPI.simulations import Simulation
+    SimAPI = Simulation()
+    data_class = SimAPI.data_configure(numPix, deltaPix, exp_time, background_rms)
+    psf_class = SimAPI.psf_configure(psf_type=psf_type, fwhm=fwhm, kernelsize=kernel_size, deltaPix=deltaPix, kernel=kernel)
+    
+    data_class.update_data(QSO_im)
+    
+    # lens light model choices
+    fixed_lens_light = []
+    kwargs_lens_light_init = []
+    kwargs_lens_light_sigma = []
+    kwargs_lower_lens_light = []
+    kwargs_upper_lens_light = []
+    
+    fixed_lens_light.append({})
+    kwargs_lens_light_init.append({'R_sersic': 1., 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
+    kwargs_lens_light_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+    kwargs_lower_lens_light.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -10, 'center_y': -10})
+    kwargs_upper_lens_light.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 10, 'center_y': 10})
+        
+    lens_light_params = [kwargs_lens_light_init, kwargs_lens_light_sigma,
+                         fixed_lens_light, kwargs_lower_lens_light,
+                         kwargs_upper_lens_light]
+    kwargs_params = {'lens_light_model': lens_light_params}
+    
+    ### Make simulation:
+    if QSO_msk is None:
+        kwargs_numerics = {'subgrid_res': 1}
+    else:
+        kwargs_numerics = {'subgrid_res': 1, 'mask': QSO_msk}
+        
+    
+    lens_light_model_list = ['SERSIC_ELLIPSE']
+    
+    kwargs_model = {'lens_light_model_list': lens_light_model_list}
+    kwargs_constraints = {'joint_center_lens_light': False}
+    kwargs_numerics_galfit = {'subgrid_res': 1}
+    kwargs_likelihood = {'check_bounds': True}
+    
+    kwargs_data = data_class.constructor_kwargs()
+    kwargs_psf = psf_class.constructor_kwargs()
+
+    from lenstronomy.LightModel.light_model import LightModel
+    lightModel = LightModel(lens_light_model_list)
+    from lenstronomy.ImSim.image_model import ImageModel
+    imageModel = ImageModel(data_class, psf_class, lens_light_model_class=lightModel, kwargs_numerics=kwargs_numerics)
+    
+    
+    if QSO_std is not None:
+        kwargs_data['noise_map'] = QSO_std
+    
+    image_band = [kwargs_data, kwargs_psf, kwargs_numerics_galfit]
+    multi_band_list = [image_band]
+    
+    from lenstronomy.Workflow.fitting_sequence import FittingSequence
+    fitting_seq = FittingSequence(multi_band_list, kwargs_model, kwargs_constraints, kwargs_likelihood, kwargs_params)
+    
+    fitting_kwargs_list = [
+            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 50,
+             'n_iterations': 50},
+#            {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 20, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
+#               #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
+#            'sigma_scale': .1}
+            ]
+    lens_result, source_result, lens_light_result, ps_result, cosmo_result, chain_list, param_list, samples_mcmc, param_mcmc, dist_mcmc = fitting_seq.fit_sequence(fitting_kwargs_list)
+    
+    from lenstronomy.Plots.output_plots import LensModelPlot
+    import lenstronomy.Plots.output_plots as out_plot
+    lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
+                             lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=1)
+    
+    for i in range(len(chain_list)):
+        if len(param_list[i]) > 0:
+            f, axes = out_plot.plot_chain(chain_list[i], param_list[i])
+    
+    f, axes = plt.subplots(2, 3, figsize=(16, 8), sharex=False, sharey=False)
+
+    lensPlot.data_plot(ax=axes[0,0])
+    lensPlot.model_plot(ax=axes[0,1])
+    lensPlot.normalized_residual_plot(ax=axes[0,2], v_min=-6, v_max=6)
+    #f.tight_layout()
+    #f.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0., hspace=0.05)
+    #plt.show()
+    #f, axes = plt.subplots(1, 3, figsize=(16, 8), sharex=False, sharey=False)
+    
+    lensPlot.decomposition_plot(ax=axes[1,0], text='Lens light', lens_light_add=True, unconvolved=True)
+    lensPlot.decomposition_plot(ax=axes[1,1], text='Lens light convolved', lens_light_add=True)
+    lensPlot.subtract_from_data_plot(ax=axes[1,2], text='Data - Lens Light', lens_light_add=True)
+    f.tight_layout()
+    #f.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0., hspace=0.05)
+    plt.show()
+    image_reconstructed, _, _, _ = imageModel.image_linear_solve(kwargs_lens_light=lens_light_result)
+    
+    image_host = imageModel.lens_surface_brightness(lens_light_result)
+#    print lens_light_result
+    return lens_light_result, image_host, data_class.C_D
