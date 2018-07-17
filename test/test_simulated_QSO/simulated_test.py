@@ -75,16 +75,16 @@ imageModel = ImageModel(data_class, psf_class, source_model_class=lightModel,
                                 point_source_class=pointSource, kwargs_numerics=kwargs_numerics)
 # simulate image with the parameters we have defined above #
 image = imageModel.image(kwargs_source=kwargs_host, kwargs_ps=kwargs_ps)
-plt.matshow(np.log10(image), origin='lower')
-plt.show()
+#plt.matshow(np.log10(image), origin='lower')
+#plt.show()
 # we can also add noise #
 import lenstronomy.Util.image_util as image_util
 poisson = image_util.add_poisson(image, exp_time=400.)
 bkg = image_util.add_background(image, sigma_bkd=0.09)
 noise = bkg + poisson
 image_noisy = image + noise
-plt.matshow(np.log10(image_noisy), origin='lower')
-plt.show()
+#plt.matshow(np.log10(image_noisy), origin='lower')
+#plt.show()
 
 # we can also simulate the different components separately
 imageModel_ps = ImageModel(data_class, psf_class, point_source_class=pointSource, kwargs_numerics=kwargs_numerics)
@@ -135,11 +135,11 @@ result = transfer_to_result(data=image,
                             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
                             cut=0, filt='F140w', fixcenter=True,ID=ID,
                             QSO_msk = 'QSO_msk*.reg', plot_compare= True, tag=None) 
-print 'total_flux:', round(image_noisy.sum(),2)
-print 'host_total_flux: ',round(image_host_sim.sum(),2),'\npoint source flux: ',round(image_ps_sim.sum(),2)
+#print 'total_flux:', round(image_noisy.sum(),2)
+#print 'host_total_flux: ',round(image_host_sim.sum(),2),'\npoint source flux: ',round(image_ps_sim.sum(),2)
 del result['host_mag'], result['q'], result['phi_G'],result['amp'],result['center_x'], result['center_y']
 #del result['redu_Chisq']
-print 'Sim_n:', sim_n, 'ini_n:', ini_n, 'input_host_ratio:', round(host_ratio*100,1), '%\nfit_result:\n', result
+#print 'Sim_n:', sim_n, 'ini_n:', ini_n, 'input_host_ratio:', round(host_ratio*100,1), '%\nfit_result:\n', result
 
 import glob
 filename = 'Sn_{0}_In_{1}_Rato_{2}.txt'.format(int(sim_n),int(ini_n),int(host_ratio*10))
