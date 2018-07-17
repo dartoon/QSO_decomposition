@@ -54,7 +54,9 @@ def flux_in_region(image,region,mode='exact'):
     tot_flux= np.sum(mask.data * data)
     return tot_flux
 
-def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=False, fits_plot=False):
+def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=False,
+                 fits_plot=False, mask_list=None, mask_cut=0., msk_image=None,
+                 mask_plot = False):
     '''
     Derive the flux profile of one image start at the center.
     
@@ -82,13 +84,24 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
         r_grids += diff             #starts from pixel 0.5
     r_flux = np.empty(grids)
     regions = []
+    mask = np.ones(image.shape)
+    if mask_list != None:
+        if msk_image is None:
+            for i in range(len(mask_list)):
+                mask *= cr_mask(image=image, filename=mask_list[i], mask_reg_cut = mask_cut)
+        else:
+            mask = msk_image
+            if mask_plot == True:
+                plt.imshow(mask,origin='lower')
+                plt.show()
     for i in range(len(r_grids)):
         region = pix_region(center, r_grids[i])
-        r_flux[i] =flux_in_region(image, region)
+        r_flux[i] =flux_in_region(image*mask, region)
         regions.append(region)
+            
     if fits_plot == True:
         ax=plt.subplot(1,1,1)
-        cax=ax.imshow((image),origin='lower',cmap='gist_heat')
+        cax=ax.imshow((image*mask),norm=LogNorm(),origin='lower')#,cmap='gist_heat')
         #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
         for i in range(grids):
             ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
@@ -127,7 +140,7 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
         grids: The number of points to sample the flux with default equals to 20;
         ifplot: if plot the profile
         fits_plot: if plot the fits file with the regions.
-        msk_image: if not is not one, will use this image as mask.
+        msk_image: if is not one, will use this image as mask.
     Returns
     --------
         A 1-D array of the SB value of each 'grids' in the profile with the sampled radius.
@@ -169,9 +182,9 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
     if fits_plot == True:
         ax=plt.subplot(1,1,1)
         if mask_list != None:
-            cax=ax.imshow(image*mask, norm=LogNorm(),origin='lower')
+            cax=ax.imshow(image*mask,norm=LogNorm(),origin='lower')
         elif mask_list == None:
-            cax=ax.imshow(image,  norm=LogNorm(),origin='lower')
+            cax=ax.imshow(image, norm=LogNorm(),origin='lower')
         #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
         for i in range(grids):
             ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
@@ -333,7 +346,7 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
                                    grids=grids, gridspace=gridspace,if_annuli=if_annuli)
         
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
-            count = r_grids <= norm_pix
+            count = r_grids <= norm_pix * scale
             idx = count.sum() -1
 #            print "idx:",idx
             r_SB /= r_SB[idx]      #normalize the curves
