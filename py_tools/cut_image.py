@@ -21,18 +21,51 @@ def cut_image(image, center, radius):
     cut_image = cut.cutout(image)
     return cut_image
 
-def cut_center_bright(image, center, radius, return_center=False):
+def cut_center_bright(image, center, radius,kernel = 'gaussian', return_center=False,plot=True):
     """
     Auto cut the image, with with brightest center in the center.
+        kernel: define the center.
     """
     temp_center = np.asarray(center)
+#    print temp_center.astype(int)
     radius = radius
-    img_test = cut_image(image=image, center=temp_center, radius=radius)
-    frm_qrt = int(len(img_test)/2.5)
-    test_center =  np.asarray(np.where(img_test == img_test[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max()))[:,0]
-    center_shift = np.array((test_center- radius))[::-1]
-    center = (temp_center + center_shift)
-    cut_c_b = cut_image(image=image, center=center, radius=radius)
+    img_test = cut_image(image=image, center=temp_center.astype(int), radius=radius)
+    if kernel == 'gaussian':
+        for i in range(3):
+            frm_q = int(len(img_test)/2.5)
+            from photutils import centroid_2dg
+            test_center = frm_q + centroid_2dg(img_test[frm_q:-frm_q,frm_q:-frm_q])
+            if i ==2 and plot==True :
+                print test_center
+                fig, ax = plt.subplots(1, 1)
+                ax.imshow(img_test[frm_q:-frm_q,frm_q:-frm_q], origin='lower')
+                marker = '+'
+                ms, mew = 30, 2.
+                plt.plot(test_center[0]-frm_q, test_center[1]-frm_q, color='b', marker=marker, ms=ms, mew=mew)
+                plt.show()
+                print 'test_center - radius', test_center, radius
+            center_shift = np.array((test_center - radius))
+            if i ==2 and plot==True :
+                print 'center_shift',center_shift
+            center = (center.astype(int) + np.round(center_shift))
+            img_test = cut_image(image=image, center=center, radius=radius)
+            if i ==2 and plot==True :
+                plt_center = img_test[frm_q:-frm_q,frm_q:-frm_q].shape
+                plt.plot(plt_center[0]/2, plt_center[1]/2, color='r', marker=marker, ms=ms, mew=mew)
+                plt.imshow(img_test[frm_q:-frm_q,frm_q:-frm_q], origin='lower')
+                plt.show()
+        cut_c_b = img_test
+    elif kernel == 'center_bright':
+        frm_q = int(len(img_test)/2.5)
+        test_center =  np.asarray(np.where(img_test == img_test[frm_q:-frm_q,frm_q:-frm_q].max()))[:,0]
+        center_shift = np.array((test_center- radius))[::-1]
+        center = (temp_center.astype(int) + np.round(center_shift))
+        cut_c_b = cut_image(image=image, center=center, radius=radius)
+        plt_center = img_test[frm_q:-frm_q,frm_q:-frm_q].shape
+        if plot==True:
+            plt.plot(plt_center[0]/2, plt_center[1]/2, color='r', marker=marker, ms=ms, mew=mew)
+            plt.imshow(img_test[frm_q:-frm_q,frm_q:-frm_q], origin='lower')
+            plt.show()
     if return_center==False:
         return cut_c_b
     if return_center==True:
