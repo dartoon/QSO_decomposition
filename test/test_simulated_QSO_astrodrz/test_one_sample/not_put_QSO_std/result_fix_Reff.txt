@@ -1,0 +1,40 @@
+
+#========================================
+#fit result:
+{'n_sersic': 1.0, 'R_sersic': 0.3, 'redu_Chisq': 7.17, 'host_flux_ratio_percent': 30.538}
+#========================================
+#fit result:
+{'n_sersic': 1.25, 'R_sersic': 0.3, 'redu_Chisq': 7.138, 'host_flux_ratio_percent': 31.888}
+#========================================
+#fit result:
+{'n_sersic': 1.5, 'R_sersic': 0.3, 'redu_Chisq': 7.168, 'host_flux_ratio_percent': 33.035}
+#========================================
+#fit result:
+{'n_sersic': 1.75, 'R_sersic': 0.3, 'redu_Chisq': 7.226, 'host_flux_ratio_percent': 34.052}
+#========================================
+#fit result:
+{'n_sersic': 2.0, 'R_sersic': 0.3, 'redu_Chisq': 7.296, 'host_flux_ratio_percent': 34.994}
+#========================================
+#fit result:
+{'n_sersic': 2.25, 'R_sersic': 0.3, 'redu_Chisq': 7.368, 'host_flux_ratio_percent': 35.896}
+#========================================
+#fit result:
+{'n_sersic': 2.5, 'R_sersic': 0.3, 'redu_Chisq': 7.437, 'host_flux_ratio_percent': 36.827}
+#========================================
+#fit result:
+{'n_sersic': 2.75, 'R_sersic': 0.3, 'redu_Chisq': 7.503, 'host_flux_ratio_percent': 37.876}
+#========================================
+#fit result:
+{'n_sersic': 3.0, 'R_sersic': 0.3, 'redu_Chisq': 7.563, 'host_flux_ratio_percent': 39.158}
+#========================================
+#fit result:
+{'n_sersic': 3.25, 'R_sersic': 0.3, 'redu_Chisq': 7.619, 'host_flux_ratio_percent': 40.525}
+#========================================
+#fit result:
+{'n_sersic': 3.5, 'R_sersic': 0.3, 'redu_Chisq': 7.672, 'host_flux_ratio_percent': 41.358}
+#========================================
+#fit result:
+{'n_sersic': 3.75, 'R_sersic': 0.3, 'redu_Chisq': 7.721, 'host_flux_ratio_percent': 42.04}
+#========================================
+#fit result:
+{'n_sersic': 4.0, 'R_sersic': 0.3, 'redu_Chisq': 8.181, 'host_flux_ratio_percent': 67.829}

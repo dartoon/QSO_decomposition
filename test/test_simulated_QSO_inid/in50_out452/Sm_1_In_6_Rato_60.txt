@@ -1,0 +1,11 @@
+
+#========================================
+#Sim_n: 1.0 ini_n: 6 input_host_ratio: 60.0%
+#total_flux: 407.69 host_flux: 240.47 point_source_flux: 160.22
+#fit_result:
+{'n_sersic': 1.818, 'R_sersic': 0.2, 'QSO_amp': 35.453, 'redu_Chisq': 3.267, 'host_amp': 349.228, 'host_flux_ratio_percent': 90.788}
+#========================================
+#Sim_n: 1.0 ini_n: 6 input_host_ratio: 60.0%
+#total_flux: 408.31 host_flux: 240.47 point_source_flux: 160.22
+#fit_result:
+{'n_sersic': 1.872, 'R_sersic': 0.203, 'QSO_amp': 39.628, 'redu_Chisq': 3.294, 'host_amp': 351.018, 'host_flux_ratio_percent': 89.861}

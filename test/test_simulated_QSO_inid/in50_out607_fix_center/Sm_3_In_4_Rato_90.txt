@@ -1,0 +1,31 @@
+
+#========================================
+#Sim_n: 3.0 ini_n: 4 input_host_ratio: 90.0%
+#total_flux: 404.7 host_flux: 366.21 point_source_flux: 40.06
+#fit_result:
+{'n_sersic': 3.908, 'R_sersic': 0.228, 'QSO_amp': -614.761, 'redu_Chisq': 1.615, 'host_amp': 978.995, 'host_flux_ratio_percent': 268.96}
+#========================================
+#Sim_n: 3.0 ini_n: 4 input_host_ratio: 90.0%
+#total_flux: 407.34 host_flux: 366.21 point_source_flux: 40.06
+#fit_result:
+{'n_sersic': 4.187, 'R_sersic': 0.251, 'QSO_amp': -609.532, 'redu_Chisq': 1.566, 'host_amp': 983.959, 'host_flux_ratio_percent': 262.958}
+#========================================
+#Sim_n: 3.0 ini_n: 4 input_host_ratio: 90.0%
+#total_flux: 404.6 host_flux: 366.21 point_source_flux: 40.06
+#fit_result:
+{'n_sersic': 3.918, 'R_sersic': 0.231, 'QSO_amp': -582.093, 'redu_Chisq': 1.607, 'host_amp': 947.222, 'host_flux_ratio_percent': 259.582}
+#========================================
+#Sim_n: 3.0 ini_n: 4 input_host_ratio: 90.0%
+#total_flux: 407.52 host_flux: 366.21 point_source_flux: 40.06
+#fit_result:
+{'n_sersic': 4.034, 'R_sersic': 0.234, 'QSO_amp': -564.608, 'redu_Chisq': 1.607, 'host_amp': 933.655, 'host_flux_ratio_percent': 253.141}
+#========================================
+#Sim_n: 3.0 ini_n: 4 input_host_ratio: 90.0%
+#total_flux: 405.19 host_flux: 366.21 point_source_flux: 40.06
+#fit_result:
+{'n_sersic': 4.024, 'R_sersic': 0.236, 'QSO_amp': -650.326, 'redu_Chisq': 1.546, 'host_amp': 1019.588, 'host_flux_ratio_percent': 276.306}
+#========================================
+#Sim_n: 3.0 ini_n: 4 input_host_ratio: 90.0%
+#total_flux: 406.31 host_flux: 366.21 point_source_flux: 40.06
+#fit_result:
+{'n_sersic': 4.444, 'R_sersic': 0.276, 'QSO_amp': 16.519, 'redu_Chisq': 1.47, 'host_amp': 363.333, 'host_flux_ratio_percent': 95.649}

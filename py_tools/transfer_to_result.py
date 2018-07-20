@@ -9,7 +9,7 @@ Transfer the fit to a result dict
 """
 import numpy as np
 def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
-                       data_C_D, cut, filt, fixcenter,ID, plot_compare=False,
+                       data_C_D, cut, filt, fixcenter,ID, plot_compare=True,
                        QSO_msk = "QSO_msk*.reg",pix_sz = 'swarp', QSO_msk_image = None,
                        tag=None):
     #==============================================================================
@@ -74,7 +74,7 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     chiq_map = ((data-image_ps-image_host)/np.sqrt(data_C_D))**2 * QSO_mask
     pixels=len(data_C_D)**2 - (1-QSO_mask).sum()
     reduced_Chisq = chiq_map.sum()/pixels
-    result['redu_Chisq'] = reduced_Chisq
-    
     result=roundme(result)
+    result['redu_Chisq'] = round(reduced_Chisq,6)
+    
     return result

@@ -1,8 +1,0 @@
-#fit with PSF by Plan a: 
-{'n_sersic': 0.303, 'host_mag': 21.142, 'center_x': -0.016, 'QSO_amp': 119.532, 'q': 0.632, 'redu_Chisq': 3.076, 'I0_sersic': 10.812, 'center_y': -0.058, 'host_amp': 133.035, 'phi_G': 0.613, 'R_sersic': 0.1, 'host_flux_ratio_percent': 52.185}
-#fit with PSF by Plan a, relax center: 
-{'n_sersic': 4.748, 'host_mag': 21.895, 'qso_y': -0.075, 'qso_x': -0.032, 'center_x': 0.06, 'QSO_amp': 193.639, 'q': 0.433, 'redu_Chisq': 2.95, 'I0_sersic': 0.834, 'center_y': -0.002, 'host_amp': 66.518, 'phi_G': -0.915, 'R_sersic': 0.141, 'host_flux_ratio_percent': 25.718}
-#fit with PSF by Plan b: 
-{'n_sersic': 4.82, 'host_mag': 21.652, 'center_x': -0.014, 'QSO_amp': 137.034, 'q': 0.894, 'redu_Chisq': 2.351, 'I0_sersic': 1.531, 'center_y': -0.057, 'host_amp': 83.188, 'phi_G': 1.006, 'R_sersic': 0.1, 'host_flux_ratio_percent': 37.487}
-#fit with PSF by Plan b, relax center: 
-{'n_sersic': 4.052, 'host_mag': 21.899, 'qso_y': -0.056, 'qso_x': -0.03, 'center_x': 0.063, 'QSO_amp': 155.414, 'q': 0.545, 'redu_Chisq': 2.257, 'I0_sersic': 0.111, 'center_y': -0.065, 'host_amp': 66.292, 'phi_G': -1.547, 'R_sersic': 0.347, 'host_flux_ratio_percent': 29.81}

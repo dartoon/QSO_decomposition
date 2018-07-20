@@ -314,7 +314,8 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     return fig
 
 def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None ,
-                     grids = 20,  norm_pix = 3, if_annuli=False, astrodrz=False):
+                     grids = 20,  norm_pix = 3, if_annuli=False, astrodrz=False,
+                     y_log=False):
     '''
     Compare the profile between different profile (prf?). One can set the scal to uniformize the resolution.
     Note that the SB center from the center of the image; Not allow mask yet.
@@ -353,8 +354,11 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
         r_grids /= scale
         if prf_name_list == None:
             plt.plot(r_grids, r_SB, 'x-', label="prf_list{0}".format(i))
-        elif len(prf_name_list)==len(prf_list):
+        elif len(prf_name_list)==len(prf_list) and y_log == False:
             plt.plot(r_grids, r_SB, 'x-', label=prf_name_list[i])
+        elif len(prf_name_list)==len(prf_list) and y_log == True:
+            plt.plot(np.log10(r_grids), r_SB, 'x-', label=prf_name_list[i])
+            plt.ylim(0, 0.5) 
         else:
             raise ValueError("The profile name is not in right length")
         plt.legend()
@@ -544,12 +548,14 @@ def total_compare(label_list, flux_list,
     ax5.set_xlabel('arcsec', fontsize=15)
     ax5.set_xscale('log')
     ax5.set_xticks([0.1, 0.2, 0.5, 1, 3])
-    ax5.set_yticks([-1.0, -0.5, 0., 0.5, 1.0])
+    ax5.set_yticks([-0.5,-0.25, 0., 0.25, 0.5])
+#    ax5.set_yticks([-1.0, -0.5, 0., 0.5, 1.0])
     import matplotlib
     ax5.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
     ax5.plot(x, y, 'k--')  
     plt.xlim([(r_grids*delatPixel).min()* 0.7,(r_grids*delatPixel).max() + 1])
-    plt.ylim([-1,1])
+    plt.ylim([-0.5,0.5])
+#    plt.ylim([-1,1])
     pos5_o = ax5.get_position() # get the original position
     pos5 = [pos5_o.x0 -0.04, pos5_o.y0, pos5_o.width, pos5_o.height*2]
     ax5.set_position(pos5) # set a new position

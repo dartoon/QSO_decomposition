@@ -55,7 +55,8 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     
     kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
     if psf_std is not None:
-        kwargs_numerics.get('psf_error_map', True)     #Turn on the PSF error map
+        kwargs_numerics.get('psf_error_map', False)     #Turn on the PSF error map
+#        print "Turn off"
     
     if source_params is None:
         # here are the options for the host galaxy fitting
@@ -66,15 +67,15 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         kwargs_upper_source = []
         
         # Disk component, as modelled by an elliptical Sersic profile
-        fixed_source.append({})  # we fix the Sersic index to n=1 (exponential)
         if fix_n == None:
-            kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
+            fixed_source.append({})  # we fix the Sersic index to n=1 (exponential)
+            kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
             kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -10, 'center_y': -10})
             kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 10, 'center_y': 10})
         elif fix_n is not None:
             fixed_source.append({'n_sersic': fix_n})
-            kwargs_source_init.append({'R_sersic': 1., 'n_sersic': fix_n, 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
+            kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': fix_n, 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
             kwargs_source_sigma.append({'n_sersic_sigma': 0.001, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': fix_n, 'center_x': -10, 'center_y': -10})
             kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': fix_n, 'center_x': 10, 'center_y': 10})
@@ -85,7 +86,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         #kwargs_lower_source.append({'R_sersic': 0.001, 'n_sersic': .5, 'center_x': -10, 'center_y': -10})
         #kwargs_upper_source.append({'R_sersic': 10, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
         source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
-        print source_params
+#        print source_params
     else:
         source_params = source_params
 
@@ -141,7 +142,8 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     
     kwargs_likelihood = {'check_bounds': True,  #Set the bonds, if exceed, reutrn "penalty"
                          'source_marg': False,  #In likelihood_module.LikelihoodModule -- whether to fully invert the covariance matrix for marginalization
-                                 }
+                          'check_positive_flux': True,        
+                         }
     kwargs_data = data_class.constructor_kwargs() # The "dec_at_xy_0" means the dec at the (0,0) point.
     if QSO_std is not None:
         kwargs_data['noise_map'] = QSO_std
@@ -149,6 +151,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     kwargs_psf = psf_class.constructor_kwargs()
     if psf_std is not None:
         kwargs_psf['psf_error_map'] = psf_std
+#        print "Turn off"
                   
     image_band = [kwargs_data, kwargs_psf, kwargs_numerics]
     multi_band_list = [image_band]
@@ -163,16 +166,16 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     if deep_seed == False:
         fitting_kwargs_list = [
             {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 0.8, 'n_particles': 100,
-             'n_iterations': 100},
+             'n_iterations': 80},
             {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 20, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
                #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
             'sigma_scale': .1}
             ]
     elif deep_seed == True:
          fitting_kwargs_list = [
-            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 80,
+            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 100,
              'n_iterations': 100},
-            {'fitting_routine': 'MCMC', 'n_burn': 30, 'n_run': 30, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
+            {'fitting_routine': 'MCMC', 'n_burn': 50, 'n_run': 100, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
                #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
             'sigma_scale': .1}
             ]
@@ -216,7 +219,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
             f.savefig('{0}_fitted_image.pdf'.format(tag))
         plt.show()
         
-    if corner_plot:
+    if corner_plot==True and no_MCMC==False:
         # here the (non-converged) MCMC chain of the non-linear parameters
         if not samples_mcmc == []:
            n, num_param = np.shape(samples_mcmc)
@@ -226,7 +229,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
            plt.show()
            
         
-    if flux_ratio_plot:
+    if flux_ratio_plot==True and no_MCMC==False:
         from lenstronomy.Workflow.parameters import Param
         param = Param(kwargs_model, kwargs_constraints, kwargs_fixed_source=source_params[2], kwargs_fixed_ps=fixed_ps)
         mcmc_new_list = []
