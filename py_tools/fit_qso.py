@@ -53,10 +53,11 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     kernel_size = len(psf_ave)
     kernel = psf_ave
     
-    kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
     if psf_std is not None:
-        kwargs_numerics.get('psf_error_map', False)     #Turn on the PSF error map
-#        print "Turn off"
+        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False, 'psf_error_map': True}     #Turn on the PSF error map
+        print "Turn on psf_error_map"
+    else: 
+        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
     
     if source_params is None:
         # here are the options for the host galaxy fitting

@@ -9,7 +9,7 @@ Transfer the fit to a result dict
 """
 import numpy as np
 def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
-                       data_C_D, cut, filt, fixcenter,ID, plot_compare=True,
+                       data_C_D, filt, fixcenter,ID, cut=0, plot_compare=True,
                        QSO_msk = "QSO_msk*.reg",pix_sz = 'swarp', QSO_msk_image = None,
                        tag=None):
     #==============================================================================

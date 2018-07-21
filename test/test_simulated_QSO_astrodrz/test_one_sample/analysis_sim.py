@@ -25,7 +25,7 @@ from mpl_toolkits.axes_grid1 import make_axes_locatable
 image_noisy = pyfits.getdata('sim_image.fits')
 QSO_std = pyfits.getdata('error_map.fits')
 #QSO_std[29:-29,29:-29] *= 10
-ini_n = 1.55
+ini_n = 3.55
 fixed_source, kwargs_source_init,kwargs_source_sigma,kwargs_lower_source, kwargs_upper_source= [], [], [], [], []
 #fixed_source.append({'n_sersic': ini_n})
 fixed_source.append({})

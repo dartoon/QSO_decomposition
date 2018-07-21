@@ -10,15 +10,17 @@ Calculate the noise map level from the undrizzled image.
 import astropy.io.fits as pyfits
 import numpy as np
 import matplotlib.pylab as plt
-import glob
+#import glob
 #from matplotlib.colors import LogNorm
 
-ID = 'CID1174'
+ID = 'CID216'
 
 wht = pyfits.getdata('wht_map.fits')
 exp = 2400.
 mean_wht = 2395.399 * (0.0642/0.135)**2
 exp_map = exp * wht/mean_wht
+
+
 stdd = 0.0076
 filename = '{0}_cutout.fits'.format(ID)
 image = pyfits.open(filename)
