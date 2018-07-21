@@ -19,7 +19,7 @@ filename= '../analysis/stars_and_QSO.reg'
 c_psf_list = grab_pos(filename,reg_ty = 'astrodrz_06')
 #print c_psf_list
 
-fitsFile = pyfits.open('../astrodrz/final_drz_0642.fits')
+fitsFile = pyfits.open('../astrodrz/final_drz.fits')
 img = fitsFile[1].data # check the back grounp
 
 #from astropy.visualization import SqrtStretch
@@ -71,7 +71,7 @@ pyfits.PrimaryHDU(cut_wht).writeto('wht_map.fits',overwrite=True)
 count=0
 psf_list = np.delete(c_psf_list, (QSO_loc), axis=0)
 psf_list = psf_list[psf_list[:,0].argsort()]
-#psf_list[[c3,4]] = psf_list[[4,3]]
+#psf_list[[3,4]] = psf_list[[4,3]]
 for i in range(len(psf_list)):
     print 'PSF',i
     PSF = cut_center_bright(image=img, center=psf_list[i], radius=60, plot=True)
@@ -80,8 +80,9 @@ for i in range(len(psf_list)):
 
 
 #extra_psfs = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx],[xxx,xxx]])
+#extra_psfs = extra_psfs[extra_psfs[:,0].argsort()]
 #for i in range(len(extra_psfs)):
-#    PSF = cut_center_bright(image=img, center=extra_psfs[i], radius=60)
+#    PSF = cut_center_bright(image=img, center=extra_psfs[i], radius=60, plot=True)
 #    pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(count),overwrite=True)
 #    count += 1
 

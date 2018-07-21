@@ -18,7 +18,7 @@ import glob
 ID='xxx'
 
 test_n = 10
-img = pyfits.getdata('{0}_cutout_outer.fits'.format{ID})
+img = pyfits.getdata('{0}_cutout_outer.fits'.format(ID)
 center = np.asarray(img.shape) /2
 mask_list = glob.glob("QSO_outer_msk*.reg")   # Read *.reg files in a list.
 r_flux, r_grids, regions=flux_profile(img, center,radius=center.min(), grids=50, ifplot=True, fits_plot= True, mask_list=mask_list)

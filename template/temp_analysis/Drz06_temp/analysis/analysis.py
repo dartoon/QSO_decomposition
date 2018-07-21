@@ -36,7 +36,7 @@ frame_size = 61
 frame = '{0}'.format(frame_size)
 ct = (121-frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
 mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
-QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))[ct:-ct,ct:-ct]
+QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
 #==============================================================================
 # Compare the profile and derive the Average image
 #==============================================================================
@@ -73,6 +73,11 @@ psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(0,2,5,6,7,8),
 psf_ave_pa, psf_std_pa = psf_ave_pa[ct:-ct,ct:-ct], psf_std_pa[ct:-ct,ct:-ct]
 psf_ave_pb, psf_std_pb = psf_ave_pb[ct:-ct,ct:-ct], psf_std_pb[ct:-ct,ct:-ct]
 
+#pyfits.PrimaryHDU(psf_ave_pa).writeto('psf_ave_pa.fits',overwrite=True)
+#pyfits.PrimaryHDU(psf_std_pa).writeto('psf_std_pa.fits',overwrite=True)
+#pyfits.PrimaryHDU(psf_ave_pb).writeto('psf_ave_pb.fits',overwrite=True)
+#pyfits.PrimaryHDU(psf_std_pb).writeto('psf_std_pb.fits',overwrite=True)
+
 prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
 scal_list = [1,1,1]
 prf_name_list = ['QSO','Plan a','Plan b']
@@ -88,6 +93,8 @@ from flux_profile import cr_mask_img
 background_rms = 0.0076
 #mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
 #QSO_msk = cr_mask_img(QSO_im, mask_list)
+#QSO_msk = QSO_msk[ct:-ct,ct:-ct]
+QSO_im = QSO_im[ct:-ct,ct:-ct]
 QSO_msk = None
 QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 fit_result = open('fit_result_{0}_reg.txt'.format(frame),'w') 
