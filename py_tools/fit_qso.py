@@ -55,7 +55,6 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     
     if psf_std is not None:
         kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False, 'psf_error_map': True}     #Turn on the PSF error map
-        print "Turn on psf_error_map"
     else: 
         kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
     
@@ -124,10 +123,8 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     
     ### Make simulation:
     from lenstronomy.ImSim.image_model import ImageModel
-    if QSO_msk is None:
-        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
-    else:
-        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False, 'mask': QSO_msk}
+    if QSO_msk is not None:
+        kwargs_numerics['mask'] = QSO_msk
     imageModel = ImageModel(data_class, psf_class, source_model_class=lightModel,
                                     point_source_class=pointSource, kwargs_numerics=kwargs_numerics)
     
@@ -257,6 +254,133 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
             plot.savefig('{0}_HOSTvsQSO_corner.pdf'.format(tag))
         plt.show()
     return source_result, ps_result, image_ps, image_host, data_class.C_D
+
+
+def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=None, pix_sz = None,
+            exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
+            flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None, QSO_std=None,
+            tag = None, no_MCMC= False):
+    '''
+    Fit the fitted_PSF and with ave_psf and return the ra and dec.
+    Note that this fitting is in pixel sacle
+    '''
+    # data specifics need to set up based on the data situation
+    numPix = len(QSO_im)  #  cutout pixel size
+    deltaPix = 1  #  pixel size
+    fwhm = 0.1  # full width half max of PSF (only valid when psf_type='gaussian')
+    psf_type = 'PIXEL'  # 'gaussian', 'pixel', 'NONE'
+    kernel_size = len(psf_ave)
+    kernel = psf_ave
+     
+    # here are the options for the host galaxy fitting
+    fixed_source = []
+    kwargs_source_init = []
+    kwargs_source_sigma = []
+    kwargs_lower_source = []
+    kwargs_upper_source = []
+    
+    source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
+    center_x = 0.0
+    center_y = 0.0
+    point_amp = QSO_im.sum()
+    
+    fixed_ps = [{}]
+    kwargs_ps = [{'ra_image': [center_x], 'dec_image': [center_y], 'point_amp': [point_amp]}]
+    kwargs_ps_init = kwargs_ps
+    kwargs_ps_sigma = [{'pos_sigma': 0.01, 'pos_sigma': 0.01}]
+    kwargs_lower_ps = [{'ra_image': [-10], 'dec_image': [-10]}]
+    kwargs_upper_ps = [{'ra_image': [10], 'dec_image': [10]}]
+    ps_param = [kwargs_ps_init, kwargs_ps_sigma, fixed_ps, kwargs_lower_ps, kwargs_upper_ps]
+    
+    kwargs_params = {'source_model': source_params,
+                'point_source_model': ps_param}
+    
+    #==============================================================================
+    #Doing the QSO fitting 
+    #==============================================================================
+    from lenstronomy.SimulationAPI.simulations import Simulation
+    SimAPI = Simulation()
+    data_class = SimAPI.data_configure(numPix, deltaPix, exp_time, background_rms)
+    psf_class = SimAPI.psf_configure(psf_type=psf_type, fwhm=fwhm, kernelsize=kernel_size, deltaPix=deltaPix, kernel=kernel)
+    data_class.update_data(QSO_im)
+    from lenstronomy.PointSource.point_source import PointSource
+    point_source_list = ['UNLENSED']
+    pointSource = PointSource(point_source_type_list=point_source_list)
+    ### Make simulation:
+    if psf_std is not None:
+        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False, 'psf_error_map': True}     #Turn on the PSF error map
+    else: 
+        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
+    if QSO_msk is not None:
+        kwargs_numerics['mask'] = QSO_msk
+
+    from lenstronomy.ImSim.image_model import ImageModel
+    imageModel = ImageModel(data_class, psf_class,
+                                    point_source_class=pointSource, kwargs_numerics=kwargs_numerics)    
+     
+    kwargs_model = { #'source_light_model_list': light_model_list,
+                     'point_source_model_list': point_source_list
+                      }
+     
+    kwargs_constraints = {'joint_center_source_light': True,  # if set to True, all the components in the host galaxy will have a shared center
+                          'fix_to_point_source_list': [True, True],  # this results in a shared center of the host galaxy with the point source (quasar)
+                           'num_point_source_list': [1]
+                          }
+     
+    kwargs_likelihood = {'check_bounds': True,  #Set the bonds, if exceed, reutrn "penalty"
+                         'source_marg': False,  #In likelihood_module.LikelihoodModule -- whether to fully invert the covariance matrix for marginalization
+                                 }
+    kwargs_data = data_class.constructor_kwargs() # The "dec_at_xy_0" means the dec at the (0,0) point.
+    kwargs_psf = psf_class.constructor_kwargs()
+    if psf_std is not None:
+        kwargs_psf['psf_error_map'] = psf_std
+    
+    
+    image_band = [kwargs_data, kwargs_psf, kwargs_numerics]
+    multi_band_list = [image_band]
+    
+    from lenstronomy.Workflow.fitting_sequence import FittingSequence
+    fitting_seq = FittingSequence(multi_band_list, kwargs_model, kwargs_constraints, kwargs_likelihood, kwargs_params)
+    
+    fitting_kwargs_list = [
+            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 50,
+             'n_iterations': 50},
+    ]
+    
+    import time
+    start_time = time.time()
+    lens_result, source_result, lens_light_result, ps_result, cosmo_temp, chain_list, param_list, samples_mcmc, param_mcmc, dist_mcmc  = fitting_seq.fit_sequence(fitting_kwargs_list)
+    end_time = time.time()
+    print(end_time - start_time, 'total time needed for computation')
+    print('============ CONGRATULATION, YOUR JOB WAS SUCCESSFUL ================ ')
+    # this is the linear inversion. The kwargs will be updated afterwards
+    image_reconstructed, _, _, _ = imageModel.image_linear_solve(kwargs_source=source_result, kwargs_ps=ps_result)
+    image_ps = imageModel.point_source(ps_result)
+    # let's plot the output of the PSO minimizer
+    if image_plot:
+        from lenstronomy.Plots.output_plots import LensModelPlot
+        lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
+                                 lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=5)
+    
+        f, axes = plt.subplots(3, 3, figsize=(16, 16), sharex=False, sharey=False)
+        lensPlot.data_plot(ax=axes[0,0])
+        lensPlot.model_plot(ax=axes[0,1])
+        lensPlot.normalized_residual_plot(ax=axes[0,2], v_min=-6, v_max=6)
+        
+        lensPlot.decomposition_plot(ax=axes[1,0], text='Host galaxy', source_add=True, unconvolved=True)
+        lensPlot.decomposition_plot(ax=axes[1,1], text='Host galaxy convolved', source_add=True)
+        lensPlot.decomposition_plot(ax=axes[1,2], text='All components convolved', source_add=True, lens_light_add=True, point_source_add=True)
+        
+        lensPlot.subtract_from_data_plot(ax=axes[2,0], text='Data - Point Source', point_source_add=True)
+        lensPlot.subtract_from_data_plot(ax=axes[2,1], text='Data - host galaxy', source_add=True)
+        lensPlot.subtract_from_data_plot(ax=axes[2,2], text='Data - host galaxy - Point Source', source_add=True, point_source_add=True)
+        
+        f.tight_layout()
+        #f.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0., hspace=0.05)
+        if tag is not None:
+            f.savefig('{0}_fitted_image.pdf'.format(tag))
+        plt.show()    
+    return source_result, ps_result, image_ps, QSO_im-image_ps, data_class.C_D
 
 
 """
