@@ -15,21 +15,21 @@ import astropy.io.fits as pyfits
 from flux_profile import flux_profile, SB_profile
 import glob
 
-ID='xxx'
+ID='CID3242'
 
 test_n = 10
-img = pyfits.getdata('{0}_cutout_outer.fits'.format{ID})
-center = np.asarray(img.shape) /2
-mask_list = glob.glob("QSO_outer_msk*.reg")   # Read *.reg files in a list.
-r_flux, r_grids, regions=flux_profile(img, center,radius=center.min(), grids=50, ifplot=True, fits_plot= True, mask_list=mask_list)
-print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
-
-
-#img = pyfits.getdata('PSF2.fits')
+#img = pyfits.getdata('{0}_cutout.fits'.format(ID))
 #center = np.asarray(img.shape) /2
-#mask_list = glob.glob("PSF2*.reg")   # Read *.reg files in a list.
-#r_flux, r_grids, regions=flux_profile(img, center,radius=center.min(), grids=30, ifplot=True, fits_plot= True, mask_list=mask_list)
+#mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
+#r_flux, r_grids, regions=flux_profile(img-0.0018, center,radius=center.min(), grids=50, ifplot=True, fits_plot= True, mask_list=mask_list)
 #print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
+
+
+img = pyfits.getdata('PSF9.fits')
+center = np.asarray(img.shape) /2
+mask_list = glob.glob("PSF9*.reg")   # Read *.reg files in a list.
+r_flux, r_grids, regions=flux_profile(img-0.0009, center,radius=center.min(), grids=30, ifplot=True, fits_plot= True, mask_list=mask_list)
+print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
 
 #img = pyfits.getdata('PSF3.fits')
 #center = np.asarray(img.shape) /2

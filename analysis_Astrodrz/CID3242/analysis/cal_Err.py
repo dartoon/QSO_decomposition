@@ -13,7 +13,7 @@ import matplotlib.pylab as plt
 #import glob
 #from matplotlib.colors import LogNorm
 
-ID = 'CID216'
+ID = 'CID3242'
 
 wht = pyfits.getdata('wht_map.fits')
 exp = 2400.
