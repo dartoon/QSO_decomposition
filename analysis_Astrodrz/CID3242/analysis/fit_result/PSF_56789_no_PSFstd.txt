@@ -1,0 +1,2 @@
+#fit with plan b, relax center: 
+{'n_sersic': 7.0, 'host_mag': 21.103, 'R_sersic': 0.1, 'qso_y': -0.017, 'qso_x': -0.007, 'QSO_amp': 149.315, 'q': 0.677, 'redu_Chisq': 3.599779, 'center_x': -0.071, 'center_y': -0.099, 'host_amp': 137.99, 'phi_G': 0.186, 'amp': 3.851, 'host_flux_ratio_percent': 49.287}

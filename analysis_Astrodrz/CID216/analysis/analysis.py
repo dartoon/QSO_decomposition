@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+ss#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
 Created on Thu Mar 29 20:17:41 2018
@@ -69,6 +69,11 @@ psf_ave_pb, psf_std_pb = psf_ave_pb[30:-30,30:-30], psf_std_pb[30:-30,30:-30]
 
 #QSO_im -= 0.00024
 
+pyfits.PrimaryHDU(psf_ave_pa).writeto('psf_ave_pa.fits',overwrite=True)
+pyfits.PrimaryHDU(psf_std_pa).writeto('psf_std_pa.fits',overwrite=True)
+pyfits.PrimaryHDU(psf_ave_pb).writeto('psf_ave_pb.fits',overwrite=True)
+pyfits.PrimaryHDU(psf_std_pb).writeto('psf_std_pb.fits',overwrite=True)
+
 prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
 scal_list = [1,1,1]
 prf_name_list = ['QSO','Plan a','Plan b']
@@ -83,37 +88,37 @@ from transfer_to_result import transfer_to_result
 from flux_profile import cr_mask_img
 background_rms = 0.0076
 #QSO_im -= 0.00026
-#mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
-#QSO_msk = cr_mask_img(QSO_im, mask_list)
+mask_list = glob.glob("")   # Read *.reg files in a list.
+QSO_msk = cr_mask_img(QSO_im, mask_list)
 QSO_msk = None
 QSO_std = pyfits.getdata('wht_err.fits')[30:-30,30:-30]
 #QSO_std[28:-28,28:-28] = 10 ** 3
 frame = '6161_PSF'
-fit_result = open('fit_result_{0}_reg.txt'.format(frame),'w') 
+fit_result = open('fit_result_PSF_std.txt'.format(frame),'w') 
 ##############################Fit
-print "by plan a"
-fixcenter = True
-tag = 'plan_a_fc{0}'.format(frame)
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im, psf_ave=psf_ave_pa, psf_std = psf_std_pa,background_rms=background_rms,
-                                                       source_params=None, QSO_msk = QSO_msk, fixcenter=fixcenter, pix_sz = 'drz06', no_MCMC =True,
-                                                       QSO_std =QSO_std, tag=tag)
-result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
-                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=QSO_std**2,
-                            cut=0, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = '', tag=tag)
-fit_result.write("#fit with plan a, ave with 'CI': \n")
-fit_result.write(repr(result) + "\n")
+#print "by plan a"
+#fixcenter = True
+#tag = 'plan_a_fc{0}'.format(frame)
+#source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_ave_pa, psf_std = psf_std_pa,background_rms=background_rms,
+#                                                       source_params=None, QSO_msk = QSO_msk, fixcenter=fixcenter, pix_sz = 'drz06', no_MCMC =True,
+#                                                       QSO_std =QSO_std, tag=tag)
+#result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
+#                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, error_map=error_map,
+#                            cut=0, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = QSO_msk, tag=tag)
+#fit_result.write("#fit with plan a, ave with 'CI': \n")
+#fit_result.write(repr(result) + "\n")
 
 ##############################Fit
 print "by plan a, relax center"
 fixcenter = False
-tag = 'plan_a_rc{0}'.format(frame)
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im, psf_ave=psf_ave_pa, psf_std = psf_std_pa,background_rms=background_rms,
-                                                       source_params=None, deep_seed = False, fixcenter= fixcenter, pix_sz = 'drz06',  no_MCMC =True,
+tag = 'PSF_std_plan_a_{0}'.format(frame)
+source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_ave_pa, psf_std = psf_std_pa,background_rms=background_rms,
+                                                       source_params=None, deep_seed = False, fixcenter= fixcenter, pix_sz = 'drz06',
                                                        QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
 result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
-                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=QSO_std**2,
-                            cut=0, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = '',tag=tag)
-fit_result.write("#fit with plan b, ave with 'CI', relax center: \n")
+                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, error_map=error_map,
+                            cut=0, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = QSO_msk,tag=tag)
+fit_result.write("#fit with plan a, ave with 'CI', relax center: \n")
 fit_result.write(repr(result) + "\n")
 ###############################Fit
 #print "by plan b"
@@ -124,20 +129,20 @@ fit_result.write(repr(result) + "\n")
 #                                                       QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
 #result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
 #                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=QSO_std**2,
-#                            cut=0, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = '',tag=tag)
+#                            cut=0, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = QSO_msk,tag=tag)
 #fit_result.write("#fit with plan b, ave with 'CI': \n")
 #fit_result.write(repr(result) + "\n")
 #
 ################################Fit
-#print "by plan b, relax center"
-#fixcenter = False
-#tag = 'plan_b_rc{0}'.format(frame)
-#source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im, psf_ave=psf_ave_pb, psf_std = psf_std_pb,background_rms=background_rms,
-#                                                       source_params=None, deep_seed = False, fixcenter= fixcenter, pix_sz = 'drz06',
-#                                                       QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
-#result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
-#                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=QSO_std**2,
-#                            cut=0, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = '',tag=tag)
-#fit_result.write("#fit with plan b, ave with 'CI', relax center: \n")
-#fit_result.write(repr(result) + "\n")
+print "by plan b, relax center"
+fixcenter = False
+tag = 'PSF_std_plan_b_{0}'.format(frame)
+source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im, psf_ave=psf_ave_pb, psf_std = psf_std_pb,background_rms=background_rms,
+                                                       source_params=None, deep_seed = False, fixcenter= fixcenter, pix_sz = 'drz06',
+                                                       QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
+result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
+                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, error_map=error_map,
+                            cut=0, filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk = QSO_msk,tag=tag)
+fit_result.write("#fit with plan b, ave with 'CI', relax center: \n")
+fit_result.write(repr(result) + "\n")
 fit_result.close()
