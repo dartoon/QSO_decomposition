@@ -79,14 +79,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
             kwargs_source_sigma.append({'n_sersic_sigma': 0.001, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': fix_n, 'center_x': -10, 'center_y': -10})
             kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': fix_n, 'center_x': 10, 'center_y': 10})
-        ## Buldge component, as modelled by a spherical Sersic profile
-        #fixed_source.append({'n_sersic': 4})  # we fix the Sersic index to n=4 (buldgy)
-        #kwargs_source_init.append({'R_sersic': .5, 'n_sersic': 4, 'center_x': 0, 'center_y': 0})
-        #kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.3, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
-        #kwargs_lower_source.append({'R_sersic': 0.001, 'n_sersic': .5, 'center_x': -10, 'center_y': -10})
-        #kwargs_upper_source.append({'R_sersic': 10, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
         source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
-#        print source_params
     else:
         source_params = source_params
 
@@ -121,12 +114,9 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     point_source_list = ['UNLENSED']
     pointSource = PointSource(point_source_type_list=point_source_list)
     
-    ### Make simulation:
     from lenstronomy.ImSim.image_model import ImageModel
     if QSO_msk is not None:
         kwargs_numerics['mask'] = QSO_msk
-    imageModel = ImageModel(data_class, psf_class, source_model_class=lightModel,
-                                    point_source_class=pointSource, kwargs_numerics=kwargs_numerics)
     
     kwargs_model = { 'source_light_model_list': light_model_list,
                     'point_source_model_list': point_source_list
@@ -149,7 +139,13 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     kwargs_psf = psf_class.constructor_kwargs()
     if psf_std is not None:
         kwargs_psf['psf_error_map'] = psf_std
-#        print "Turn off"
+    
+    from lenstronomy.Data.psf import PSF
+    psf_class = PSF(kwargs_psf)
+    
+    
+    imageModel = ImageModel(data_class, psf_class, source_model_class=lightModel,
+                                    point_source_class=pointSource, kwargs_numerics=kwargs_numerics)
                   
     image_band = [kwargs_data, kwargs_psf, kwargs_numerics]
     multi_band_list = [image_band]
@@ -189,7 +185,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     print('============ CONGRATULATION, YOUR JOB WAS SUCCESSFUL ================ ')
     
     # this is the linear inversion. The kwargs will be updated afterwards
-    image_reconstructed, _, _, _ = imageModel.image_linear_solve(kwargs_source=source_result, kwargs_ps=ps_result)
+    image_reconstructed, error_map, _, _ = imageModel.image_linear_solve(kwargs_source=source_result, kwargs_ps=ps_result)
     image_ps = imageModel.point_source(ps_result)
     image_host = imageModel.source_surface_brightness(source_result)
     # let's plot the output of the PSO minimizer
@@ -253,8 +249,10 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         if tag is not None:
             plot.savefig('{0}_HOSTvsQSO_corner.pdf'.format(tag))
         plt.show()
-    return source_result, ps_result, image_ps, image_host, data_class.C_D
-
+    if QSO_std is None:
+        return source_result, ps_result, image_ps, image_host, np.sqrt(data_class.C_D+np.abs(error_map))
+    else:
+        return source_result, ps_result, image_ps, image_host, np.sqrt(QSO_std**2+np.abs(error_map))
 
 def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=None, pix_sz = None,
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
@@ -334,7 +332,8 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
     kwargs_psf = psf_class.constructor_kwargs()
     if psf_std is not None:
         kwargs_psf['psf_error_map'] = psf_std
-    
+    from lenstronomy.Data.psf import PSF
+    psf_class = PSF(kwargs_psf)
     
     image_band = [kwargs_data, kwargs_psf, kwargs_numerics]
     multi_band_list = [image_band]
@@ -362,19 +361,11 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
         lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
                                  lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=5)
     
-        f, axes = plt.subplots(3, 3, figsize=(16, 16), sharex=False, sharey=False)
+        f, axes = plt.subplots(2, 2, figsize=(9, 9), sharex=False, sharey=False)
         lensPlot.data_plot(ax=axes[0,0])
         lensPlot.model_plot(ax=axes[0,1])
-        lensPlot.normalized_residual_plot(ax=axes[0,2], v_min=-6, v_max=6)
-        
-        lensPlot.decomposition_plot(ax=axes[1,0], text='Host galaxy', source_add=True, unconvolved=True)
-        lensPlot.decomposition_plot(ax=axes[1,1], text='Host galaxy convolved', source_add=True)
-        lensPlot.decomposition_plot(ax=axes[1,2], text='All components convolved', source_add=True, lens_light_add=True, point_source_add=True)
-        
-        lensPlot.subtract_from_data_plot(ax=axes[2,0], text='Data - Point Source', point_source_add=True)
-        lensPlot.subtract_from_data_plot(ax=axes[2,1], text='Data - host galaxy', source_add=True)
-        lensPlot.subtract_from_data_plot(ax=axes[2,2], text='Data - host galaxy - Point Source', source_add=True, point_source_add=True)
-        
+        lensPlot.normalized_residual_plot(ax=axes[1,0], v_min=-6, v_max=6)
+        lensPlot.subtract_from_data_plot(ax=axes[1,1], text='Data - Point Source', point_source_add=True)
         f.tight_layout()
         #f.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0., hspace=0.05)
         if tag is not None:

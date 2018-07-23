@@ -9,8 +9,8 @@ Transfer the fit to a result dict
 """
 import numpy as np
 def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
-                       data_C_D, filt, fixcenter,ID, cut=0, plot_compare=True,
-                       QSO_msk = "QSO_msk*.reg",pix_sz = 'swarp', QSO_msk_image = None,
+                       error_map, filt, fixcenter,ID, cut=0, plot_compare=True,
+                       QSO_msk_list = "",pix_sz = 'swarp', QSO_msk = None,
                        tag=None):
     #==============================================================================
     # Translate the e1, e2 to phi_G and q
@@ -54,11 +54,11 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     flux_list = [data, QSO, host]
     label = ['data', 'QSO', 'host', 'model', 'residual']
     import glob
-    mask_list = glob.glob(QSO_msk)   # Read *.reg files in a list.
+    mask_list = glob.glob(QSO_msk_list)   # Read *.reg files in a list.
 #    print "mask_list,muhahah", mask_list
     fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID, pix_sz=pix_sz,
                   data_mask_list = mask_list, data_cut = cut, facility = filt,
-                  plot_compare = plot_compare, msk_image = QSO_msk_image)
+                  plot_compare = plot_compare, msk_image = QSO_msk)
     if tag is not None:
         fig.savefig("{0}_SB_profile.pdf".format(tag))
     fig.show()
@@ -67,12 +67,12 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     # Calculate reduced Chisq and save to result
     # =============================================================================
     from flux_profile import cr_mask_img
-    if QSO_msk_image is None:
+    if QSO_msk is None:
         QSO_mask = cr_mask_img(data, mask_list, mask_reg_cut = cut)
     else:
-        QSO_mask = QSO_msk_image
-    chiq_map = ((data-image_ps-image_host)/np.sqrt(data_C_D))**2 * QSO_mask
-    pixels=len(data_C_D)**2 - (1-QSO_mask).sum()
+        QSO_mask = QSO_msk
+    chiq_map = ((data-image_ps-image_host)/(error_map))**2 * QSO_mask
+    pixels=len(error_map)**2 - (1-QSO_mask).sum()
     reduced_Chisq = chiq_map.sum()/pixels
     result=roundme(result)
     result['redu_Chisq'] = round(reduced_Chisq,6)

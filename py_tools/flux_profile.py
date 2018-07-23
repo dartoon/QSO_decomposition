@@ -76,11 +76,11 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
     '''
     if gridspace == None:
         r_grids=(np.linspace(0,1,grids+1)*radius)[1:]
-        diff = 0.5 - r_grids[0]
+        diff = 1.5 - r_grids[0]
         r_grids += diff             #starts from pixel 0.5
     elif gridspace == 'log':
         r_grids=(np.logspace(-2,0,grids+1)*radius)[1:]
-        diff = 0.5 - r_grids[0]
+        diff = 1.5 - r_grids[0]
         r_grids += diff             #starts from pixel 0.5
     r_flux = np.empty(grids)
     regions = []
@@ -203,7 +203,7 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
         ax.set_xlabel("Pixels")
         if gridspace == 'log':
             ax.set_xscale('log')
-            plt.xlim(0.5, ) 
+            plt.xlim(1.25, ) 
         plt.grid(which="minor")
         plt.show()
     return r_SB, r_grids
@@ -289,9 +289,9 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
 #                print "idx:",idx
                 r_SB /= r_SB[idx]      #normalize the curves
             if gridspace == None:
-                plt.text(0.25,r_SB[0],i)
+                plt.text(1.5-0.25,r_SB[0],i)
             elif gridspace == 'log':
-                plt.text(0.40,r_SB[0],i)
+                plt.text(1.5-0.1,r_SB[0],i)
 #            print r_grids[idx]
             if i not in not_plt:
                 plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
@@ -308,7 +308,7 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     ax.set_xlabel("Pixels")
     if gridspace == 'log':
         ax.set_xscale('log')
-        plt.xlim(0.4, ) 
+        plt.xlim(1.3, ) 
     plt.grid(which="minor")
 #    plt.close() 
     return fig
@@ -372,7 +372,7 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
     ax.set_xlabel("Pixels")
     if gridspace == 'log':
         ax.set_xscale('log')
-        plt.xlim(0.5, ) 
+        plt.xlim(1.3, ) 
     plt.grid(which="minor")
 #    plt.close() 
     return fig
@@ -607,3 +607,28 @@ def scale_bar(ax, d, dist=1/0.13, text='1"', color='black', flipped=False):
         p0 = d / 15.
         ax.plot([p0, p0 + dist], [p0, p0], linewidth=2, color=color)
         ax.text(p0 + dist / 2., p0 + 0.02 * d, text, fontsize=15, color=color, ha='center')
+        
+def cal_bkg_var(sub, img, mask_list=None, test_n = 20):
+    center = np.asarray(img.shape) /2
+    t_r_flux, t_r_grids, regions=flux_profile(img-sub, center,
+                                          radius=center.min(), grids=50,
+                                          ifplot=False, fits_plot= False,
+                                          mask_list=mask_list)
+    value = (t_r_flux[-test_n:][1:]-t_r_flux[-test_n:][:-1]).sum()
+    return value
+
+#print cal_bkg_var(sub=0.0017, img=img, mask_list=mask_list)
+
+def min_sub(ini, img, mask_list=None, test_n=20):
+    sub_list1=np.linspace(ini-0.01,ini+0.01,20)
+    values = np.zeros_like(sub_list1)
+    for i in range(len(sub_list1)):
+        values[i] = cal_bkg_var(sub=sub_list1[i], img=img, mask_list=mask_list)
+    idx = np.where(abs(values).min() == abs(values))[0][0]
+    ini2 = sub_list1[idx]
+    sub_list2=np.linspace(ini2-0.001,ini2+0.001,40)
+    values2 = np.zeros_like(sub_list2)
+    for i in range(len(sub_list2)):
+        values2[i] = cal_bkg_var(sub=sub_list2[i], img=img, mask_list=mask_list, test_n=test_n)
+    idx2 = np.where(abs(values2).min() == abs(values2))[0][0]
+    return sub_list2[idx2], values2[idx2]
