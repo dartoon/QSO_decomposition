@@ -17,35 +17,29 @@ import glob
 
 ID='xxx'
 
-test_n = 10
-img = pyfits.getdata('{0}_cutout_outer.fits'.format(ID)
+test_n=20
+img = pyfits.getdata('{0}_cutout.fits'.format(ID))
 center = np.asarray(img.shape) /2
-mask_list = glob.glob("QSO_outer_msk*.reg")   # Read *.reg files in a list.
-r_flux, r_grids, regions=flux_profile(img, center,radius=center.min(), grids=50, ifplot=True, fits_plot= True, mask_list=mask_list)
-print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
+mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
+sub, value = min_sub(0.001, img, mask_list=mask_list, test_n=test_n)
+r_flux, r_grids, regions=flux_profile(img-sub, center,radius=center.min(), grids=50, ifplot=True, fits_plot= True, mask_list=mask_list)
+#print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', 
+print sub
+print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum(), value
 
-
-#img = pyfits.getdata('PSF2.fits')
-#center = np.asarray(img.shape) /2
-#mask_list = glob.glob("PSF2*.reg")   # Read *.reg files in a list.
-#r_flux, r_grids, regions=flux_profile(img, center,radius=center.min(), grids=30, ifplot=True, fits_plot= True, mask_list=mask_list)
-#print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
-
-#img = pyfits.getdata('PSF3.fits')
-#center = np.asarray(img.shape) /2
-#mask_list = glob.glob("PSF3*.reg")   # Read *.reg files in a list.
-#r_flux, r_grids, regions=flux_profile(img+0.00012, center,radius=center.min(), grids=30, ifplot=True, fits_plot= True, mask_list=mask_list)
-#print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
-#
-#img = pyfits.getdata('PSF4.fits')
-#center = np.asarray(img.shape) /2
-#mask_list = glob.glob("PSF4*.reg")   # Read *.reg files in a list.
-#r_flux, r_grids, regions=flux_profile(img+0.00025, center,radius=center.min(), grids=30, ifplot=True, fits_plot= True, mask_list=mask_list)
-#print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
-#
-
-#img = psf_ave_pb
-#center = np.asarray(img.shape) /2
-#mask_list = glob.glob('')   # Read *.reg files in a list.
-#r_flux, r_grids, regions=flux_profile(img, center,radius=center.min(), grids=30, ifplot=True, fits_plot= True, mask_list=mask_list)
-#print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
+#sub_list = np.zeros(10)
+#value = np.zeros(10)
+#for i in range(10):
+#    print 'PSF{0}'.format(i)
+#    img = pyfits.getdata('PSF{0}.fits'.format(i))
+#    center = np.asarray(img.shape) /2
+#    mask_list = glob.glob("PSF{0}*.reg".format(i))   # Read *.reg files in a list.
+#    sub_list[i], value[i] = min_sub(0.001, img, mask_list=mask_list)
+#    print sub_list[i]
+#    r_flux, r_grids, regions=flux_profile(img- sub_list[i], center,
+#                                          radius=center.min(), grids=50,
+#                                          ifplot=True, fits_plot= False,
+#                                          mask_list=mask_list)
+##    print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n'
+##    print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
+#print sub_list, value

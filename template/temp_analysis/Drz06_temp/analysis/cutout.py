@@ -15,7 +15,7 @@ import copy
 import astropy.io.fits as pyfits
 ID = 'xxx'
 
-filename= '../analysis/stars_and_QSO.reg'
+filename= 'stars_and_QSO.reg'
 c_psf_list = grab_pos(filename,reg_ty = 'astrodrz_06')
 #print c_psf_list
 
@@ -55,7 +55,7 @@ img = fitsFile[1].data # check the back grounp
 #plt.show()
 #
 #img -= back              
-#pyfits.PrimaryHDU(img).writeto('sub_coadd_sub.fits',overwrite=True)
+#pyfits.PrimaryHDU(img).writeto('sub_coadd.fits',overwrite=True)
 
 c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'astrodrz_06', QSO_reg_return=True)
 center_QSO = c_psf_list[QSO_loc]
@@ -82,6 +82,7 @@ for i in range(len(psf_list)):
 #extra_psfs = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx],[xxx,xxx]])
 #extra_psfs = extra_psfs[extra_psfs[:,0].argsort()]
 #for i in range(len(extra_psfs)):
+#    print 'PSF',count
 #    PSF = cut_center_bright(image=img, center=extra_psfs[i], radius=60, plot=True)
 #    pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(count),overwrite=True)
 #    count += 1
