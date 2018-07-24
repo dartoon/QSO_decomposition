@@ -63,30 +63,6 @@ for i in range(2):
                 plt.show()
             else:
                 plt.close()
-
-PSF_sub_list = np.zeros(len(psf_list)) #np.array([])
-psf_list_sub = [psf_list[i]-PSF_sub_list[i] for i in range(len(psf_list))]
-
-psf_ave_pa, psf_std_pa=psf_ave(psf_list_sub,mode = 'CI', not_count=(,),
-                  mask_list=mask_list)
-
-psf_ave_pb, psf_std_pb=psf_ave(psf_list_sub,mode = 'CI', not_count=(,),
-                  mask_list=mask_list)
-
-psf_ave_pa, psf_std_pa = psf_ave_pa[ct:-ct,ct:-ct], psf_std_pa[ct:-ct,ct:-ct]
-psf_ave_pb, psf_std_pb = psf_ave_pb[ct:-ct,ct:-ct], psf_std_pb[ct:-ct,ct:-ct]
-
-#pyfits.PrimaryHDU(psf_ave_pa).writeto('psf_ave_pa.fits',overwrite=True)
-#pyfits.PrimaryHDU(psf_std_pa).writeto('psf_std_pa.fits',overwrite=True)
-#pyfits.PrimaryHDU(psf_ave_pb).writeto('psf_ave_pb.fits',overwrite=True)
-#pyfits.PrimaryHDU(psf_std_pb).writeto('psf_std_pb.fits',overwrite=True)
-
-prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
-scal_list = [1,1,1]
-prf_name_list = ['QSO','Plan a','Plan b']
-fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
-                                   gridspace = 'log',if_annuli=True,astrodrz=True)
-plt.show()
 # =============================================================================
 # Doing the fitting
 # =============================================================================
@@ -94,23 +70,22 @@ from fit_qso import fit_qso, fit_ps
 from transfer_to_result import transfer_to_result
 from flux_profile import cr_mask_img
 background_rms = 0.0076
-#mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
-#QSO_msk = cr_mask_img(QSO_im, mask_list)
-#QSO_msk = QSO_msk[ct:-ct,ct:-ct]
+mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
+QSO_msk = cr_mask_img(QSO_im, mask_list)
+QSO_msk = QSO_msk[ct:-ct,ct:-ct]
 QSO_im = QSO_im[ct:-ct,ct:-ct]
-QSO_msk = None
+#QSO_msk = None
 QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
-fit_result = open('fit_result_{0}_reg.txt'.format(frame),'w') 
 ##############################Fit
 PSF_sub_list = np.array([])
 
 fit_result = open('fit_result/each_PSF_fit_ps.txt'.format(i),'w') 
-for i in np.array([0,1,2,3,5,6,7,8,9]):
+for i in np.array([0,1,2,3,4,5,6,7,8,9,10]):
     print "by PSF{0}".format(i)
     tag = 'fit_result/ps_fit_PSF{0}'.format(i)
     mask_list = glob.glob("PSF{0}*.reg".format(i))
     print mask_list
-    psf_i, _=psf_ave([psf_list[i]-PSF_sub_list[i]],mode = 'CI', not_count=(), mask_list=mask_list)
+    psf_i = psf_list[i] * cr_mask_img(image=psf_list[i], mask_list=mask_list)
     psf_i = psf_i[ct:-ct,ct:-ct]
     source_result, ps_result, image_ps, image_host, error_map=fit_ps(QSO_im-0.0000, psf_ave=psf_i, psf_std = None,
                                                                      background_rms=background_rms,
@@ -126,13 +101,13 @@ for i in np.array([0,1,2,3,5,6,7,8,9]):
 fit_result.close()    
 
 #fixcenter = False
-#fit_result = open('fit_result/by_each_PSF.txt'.format(i),'w') 
+#fit_result = open('fit_result/each_PSF_fit_qso.txt'.format(i),'w') 
 #for i in np.array([0,1,2,3,5,6,7,8,9]):
 #    print "by PSF{0}".format(i)
 #    tag = 'fit_result/qso_fit_PSF{0}'.format(i)
 #    mask_list = glob.glob("PSF{0}*.reg".format(i))
 #    print mask_list
-#    psf_i, _=psf_ave([psf_list[i]-PSF_sub_list[i]],mode = 'CI', not_count=(), mask_list=mask_list)
+#    psf_i = psf_list[i] * cr_mask_img(image=psf_list[i], mask_list=mask_list)
 #    psf_i = psf_i[ct:-ct,ct:-ct]
 #    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im-0.0000, psf_ave=psf_i, psf_std = None,
 #                                                                     background_rms=background_rms,
@@ -147,11 +122,48 @@ fit_result.close()
 #    fit_result.write(repr(result) + "\n")
 #fit_result.close()
 
+##from fit_qso import fit_single_host
+##from roundme import roundme
+##lens_light_result, image_host, error_map = fit_single_host(QSO_im, psf_ave= psf_list???,
+##                                                           pix_sz = 'drz06',QSO_msk=QSO_msk,
+##                                                           QSO_std=QSO_std, tag='fit_result/pure_galaxy')
+##fit_result = open('fit_result/pure_galaxy_fit.txt'.format(i),'w') 
+##fit_result.write("#fit by PSF: \n".format(i))
+##fit_result.write(repr(roundme(lens_light_result[0])) + "\n")
+##fit_result.write('Image_total_flux: '+repr(round(QSO_im.sum(),2))+' Galaxy_fitted_totflux: '+repr(round(image_host.sum(),2)))
+##fit_result.close()
 
+
+#==============================================================================
+# Combining fitting
+#==============================================================================
+#PSF_sub_list = np.zeros(len(psf_list)) #np.array([])
+#psf_list_sub = [psf_list[i]-PSF_sub_list[i] for i in range(len(psf_list))]
+#mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
+#psf_ave_pa, psf_std_pa=psf_ave(psf_list_sub,mode = 'CI', not_count=(,),
+#                  mask_list=mask_list)
+#
+#psf_ave_pb, psf_std_pb=psf_ave(psf_list_sub,mode = 'CI', not_count=(,),
+#                  mask_list=mask_list)
+#
+#psf_ave_pa, psf_std_pa = psf_ave_pa[ct:-ct,ct:-ct], psf_std_pa[ct:-ct,ct:-ct]
+#psf_ave_pb, psf_std_pb = psf_ave_pb[ct:-ct,ct:-ct], psf_std_pb[ct:-ct,ct:-ct]
+#
+##pyfits.PrimaryHDU(psf_ave_pa).writeto('psf_ave_pa.fits',overwrite=True)
+##pyfits.PrimaryHDU(psf_std_pa).writeto('psf_std_pa.fits',overwrite=True)
+##pyfits.PrimaryHDU(psf_ave_pb).writeto('psf_ave_pb.fits',overwrite=True)
+##pyfits.PrimaryHDU(psf_std_pb).writeto('psf_std_pb.fits',overwrite=True)
+#
+#prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
+#scal_list = [1,1,1]
+#prf_name_list = ['QSO','Plan a','Plan b']
+#fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
+#                                   gridspace = 'log',if_annuli=True,astrodrz=True)
+#plt.show()
 #print "by selected PSF, relax center"
 #fixcenter = False
-#fit_result = open('fit_result/comb_PSF???_subsky.txt'.format(i),'w')
-#tag = 'fit_result/PSF_56789_frame{0}_subsky'.format(frame)
+#fit_result = open('fit_result/comb_PSF???.txt'.format(i),'w')
+#tag = 'fit_result/comb_PSF_???'
 #source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im-0.0000, psf_ave=psf_ave_pa, psf_std = psf_std_pa, background_rms=background_rms,
 #                                                       source_params=None, deep_seed = False, fixcenter= fixcenter, pix_sz = 'drz06',  no_MCMC =True,
 #                                                       QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)

@@ -56,6 +56,7 @@ img = fitsFile[1].data # check the back grounp
 #
 #img -= back              
 #pyfits.PrimaryHDU(img).writeto('sub_coadd.fits',overwrite=True)
+##img = pyfits.getdata('sub_coadd.fits')
 
 c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'astrodrz_06', QSO_reg_return=True)
 center_QSO = c_psf_list[QSO_loc]

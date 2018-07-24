@@ -12,7 +12,7 @@ import numpy as np
 import sys
 sys.path.insert(0,'../../../py_tools')
 import astropy.io.fits as pyfits
-from flux_profile import flux_profile, SB_profile
+from flux_profile import flux_profile, SB_profile, min_sub
 import glob
 
 ID='xxx'
