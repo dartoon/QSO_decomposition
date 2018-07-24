@@ -600,7 +600,7 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
 
 
 def fit_single_host(QSO_im, psf_ave, background_rms=0.04, pix_sz = 'swarp',
-            exp_time = 2400., QSO_msk=None, QSO_std=None):
+            exp_time = 2400., QSO_msk=None, QSO_std=None, tag=None):
     '''
     A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
     
@@ -734,8 +734,13 @@ def fit_single_host(QSO_im, psf_ave, background_rms=0.04, pix_sz = 'swarp',
     f.tight_layout()
     #f.subplots_adjust(left=None, bottom=None, right=None, top=None, wspace=0., hspace=0.05)
     plt.show()
+    if tag is not None:
+            f.savefig('{0}_fitted_image.pdf'.format(tag))
     image_reconstructed, _, _, _ = imageModel.image_linear_solve(kwargs_lens_light=lens_light_result)
     
     image_host = imageModel.lens_surface_brightness(lens_light_result)
 #    print lens_light_result
-    return lens_light_result, image_host, data_class.C_D
+    if QSO_std is None:
+        return lens_light_result, image_host, np.sqrt(data_class.C_D)
+    else:
+        return lens_light_result, image_host, QSO_std
