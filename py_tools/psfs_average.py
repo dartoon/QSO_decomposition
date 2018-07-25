@@ -53,7 +53,7 @@ def psf_ave(psfs_list, not_count=(), mode = 'CI',  mask_list=['default.reg']):
             print "The PSF{0} is not count".format(i)
             psfs_l_msk[i] = np.zeros_like(psfs_list[i])
         else:
-            msk_counts, mask_lists = text_in_string_list("PSF{0}".format(i), mask_list)
+            msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), mask_list)
             mask = np.ones(psfs_list[i].shape)
             if msk_counts != 0:
                 for j in range(msk_counts):

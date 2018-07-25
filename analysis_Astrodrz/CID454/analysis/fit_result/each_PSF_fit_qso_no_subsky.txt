@@ -1,0 +1,24 @@
+#fit by PSF1: 
+PSF_intensity:94.73 
+{'n_sersic': 3.033, 'host_mag': 20.372, 'R_sersic': 0.117, 'qso_y': -0.017, 'qso_x': -0.039, 'QSO_amp': 80.377, 'q': 0.923, 'redu_Chisq': 14.68085, 'center_x': -0.022, 'center_y': 0.087, 'host_amp': 270.541, 'phi_G': -1.412, 'amp': 4.867, 'host_flux_ratio_percent': 76.477}
+#fit by PSF3: 
+PSF_intensity:96.47 
+{'n_sersic': 3.7, 'host_mag': 20.527, 'R_sersic': 0.128, 'qso_y': -0.028, 'qso_x': -0.046, 'QSO_amp': 105.811, 'q': 0.792, 'redu_Chisq': 15.269936, 'center_x': -0.049, 'center_y': 0.04, 'host_amp': 234.554, 'phi_G': -1.492, 'amp': 3.724, 'host_flux_ratio_percent': 68.101}
+#fit by PSF4: 
+PSF_intensity:34.36 
+{'n_sersic': 3.071, 'host_mag': 20.278, 'R_sersic': 0.146, 'qso_y': -0.064, 'qso_x': 0.029, 'QSO_amp': 33.304, 'q': 0.869, 'redu_Chisq': 20.134218, 'center_x': -0.006, 'center_y': 0.038, 'host_amp': 294.873, 'phi_G': 1.346, 'amp': 3.397, 'host_flux_ratio_percent': 89.296}
+#fit by PSF5: 
+PSF_intensity:24.82 
+{'n_sersic': 2.489, 'host_mag': 20.33, 'R_sersic': 0.161, 'qso_y': -0.087, 'qso_x': -0.028, 'QSO_amp': 29.959, 'q': 0.928, 'redu_Chisq': 30.315084, 'center_x': -0.015, 'center_y': 0.046, 'host_amp': 281.175, 'phi_G': -1.158, 'amp': 2.7, 'host_flux_ratio_percent': 90.049}
+#fit by PSF6: 
+PSF_intensity:29.96 
+{'n_sersic': 2.565, 'host_mag': 20.379, 'R_sersic': 0.16, 'qso_y': -0.046, 'qso_x': -0.032, 'QSO_amp': 37.411, 'q': 0.899, 'redu_Chisq': 29.459561, 'center_x': -0.062, 'center_y': 0.05, 'host_amp': 268.702, 'phi_G': -1.457, 'amp': 2.529, 'host_flux_ratio_percent': 86.734}
+#fit by PSF7: 
+PSF_intensity:1520.38 
+{'n_sersic': 2.012, 'host_mag': 20.807, 'R_sersic': 0.246, 'qso_y': -0.016, 'qso_x': -0.043, 'QSO_amp': 167.46, 'q': 0.89, 'redu_Chisq': 6.700153, 'center_x': -0.034, 'center_y': 0.03, 'host_amp': 181.147, 'phi_G': -1.447, 'amp': 0.865, 'host_flux_ratio_percent': 51.735}
+#fit by PSF8: 
+PSF_intensity:1263.94 
+{'n_sersic': 0.3, 'host_mag': 21.604, 'R_sersic': 0.425, 'qso_y': 0.077, 'qso_x': -0.028, 'QSO_amp': 251.003, 'q': 0.951, 'redu_Chisq': 9.79738, 'center_x': -0.039, 'center_y': 0.105, 'host_amp': 86.987, 'phi_G': 1.087, 'amp': 0.267, 'host_flux_ratio_percent': 25.349}
+#fit by PSF9: 
+PSF_intensity:145.58 
+{'n_sersic': 0.572, 'host_mag': 21.32, 'R_sersic': 0.39, 'qso_y': 0.056, 'qso_x': -0.026, 'QSO_amp': 233.802, 'q': 0.948, 'redu_Chisq': 6.492472, 'center_x': 0.002, 'center_y': 0.075, 'host_amp': 112.979, 'phi_G': -1.515, 'amp': 0.342, 'host_flux_ratio_percent': 32.41}

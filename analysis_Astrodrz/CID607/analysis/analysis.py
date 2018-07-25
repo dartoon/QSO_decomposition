@@ -78,10 +78,13 @@ QSO_im = QSO_im[ct:-ct,ct:-ct]
 #QSO_msk = None
 QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 ##############################Fit
-PSF_sub_list = np.zeros(len(psf_list)) #np.array([])
+PSF_sub_list = np.array([  2.94197031e-04,   6.53171390e-04,  -6.47773279e-05,
+        -1.94331984e-04,   4.48043185e-04,   4.99325236e-04,
+         6.53171390e-04,   9.60863698e-04,  -1.34952767e-05,
+         1.40350877e-04, 0.00034547908232118545])
 
-#fit_result = open('fit_result/each_PSF_fit_ps.txt'.format(i),'w') 
-#for i in (0,2,6,8,9,10):
+#fit_result = open('fit_result/each_PSF_fit_ps.txt'.format(i),'r+') 
+#for i in (7,):
 #    print "by PSF{0}".format(i)
 #    tag = 'fit_result/ps_fit_PSF{0}'.format(i)
 #    mask_list = glob.glob("PSF{0}*.reg".format(i))
@@ -100,10 +103,10 @@ PSF_sub_list = np.zeros(len(psf_list)) #np.array([])
 #    ratio = round(host_amp/(host_amp+ps_amp)*100, 2)
 #    fit_result.write('Point_source_flux:'+repr(ps_amp) + ' host_flux:' + repr(host_amp)+ ' host_ratio:'+ repr(ratio) + "%\n")
 #fit_result.close()    
-
+#
 #fixcenter = False
-#fit_result = open('fit_result/each_PSF_fit_qso.txt'.format(i),'w') 
-#for i in (0,2,6,8,9,10):
+#fit_result = open('fit_result/each_PSF_fit_qso.txt'.format(i),'r+') 
+#for i in (7,):
 #    print "by PSF{0}".format(i)
 #    tag = 'fit_result/qso_fit_PSF{0}'.format(i)
 #    mask_list = glob.glob("PSF{0}*.reg".format(i))
@@ -128,7 +131,7 @@ PSF_sub_list = np.zeros(len(psf_list)) #np.array([])
 psf_list_sub = [psf_list[i]-PSF_sub_list[i] for i in range(len(psf_list))]
 
 mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
-psf_ave_pa, psf_std_pa=psf_ave(psf_list_sub,mode = 'CI', not_count=(0,1,2,3,4,5,7),
+psf_ave_pa, psf_std_pa=psf_ave(psf_list_sub,mode = 'CI', not_count=(0,1,2,3,4,5,6),
                   mask_list=mask_list)
 
 #psf_ave_pb, psf_std_pb=psf_ave(psf_list_sub,mode = 'CI', not_count=(,),
@@ -136,8 +139,8 @@ psf_ave_pa, psf_std_pa=psf_ave(psf_list_sub,mode = 'CI', not_count=(0,1,2,3,4,5,
 psf_ave_pa, psf_std_pa = psf_ave_pa[ct:-ct,ct:-ct], psf_std_pa[ct:-ct,ct:-ct]
 #psf_ave_pb, psf_std_pb = psf_ave_pb[ct:-ct,ct:-ct], psf_std_pb[ct:-ct,ct:-ct]
 
-pyfits.PrimaryHDU(psf_ave_pa).writeto('psf_ave_pa.fits',overwrite=True)
-pyfits.PrimaryHDU(psf_std_pa).writeto('psf_std_pa.fits',overwrite=True)
+pyfits.PrimaryHDU(psf_ave_pa).writeto('psf_78910.fits',overwrite=True)
+pyfits.PrimaryHDU(psf_std_pa).writeto('psf_78910_std.fits',overwrite=True)
 #pyfits.PrimaryHDU(psf_ave_pb).writeto('psf_ave_pb.fits',overwrite=True)
 #pyfits.PrimaryHDU(psf_std_pb).writeto('psf_std_pb.fits',overwrite=True)
 
@@ -150,9 +153,9 @@ pyfits.PrimaryHDU(psf_std_pa).writeto('psf_std_pa.fits',overwrite=True)
 
 print "by selected PSF, relax center"
 fixcenter = False
-fit_result = open('fit_result/comb_PSF_6891o_no_PSFstd.txt'.format(i),'w')
-tag = 'fit_result/PSF_6891o_frame{0}_no_PSFstd'.format(frame)
-source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im-0.0000, psf_ave=psf_ave_pa, psf_std = None, background_rms=background_rms,
+fit_result = open('fit_result/comb_PSF_7891o_subsky.txt'.format(i),'w')
+tag = 'fit_result/PSF_7891o_subsky'
+source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im-0.000755735492578, psf_ave=psf_ave_pa, psf_std = psf_std_pa, background_rms=background_rms,
                                                        source_params=None, deep_seed = False, fixcenter= fixcenter, pix_sz = 'drz06',  no_MCMC =True,
                                                        QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
 result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',

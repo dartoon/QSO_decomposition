@@ -77,15 +77,15 @@ QSO_im = QSO_im[ct:-ct,ct:-ct]
 #QSO_msk = None
 QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 ##############################Fit
-PSF_sub_list = np.array([])
+PSF_sub_list = np.zeros(len(psf_list)) #np.array([])
 
 fit_result = open('fit_result/each_PSF_fit_ps.txt'.format(i),'w') 
 for i in np.array([0,1,2,3,4,5,6,7,8,9,10]):
     print "by PSF{0}".format(i)
     tag = 'fit_result/ps_fit_PSF{0}'.format(i)
-    mask_list = glob.glob("PSF{0}*.reg".format(i))
+    mask_list = glob.glob("PSF{0}_*.reg".format(i))
     print mask_list
-    psf_i = psf_list[i] * cr_mask_img(image=psf_list[i], mask_list=mask_list)
+    psf_i = (psf_list[i]-PSF_sub_list[i]) * cr_mask_img(image=psf_list[i], mask_list=mask_list)
     psf_i = psf_i[ct:-ct,ct:-ct]
     source_result, ps_result, image_ps, image_host, error_map=fit_ps(QSO_im-0.0000, psf_ave=psf_i, psf_std = None,
                                                                      background_rms=background_rms,
@@ -102,12 +102,12 @@ fit_result.close()
 
 #fixcenter = False
 #fit_result = open('fit_result/each_PSF_fit_qso.txt'.format(i),'w') 
-#for i in np.array([0,1,2,3,5,6,7,8,9]):
+#for i in np.array([0,1,2,3,4,5,6,7,8,9]):
 #    print "by PSF{0}".format(i)
 #    tag = 'fit_result/qso_fit_PSF{0}'.format(i)
-#    mask_list = glob.glob("PSF{0}*.reg".format(i))
+#    mask_list = glob.glob("PSF{0}_*.reg".format(i))
 #    print mask_list
-#    psf_i = psf_list[i] * cr_mask_img(image=psf_list[i], mask_list=mask_list)
+#    psf_i = (psf_list[i]-PSF_sub_list[i]) * cr_mask_img(image=psf_list[i], mask_list=mask_list)
 #    psf_i = psf_i[ct:-ct,ct:-ct]
 #    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im-0.0000, psf_ave=psf_i, psf_std = None,
 #                                                                     background_rms=background_rms,

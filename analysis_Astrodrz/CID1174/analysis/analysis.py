@@ -96,7 +96,7 @@ QSO_msk = cr_mask_img(QSO_im, mask_list)[30:-30,30:-30]
 
 QSO_std = pyfits.getdata('wht_err.fits')[30:-30,30:-30]
 QSO_im  = QSO_im[30:-30,30:-30]
-fit_result = open('fit_result_PSF_std_QSOmsk.txt','w') 
+fit_result = open('fit_result_PSF_stdCal_QSOmsk.txt','w') 
 ##############################Fit
 #print "by plan a"
 #fixcenter = True
@@ -113,8 +113,8 @@ fit_result = open('fit_result_PSF_std_QSOmsk.txt','w')
 ##############################Fit
 print "by plan a, relax center"
 fixcenter = False
-tag = 'PSF_std_Plan_a_QSOmsk'
-source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_ave_pa, psf_std = psf_std_pa,background_rms=background_rms,
+tag = 'PSF_std_Cal_Plan_a_QSOmsk'
+source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_ave_pa, psf_std = psf_ave_pa/10.,background_rms=background_rms,
                                                        source_params=None, deep_seed = False, fixcenter= fixcenter, pix_sz = 'drz06', no_MCMC=True,
                                                        QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
 result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
@@ -138,8 +138,8 @@ fit_result.write(repr(result) + "\n")
 ###############################Fit
 print "by plan b, relax center"
 fixcenter = False
-tag = 'PSF_std_Plan_b_QSOmsk'
-source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_ave_pb, psf_std = psf_std_pb,background_rms=background_rms,
+tag = 'PSF_std_Cal_Plan_b_QSOmsk'
+source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_ave_pb, psf_std = psf_ave_pb/10.,background_rms=background_rms,
                                                        source_params=None, deep_seed = False, fixcenter= fixcenter, pix_sz = 'drz06', no_MCMC=True,
                                                        QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
 result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
