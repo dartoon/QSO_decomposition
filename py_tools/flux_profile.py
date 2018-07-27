@@ -514,15 +514,16 @@ def total_compare(label_list, flux_list,
 
     label_SB_list = [label_list[0], label_list[-2], label_list[1], label_list[2]] 
     flux_SB_list = [flux_list[0], model_flux, flux_list[1], flux_list[2]]
+    radi = len(flux_list[0])/2
     for i in range(len(label_SB_list)):
         center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
         if label_SB_list[i] == 'data':
             print "data_mask_lists:\t", data_mask_list
             r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log',
-                                       radius= 20, grids = 40, mask_list=data_mask_list,
+                                       radius= radi, grids = 50, mask_list=data_mask_list,
                                        mask_cut = data_cut, msk_image=msk_image)
         else:
-            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= 20, mask_list=None)
+            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= radi, mask_list=None)
         r_mag = - 2.5 * np.log10(r_SB) + zp 
         if label_SB_list[i] == 'data':
             ax4.plot(r_grids * delatPixel, r_mag, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
@@ -531,6 +532,10 @@ def total_compare(label_list, flux_list,
     ax4.set_xscale('log')
     ax4.invert_yaxis()
     ax4.set_ylabel('$\mu$(mag, pixel$^{-2}$)', fontsize=12)
+#    ax4.set_xticks(new_tick_locations)                   
+#    ax4.set_xlabel('pixel', fontsize=15)
+#    ax4.xaxis.set_label_position('top')
+#    ax4.xaxis.tick_top()    
     plt.gca().invert_yaxis()
     ax4.legend()
     pos4_o = ax4.get_position() # get the original position

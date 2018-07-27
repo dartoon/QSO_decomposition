@@ -1,2 +1,0 @@
-#fit selected PSF: 
-{'n_sersic': 5.431, 'host_mag': 21.564, 'R_sersic': 0.1, 'qso_y': 0.03, 'qso_x': 0.007, 'QSO_amp': 80.259, 'q': 0.874, 'redu_Chisq': 2.403582, 'center_x': 0.034, 'center_y': 0.041, 'host_amp': 90.252, 'phi_G': -1.013, 'amp': 2.015, 'host_flux_ratio_percent': 52.995}

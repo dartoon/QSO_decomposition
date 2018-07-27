@@ -189,11 +189,11 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     image_ps = imageModel.point_source(ps_result)
     image_host = imageModel.source_surface_brightness(source_result)
     # let's plot the output of the PSO minimizer
-    if image_plot:
-        from lenstronomy.Plots.output_plots import LensModelPlot
-        lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
+    from lenstronomy.Plots.output_plots import LensModelPlot
+    lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
                                  lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=5)
     
+    if image_plot:
         f, axes = plt.subplots(3, 3, figsize=(16, 16), sharex=False, sharey=False)
         lensPlot.data_plot(ax=axes[0,0])
         lensPlot.model_plot(ax=axes[0,1])
@@ -371,7 +371,12 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
         if tag is not None:
             f.savefig('{0}_fitted_image.pdf'.format(tag))
         plt.show()    
-    return source_result, ps_result, image_ps, QSO_im-image_ps, data_class.C_D
+#    return source_result, ps_result, image_ps, QSO_im-image_ps, data_class.C_D
+#
+    if QSO_std is None:
+        return source_result, ps_result, image_ps, QSO_im-image_ps, np.sqrt(data_class.C_D+np.abs(error_map))
+    else:
+        return source_result, ps_result, image_ps, QSO_im-image_ps, np.sqrt(QSO_std**2+np.abs(error_map))
 
 
 """

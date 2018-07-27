@@ -15,7 +15,7 @@ import astropy.io.fits as pyfits
 from flux_profile import flux_profile, SB_profile, min_sub
 import glob
 
-ID='CID216'
+ID='xxx'
 
 test_n=20
 img = pyfits.getdata('{0}_cutout.fits'.format(ID))
@@ -27,19 +27,19 @@ r_flux, r_grids, regions=flux_profile(img-sub, center,radius=center.min(), grids
 print sub
 print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum(), value
 
-sub_list = np.zeros(9)
-value = np.zeros(9)
-for i in range(9):
-    print 'PSF{0}'.format(i)
-    img = pyfits.getdata('PSF{0}.fits'.format(i))
-    center = np.asarray(img.shape) /2
-    mask_list = glob.glob("PSF{0}*.reg".format(i))   # Read *.reg files in a list.
-    sub_list[i], value[i] = min_sub(0.001, img, mask_list=mask_list)
-    print sub_list[i]
-    r_flux, r_grids, regions=flux_profile(img- sub_list[i], center,
-                                          radius=center.min(), grids=50,
-                                          ifplot=True, fits_plot= True,
-                                          mask_list=mask_list)
-#    print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n'
-#    print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
-print sub_list, value
+#sub_list = np.zeros(10)
+#value = np.zeros(10)
+#for i in range(10):
+#    print 'PSF{0}'.format(i)
+#    img = pyfits.getdata('PSF{0}.fits'.format(i))
+#    center = np.asarray(img.shape) /2
+#    mask_list = glob.glob("PSF{0}*.reg".format(i))   # Read *.reg files in a list.
+#    sub_list[i], value[i] = min_sub(0.001, img, mask_list=mask_list)
+#    print sub_list[i]
+#    r_flux, r_grids, regions=flux_profile(img- sub_list[i], center,
+#                                          radius=center.min(), grids=50,
+#                                          ifplot=True, fits_plot= False,
+#                                          mask_list=mask_list)
+##    print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n'
+##    print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
+#print sub_list, value

@@ -1,4 +1,0 @@
-#fit with plan a, ave with 'CI': 
-{'n_sersic': 3.135, 'host_mag': 21.261, 'R_sersic': 0.206, 'QSO_amp': -18.998, 'q': 0.805, 'redu_Chisq': 3.333, 'center_x': -0.026, 'center_y': 0.014, 'host_amp': 119.289, 'phi_G': -0.919, 'amp': 0.783, 'host_flux_ratio_percent': 114.787}
-#fit with plan b, ave with 'CI', relax center: 
-{'n_sersic': 3.153, 'host_mag': 21.26, 'R_sersic': 0.206, 'qso_y': 0.017, 'qso_x': -0.024, 'QSO_amp': -19.052, 'q': 0.804, 'redu_Chisq': 3.304, 'center_x': -0.026, 'center_y': 0.015, 'host_amp': 119.375, 'phi_G': -0.92, 'amp': 0.783, 'host_flux_ratio_percent': 115.752}

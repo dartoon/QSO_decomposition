@@ -14,6 +14,7 @@ sys.path.insert(0,'../../../py_tools')
 import astropy.io.fits as pyfits
 from flux_profile import flux_profile, SB_profile, min_sub
 import glob
+import matplotlib.pylab as plt
 
 ID='xxx'
 
@@ -26,6 +27,18 @@ r_flux, r_grids, regions=flux_profile(img-sub, center,radius=center.min(), grids
 #print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', 
 print sub
 print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum(), value
+      
+      
+#img_outer = pyfits.getdata('CID454_cutout_outer.fits')  
+#plt.imshow(np.log10(img_outer), origin='low') 
+#plt.show()    
+#y, x, _ = plt.hist(img_outer[img_outer<0.04], bins=150)
+#peak_idx = np.where(y==y.max())[0][0]
+#line = np.linspace(0,10000,10)
+#plt.plot(x[peak_idx]*np.ones_like(line), line, 'r')
+#plt.ylim((0, y.max()*5./4.))
+#plt.show()
+#print x[peak_idx]
 
 #sub_list = np.zeros(10)
 #value = np.zeros(10)
@@ -43,3 +56,15 @@ print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum(), value
 ##    print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n'
 ##    print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
 #print sub_list, value
+
+#for i in range(10):
+#    img_outer = pyfits.getdata('PSF{0}_outer.fits'.format(i))
+#    plt.imshow(np.log10(img_outer), origin='low') 
+#    plt.show()
+#    y, x, _ = plt.hist(img_outer[img_outer<0.04]-sub_list[i], bins=150)
+#    peak_idx = np.where(y==y.max())[0][0]
+#    line = np.linspace(0,10000,10)
+#    plt.plot(x[peak_idx]*np.ones_like(line), line, 'r')
+#    plt.ylim((0, y.max()*5./4.))
+#    plt.show()
+#    print x[peak_idx]

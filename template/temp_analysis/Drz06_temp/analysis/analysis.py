@@ -78,8 +78,13 @@ QSO_im = QSO_im[ct:-ct,ct:-ct]
 QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 ##############################Fit
 PSF_sub_list = np.zeros(len(psf_list)) #np.array([])
-
-fit_result = open('fit_result/each_PSF_fit_ps.txt'.format(i),'w') 
+filename = 'fit_result/each_PSF_fit_ps.txt'
+if_file = glob.glob(filename)   
+if if_file == []:
+    fit_result =  open(filename,'w') 
+elif if_file is not []:
+    fit_result = open(filename,"r+")
+    fit_result.read()
 for i in np.array([0,1,2,3,4,5,6,7,8,9,10]):
     print "by PSF{0}".format(i)
     tag = 'fit_result/ps_fit_PSF{0}'.format(i)
@@ -101,8 +106,14 @@ for i in np.array([0,1,2,3,4,5,6,7,8,9,10]):
 fit_result.close()    
 
 #fixcenter = False
-#fit_result = open('fit_result/each_PSF_fit_qso.txt'.format(i),'w') 
-#for i in np.array([0,1,2,3,4,5,6,7,8,9]):
+#filename = 'fit_result/each_PSF_fit_qso.txt'
+#if_file = glob.glob(filename)   
+#if if_file == []:
+#    fit_result =  open(filename,'w') 
+#elif if_file is not []:
+#    fit_result = open(filename,"r+")
+#    fit_result.read()
+#for i in np.array([0,1,2,3,4,5,6,7,8,9,10]):
 #    print "by PSF{0}".format(i)
 #    tag = 'fit_result/qso_fit_PSF{0}'.format(i)
 #    mask_list = glob.glob("PSF{0}_*.reg".format(i))
@@ -162,7 +173,13 @@ fit_result.close()
 #plt.show()
 #print "by selected PSF, relax center"
 #fixcenter = False
-#fit_result = open('fit_result/comb_PSF???.txt'.format(i),'w')
+#filename = 'fit_result/comb_PSF???.txt'
+#if_file = glob.glob(filename)   
+#if if_file == []:
+#    fit_result =  open(filename,'w') 
+#elif if_file is not []:
+#    fit_result = open(filename,"r+")
+#    fit_result.read()
 #tag = 'fit_result/comb_PSF_???'
 #source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im-0.0000, psf_ave=psf_ave_pa, psf_std = psf_std_pa, background_rms=background_rms,
 #                                                       source_params=None, deep_seed = False, fixcenter= fixcenter, pix_sz = 'drz06',  no_MCMC =True,

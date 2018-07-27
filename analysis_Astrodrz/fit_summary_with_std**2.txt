@@ -1,0 +1,17 @@
+#fit by CID452: 
+{'n_sersic': 2.054, 'host_mag': 21.02, 'R_sersic': 0.321, 'qso_y': 0.046, 'qso_x': -0.079, 'QSO_amp': 16.75, 'q': 0.829, 'redu_Chisq': 1.598138, 'center_x': -0.006, 'center_y': 0.032, 'host_amp': 121.409, 'phi_G': -0.942, 'amp': 0.357, 'host_flux_ratio_percent': 89.891}
+#fit by CID70:
+{'n_sersic': 0.421, 'host_mag': 22.849, 'R_sersic': 0.741, 'qso_y': 0.032, 'qso_x': 0.0, 'QSO_amp': 301.333, 'q': 0.556, 'redu_Chisq': 4.438421, 'center_x': 0.072, 'center_y': 0.03, 'host_amp': 27.636, 'phi_G': -0.399, 'amp': 0.044, 'host_flux_ratio_percent': 8.357}
+#fit by CID607:
+{'n_sersic': 3.578, 'host_mag': 21.458, 'R_sersic': 0.186, 'qso_y': -0.01, 'qso_x': -0.006, 'QSO_amp': 152.568, 'q': 0.67, 'redu_Chisq': 1.850234, 'center_x': -0.024, 'center_y': 0.012, 'host_amp': 81.1, 'phi_G': 0.101, 'amp': 0.703, 'host_flux_ratio_percent': 34.757}
+#fit by CID206:
+{'n_sersic': 6.996, 'host_mag': 21.821, 'R_sersic': 0.416, 'qso_y': 0.028, 'qso_x': 0.0, 'QSO_amp': 124.856, 'q': 0.665, 'redu_Chisq': 4.022924, 'center_x': 0.061, 'center_y': 0.059, 'host_amp': 71.187, 'phi_G': -1.059, 'amp': 0.075, 'host_flux_ratio_percent': 36.193}
+#fit by CID454:
+{'n_sersic': 0.3, 'host_mag': 21.55, 'R_sersic': 0.433, 'qso_y': 0.039, 'qso_x': -0.032, 'QSO_amp': 255.432, 'q': 0.964, 'redu_Chisq': 4.539344, 'center_x': -0.035, 'center_y': 0.056, 'host_amp': 91.402, 'phi_G': 0.877, 'amp': 0.263, 'host_flux_ratio_percent': 26.214}
+#fit by CID1174:
+{'n_sersic': 1.216, 'host_mag': 21.832, 'R_sersic': 0.408, 'qso_y': -0.004, 'qso_x': 0.03, 'QSO_amp': 161.018, 'q': 0.909, 'redu_Chisq': 3.507538, 'center_x': -0.007, 'center_y': -0.039, 'host_amp': 70.488, 'phi_G': -0.582, 'amp': 0.151, 'host_flux_ratio_percent': 30.244}
+#fit by CID216:
+{'n_sersic': 5.721, 'host_mag': 21.502, 'R_sersic': 0.246, 'qso_y': -0.008, 'qso_x': 0.059, 'QSO_amp': 2.308, 'q': 0.683, 'redu_Chisq': 1.628296, 'center_x': -0.017, 'center_y': 0.015, 'host_amp': 95.529, 'phi_G': -0.859, 'amp': 0.391, 'host_flux_ratio_percent': 98.117}
+#fit by CID50:
+{'n_sersic': 1.139, 'host_mag': 23.686, 'R_sersic': 0.205, 'qso_y': 0.013, 'qso_x': 0.001, 'QSO_amp': 761.118, 'q': 0.565, 'redu_Chisq': 5.770184, 'center_x': -0.174, 'center_y': -0.239, 'host_amp': 10.416, 'phi_G': -0.736, 'amp': 0.149, 'host_flux_ratio_percent': 1.373}
+

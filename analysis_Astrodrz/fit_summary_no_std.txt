@@ -1,0 +1,16 @@
+#fit by CID452: 
+{'n_sersic': 2.193, 'host_mag': 20.982, 'R_sersic': 0.317, 'qso_y': 0.046, 'qso_x': -0.088, 'QSO_amp': 15.212, 'q': 0.829, 'redu_Chisq': 1.604323, 'center_x': -0.006, 'center_y': 0.033, 'host_amp': 125.722, 'phi_G': -0.951, 'amp': 0.372, 'host_flux_ratio_percent': 91.009}
+#fit by CID70:
+{'n_sersic': 0.428, 'host_mag': 22.883, 'R_sersic': 0.812, 'qso_y': 0.032, 'qso_x': -0.002, 'QSO_amp': 310.689, 'q': 0.542, 'redu_Chisq': 5.694527, 'center_x': 0.099, 'center_y': 0.024, 'host_amp': 26.785, 'phi_G': -0.43, 'amp': 0.037, 'host_flux_ratio_percent': 7.868}
+#fit by CID607:
+{'n_sersic': 4.081, 'host_mag': 21.407, 'R_sersic': 0.161, 'qso_y': -0.011, 'qso_x': -0.004, 'QSO_amp': 149.523, 'q': 0.666, 'redu_Chisq': 1.93453, 'center_x': -0.027, 'center_y': 0.014, 'host_amp': 84.984, 'phi_G': 0.11, 'amp': 0.953, 'host_flux_ratio_percent': 36.359}
+#fit by CID206:
+{'n_sersic': 6.629, 'host_mag': 21.717, 'R_sersic': 0.515, 'qso_y': 0.027, 'qso_x': -0.005, 'QSO_amp': 118.559, 'q': 0.612, 'redu_Chisq': 4.127393, 'center_x': 0.063, 'center_y': 0.061, 'host_amp': 78.36, 'phi_G': -1.075, 'amp': 0.051, 'host_flux_ratio_percent': 39.715}
+#fit by CID454:
+{'n_sersic': 0.3, 'host_mag': 21.545, 'R_sersic': 0.431, 'qso_y': 0.037, 'qso_x': -0.034, 'QSO_amp': 253.364, 'q': 0.968, 'redu_Chisq': 5.510814, 'center_x': -0.031, 'center_y': 0.058, 'host_amp': 91.85, 'phi_G': 0.924, 'amp': 0.266, 'host_flux_ratio_percent': 26.434}
+#fit by CID1174:
+{'n_sersic': 1.693, 'host_mag': 21.767, 'R_sersic': 0.449, 'qso_y': -0.002, 'qso_x': 0.031, 'QSO_amp': 161.672, 'q': 0.875, 'redu_Chisq': 4.26, 'center_x': -0.015, 'center_y': -0.046, 'host_amp': 74.851, 'phi_G': -0.288, 'amp': 0.122, 'host_flux_ratio_percent': 31.394}
+#fit by CID216:
+{'n_sersic': 6.997, 'host_mag': 21.507, 'R_sersic': 0.218, 'qso_y': -0.105, 'qso_x': 0.145, 'QSO_amp': 2.232, 'q': 0.704, 'redu_Chisq': 1.616033, 'center_x': -0.019, 'center_y': 0.018, 'host_amp': 95.068, 'phi_G': -0.881, 'amp': 0.47, 'host_flux_ratio_percent': 97.67}
+#fit by CID50:
+{'n_sersic': 0.311, 'host_mag': 28.779, 'R_sersic': 0.1, 'qso_y': 0.014, 'qso_x': -0.0, 'QSO_amp': 800.356, 'q': 0.291, 'redu_Chisq': 9.754265, 'center_x': 0.472, 'center_y': -0.095, 'host_amp': 0.096, 'phi_G': -1.281, 'amp': 0.038, 'host_flux_ratio_percent': 0.012}
