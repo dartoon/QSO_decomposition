@@ -463,48 +463,61 @@ def total_compare(label_list, flux_list,
     elif pix_sz == 'acs':
         delatPixel = 0.03
         
-    norm = ImageNormalize(stretch=SqrtStretch())
+    from matplotlib.ticker import LogLocator
+    
+    norm = LogNorm() #ImageNormalize(stretch=SqrtStretch())
     f = plt.figure(0, figsize=(16.75,4))
     ax1 = plt.subplot2grid((6,4), (0,0), rowspan=6)
     ax2 = plt.subplot2grid((6,4), (0,1), rowspan=6)
     ax3 = plt.subplot2grid((6,4), (0,2), rowspan=6)
     ax4 = plt.subplot2grid((6,4), (0,3), rowspan=5)
     ax5 = plt.subplot2grid((6,4), (5,3), sharex=ax4)
-    c_ax1 = ax1.imshow(flux_list[0] + add_background,origin='lower',cmap='Greys', norm=norm, vmax = flux_list[0].max()/5 )
-    clim=c_ax1.properties()['clim']
+
+    im1 = ax1.imshow(flux_list[0] + add_background,origin='lower',cmap="gist_heat", norm=norm, vmax = 20  )
+    clim=im1.properties()['clim']
     frame_size = len(flux_list[0])
     ax1.set_ylabel(target_ID, fontsize=15)
-    ax1.text(frame_size*0.05, frame_size*0.9, label_list[0],
-         fontsize=20)
+    ax1.text(frame_size*0.05, frame_size*0.9, label_list[0],fontsize=20, color='white')
     ax1.get_xaxis().set_visible(False)
     ax1.get_yaxis().set_visible(False)
-    scale_bar(ax1, frame_size, dist=1/delatPixel, text='1"')
-    coordinate_arrows(ax1, frame_size, arrow_size=0.03)
+    scale_bar(ax1, frame_size, dist=1/delatPixel, text='1"', color = 'white')
+    coordinate_arrows(ax1, frame_size, arrow_size=0.03, color = 'white')
+    cb1 = f.colorbar(im1, ax=ax1, shrink=0.49, pad=0.01,   orientation="horizontal", aspect=15)
+    cb1.ax.xaxis.set_major_locator(LogLocator())
+    cb1.set_ticks(cb1.ax.xaxis.get_major_locator().tick_values(1.e-5, flux_list[0].max()))   
     
-    ax2.imshow(flux_list[1] + flux_list[2] + add_background,origin='lower',cmap='Greys', norm=norm, clim=clim)
-    pos2_o = ax2.get_position() # get the original position
-    pos2 = [pos2_o.x0 -0.03, pos2_o.y0, pos2_o.width, pos2_o.height]
-    ax2.set_position(pos2) # set a new position
+#    cb1.ax.()
+    
+    im2 = ax2.imshow(flux_list[1] + flux_list[2] + add_background,origin='lower',cmap="gist_heat", norm=norm, clim=clim)
+#    pos2_o = ax2.get_position() # get the original position
+#    pos2 = [pos2_o.x0 -0.03, pos2_o.y0, pos2_o.width, pos2_o.height]
+#    ax2.set_position(pos2) # set a new position
     ax2.text(frame_size*0.05, frame_size*0.9, label_list[-2],
-         fontsize=20)
-    scale_bar(ax2, frame_size, dist=1/delatPixel, text='1"')
-    coordinate_arrows(ax2, frame_size, arrow_size=0.03)
+         fontsize=20, color='white')
+    scale_bar(ax2, frame_size, dist=1/delatPixel, text='1"', color = 'white')
+    coordinate_arrows(ax2, frame_size, arrow_size=0.03, color = 'white')
     ax2.get_xaxis().set_visible(False)
     ax2.get_yaxis().set_visible(False)
-    
-    ax3.imshow(flux_list[0]-(flux_list[1]+flux_list[2]),origin='lower',cmap='Greys', norm=norm, clim=clim)
-    ax3.text(frame_size*0.05, frame_size*0.9, label_list[-1],
-         fontsize=20)
+    cb2 = f.colorbar(im2, ax=ax2, shrink=0.49, pad=0.01,   orientation="horizontal", aspect=15) 
+    cb2.ax.xaxis.set_major_locator(LogLocator())
+    cb2.set_ticks(cb2.ax.xaxis.get_major_locator().tick_values(1.e-5, flux_list[0].max()))                   
+                    
+    norm_residual = (flux_list[0]-(flux_list[1]+flux_list[2]))/flux_list[3] * msk_image
     pos3_o = ax3.get_position() # get the original position
-    pos3 = [pos3_o.x0 -0.06, pos3_o.y0, pos3_o.width, pos3_o.height]
+    pos3 = [pos3_o.x0 -0.1, pos3_o.y0 +0.025, pos3_o.width, pos3_o.height]
+    ax3.set_position(pos3) # set a new position
+    im3 = ax3.imshow(norm_residual, origin='lower',cmap='bwr', vmin=-6, vmax=6)
+    ax3.text(frame_size*0.02, frame_size*0.9, label_list[-1],
+         fontsize=17, color='black')
     scale_bar(ax3, frame_size, dist=1/delatPixel, text='1"')
     coordinate_arrows(ax3, frame_size, arrow_size=0.03)
-    ax3.set_position(pos3) # set a new position
     ax3.get_xaxis().set_visible(False)
     ax3.get_yaxis().set_visible(False)
-#    f.colorbar(ax1_c, ax=ax1.ravel().tolist())
-#    plt.colorbar(c_ax1)
-    make_ticklabels_invisible(plt.gcf())
+    f.colorbar(im3, ax=ax3, shrink=0.49, pad=0.01,   orientation="horizontal", aspect=15) 
+    
+#    plt.tight_layout()
+    plt.subplots_adjust(wspace=-0.5, hspace=0)
+#    make_ticklabels_invisible(plt.gcf())
     for i in range(len(flux_list)-1):
         if i == 0:
             model_flux = flux_list[i+1] +0  # Don't share a same space
@@ -535,19 +548,22 @@ def total_compare(label_list, flux_list,
 #    ax4.set_xticks(new_tick_locations)                   
 #    ax4.set_xlabel('pixel', fontsize=15)
 #    ax4.xaxis.set_label_position('top')
-#    ax4.xaxis.tick_top()    
+#    ax4.xaxis.tick_top()   
+    ax4.get_xaxis().set_visible(False) 
     plt.gca().invert_yaxis()
     ax4.legend()
     pos4_o = ax4.get_position() # get the original position
-    pos4 = [pos4_o.x0 -0.04, pos4_o.y0 + 0.08, pos4_o.width, pos4_o.height*0.9]
+    pos4 = [pos4_o.x0+0.13, pos4_o.y0 + 0.12, pos4_o.width*0.5, pos4_o.height*0.9]
     ax4.set_position(pos4) # set a new position
 
     x = np.linspace(1.e-4, 100, 2)
     y = x * 0
-    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log',
-                                        radius= 20, mask_list=data_mask_list, mask_cut = data_cut,
+    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= radi,
+                                        mask_list=data_mask_list, mask_cut = data_cut,
                                         msk_image=msk_image)[0])
-    r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= 20)[0])
+    r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
+#    r_mag_diff = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
+    
     ax5.plot(r_grids*delatPixel, r_mag_0-r_mag_1, 'ro')   
     ax5.set_ylabel('$\Delta\mu$', fontsize=15)
     ax5.set_xlabel('arcsec', fontsize=15)
@@ -562,7 +578,7 @@ def total_compare(label_list, flux_list,
     plt.ylim([-0.5,0.5])
 #    plt.ylim([-1,1])
     pos5_o = ax5.get_position() # get the original position
-    pos5 = [pos5_o.x0 -0.04, pos5_o.y0, pos5_o.width, pos5_o.height*2]
+    pos5 = [pos5_o.x0+0.13, pos5_o.y0+0.05, pos5_o.width*0.5, pos5_o.height*1.5]
     ax5.set_position(pos5) # set a new position
     if plot_compare == True:
         plt.show()
@@ -637,3 +653,25 @@ def min_sub(ini, img, mask_list=None, test_n=20):
         values2[i] = cal_bkg_var(sub=sub_list2[i], img=img, mask_list=mask_list, test_n=test_n)
     idx2 = np.where(abs(values2).min() == abs(values2))[0][0]
     return sub_list2[idx2], values2[idx2]
+
+def gaussian(x, mean, amplitude, standard_deviation):
+    return amplitude * np.exp( - ((x - mean) / standard_deviation) ** 2)
+
+def fit_bkg_as_gaussian(data, thre=0.03):
+    bin_heights, bin_borders = np.histogram(data[abs(data)<thre], bins='auto')
+    bin_widths = np.diff(bin_borders)
+    bin_centers = bin_borders[:-1] + bin_widths / 2
+    plt.bar(bin_centers, bin_heights, width=bin_widths, label='histogram')
+    from scipy.optimize import curve_fit
+    popt, _ = curve_fit(gaussian, bin_centers, bin_heights, p0=[1., 0., 1.])
+    x_interval_for_fit = np.linspace(bin_borders[0], bin_borders[-1], 10000)
+    gauss_grid = gaussian(x_interval_for_fit, *popt)
+    plt.plot(x_interval_for_fit, gauss_grid, label='fit',c='red')
+    fit_center_idx = np.where(gauss_grid==gauss_grid.max())[0][0]   
+    line = np.linspace(0,10000,10)
+    QSO_peak_loc = x_interval_for_fit[fit_center_idx]
+    plt.plot(QSO_peak_loc*np.ones_like(line), line, 'black')
+    plt.ylim((0, bin_heights.max()*5./4.))
+    plt.legend()
+    plt.show()
+    return QSO_peak_loc

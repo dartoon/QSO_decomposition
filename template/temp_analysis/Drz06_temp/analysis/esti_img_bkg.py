@@ -7,64 +7,47 @@ Created on Fri Jul 13 13:40:56 2018
 
 test the flux profile for QSO
 """
-
 import numpy as np
 import sys
 sys.path.insert(0,'../../../py_tools')
+from flux_profile import flux_profile, min_sub, fit_bkg_as_gaussian
 import astropy.io.fits as pyfits
-from flux_profile import flux_profile, SB_profile, min_sub
 import glob
 import matplotlib.pylab as plt
 
 ID='xxx'
 
-test_n=20
+#==============================================================================
+# Measure QSO
+#==============================================================================
+img_outer = pyfits.getdata('{0}_cutout_outer.fits'.format(ID))
+plt.imshow(np.log10(img_outer), origin='low') 
+plt.show()   
+QSO_bkg_value = fit_bkg_as_gaussian(img_outer)
+
 img = pyfits.getdata('{0}_cutout.fits'.format(ID))
 center = np.asarray(img.shape) /2
 mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
-sub, value = min_sub(0.001, img, mask_list=mask_list, test_n=test_n)
-r_flux, r_grids, regions=flux_profile(img-sub, center,radius=center.min(), grids=50, ifplot=True, fits_plot= True, mask_list=mask_list)
-#print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n', 
-print sub
-print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum(), value
-      
-      
-#img_outer = pyfits.getdata('CID454_cutout_outer.fits')  
-#plt.imshow(np.log10(img_outer), origin='low') 
-#plt.show()    
-#y, x, _ = plt.hist(img_outer[img_outer<0.04], bins=150)
-#peak_idx = np.where(y==y.max())[0][0]
-#line = np.linspace(0,10000,10)
-#plt.plot(x[peak_idx]*np.ones_like(line), line, 'r')
-#plt.ylim((0, y.max()*5./4.))
-#plt.show()
-#print x[peak_idx]
+r_flux, r_grids, regions=flux_profile(img-QSO_bkg_value, center,radius=center.min(), grids=50, ifplot=True, fits_plot= True, mask_list=mask_list)
+     
 
-#sub_list = np.zeros(10)
-#value = np.zeros(10)
-#for i in range(10):
-#    print 'PSF{0}'.format(i)
-#    img = pyfits.getdata('PSF{0}.fits'.format(i))
-#    center = np.asarray(img.shape) /2
-#    mask_list = glob.glob("PSF{0}*.reg".format(i))   # Read *.reg files in a list.
-#    sub_list[i], value[i] = min_sub(0.001, img, mask_list=mask_list)
-#    print sub_list[i]
-#    r_flux, r_grids, regions=flux_profile(img- sub_list[i], center,
-#                                          radius=center.min(), grids=50,
-#                                          ifplot=True, fits_plot= False,
-#                                          mask_list=mask_list)
-##    print r_flux[-test_n:],'\n',r_flux[-test_n:][1:]-r_flux[-test_n:][:-1], '\n'
-##    print (r_flux[-test_n:][1:]-r_flux[-test_n:][:-1]).sum()
-#print sub_list, value
-
-#for i in range(10):
-#    img_outer = pyfits.getdata('PSF{0}_outer.fits'.format(i))
-#    plt.imshow(np.log10(img_outer), origin='low') 
-#    plt.show()
-#    y, x, _ = plt.hist(img_outer[img_outer<0.04]-sub_list[i], bins=150)
-#    peak_idx = np.where(y==y.max())[0][0]
-#    line = np.linspace(0,10000,10)
-#    plt.plot(x[peak_idx]*np.ones_like(line), line, 'r')
-#    plt.ylim((0, y.max()*5./4.))
-#    plt.show()
-#    print x[peak_idx]
+##==============================================================================
+## Measure PSF
+##==============================================================================
+PSF_list = glob.glob("PSF_outer_*.fits")
+n = len(PSF_list)
+PSF_bkg_values = np.zeros(n)
+for i in range(n):
+    print "FIT PSF{0}".format(i)
+    img_outer = pyfits.getdata('PSF_outer_{0}.fits'.format(i))
+    plt.imshow(np.log10(img_outer), origin='low') 
+    plt.show()
+    PSF_bkg_values[i] = fit_bkg_as_gaussian(img_outer)
+    img = pyfits.getdata('PSF{0}.fits'.format(i))
+    center = np.asarray(img.shape) /2
+    mask_list = glob.glob("PSF{0}*.reg".format(i))   # Read *.reg files in a list.
+    r_flux, r_grids, regions=flux_profile(img- PSF_bkg_values[i], center,
+                                          radius=center.min(), grids=50,
+                                          ifplot=True, fits_plot= False,
+                                          mask_list=mask_list)
+print QSO_bkg_value, PSF_bkg_values

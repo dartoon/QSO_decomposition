@@ -10,7 +10,7 @@ Transfer the fit to a result dict
 import numpy as np
 def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
                        error_map, filt, fixcenter,ID, cut=0, plot_compare=True,
-                       QSO_msk_list = "",pix_sz = 'swarp', QSO_msk = None,
+                       QSO_msk_list = "",pix_sz = 'drz06', QSO_msk = None,
                        tag=None):
     #==============================================================================
     # Translate the e1, e2 to phi_G and q
@@ -51,8 +51,8 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     data = data
     QSO = image_ps
     host = image_host
-    flux_list = [data, QSO, host]
-    label = ['data', 'QSO', 'host', 'model', 'residual']
+    flux_list = [data, QSO, host, error_map]
+    label = ['data', 'QSO', 'host', 'model', 'normalized residual']
     import glob
     mask_list = glob.glob(QSO_msk_list)   # Read *.reg files in a list.
 #    print "mask_list,muhahah", mask_list

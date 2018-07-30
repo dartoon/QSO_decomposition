@@ -11,9 +11,9 @@ from matplotlib.pylab import plt
 import numpy as np
 import corner
 
-def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04, pix_sz = 'swarp',
+def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04, pix_sz = 'drz06',
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
-            flux_ratio_plot=True, deep_seed = False, fixcenter = True, QSO_msk=None, QSO_std=None,
+            flux_ratio_plot=True, deep_seed = False, fixcenter = False, QSO_msk=None, QSO_std=None,
             tag = None, no_MCMC= False):
     '''
     A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
@@ -374,9 +374,9 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
 #    return source_result, ps_result, image_ps, QSO_im-image_ps, data_class.C_D
 #
     if QSO_std is None:
-        return source_result, ps_result, image_ps, QSO_im-image_ps, np.sqrt(data_class.C_D+np.abs(error_map))
+        return source_result, ps_result, image_ps, QSO_im-image_ps, np.sqrt(data_class.C_D)
     else:
-        return source_result, ps_result, image_ps, QSO_im-image_ps, np.sqrt(QSO_std**2+np.abs(error_map))
+        return source_result, ps_result, image_ps, QSO_im-image_ps, QSO_std
 
 
 """
