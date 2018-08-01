@@ -13,7 +13,7 @@ import matplotlib.pylab as plt
 #import glob
 #from matplotlib.colors import LogNorm
 
-ID = 'xxx'
+ID = 'CID543'
 
 wht = pyfits.getdata('wht_map.fits')
 exp = 2400.
@@ -21,7 +21,7 @@ mean_wht = 2395.399 * (0.0642/0.135)**2
 exp_map = exp * wht/mean_wht
 
 
-stdd = 0.0076
+stdd = 0.005
 filename = '{0}_cutout.fits'.format(ID)
 image = pyfits.open(filename)
 flux = image[0].data.copy()

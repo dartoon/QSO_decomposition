@@ -16,7 +16,7 @@ import glob
 import matplotlib.pylab as plt
 from photutils import make_source_mask
 
-ID='xxx'
+ID='CID543'
 
 #==============================================================================
 # Measure QSO
