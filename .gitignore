@@ -46,4 +46,5 @@ Cycle25data/*
 */*/astrodrz/*
 */*/noise_map/*
 */*/analysis/*sub*.fits
+*/*/analysis/PSF*outer*.fits
 *~

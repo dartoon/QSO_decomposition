@@ -61,8 +61,8 @@ img = fitsFile[1].data # check the back grounp
 c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'astrodrz_06', QSO_reg_return=True)
 center_QSO = c_psf_list[QSO_loc]
 QSO, cut_center = cut_center_bright(image=img, center=center_QSO, radius=60, return_center=True, plot=True)
+QSO_outer, cut_center2 = cut_image(image=img, center=cut_center, radius=200)
 pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
-QSO_outer, cut_center2 = cut_center_bright(image=img, center=center_QSO, radius=200, return_center=True, plot=True)
 pyfits.PrimaryHDU(QSO_outer).writeto('{0}_cutout_outer.fits'.format(ID),overwrite=True)
 
 wht = fitsFile[2].data # - (-0.002)  # check the back grounp
@@ -75,17 +75,20 @@ psf_list = psf_list[psf_list[:,0].argsort()]
 #psf_list[[3,4]] = psf_list[[4,3]]
 for i in range(len(psf_list)):
     print 'PSF',i
-    PSF = cut_center_bright(image=img, center=psf_list[i], radius=60, plot=True)
+    PSF, PSF_center = cut_center_bright(image=img, center=psf_list[i], radius=60, return_center=True, plot=True)
+    PSF_outer = cut_image(image = img, center = PSF_center, radius=200)
     pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(count),overwrite=True)
+    pyfits.PrimaryHDU(PSF_outer).writeto('PSF_outer_{0}.fits'.format(count),overwrite=True)
     count += 1
-
 
 #extra_psfs = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx],[xxx,xxx]])
 #extra_psfs = extra_psfs[extra_psfs[:,0].argsort()]
 #for i in range(len(extra_psfs)):
 #    print 'PSF',count
-#    PSF = cut_center_bright(image=img, center=extra_psfs[i], radius=60, plot=True)
+#    PSF, PSF_center = cut_center_bright(image=img, center=extra_psfs[i], radius=60, return_center=True, plot=True)
+#    PSF_outer = cut_image(image = img, center = PSF_center, radius=200)
 #    pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(count),overwrite=True)
+#    pyfits.PrimaryHDU(PSF_outer).writeto('PSF_outer_{0}.fits'.format(count),overwrite=True)
 #    count += 1
 
 #save_loc_png(img,center_QSO,psf_list, ID=ID,reg_ty = 'astrodrz_06')
