@@ -81,7 +81,6 @@ for i in range(len(psf_list)):
     pyfits.PrimaryHDU(PSF_outer).writeto('PSF_outer_{0}.fits'.format(count),overwrite=True)
     count += 1
 
-
 #extra_psfs = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx],[xxx,xxx]])
 #extra_psfs = extra_psfs[extra_psfs[:,0].argsort()]
 #for i in range(len(extra_psfs)):

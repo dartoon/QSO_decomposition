@@ -26,7 +26,7 @@ filt = 'xxx'
 QSO_bkg_value= xxx
 PSF_bkg_values = np.arrayxxx
 
-psf_name_list = glob.glob("PSF*.fits")   # Read *.reg files in a list.
+psf_name_list = glob.glob("PSF?.fits") + glob.glob("PSF??.fits") + glob.glob("not_count*.fits") # Read *.reg files in a list.
 psf_list = []
 #if not count PSF?, just name the file to not_count_PSF?.fits and +1 in the following line.
 for i in range(len(psf_name_list)+0):
@@ -104,11 +104,11 @@ QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 #    if count == 0:
 #        fit_result.write("#QSO_img intensity: {0} \n".format(round(np.sum(QSO_im*QSO_msk),2)))
 #    fit_result.write("#fit by PSF{0}: \n".format(i))
-#    fit_result.write('PSF_intensity:{0} \n'.format(round(np.sum(psf_i),2)))
+#    fit_result.write('PSF_intensity: {0} '.format(round(np.sum(psf_i),2)))
 #    ps_amp = round(ps_result[0]['point_amp'][0],2)
 #    host_amp = round((image_host*QSO_msk).sum(),2)
 #    ratio = round(host_amp/(host_amp+ps_amp)*100, 2)
-#    fit_result.write('Point_source_flux:'+repr(ps_amp) + ' host_flux:' + repr(host_amp)+ ' host_ratio:'+ repr(ratio) + "%\n")
+#    fit_result.write('Point_source_flux: '+repr(ps_amp) + ' host_flux: ' + repr(host_amp)+ ' host_ratio: '+ repr(ratio) + "%\n")
 #    count += 1
 #fit_result.close()    
 #
@@ -159,27 +159,31 @@ QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 ## Combining fitting
 ##==============================================================================
 #PSF_mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
-#psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(,),   #0126
+#psf_ave_pa, psf_std_pa=psf_ave(psf_list,mode = 'CI', not_count=(),   #all
 #                  mask_list=PSF_mask_list)
 #
-#psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(,),   #126
+#psf_ave_pb, psf_std_pb=psf_ave(psf_list,mode = 'CI', not_count=(7,),   #ex_7
 #                  mask_list=PSF_mask_list)
+#
+##psf_ave_pc, psf_std_pc=psf_ave(psf_list,mode = 'CI', not_count=(0,2,5,6,7,8),   #134
+##                  mask_list=PSF_mask_list)
 #
 #psf_ave_pa, psf_std_pa = psf_ave_pa[ct:-ct,ct:-ct], psf_std_pa[ct:-ct,ct:-ct]
 #psf_ave_pb, psf_std_pb = psf_ave_pb[ct:-ct,ct:-ct], psf_std_pb[ct:-ct,ct:-ct]
+##psf_ave_pc, psf_std_pc = psf_ave_pc[ct:-ct,ct:-ct], psf_std_pc[ct:-ct,ct:-ct]
 #
-#psf_com = ['xxx', 'xxx']
-#PSF_aves = [psf_ave_pa, psf_ave_pb]
-#PSF_stds = [psf_std_pa, psf_std_pb]
 #
-#prf_list = [QSO_im,psf_ave_pa, psf_ave_pb]
-#scal_list = [1,1,1]
-#prf_name_list = ['QSO','Plan a','Plan b']
-#fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
-#                                   gridspace = 'log',if_annuli=True,astrodrz=True)
-#plt.show()
-#fig_pro_compare.savefig('pro_compare.pdf')
+#psf_com = ['all', 'ex_7','134']
+#PSF_aves = [psf_ave_pa, psf_ave_pb] #, psf_ave_pc]
+#PSF_stds = [psf_std_pa, psf_std_pb] #, psf_std_pc]
 #
+##prf_list = [QSO_im]+ PSF_aves
+##scal_list = np.ones(len(PSF_aves)+1)
+##prf_name_list = ['QSO']+ psf_com
+##fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
+##                                   gridspace = 'log',if_annuli=True,astrodrz=True)
+##plt.show()
+##fig_pro_compare.savefig('pro_compare.pdf')
 #
 #
 #filename = 'fit_result/comb_PSF.txt'
@@ -189,7 +193,7 @@ QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 #elif if_file is not []:
 #    fit_result = open(filename,"r+")
 #    fit_result.read()
-#for i in range(2):
+#for i in range(len(PSF_aves)):
 #    pyfits.PrimaryHDU(PSF_aves[i]).writeto('psf_ave_{0}.fits'.format(psf_com[i]),overwrite=True)
 #    pyfits.PrimaryHDU(PSF_stds[i]).writeto('psf_std_{0}.fits'.format(psf_com[i]),overwrite=True)
 #    
@@ -203,3 +207,6 @@ QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 #    fit_result.write("#fit selected PSF{0}: \n".format(psf_com[i]))
 #    fit_result.write(repr(result) + "\n")
 #fit_result.close()
+
+import os
+os.system('say "your program has finished"')
