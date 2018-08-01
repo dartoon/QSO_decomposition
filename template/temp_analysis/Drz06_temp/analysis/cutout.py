@@ -61,7 +61,7 @@ img = fitsFile[1].data # check the back grounp
 c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'astrodrz_06', QSO_reg_return=True)
 center_QSO = c_psf_list[QSO_loc]
 QSO, cut_center = cut_center_bright(image=img, center=center_QSO, radius=60, return_center=True, plot=True)
-QSO_outer, cut_center2 = cut_image(image=img, center=cut_center, radius=200)
+QSO_outer = cut_image(image=img, center=cut_center, radius=200)
 pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
 pyfits.PrimaryHDU(QSO_outer).writeto('{0}_cutout_outer.fits'.format(ID),overwrite=True)
 

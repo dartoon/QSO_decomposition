@@ -1,6 +1,5 @@
-
-xxx
+#######
 
 mkdir xxx 
 cp -r ../template/temp_analysis/Drz06_temp/* xxx
-cp ../Cycle25data/xxx/idnl19*flt*fits xxx/astrodrz
+cp ../Cycle25data/xxx/*_flt.fits xxx/astrodrz
