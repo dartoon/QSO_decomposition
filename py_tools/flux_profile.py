@@ -448,7 +448,7 @@ def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
 def total_compare(label_list, flux_list,
                   facility = 'F140w' , plot_type= 4, target_ID = 'target_ID',
                   add_background=0.0, data_mask_list = None, data_cut = 0.,plot_compare=False,
-                  pix_sz = 'swarp', msk_image=None):
+                  pix_sz = 'drz06', msk_image=None):
     if facility == 'F140w':
         zp = 26.4524
     elif facility == 'F125w':
@@ -462,18 +462,17 @@ def total_compare(label_list, flux_list,
         delatPixel = 0.0642
     elif pix_sz == 'acs':
         delatPixel = 0.03
-        
-    from matplotlib.ticker import LogLocator
     
     norm = LogNorm() #ImageNormalize(stretch=SqrtStretch())
-    f = plt.figure(0, figsize=(16.75,4))
-    ax1 = plt.subplot2grid((6,4), (0,0), rowspan=6)
-    ax2 = plt.subplot2grid((6,4), (0,1), rowspan=6)
-    ax3 = plt.subplot2grid((6,4), (0,2), rowspan=6)
-    ax4 = plt.subplot2grid((6,4), (0,3), rowspan=5)
-    ax5 = plt.subplot2grid((6,4), (5,3), sharex=ax4)
+    f = plt.figure(0, figsize=(20.1,4))
+    ax1 = plt.subplot2grid((6,5), (0,0), rowspan=6)
+    ax2 = plt.subplot2grid((6,5), (0,1), rowspan=6)
+    axE = plt.subplot2grid((6,5), (0,2), rowspan=6)
+    ax3 = plt.subplot2grid((6,5), (0,3), rowspan=6)
+    ax4 = plt.subplot2grid((6,5), (0,4), rowspan=5)
+    ax5 = plt.subplot2grid((6,5), (5,4), rowspan=1)
 
-    im1 = ax1.imshow(flux_list[0] + add_background,origin='lower',cmap="gist_heat", norm=norm, vmax = 20  )
+    im1 = ax1.imshow(flux_list[0] + add_background,origin='lower',cmap="gist_heat", norm=norm, vmax = flux_list[0].max())
     clim=im1.properties()['clim']
     frame_size = len(flux_list[0])
     ax1.set_ylabel(target_ID, fontsize=15)
@@ -482,10 +481,8 @@ def total_compare(label_list, flux_list,
     ax1.get_yaxis().set_visible(False)
     scale_bar(ax1, frame_size, dist=1/delatPixel, text='1"', color = 'white')
     coordinate_arrows(ax1, frame_size, arrow_size=0.03, color = 'white')
-    cb1 = f.colorbar(im1, ax=ax1, shrink=0.49, pad=0.01,   orientation="horizontal", aspect=15)
-    cb1.ax.xaxis.set_major_locator(LogLocator())
-    cb1.set_ticks(cb1.ax.xaxis.get_major_locator().tick_values(1.e-5, flux_list[0].max()))   
-    
+    cb1 = f.colorbar(im1, ax=ax1, shrink=0.55, pad=0.01,  orientation="horizontal", aspect=15, ticks= [1.e-4, 1.e-3, 1.e-2,1.e-1,0, 10])
+    cb1.set_ticks([1.e-5, 1.e-4, 1.e-3, 1.e-2,1.e-1,0,1])   
 #    cb1.ax.()
     
     im2 = ax2.imshow(flux_list[1] + flux_list[2] + add_background,origin='lower',cmap="gist_heat", norm=norm, clim=clim)
@@ -498,10 +495,22 @@ def total_compare(label_list, flux_list,
     coordinate_arrows(ax2, frame_size, arrow_size=0.03, color = 'white')
     ax2.get_xaxis().set_visible(False)
     ax2.get_yaxis().set_visible(False)
-    cb2 = f.colorbar(im2, ax=ax2, shrink=0.49, pad=0.01,   orientation="horizontal", aspect=15) 
-    cb2.ax.xaxis.set_major_locator(LogLocator())
-    cb2.set_ticks(cb2.ax.xaxis.get_major_locator().tick_values(1.e-5, flux_list[0].max()))                   
-                    
+    cb2 = f.colorbar(im2, ax=ax2, shrink=0.55, pad=0.01,   orientation="horizontal", aspect=15) 
+    cb2.set_ticks([1.e-5, 1.e-4, 1.e-3, 1.e-2,1.e-1,0,1])  
+    
+#    posE_o = axE.get_position() # get the original position
+#    posE = [posE_o.x0 -0.1, pos3_o.y0 +0.025, pos3_o.width, pos3_o.height]
+#    axE.set_position(posE) # set a new position
+    imE = axE.imshow((flux_list[0] - flux_list[1])*msk_image, origin='lower',cmap='gist_heat', norm=norm, clim=clim)
+    axE.text(frame_size*0.05, frame_size*0.9, 'data - QSO',
+         fontsize=19, color='white')
+    scale_bar(axE, frame_size, dist=1/delatPixel, text='1"')
+    coordinate_arrows(axE, frame_size, arrow_size=0.03)
+    axE.get_xaxis().set_visible(False)
+    axE.get_yaxis().set_visible(False)
+    cbE =f.colorbar(imE, ax=axE, shrink=0.55, pad=0.01,   orientation="horizontal", aspect=15) 
+    cbE.set_ticks([1.e-5, 1.e-4, 1.e-3, 1.e-2,1.e-1,0,1])  
+    
     norm_residual = (flux_list[0]-(flux_list[1]+flux_list[2]))/flux_list[3] * msk_image
     pos3_o = ax3.get_position() # get the original position
     pos3 = [pos3_o.x0 -0.1, pos3_o.y0 +0.025, pos3_o.width, pos3_o.height]
@@ -513,10 +522,11 @@ def total_compare(label_list, flux_list,
     coordinate_arrows(ax3, frame_size, arrow_size=0.03)
     ax3.get_xaxis().set_visible(False)
     ax3.get_yaxis().set_visible(False)
-    f.colorbar(im3, ax=ax3, shrink=0.49, pad=0.01,   orientation="horizontal", aspect=15) 
+    f.colorbar(im3, ax=ax3, shrink=0.55, pad=0.01,   orientation="horizontal", aspect=15) 
+    
     
 #    plt.tight_layout()
-    plt.subplots_adjust(wspace=-0.5, hspace=0)
+    plt.subplots_adjust(wspace=-0.4, hspace=0)
 #    make_ticklabels_invisible(plt.gcf())
     for i in range(len(flux_list)-1):
         if i == 0:
@@ -539,21 +549,28 @@ def total_compare(label_list, flux_list,
             r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= radi, mask_list=None)
         r_mag = - 2.5 * np.log10(r_SB) + zp 
         if label_SB_list[i] == 'data':
-            ax4.plot(r_grids * delatPixel, r_mag, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
+            ax4.plot(r_grids, r_mag, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
         else:
-            ax4.plot(r_grids * delatPixel, r_mag, '-', label=label_SB_list[i])
+            ax4.plot(r_grids, r_mag, '-', label=label_SB_list[i])
+    ax4.set_xlabel('pixel', fontsize=15)
+    ax4.xaxis.set_label_position('top')
+    ax4.xaxis.tick_top() 
     ax4.set_xscale('log')
+    ax4.set_xticks([2,4,6,10,15,20,30])
+    from matplotlib.ticker import ScalarFormatter
+    ax4.xaxis.set_major_formatter(ScalarFormatter())
+    ax4.set_xlim([(r_grids).min()*0.85,(r_grids).max() + 5])
+
     ax4.invert_yaxis()
     ax4.set_ylabel('$\mu$(mag, pixel$^{-2}$)', fontsize=12)
-#    ax4.set_xticks(new_tick_locations)                   
-#    ax4.set_xlabel('pixel', fontsize=15)
-#    ax4.xaxis.set_label_position('top')
-#    ax4.xaxis.tick_top()   
-    ax4.get_xaxis().set_visible(False) 
+    ax4.yaxis.set_label_position('right')
+    ax4.yaxis.tick_right()
+    ax4.yaxis.set_ticks_position('both') 
     plt.gca().invert_yaxis()
+    
     ax4.legend()
     pos4_o = ax4.get_position() # get the original position
-    pos4 = [pos4_o.x0+0.13, pos4_o.y0 + 0.12, pos4_o.width*0.5, pos4_o.height*0.9]
+    pos4 = [pos4_o.x0+0.06, pos4_o.y0 + 0.12, pos4_o.width*0.62, pos4_o.height*0.9]
     ax4.set_position(pos4) # set a new position
 
     x = np.linspace(1.e-4, 100, 2)
@@ -563,22 +580,25 @@ def total_compare(label_list, flux_list,
                                         msk_image=msk_image)[0])
     r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
 #    r_mag_diff = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
-    
     ax5.plot(r_grids*delatPixel, r_mag_0-r_mag_1, 'ro')   
     ax5.set_ylabel('$\Delta\mu$', fontsize=15)
     ax5.set_xlabel('arcsec', fontsize=15)
     ax5.set_xscale('log')
-    ax5.set_xticks([0.1, 0.2, 0.5, 1, 3])
-    ax5.set_yticks([-0.5,-0.25, 0., 0.25, 0.5])
-#    ax5.set_yticks([-1.0, -0.5, 0., 0.5, 1.0])
+    ax5.set_xticks([0.1, 0.2, 0.5, 1, 2])
+    ax5.set_yticks([-0.5,-0.25, 0., 0.25])
     import matplotlib
     ax5.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
     ax5.plot(x, y, 'k--')  
-    plt.xlim([(r_grids*delatPixel).min()* 0.7,(r_grids*delatPixel).max() + 1])
+    ax5.yaxis.set_label_position('right')
+    ax5.yaxis.tick_right()
+    ax5.yaxis.set_ticks_position('both')
+    ax5.set_xlim([(r_grids*delatPixel).min()*0.85, ((r_grids).max() + 5)*delatPixel])
     plt.ylim([-0.5,0.5])
+    
+    
 #    plt.ylim([-1,1])
     pos5_o = ax5.get_position() # get the original position
-    pos5 = [pos5_o.x0+0.13, pos5_o.y0+0.05, pos5_o.width*0.5, pos5_o.height*1.5]
+    pos5 = [pos5_o.x0+0.06, pos5_o.y0+0.05, pos5_o.width*0.62, pos5_o.height*1.5]
     ax5.set_position(pos5) # set a new position
     if plot_compare == True:
         plt.show()

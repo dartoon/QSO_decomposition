@@ -60,7 +60,7 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
                   data_mask_list = mask_list, data_cut = cut, facility = filt,
                   plot_compare = plot_compare, msk_image = QSO_msk)
     if tag is not None:
-        fig.savefig("{0}_SB_profile.pdf".format(tag))
+        fig.savefig("{0}_SB_profile.pdf".format(tag), bbox_inches = 'tight')
     fig.show()
     
     # =============================================================================
