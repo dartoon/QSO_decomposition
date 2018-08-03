@@ -45,6 +45,13 @@ img = fitsFile[1].data # check the back grounp
 #ax.xaxis.set_visible(False)
 #ax.yaxis.set_visible(False)
 #plt.show()  
+#fig=plt.figure(figsize=(15,15))
+#ax=fig.add_subplot(1,1,1)
+#ax.imshow(mask, origin='lower') 
+##bkg.plot_meshes(outlines=True, color='#1f77b4')
+#ax.xaxis.set_visible(False)
+#ax.yaxis.set_visible(False)
+#plt.show()  
 #
 #back = bkg.background* ~mask_1
 #fig=plt.figure(figsize=(15,15))
@@ -81,6 +88,7 @@ for i in range(len(psf_list)):
     pyfits.PrimaryHDU(PSF_outer).writeto('PSF_outer_{0}.fits'.format(count),overwrite=True)
     count += 1
 
+extra_psfs=None
 #extra_psfs = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx],[xxx,xxx]])
 #extra_psfs = extra_psfs[extra_psfs[:,0].argsort()]
 #for i in range(len(extra_psfs)):
@@ -91,5 +99,8 @@ for i in range(len(psf_list)):
 #    pyfits.PrimaryHDU(PSF_outer).writeto('PSF_outer_{0}.fits'.format(count),overwrite=True)
 #    count += 1
 
-#save_loc_png(img,center_QSO,psf_list, ID=ID,reg_ty = 'astrodrz_06')
+if extra_psfs == None:
+    save_loc_png(img,center_QSO,psf_list, ID=ID,reg_ty = 'astrodrz_06')
+else:
+    save_loc_png(img,center_QSO,psf_list,extra_psfs, ID=ID,reg_ty = 'astrodrz_06')
 

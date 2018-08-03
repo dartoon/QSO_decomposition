@@ -1,0 +1,29 @@
+#QSO_img intensity: 138.45 
+#fit by PSF0: 
+PSF_intensity:76.81 
+{'e1': 0.5, 'n_sersic': 2.807, 'center_x': -0.037, 'center_y': -0.004, 'amp': 0.277, 'R_sersic': 0.622, 'e2': 0.144}
+Image_total_flux: 140.39 Galaxy_fitted_totflux: 144.76
+#fit by PSF1: 
+PSF_intensity:26.84 
+{'e1': 0.5, 'n_sersic': 3.176, 'center_x': -0.02, 'center_y': -0.027, 'amp': 0.375, 'R_sersic': 0.533, 'e2': 0.133}
+Image_total_flux: 140.39 Galaxy_fitted_totflux: 146.73
+#fit by PSF2: 
+PSF_intensity:33.71 
+{'e1': 0.5, 'n_sersic': 3.575, 'center_x': 0.012, 'center_y': -0.024, 'amp': 0.32, 'R_sersic': 0.569, 'e2': 0.146}
+Image_total_flux: 140.39 Galaxy_fitted_totflux: 146.2
+#fit by PSF3: 
+PSF_intensity:14.98 
+{'e1': 0.5, 'n_sersic': 2.763, 'center_x': -0.003, 'center_y': -0.054, 'amp': 0.214, 'R_sersic': 0.705, 'e2': 0.142}
+Image_total_flux: 140.39 Galaxy_fitted_totflux: 143.28
+#fit by PSF4: 
+PSF_intensity:55.97 
+{'e1': 0.5, 'n_sersic': 3.722, 'center_x': -0.022, 'center_y': -0.016, 'amp': 0.311, 'R_sersic': 0.566, 'e2': 0.147}
+Image_total_flux: 140.39 Galaxy_fitted_totflux: 145.91
+#fit by PSF5: 
+PSF_intensity:399.38 
+{'e1': 0.5, 'n_sersic': 3.166, 'center_x': 0.016, 'center_y': 0.007, 'amp': 0.388, 'R_sersic': 0.509, 'e2': 0.165}
+Image_total_flux: 140.39 Galaxy_fitted_totflux: 147.18
+#fit by PSF6: 
+PSF_intensity:843.65 
+{'e1': 0.5, 'n_sersic': 3.982, 'center_x': -0.023, 'center_y': -0.035, 'amp': 0.406, 'R_sersic': 0.503, 'e2': 0.153}
+Image_total_flux: 140.39 Galaxy_fitted_totflux: 147.76

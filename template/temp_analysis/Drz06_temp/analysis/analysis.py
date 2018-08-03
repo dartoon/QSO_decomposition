@@ -145,30 +145,48 @@ for i in range(2):
 
 #from fit_qso import fit_single_host
 #from roundme import roundme
-#lens_light_result, image_host, error_map = fit_single_host(QSO_im, psf_ave= psf_list???,
-#                                                           pix_sz = 'drz06',QSO_msk=QSO_msk,
-#                                                           QSO_std=QSO_std, tag='fit_result/pure_galaxy')
-#fit_result = open('fit_result/pure_galaxy_fit.txt'.format(i),'w') 
-#fit_result.write("#fit by PSF: \n".format(i))
-#fit_result.write(repr(roundme(lens_light_result[0])) + "\n")
-#fit_result.write('Image_total_flux: '+repr(round(QSO_im.sum(),2))+' Galaxy_fitted_totflux: '+repr(round(image_host.sum(),2)))
+#filename = 'fit_result_each/each_PSF_pure_galaxy.txt'
+#if_file = glob.glob(filename)   
+#if if_file == []:
+#    fit_result =  open(filename,'w') 
+#elif if_file is not []:
+#    fit_result = open(filename,"r+")
+#    fit_result.read()
+#count = 0
+#for i in np.array([???]):
+#    print "by PSF{0}".format(i)
+#    tag = 'fit_result_each/pure_galaxy_PSF{0}'.format(i)
+#    mask_list = glob.glob("PSF{0}_*.reg".format(i))
+#    print mask_list
+#    psf_i = psf_list[i] * cr_mask_img(image=psf_list[i], mask_list=mask_list)
+#    psf_i = psf_i[ct:-ct,ct:-ct]
+#    lens_light_result, image_host, error_map = fit_single_host(QSO_im, psf_ave=psf_i,
+#                                                              pix_sz = 'drz06',QSO_msk=QSO_msk,
+#                                                              QSO_std=QSO_std, tag=tag)
+#    if count == 0:
+#        fit_result.write("#QSO_img intensity: {0} \n".format(round(np.sum(QSO_im*QSO_msk),2)))
+#    fit_result.write("#fit by PSF{0}: \n".format(i))
+#    fit_result.write('PSF_intensity:{0} \n'.format(round(np.sum(psf_i),2)))
+#    fit_result.write(repr(roundme(lens_light_result[0])) + "\n")
+#    fit_result.write('Image_total_flux: '+repr(round(QSO_im.sum(),2))+' Galaxy_fitted_totflux: '+repr(round(image_host.sum(),2)))
+#    count += 1
 #fit_result.close()
 
 ##==============================================================================
 ## Combining fitting
 ##==============================================================================
-PSF_mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
-count_ele = range(len(psf_name_list))
-import re
-count_list= [[????], [????],[????]]
-psf_com = [re.sub('\W+', '',repr(count_list[i])) for i in range(len(count_list))] 
-#psf_com = ['0157', '57','01579', '579']
-
-not_count_list= [] #[(2,3,4,6,8,9), (0,1,2,3,4,6,8,9),(2,3,4,6,8) ,(0,1,2,3,4,6,8)]
-
-for i in range(len(count_list)):
-    count_i = [x for x in count_ele if x not in count_list[i]]
-    not_count_list.append(count_i)    
+#PSF_mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
+#count_ele = range(len(psf_name_list))
+#import re
+#count_list= [[????], [????],[????]]
+#psf_com = [re.sub('\W+', '',repr(count_list[i])) for i in range(len(count_list))] 
+##psf_com = ['0157', '57','01579', '579']
+#
+#not_count_list= [] #[(2,3,4,6,8,9), (0,1,2,3,4,6,8,9),(2,3,4,6,8) ,(0,1,2,3,4,6,8)]
+#
+#for i in range(len(count_list)):
+#    count_i = [x for x in count_ele if x not in count_list[i]]
+#    not_count_list.append(count_i)    
     
 #PSF_aves, PSF_stds = [], []
 #for i in range(len(not_count_list)):
@@ -188,7 +206,7 @@ for i in range(len(count_list)):
 ##fig_pro_compare.savefig('pro_compare.pdf')
 #
 #
-#filename = 'fit_result/comb_PSF_fixn1.txt'
+#filename = 'fit_result/comb_PSF.txt'
 #if_file = glob.glob(filename)   
 #if if_file == []:
 #    fit_result =  open(filename,'w') 
@@ -200,10 +218,10 @@ for i in range(len(count_list)):
 #    pyfits.PrimaryHDU(PSF_aves[i]).writeto('psf_ave_{0}.fits'.format(psf_com[i]),overwrite=True)
 #    pyfits.PrimaryHDU(PSF_stds[i]).writeto('psf_std_{0}.fits'.format(psf_com[i]),overwrite=True)
 #    
-#    tag = 'fit_result/comb_PSF_{0}_fixn1'.format(psf_com[i])
+#    tag = 'fit_result/comb_PSF_{0}'.format(psf_com[i])
 #    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=PSF_aves[i], psf_std = PSF_stds[i]**2,
 #                                                                      background_rms=background_rms, pix_sz = 'drz06',  no_MCMC =True,
-#                                                                      QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag, fix_n=1)
+#                                                                      QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
 #    result = transfer_to_result(data=QSO_im, pix_sz = 'drz06', source_result=source_result, ps_result=ps_result,
 #                                image_ps=image_ps, image_host=image_host, error_map=error_map,
 #                                filt=filt, fixcenter=False,ID=ID,QSO_msk = QSO_msk,tag=tag)

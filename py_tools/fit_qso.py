@@ -160,15 +160,15 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     if deep_seed == False:
         fitting_kwargs_list = [
             {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 0.8, 'n_particles': 100,
-             'n_iterations': 80},
+             'n_iterations': 100},
             {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 20, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
                #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
             'sigma_scale': .1}
             ]
     elif deep_seed == True:
          fitting_kwargs_list = [
-            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 100,
-             'n_iterations': 100},
+            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 150,
+             'n_iterations': 150},
             {'fitting_routine': 'MCMC', 'n_burn': 50, 'n_run': 100, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
                #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
             'sigma_scale': .1}
@@ -264,7 +264,7 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
     '''
     # data specifics need to set up based on the data situation
     numPix = len(QSO_im)  #  cutout pixel size
-    deltaPix = 1  #  pixel size
+    deltaPix = 0.0642  #  pixel size
     fwhm = 0.1  # full width half max of PSF (only valid when psf_type='gaussian')
     psf_type = 'PIXEL'  # 'gaussian', 'pixel', 'NONE'
     kernel_size = len(psf_ave)

@@ -504,8 +504,8 @@ def total_compare(label_list, flux_list,
     imE = axE.imshow((flux_list[0] - flux_list[1])*msk_image, origin='lower',cmap='gist_heat', norm=norm, clim=clim)
     axE.text(frame_size*0.05, frame_size*0.9, 'data - QSO',
          fontsize=19, color='white')
-    scale_bar(axE, frame_size, dist=1/delatPixel, text='1"')
-    coordinate_arrows(axE, frame_size, arrow_size=0.03)
+    scale_bar(axE, frame_size, dist=1/delatPixel, text='1"', color = 'white')
+    coordinate_arrows(axE, frame_size, arrow_size=0.03, color = 'white')
     axE.get_xaxis().set_visible(False)
     axE.get_yaxis().set_visible(False)
     cbE =f.colorbar(imE, ax=axE, shrink=0.55, pad=0.01,   orientation="horizontal", aspect=15) 

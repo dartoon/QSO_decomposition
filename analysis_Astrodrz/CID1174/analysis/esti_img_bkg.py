@@ -57,7 +57,7 @@ for i in range(n):
     mask_list = glob.glob("PSF{0}*.reg".format(i))   # Read *.reg files in a list.
     r_flux, r_grids, regions=flux_profile(img- PSF_bkg_values[i], center,
                                           radius=center.min(), grids=50,
-                                          ifplot=True, fits_plot= False,
+                                          ifplot=True, fits_plot= True,
                                           mask_list=mask_list)
 print QSO_bkg_value, PSF_bkg_values
 #PSF_bkg_values[2] = np.average([PSF_bkg_values[i] for i in range(len(PSF_bkg_values)) if i!=2])

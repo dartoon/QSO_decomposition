@@ -170,46 +170,47 @@ for i in range(len(count_list)):
     count_i = [x for x in count_ele if x not in count_list[i]]
     not_count_list.append(count_i)
 
-#PSF_aves, PSF_stds = [], []
-#for i in range(len(not_count_list)):
-#    psf_ave_i, psf_std_i=psf_ave(psf_list,mode = 'CI', not_count=not_count_list[i],   #0157
-#                  mask_list=PSF_mask_list)
-#    psf_ave_i = psf_ave_i[ct:-ct,ct:-ct]
-#    psf_std_i = psf_std_i[ct:-ct,ct:-ct]
-#    PSF_aves.append(psf_ave_i)
-#    PSF_stds.append(psf_std_i)
-#    
-##prf_list = [QSO_im]+ PSF_aves
-##scal_list = np.ones(len(PSF_aves)+1)
-##prf_name_list = ['QSO']+ psf_com
-##fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
-##                                   gridspace = 'log',if_annuli=True,astrodrz=True)
-##plt.show()
-##fig_pro_compare.savefig('pro_compare.pdf')
-#
-#
-#filename = 'fit_result/comb_PSF_fixn1.txt'
-#if_file = glob.glob(filename)   
-#if if_file == []:
-#    fit_result =  open(filename,'w') 
-#elif if_file is not []:
-#    fit_result = open(filename,"r+")
-#    fit_result.read()
-#for i in range(len(PSF_aves)):
-#    print "NO.",i," For fit PSF", psf_com[i]
-#    pyfits.PrimaryHDU(PSF_aves[i]).writeto('psf_ave_{0}.fits'.format(psf_com[i]),overwrite=True)
-#    pyfits.PrimaryHDU(PSF_stds[i]).writeto('psf_std_{0}.fits'.format(psf_com[i]),overwrite=True)
-#    
-#    tag = 'fit_result/comb_PSF_{0}_fixn1'.format(psf_com[i])
-#    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=PSF_aves[i], psf_std = PSF_stds[i]**2,
-#                                                                      background_rms=background_rms, pix_sz = 'drz06',  no_MCMC =True,
-#                                                                      QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag, fix_n=1)
-#    result = transfer_to_result(data=QSO_im, pix_sz = 'drz06', source_result=source_result, ps_result=ps_result,
-#                                image_ps=image_ps, image_host=image_host, error_map=error_map,
-#                                filt=filt, fixcenter=False,ID=ID,QSO_msk = QSO_msk,tag=tag)
-#    fit_result.write("#fit selected PSF{0}: \n".format(psf_com[i]))
-#    fit_result.write(repr(result) + "\n")
-#fit_result.close()
+PSF_aves, PSF_stds = [], []
+for i in range(len(not_count_list)):
+    psf_ave_i, psf_std_i=psf_ave(psf_list,mode = 'CI', not_count=not_count_list[i],
+                  mask_list=PSF_mask_list)
+    psf_ave_i = psf_ave_i[ct:-ct,ct:-ct]
+    psf_std_i = psf_std_i[ct:-ct,ct:-ct]
+    psf_std_i[psf_ave_i>0.003] *= 100   #Boost central noise level.
+    PSF_aves.append(psf_ave_i)
+    PSF_stds.append(psf_std_i)
+
+#prf_list = [QSO_im]+ PSF_aves
+#scal_list = np.ones(len(PSF_aves)+1)
+#prf_name_list = ['QSO']+ psf_com
+#fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
+#                                   gridspace = 'log',if_annuli=True,astrodrz=True)
+#plt.show()
+#fig_pro_compare.savefig('pro_compare.pdf')
+
+
+filename = 'fit_result/comb_PSF_bstPSFstd.txt'
+if_file = glob.glob(filename)   
+if if_file == []:
+    fit_result =  open(filename,'w') 
+elif if_file is not []:
+    fit_result = open(filename,"r+")
+    fit_result.read()
+for i in range(len(PSF_aves)):
+    print "NO.",i," For fit PSF", psf_com[i]
+    pyfits.PrimaryHDU(PSF_aves[i]).writeto('psf_ave_{0}.fits'.format(psf_com[i]),overwrite=True)
+    pyfits.PrimaryHDU(PSF_stds[i]).writeto('psf_std_{0}.fits'.format(psf_com[i]),overwrite=True)
+    
+    tag = 'fit_result/comb_PSF_{0}_bstPSFstd'.format(psf_com[i])
+    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=PSF_aves[i], psf_std = PSF_stds[i]**2,
+                                                                      background_rms=background_rms, pix_sz = 'drz06',  no_MCMC =True,
+                                                                      QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
+    result = transfer_to_result(data=QSO_im, pix_sz = 'drz06', source_result=source_result, ps_result=ps_result,
+                                image_ps=image_ps, image_host=image_host, error_map=error_map,
+                                filt=filt, fixcenter=False,ID=ID,QSO_msk = QSO_msk,tag=tag)
+    fit_result.write("#fit selected PSF{0}: \n".format(psf_com[i]))
+    fit_result.write(repr(result) + "\n")
+fit_result.close()
 
 import os
 os.system('say "your program has finished"')
