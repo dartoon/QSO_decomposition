@@ -191,7 +191,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     # let's plot the output of the PSO minimizer
     from lenstronomy.Plots.output_plots import LensModelPlot
     lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
-                                 lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=5)
+                                 lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat")
     
     if image_plot:
         f, axes = plt.subplots(3, 3, figsize=(16, 16), sharex=False, sharey=False)
@@ -359,7 +359,7 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
     if image_plot:
         from lenstronomy.Plots.output_plots import LensModelPlot
         lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
-                                 lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=5)
+                                 lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat")
     
         f, axes = plt.subplots(2, 2, figsize=(9, 9), sharex=False, sharey=False)
         lensPlot.data_plot(ax=axes[0,0])
@@ -551,7 +551,7 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
     if image_plot:
         from lenstronomy.Plots.output_plots import LensModelPlot
         lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
-                                 lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=5)
+                                 lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat")
     
         f, axes = plt.subplots(3, 3, figsize=(16, 16), sharex=False, sharey=False)
         lensPlot.data_plot(ax=axes[0,0])
@@ -717,7 +717,7 @@ def fit_single_host(QSO_im, psf_ave, background_rms=0.04, pix_sz = 'swarp',
     from lenstronomy.Plots.output_plots import LensModelPlot
     import lenstronomy.Plots.output_plots as out_plot
     lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
-                             lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat", high_res=1)
+                             lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat")
     
     for i in range(len(chain_list)):
         if len(param_list[i]) > 0:

@@ -22,47 +22,47 @@ c_psf_list = grab_pos(filename,reg_ty = 'astrodrz_06')
 fitsFile = pyfits.open('../astrodrz/final_drz.fits')
 img = fitsFile[1].data # check the back grounp
 
-#from astropy.visualization import SqrtStretch
-#from astropy.stats import SigmaClip
-#from photutils import Background2D, SExtractorBackground  
-#from astropy.visualization.mpl_normalize import ImageNormalize
-#import matplotlib.pyplot as plt
-#norm = ImageNormalize(stretch=SqrtStretch())         
-#sigma_clip = SigmaClip(sigma=3., iters=10)
-#bkg_estimator = SExtractorBackground()
-#from photutils import make_source_mask
-#mask_0 = make_source_mask(img, snr=2, npixels=5, dilate_size=11)
-#mask_1 = (np.isnan(img))
-#mask = mask_0 + mask_1
-#bkg = Background2D(img, (50, 50), filter_size=(3, 3),
-#                   sigma_clip=sigma_clip, bkg_estimator=bkg_estimator,
-#                   mask=mask)
-#from matplotlib.colors import LogNorm
-#fig=plt.figure(figsize=(15,15))
-#ax=fig.add_subplot(1,1,1)
-#ax.imshow(img, norm=LogNorm(), origin='lower') 
-##bkg.plot_meshes(outlines=True, color='#1f77b4')
-#ax.xaxis.set_visible(False)
-#ax.yaxis.set_visible(False)
-#plt.show()  
-#fig=plt.figure(figsize=(15,15))
-#ax=fig.add_subplot(1,1,1)
-#ax.imshow(mask, origin='lower') 
-##bkg.plot_meshes(outlines=True, color='#1f77b4')
-#ax.xaxis.set_visible(False)
-#ax.yaxis.set_visible(False)
-#plt.show()  
-#
-#back = bkg.background* ~mask_1
-#fig=plt.figure(figsize=(15,15))
-#ax=fig.add_subplot(1,1,1)
-#ax.imshow(back, origin='lower', cmap='Greys_r')
-#ax.xaxis.set_visible(False)
-#ax.yaxis.set_visible(False)
-#plt.show()
-#
-#img -= back              
-#pyfits.PrimaryHDU(img).writeto('sub_coadd.fits',overwrite=True)
+from astropy.visualization import SqrtStretch
+from astropy.stats import SigmaClip
+from photutils import Background2D, SExtractorBackground  
+from astropy.visualization.mpl_normalize import ImageNormalize
+import matplotlib.pyplot as plt
+norm = ImageNormalize(stretch=SqrtStretch())         
+sigma_clip = SigmaClip(sigma=3., iters=10)
+bkg_estimator = SExtractorBackground()
+from photutils import make_source_mask
+mask_0 = make_source_mask(img, snr=2, npixels=5, dilate_size=11)
+mask_1 = (np.isnan(img))
+mask = mask_0 + mask_1
+bkg = Background2D(img, (50, 50), filter_size=(3, 3),
+                   sigma_clip=sigma_clip, bkg_estimator=bkg_estimator,
+                   mask=mask)
+from matplotlib.colors import LogNorm
+fig=plt.figure(figsize=(15,15))
+ax=fig.add_subplot(1,1,1)
+ax.imshow(img, norm=LogNorm(), origin='lower') 
+#bkg.plot_meshes(outlines=True, color='#1f77b4')
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+plt.show()  
+fig=plt.figure(figsize=(15,15))
+ax=fig.add_subplot(1,1,1)
+ax.imshow(mask, origin='lower') 
+#bkg.plot_meshes(outlines=True, color='#1f77b4')
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+plt.show()  
+
+back = bkg.background* ~mask_1
+fig=plt.figure(figsize=(15,15))
+ax=fig.add_subplot(1,1,1)
+ax.imshow(back, origin='lower', cmap='Greys_r')
+ax.xaxis.set_visible(False)
+ax.yaxis.set_visible(False)
+plt.show()
+
+img -= back              
+pyfits.PrimaryHDU(img).writeto('sub_coadd.fits',overwrite=True)
 ##img = pyfits.getdata('sub_coadd.fits')
 
 c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'astrodrz_06', QSO_reg_return=True)
@@ -99,7 +99,7 @@ extra_psfs=None
 #    pyfits.PrimaryHDU(PSF_outer).writeto('PSF_outer_{0}.fits'.format(count),overwrite=True)
 #    count += 1
 
-if extra_psfs == None:
+if extra_psfs is None:
     save_loc_png(img,center_QSO,psf_list, ID=ID,reg_ty = 'astrodrz_06')
 else:
     save_loc_png(img,center_QSO,psf_list,extra_psfs, ID=ID,reg_ty = 'astrodrz_06')

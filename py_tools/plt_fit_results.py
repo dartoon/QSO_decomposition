@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import re
 import matplotlib
 
-f = open("../analysis_Astrodrz/CID206/analysis/fit_result_each/each_PSF_fit_qso.txt","r")
+f = open("../analysis_Astrodrz/CID237/analysis/fit_result_each/each_PSF_fit_qso.txt","r")
 #f = open("/Users/Dartoon/Astro/analysis_back_up/second_run_with_smaller_frame_size/CID3242/analysis/fit_result/each_PSF_fit_qso.txt","r")
 #f = open("../analysis_Astrodrz/fit_summary_with_std**2.txt","r")
 
@@ -29,6 +29,9 @@ normalize = matplotlib.colors.Normalize(vmin=0.3, vmax=7.0)
 S_n_list = [float(value) for value in S_n_list]
 
 colors = [cmap(normalize(value)) for value in S_n_list]
+
+Re = [float(i) for i in Re]
+host_flux_ratio = [float(i) for i in host_flux_ratio]
 
 fig, ax = plt.subplots(figsize=(10,6))
 ax.scatter(Re, host_flux_ratio, color=colors)

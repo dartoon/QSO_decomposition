@@ -1,0 +1,4 @@
+#fit selected PSF568: 
+{'n_sersic': 4.0, 'host_mag': 21.277, 'R_sersic': 0.612, 'qso_y': 0.012, 'qso_x': 0.025, 'QSO_amp': 278.576, 'q': 0.74, 'redu_Chisq': 3.393479, 'center_x': 0.11, 'center_y': -0.046, 'host_amp': 117.508, 'phi_G': 1.102, 'amp': 0.091, 'host_flux_ratio_percent': 30.244}
+#fit selected PSF5678: 
+{'n_sersic': 4.0, 'host_mag': 21.483, 'R_sersic': 0.981, 'qso_y': 0.013, 'qso_x': 0.031, 'QSO_amp': 297.25, 'q': 0.703, 'redu_Chisq': 2.741554, 'center_x': 0.137, 'center_y': -0.046, 'host_amp': 97.239, 'phi_G': 1.194, 'amp': 0.035, 'host_flux_ratio_percent': 24.823}

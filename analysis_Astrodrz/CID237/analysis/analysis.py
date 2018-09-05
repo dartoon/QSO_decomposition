@@ -17,8 +17,8 @@ from psfs_average import psf_ave
 from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
 
-ID = 'xxx'
-filt = 'xxx'
+ID = 'CID237'
+filt = 'F140w'
 
 # =============================================================================
 # Read PSF and QSO image
@@ -40,46 +40,46 @@ ct = (121-frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
 PSF_mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
 QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID)) - QSO_bkg_value
 
-#==============================================================================
-# Compare the profile and derive the Average image
-#==============================================================================
-if_QSO_l = [False, True]
-gridsp_l = ['log', None]
-if_annuli_l = [False, True] 
-for i in range(2):
-    for j in range(2):
-        for k in range(2):
-            plt_which_PSF = None
-            plt_QSO = False
-            if i+k+j == 0:
-                plt_which_PSF = (0,1,2,3,4,5,6,7,8)
-            if i==1 and j+k ==0:
-                plt_QSO = True
-            fig_psf_com = QSO_psfs_compare(QSO=QSO_im, psfs=psf_list,
-                                               plt_which_PSF=plt_which_PSF,
-                                               mask_list=PSF_mask_list, grids=30,
-                                               include_QSO=if_QSO_l[i], 
-                                               plt_QSO = plt_QSO, norm_pix = 5.0,
-                                               gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
-            fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
-            if i==1 and k==1:
-                plt.show()
-            else:
-                plt.close()
+##==============================================================================
+## Compare the profile and derive the Average image
+##==============================================================================
+#if_QSO_l = [False, True]
+#gridsp_l = ['log', None]
+#if_annuli_l = [False, True] 
+#for i in range(2):
+#    for j in range(2):
+#        for k in range(2):
+#            plt_which_PSF = None
+#            plt_QSO = False
+#            if i+k+j == 0:
+#                plt_which_PSF = (0,1,2,4,5,6,7,8)
+#            if i==1 and j+k ==0:
+#                plt_QSO = True
+#            fig_psf_com = QSO_psfs_compare(QSO=QSO_im, psfs=psf_list,
+#                                               plt_which_PSF=plt_which_PSF,
+#                                               mask_list=PSF_mask_list, grids=30,
+#                                               include_QSO=if_QSO_l[i], 
+#                                               plt_QSO = plt_QSO, norm_pix = 5.0,
+#                                               gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
+#            fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
+#            if i==1 and k==1:
+#                plt.show()
+#            else:
+#                plt.close()
 # =============================================================================
 # Doing the fitting
 # =============================================================================
-#from fit_qso import fit_qso, fit_ps
-#from transfer_to_result import transfer_to_result
-#from flux_profile import cr_mask_img
-#background_rms = 0.0076
-#QSO_mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
-#QSO_msk = cr_mask_img(QSO_im, QSO_mask_list)
-#QSO_msk = QSO_msk[ct:-ct,ct:-ct]
-#QSO_im = QSO_im[ct:-ct,ct:-ct]
-##QSO_msk = None
-#QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
-##############################Fit
+from fit_qso import fit_qso, fit_ps
+from transfer_to_result import transfer_to_result
+from flux_profile import cr_mask_img
+background_rms = 0.0064
+QSO_mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
+QSO_msk = cr_mask_img(QSO_im, QSO_mask_list)
+QSO_msk = QSO_msk[ct:-ct,ct:-ct]
+QSO_im = QSO_im[ct:-ct,ct:-ct]
+#QSO_msk = None
+QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
+#############################Fit
 #filename = 'fit_result_each/each_PSF_fit_ps.txt'
 #if_file = glob.glob(filename)   
 #if if_file == []:
@@ -88,7 +88,7 @@ for i in range(2):
 #    fit_result = open(filename,"r+")
 #    fit_result.read()
 #count = 0
-#for i in np.array([xxx]):
+#for i in np.array([0,1,2,4,5,6,7,8]):
 #    print "by PSF{0}".format(i)
 #    tag = 'fit_result_each/ps_fit_PSF{0}'.format(i)
 #    mask_list = glob.glob("PSF{0}_*.reg".format(i))
@@ -110,7 +110,7 @@ for i in range(2):
 #    fit_result.write('Point_source_flux: '+repr(ps_amp) + ' host_flux: ' + repr(host_amp)+ ' host_ratio: '+ repr(ratio) + "%\n")
 #    count += 1
 #fit_result.close()    
-#
+
 #fixcenter = False
 #filename = 'fit_result_each/each_PSF_fit_qso.txt'
 #if_file = glob.glob(filename)   
@@ -120,7 +120,7 @@ for i in range(2):
 #    fit_result = open(filename,"r+")
 #    fit_result.read()
 #count = 0
-#for i in np.array([xxx]):
+#for i in np.array([0,1,2,4,5,6,7,8]):
 #    print "by PSF{0}".format(i)
 #    tag = 'fit_result_each/qso_fit_PSF{0}'.format(i)
 #    mask_list = glob.glob("PSF{0}_*.reg".format(i))
@@ -172,40 +172,40 @@ for i in range(2):
 #    count += 1
 #fit_result.close()
 
-##==============================================================================
-## Combining fitting
-##==============================================================================
-#PSF_mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
-#count_ele = range(len(psf_name_list))
-#import re
-#count_list= [[????], [????],[????]]
-#psf_com = [re.sub('\W+', '',repr(count_list[i])) for i in range(len(count_list))] 
-##psf_com = ['0157', '57','01579', '579']
-#
-#not_count_list= [] #[(2,3,4,6,8,9), (0,1,2,3,4,6,8,9),(2,3,4,6,8) ,(0,1,2,3,4,6,8)]
-#
-#for i in range(len(count_list)):
-#    count_i = [x for x in count_ele if x not in count_list[i]]
-#    not_count_list.append(count_i)    
+#==============================================================================
+# Combining fitting
+#==============================================================================
+PSF_mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
+count_ele = range(len(psf_name_list))
+import re
+count_list= [[5,6,8],[5,6,7,8]]
+psf_com = [re.sub('\W+', '',repr(count_list[i])) for i in range(len(count_list))] 
+#psf_com = ['0157', '57','01579', '579']
+
+not_count_list= [] #[(2,3,4,6,8,9), (0,1,2,3,4,6,8,9),(2,3,4,6,8) ,(0,1,2,3,4,6,8)]
+
+for i in range(len(count_list)):
+    count_i = [x for x in count_ele if x not in count_list[i]]
+    not_count_list.append(count_i)    
     
-#PSF_aves, PSF_stds = [], []
-#for i in range(len(not_count_list)):
-#    psf_ave_i, psf_std_i=psf_ave(psf_list,mode = 'CI', not_count=not_count_list[i],   #0157
-#                  mask_list=PSF_mask_list)
-#    psf_ave_i = psf_ave_i[ct:-ct,ct:-ct]
-#    psf_std_i = psf_std_i[ct:-ct,ct:-ct]
-#    PSF_aves.append(psf_ave_i)
-#    PSF_stds.append(psf_std_i)
-#    
-##prf_list = [QSO_im]+ PSF_aves
-##scal_list = np.ones(len(PSF_aves)+1)
-##prf_name_list = ['QSO']+ psf_com
-##fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
-##                                   gridspace = 'log',if_annuli=True,astrodrz=True)
-##plt.show()
-##fig_pro_compare.savefig('pro_compare.pdf')
-#
-#
+PSF_aves, PSF_stds = [], []
+for i in range(len(not_count_list)):
+    psf_ave_i, psf_std_i=psf_ave(psf_list,mode = 'CI', not_count=not_count_list[i],   #0157
+                  mask_list=PSF_mask_list)
+    psf_ave_i = psf_ave_i[ct:-ct,ct:-ct]
+    psf_std_i = psf_std_i[ct:-ct,ct:-ct]
+    PSF_aves.append(psf_ave_i)
+    PSF_stds.append(psf_std_i)
+    
+#prf_list = [QSO_im]+ PSF_aves
+#scal_list = np.ones(len(PSF_aves)+1)
+#prf_name_list = ['QSO']+ psf_com
+#fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
+#                                   gridspace = 'log',if_annuli=True,astrodrz=True)
+#plt.show()
+#fig_pro_compare.savefig('pro_compare.pdf')
+
+
 #filename = 'fit_result/comb_PSF.txt'
 #if_file = glob.glob(filename)   
 #if if_file == []:
@@ -228,6 +228,29 @@ for i in range(2):
 #    fit_result.write("#fit selected PSF{0}: \n".format(psf_com[i]))
 #    fit_result.write(repr(result) + "\n")
 #fit_result.close()
+
+filename = 'fit_result/comb_PSF_n4.txt'
+if_file = glob.glob(filename)   
+if if_file == []:
+    fit_result =  open(filename,'w') 
+elif if_file is not []:
+    fit_result = open(filename,"r+")
+    fit_result.read()
+for i in range(len(PSF_aves)):
+    print "NO.",i," For fit PSF", psf_com[i]
+    pyfits.PrimaryHDU(PSF_aves[i]).writeto('psf_ave_{0}.fits'.format(psf_com[i]),overwrite=True)
+    pyfits.PrimaryHDU(PSF_stds[i]).writeto('psf_std_{0}.fits'.format(psf_com[i]),overwrite=True)
+    
+    tag = 'fit_result/comb_PSF_n4_{0}'.format(psf_com[i])
+    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=PSF_aves[i], psf_std = PSF_stds[i]**2,
+                                                                      background_rms=background_rms, pix_sz = 'drz06',  no_MCMC =True,
+                                                                      QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
+    result = transfer_to_result(data=QSO_im, pix_sz = 'drz06', source_result=source_result, ps_result=ps_result,
+                                image_ps=image_ps, image_host=image_host, error_map=error_map,
+                                filt=filt, fixcenter=False,ID=ID,QSO_msk = QSO_msk,tag=tag)
+    fit_result.write("#fit selected PSF{0}: \n".format(psf_com[i]))
+    fit_result.write(repr(result) + "\n")
+fit_result.close()
 
 import os
 os.system('say "your program has finished"')
