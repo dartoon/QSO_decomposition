@@ -11,7 +11,8 @@ import matplotlib.pyplot as plt
 import re
 import matplotlib
 
-f = open("../analysis_Astrodrz/CID237/analysis/fit_result_each/each_PSF_fit_qso.txt","r")
+inp = raw_input('The name of the target:\n')
+f = open("../analysis_Astrodrz/{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(inp),"r")
 #f = open("/Users/Dartoon/Astro/analysis_back_up/second_run_with_smaller_frame_size/CID3242/analysis/fit_result/each_PSF_fit_qso.txt","r")
 #f = open("../analysis_Astrodrz/fit_summary_with_std**2.txt","r")
 
