@@ -13,7 +13,7 @@ from flux_profile import text_in_string_list,cr_mask
 import matplotlib.pylab as plt
 from matplotlib.colors import LogNorm
 
-def psf_ave(psfs_list, not_count=(), mode = 'CI',  mask_list=['default.reg']):
+def psf_ave(psfs_list, not_count=(), mode = 'CI',  mask_list=['default.reg'], mask_img_list=None):
     '''
     Produce the average for a list of psfs.
     
@@ -53,11 +53,14 @@ def psf_ave(psfs_list, not_count=(), mode = 'CI',  mask_list=['default.reg']):
             print "The PSF{0} is not count".format(i)
             psfs_l_msk[i] = np.zeros_like(psfs_list[i])
         else:
-            msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), mask_list)
-            mask = np.ones(psfs_list[i].shape)
-            if msk_counts != 0:
-                for j in range(msk_counts):
-                    mask *= cr_mask(image=psfs_list[i], filename=mask_lists[j])
+            if mask_img_list is None:
+                msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), mask_list)
+                mask = np.ones(psfs_list[i].shape)
+                if msk_counts != 0:
+                    for j in range(msk_counts):
+                        mask *= cr_mask(image=psfs_list[i], filename=mask_lists[j])
+            else:
+                mask = mask_img_list[i]
             psfs_l_msk[i] = psfs_list[i] * mask
 #    for i in range(psf_NO):
 #            print "plot psfs_list", i

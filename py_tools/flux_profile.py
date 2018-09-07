@@ -140,24 +140,24 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
         grids: The number of points to sample the flux with default equals to 20;
         ifplot: if plot the profile
         fits_plot: if plot the fits file with the regions.
-        msk_image: if is not one, will use this image as mask.
+        msk_image: if is not None, will use this image as mask.
     Returns
     --------
         A 1-D array of the SB value of each 'grids' in the profile with the sampled radius.
     '''
-    if mask_list == None:
+    if mask_list is None and msk_image is None:
         r_flux, r_grids, regions=flux_profile(image, center, radius=radius, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
         region_area = np.zeros([len(r_flux)])
         for i in range(len(r_flux)):
             circle=regions[i].to_mask(mode='exact')
             edge_mask = circle.cutout(np.ones(image.shape))
             region_area[i]=(circle.data * edge_mask).sum()
-    elif mask_list != None:
+    else:
         mask = np.ones(image.shape)
-        if msk_image is None:
+        if mask_list is not None and msk_image is None:
             for i in range(len(mask_list)):
                 mask *= cr_mask(image=image, filename=mask_list[i], mask_reg_cut = mask_cut)
-        else:
+        elif msk_image is not None:
             mask = msk_image
 #        plt.imshow(mask, origin='low')
 #        plt.show()
@@ -181,10 +181,10 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
         r_SB[1:] = (r_flux[1:]-r_flux[:-1]) / (region_area[1:]-region_area[:-1])
     if fits_plot == True:
         ax=plt.subplot(1,1,1)
-        if mask_list != None:
-            cax=ax.imshow(image*mask,norm=LogNorm(),origin='lower')
-        elif mask_list == None:
+        if mask_list is None and msk_image is None:
             cax=ax.imshow(image, norm=LogNorm(),origin='lower')
+        else:
+            cax=ax.imshow(image*mask,norm=LogNorm(),origin='lower')
         #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
         for i in range(grids):
             ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
@@ -229,7 +229,7 @@ def text_in_string_list(text, string_list):
     return counts, text_string
             
 
-def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
+def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=None, plt_which_PSF=None,
                      include_QSO = True, gridspace = None , grids=30, norm_pix = 3.0,
                      if_annuli=False,plt_QSO=False,astrodrz=False, not_plt=()):
     """
@@ -250,7 +250,9 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
             print "Plot for QSO:"
         center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max())),(2))[::-1]
 #        print "center_QSO:", center_QSO
-        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, fits_plot=plt_QSO, gridspace=gridspace, if_annuli=if_annuli)
+        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, 
+                                           fits_plot=plt_QSO, gridspace=gridspace, if_annuli=if_annuli,
+                                           msk_image=QSO_msk)
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
             count = r_grids_QSO <= norm_pix
             idx = count.sum()-1
@@ -262,14 +264,19 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):
             j = plt_which_PSF[i]
-            msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(j), mask_list)
-            print "Plot for fits: PSF{0}.fits".format(j)
-            if msk_counts == 0:
-                SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
-            elif msk_counts >0:
-                print mask_lists
+            if PSF_mask_img is None:
+                msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(j), psf_mask_list)
+                print "Plot for fits: PSF{0}.fits".format(j)
+                if msk_counts == 0:
+                    SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
+                elif msk_counts >0:
+                    print mask_lists
+                    SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
+                                           mask_plot = False, psf_mask_list=mask_lists)
+            else:
+                print "Plot for fits: PSF{0}.fits".format(j)
                 SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
-                                       mask_plot = False, mask_list=mask_lists)
+                                           mask_plot = False, msk_image=PSF_mask_img[j])
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
     for i in range(psfs_NO):
@@ -277,12 +284,16 @@ def QSO_psfs_compare(QSO, psfs, mask_list=None, plt_which_PSF=None,
             plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5)
             plt.legend()
         if psfs[i] is not None:
-            msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), mask_list)
-            if msk_counts == 0:
-                r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli)
-            elif msk_counts >0:
-                r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
-                                           mask_list=mask_lists)
+            if PSF_mask_img is None:
+                msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), psf_mask_list)
+                if msk_counts == 0:
+                    r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli)
+                elif msk_counts >0:
+                    r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
+                                               psf_mask_list=mask_lists)
+            else:
+                    r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
+                                               msk_image=PSF_mask_img[i])
             if isinstance(norm_pix,int) or isinstance(norm_pix,float):
                 count = r_grids <= norm_pix
                 idx = count.sum() -1

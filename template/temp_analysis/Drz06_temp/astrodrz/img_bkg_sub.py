@@ -36,7 +36,7 @@ for i in range(len(files)):
     ax.imshow(mask,origin='low')
     ax.xaxis.set_visible(False)
     ax.yaxis.set_visible(False) 
-    plt.show()
+    plt.close()
     bkg = Background2D(img, (50, 50), filter_size=(3, 3),
                        sigma_clip=sigma_clip, bkg_estimator=bkg_estimator,
                        mask=mask)
@@ -49,10 +49,12 @@ for i in range(len(files)):
     ax.imshow(back, origin='lower', cmap='Greys_r')
     ax.xaxis.set_visible(False)
     ax.yaxis.set_visible(False)     
-    plt.show()
+    plt.close()
     
     img -= back
     fitsFile[1].data = img
     fitsFile.flush()
+    
+print "total drz:", len(files)
     
              

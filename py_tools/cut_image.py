@@ -14,7 +14,7 @@ import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 from flux_profile import pix_region
 from matplotlib.colors import LogNorm
-
+import copy 
 def cut_image(image, center, radius):
     region = pix_region(center, radius=radius)
     cut = region.to_mask(mode='exact')
@@ -356,3 +356,23 @@ def string_find_between(s, first, last ):
         return s[start:end]
     except ValueError:
         return ""
+    
+def make_side_msk(img, snr=2.5, npixels=10, dilate_size=5):
+    from photutils import make_source_mask
+    mask_o = make_source_mask(img, snr=2.5, npixels=10, dilate_size=5)
+    exp_center = np.zeros_like(mask_o)
+    cent = len(exp_center)/2
+    exp_center[cent,cent] = 1
+    count = [-1,0,1]
+    i=0
+    exp_center_comp = np.zeros_like(mask_o)
+    while exp_center_comp.sum() != exp_center.sum():
+        exp_center_comp = copy.deepcopy(exp_center)
+        for i in range(exp_center.sum()):
+            x, y = np.where(exp_center==1)[0][i], np.where(exp_center==1)[1][i]
+            for j in count:
+                for k in count:
+                    if exp_center[x+j,y+k] == 0 and mask_o [x+j,y+k] == 1:
+                        exp_center[x+j,y+k] = 1
+    mask_ = mask_o * ~exp_center
+    return ~mask_
