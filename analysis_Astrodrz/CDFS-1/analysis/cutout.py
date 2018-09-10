@@ -13,11 +13,11 @@ sys.path.insert(0,'../../../py_tools')
 from cut_image import cut_image, cut_center_bright, save_loc_png, grab_pos
 import copy
 import astropy.io.fits as pyfits
-ID = 'xxx'
+ID = 'CDFS-1'
 
 fitsFile = pyfits.open('../astrodrz/final_drz.fits')
-
 img = fitsFile[1].data # check the back grounp
+
 from astropy.visualization import SqrtStretch
 from astropy.stats import SigmaClip
 from photutils import Background2D, SExtractorBackground  
@@ -61,10 +61,9 @@ img -= back
 pyfits.PrimaryHDU(img).writeto('sub_coadd.fits',overwrite=True)
 ##img = pyfits.getdata('sub_coadd.fits')
 
-filename= 'stars_and_QSO.reg'
-c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'astrodrz_06', QSO_reg_return=True)
-center_QSO = c_psf_list[QSO_loc]
-
+#filename= 'stars_and_QSO.reg'
+#c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'astrodrz_06', QSO_reg_return=True)
+center_QSO = np.array([1160,1562])#c_psf_list[QSO_loc]
 QSO, cut_center = cut_center_bright(image=img, center=center_QSO, radius=60, return_center=True, plot=True)
 QSO_outer = cut_image(image=img, center=cut_center, radius=200)
 pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
@@ -75,28 +74,28 @@ cut_wht = cut_image(image=wht, center=cut_center, radius=60)
 pyfits.PrimaryHDU(cut_wht).writeto('wht_map.fits',overwrite=True)
 
 count=0
-psf_list = None
-psf_list = np.delete(c_psf_list, (QSO_loc), axis=0)
-psf_list = psf_list[psf_list[:,0].argsort()]
+psf_list=None
+#psf_list = np.delete(c_psf_list, (QSO_loc), axis=0)
+#psf_list = psf_list[psf_list[:,0].argsort()]
 #psf_list[[3,4]] = psf_list[[4,3]]
-for i in range(len(psf_list)):
-    print 'PSF',i
-    PSF, PSF_center = cut_center_bright(image=img, center=psf_list[i], radius=60, return_center=True, plot=True)
-    PSF_outer = cut_image(image = img, center = PSF_center, radius=200)
-    pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(count),overwrite=True)
-    pyfits.PrimaryHDU(PSF_outer).writeto('PSF_outer_{0}.fits'.format(count),overwrite=True)
-    count += 1
-
-extra_psfs=None
-#extra_psfs = np.array([[xxx,xxx],[xxx,xxx],[xxx,xxx],[xxx,xxx]])
-#extra_psfs = extra_psfs[extra_psfs[:,0].argsort()]
-#for i in range(len(extra_psfs)):
-#    print 'PSF',count
-#    PSF, PSF_center = cut_center_bright(image=img, center=extra_psfs[i], radius=60, return_center=True, plot=True)
+#for i in range(len(psf_list)):
+#    print 'PSF',i
+#    PSF, PSF_center = cut_center_bright(image=img, center=psf_list[i], radius=60, return_center=True, plot=True)
 #    PSF_outer = cut_image(image = img, center = PSF_center, radius=200)
 #    pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(count),overwrite=True)
 #    pyfits.PrimaryHDU(PSF_outer).writeto('PSF_outer_{0}.fits'.format(count),overwrite=True)
 #    count += 1
+
+#extra_psfs=None
+extra_psfs = np.array([[1562,1731],[2385,1380],[2378,968],[848,2274]])
+extra_psfs = extra_psfs[extra_psfs[:,0].argsort()]
+for i in range(len(extra_psfs)):
+    print 'PSF',count
+    PSF, PSF_center = cut_center_bright(image=img, center=extra_psfs[i], radius=60, return_center=True, plot=True)
+    PSF_outer = cut_image(image = img, center = PSF_center, radius=200)
+    pyfits.PrimaryHDU(PSF).writeto('PSF{0}.fits'.format(count),overwrite=True)
+    pyfits.PrimaryHDU(PSF_outer).writeto('PSF_outer_{0}.fits'.format(count),overwrite=True)
+    count += 1
 
 if extra_psfs is None:
     save_loc_png(img,center_QSO,psf_list, ID=ID,reg_ty = 'astrodrz_06')

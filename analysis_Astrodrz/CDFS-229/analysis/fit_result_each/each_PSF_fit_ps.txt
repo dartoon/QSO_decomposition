@@ -1,0 +1,11 @@
+#QSO_img intensity: 426.66 
+#fit by PSF1: 
+PSF_intensity: 104.7 Point_source_flux: 365.1 host_flux: 61.64 host_ratio: 14.44%
+#fit by PSF3: 
+PSF_intensity: 5850.16 Point_source_flux: 374.89 host_flux: 51.85 host_ratio: 12.15%
+
+#QSO_img intensity with side_msk: 423.77 
+#fit by PSF1: 
+PSF_intensity: 104.7 Point_source_flux: 365.13 host_flux: 59.28 host_ratio: 13.97%
+#fit by PSF3: 
+PSF_intensity: 5850.16 Point_source_flux: 374.65 host_flux: 49.94 host_ratio: 11.76%

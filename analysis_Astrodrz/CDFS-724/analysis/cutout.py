@@ -16,8 +16,8 @@ import astropy.io.fits as pyfits
 ID = 'xxx'
 
 fitsFile = pyfits.open('../astrodrz/final_drz.fits')
-
 img = fitsFile[1].data # check the back grounp
+
 from astropy.visualization import SqrtStretch
 from astropy.stats import SigmaClip
 from photutils import Background2D, SExtractorBackground  
@@ -64,7 +64,6 @@ pyfits.PrimaryHDU(img).writeto('sub_coadd.fits',overwrite=True)
 filename= 'stars_and_QSO.reg'
 c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'astrodrz_06', QSO_reg_return=True)
 center_QSO = c_psf_list[QSO_loc]
-
 QSO, cut_center = cut_center_bright(image=img, center=center_QSO, radius=60, return_center=True, plot=True)
 QSO_outer = cut_image(image=img, center=cut_center, radius=200)
 pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
@@ -75,7 +74,6 @@ cut_wht = cut_image(image=wht, center=cut_center, radius=60)
 pyfits.PrimaryHDU(cut_wht).writeto('wht_map.fits',overwrite=True)
 
 count=0
-psf_list = None
 psf_list = np.delete(c_psf_list, (QSO_loc), axis=0)
 psf_list = psf_list[psf_list[:,0].argsort()]
 #psf_list[[3,4]] = psf_list[[4,3]]
