@@ -105,7 +105,7 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,
     QSO_reg = pix_region(center_QSO, radius= QSO_box_size)
     QSO_mask = QSO_reg.to_mask(mode='center')
     ax.text(center_QSO[0]-2*QSO_box_size, center_QSO[1]+1.5*QSO_box_size, 'QSO',color='white', fontsize=20)
-    ax.add_patch(QSO_mask.bbox.as_patch(facecolor='none', edgecolor='white', linewidth=2))
+    ax.add_patch(QSO_mask.bbox.as_artist(facecolor='none', edgecolor='white', linewidth=2))
     count=0
     count_shift = 0
     if c_psf_list is not None:
@@ -129,7 +129,7 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,
         for i in range(len(extra_psfs)):
             PSF_reg = pix_region(extra_psfs[i], radius= PSF_box_size)
             PSF_mask = PSF_reg.to_mask(mode='center')
-            ax.add_patch(PSF_mask.bbox.as_patch(facecolor='none', edgecolor='yellow', linewidth=2))
+            ax.add_patch(PSF_mask.bbox.as_artist(facecolor='none', edgecolor='yellow', linewidth=2))
             if count not in label_shift_NO:
                 ax.text(extra_psfs[i][0]-2*PSF_box_size, extra_psfs[i][1]+2*PSF_box_size, 'PSF{0}?'.format(count),color='white', fontsize=15)
             else:

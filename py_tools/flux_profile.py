@@ -102,9 +102,9 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
     if fits_plot == True:
         ax=plt.subplot(1,1,1)
         cax=ax.imshow((image*mask),norm=LogNorm(),origin='lower')#,cmap='gist_heat')
-        #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
+        #ax.add_patch(mask.bbox.as_artist(facecolor='none', edgecolor='white'))
         for i in range(grids):
-            ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
+            ax.add_patch(regions[i].as_artist(facecolor='none', edgecolor='orange'))
         plt.colorbar(cax)
         plt.show()
     if ifplot == True:
@@ -185,9 +185,9 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
             cax=ax.imshow(image, norm=LogNorm(),origin='lower')
         else:
             cax=ax.imshow(image*mask,norm=LogNorm(),origin='lower')
-        #ax.add_patch(mask.bbox.as_patch(facecolor='none', edgecolor='white'))
+        #ax.add_patch(mask.bbox.as_artist(facecolor='none', edgecolor='white'))
         for i in range(grids):
-            ax.add_patch(regions[i].as_patch(facecolor='none', edgecolor='orange'))
+            ax.add_patch(regions[i].as_artist(facecolor='none', edgecolor='orange'))
         plt.colorbar(cax)
         plt.show()
     if ifplot == True:

@@ -70,13 +70,13 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
         if fix_n == None:
             fixed_source.append({})  # we fix the Sersic index to n=1 (exponential)
             kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
-            kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+            kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -10, 'center_y': -10})
             kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 10, 'center_y': 10})
         elif fix_n is not None:
             fixed_source.append({'n_sersic': fix_n})
             kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': fix_n, 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
-            kwargs_source_sigma.append({'n_sersic_sigma': 0.001, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+            kwargs_source_sigma.append({'n_sersic': 0.001, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
             kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': fix_n, 'center_x': -10, 'center_y': -10})
             kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': fix_n, 'center_x': 10, 'center_y': 10})
         source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
@@ -90,7 +90,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     fixed_ps = [{}]
     kwargs_ps = [{'ra_image': [center_x], 'dec_image': [center_y], 'point_amp': [point_amp]}]
     kwargs_ps_init = kwargs_ps
-    kwargs_ps_sigma = [{'pos_sigma': 0.01, 'pos_sigma': 0.01}]
+    kwargs_ps_sigma = [{'ra_image': [0.01], 'dec_image': [0.01]}]
     kwargs_lower_ps = [{'ra_image': [-10], 'dec_image': [-10]}]
     kwargs_upper_ps = [{'ra_image': [10], 'dec_image': [10]}]
     ps_param = [kwargs_ps_init, kwargs_ps_sigma, fixed_ps, kwargs_lower_ps, kwargs_upper_ps]
@@ -285,7 +285,7 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
     fixed_ps = [{}]
     kwargs_ps = [{'ra_image': [center_x], 'dec_image': [center_y], 'point_amp': [point_amp]}]
     kwargs_ps_init = kwargs_ps
-    kwargs_ps_sigma = [{'pos_sigma': 0.01, 'pos_sigma': 0.01}]
+    kwargs_ps_sigma = [{'ra_image': [0.01], 'dec_image': [0.01]}]
     kwargs_lower_ps = [{'ra_image': [-10], 'dec_image': [-10]}]
     kwargs_upper_ps = [{'ra_image': [10], 'dec_image': [10]}]
     ps_param = [kwargs_ps_init, kwargs_ps_sigma, fixed_ps, kwargs_lower_ps, kwargs_upper_ps]
@@ -435,13 +435,13 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
 #         Disk component, as modelled by an elliptical Sersic profile
         fixed_source.append({'n_sersic': 1})  # we fix the Sersic index to n=1 (exponential)
         kwargs_source_init.append({'R_sersic': 1., 'n_sersic': 1, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
-        kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+        kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
         kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': .3, 'center_x': -10, 'center_y': -10})
         kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
 #         Buldge component, as modelled by a spherical Sersic profile
         fixed_source.append({'n_sersic': 4})  # we fix the Sersic index to n=4 (buldgy)
         kwargs_source_init.append({'R_sersic': .3, 'n_sersic': 4, 'e1': 0, 'e2': 0, 'center_x': 0, 'center_y': 0})
-        kwargs_source_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.3, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+        kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.3, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
         kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': .5, 'center_x': -10, 'center_y': -10})
         kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3, 'n_sersic': 5., 'center_x': 10, 'center_y': 10})
         source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
@@ -455,7 +455,7 @@ def fit_qso_disk_buldge(QSO_im, psf_ave, psf_std=None, source_params=None, backg
     fixed_ps = [{}]
     kwargs_ps = [{'ra_image': [center_x], 'dec_image': [center_y], 'point_amp': [point_amp]}]
     kwargs_ps_init = kwargs_ps
-    kwargs_ps_sigma = [{'pos_sigma': 0.01, 'pos_sigma': 0.01}]
+    kwargs_ps_sigma = [{'ra_image': [0.01], 'dec_image': [0.01]}]
     kwargs_lower_ps = [{'ra_image': [-10], 'dec_image': [-10]}]
     kwargs_upper_ps = [{'ra_image': [10], 'dec_image': [10]}]
     ps_param = [kwargs_ps_init, kwargs_ps_sigma, fixed_ps, kwargs_lower_ps, kwargs_upper_ps]
@@ -664,7 +664,7 @@ def fit_single_host(QSO_im, psf_ave, background_rms=0.04, pix_sz = 'swarp',
     
     fixed_lens_light.append({})
     kwargs_lens_light_init.append({'R_sersic': 1., 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
-    kwargs_lens_light_sigma.append({'n_sersic_sigma': 0.5, 'R_sersic_sigma': 0.5, 'e1_sigma': 0.1, 'e2_sigma': 0.1, 'center_x_sigma': 0.1, 'center_y_sigma': 0.1})
+    kwargs_lens_light_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
     kwargs_lower_lens_light.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -10, 'center_y': -10})
     kwargs_upper_lens_light.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 10, 'center_y': 10})
         
