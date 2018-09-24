@@ -1,0 +1,4 @@
+#QSO_img intensity: 243.39 
+#fit by PSF0: 
+PSF_intensity:655.7 
+{'n_sersic': 0.3, 'host_mag': 21.561, 'R_sersic': 0.953, 'qso_y': 0.011, 'qso_x': 0.028, 'QSO_amp': 133.863, 'q': 0.548, 'redu_Chisq': 11.726385, 'center_x': -0.429, 'center_y': 0.324, 'host_amp': 90.459, 'phi_G': -0.653, 'amp': 0.096, 'host_flux_ratio_percent': 41.181}
