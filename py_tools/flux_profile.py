@@ -272,7 +272,7 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
                 elif msk_counts >0:
                     print mask_lists
                     SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
-                                           mask_plot = False, psf_mask_list=mask_lists)
+                                           mask_plot = False, mask_list=mask_lists)
             else:
                 print "Plot for fits: PSF{0}.fits".format(j)
                 SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
@@ -290,7 +290,7 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
                     r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli)
                 elif msk_counts >0:
                     r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
-                                               psf_mask_list=mask_lists)
+                                               mask_list=mask_lists)
             else:
                     r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
                                                msk_image=PSF_mask_img[i])
