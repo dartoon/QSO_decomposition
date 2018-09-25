@@ -23,18 +23,32 @@ filt = 'acs'
 # =============================================================================
 # Read PSF and QSO image
 # =============================================================================
-psf_name_list = glob.glob("PSF*.fits")   # Read *.reg files in a list.
+QSO_bkg_value= 0.
+psf_name_list = glob.glob("*PSF?.fits") + glob.glob("*PSF??.fits") # Read *.reg files in a list.
+PSF_bkg_values = np.zeros(len(psf_name_list))
 psf_list = []
-for i in range(len(psf_name_list)):
-    psf_get = pyfits.getdata('PSF{0}.fits'.format(i))
-    psf_list.append(psf_get)
-mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
-QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID))
+#if not count PSF?, just name the file to not_count_PSF?.fits and +1 in the following line.
+for i in range(len(psf_name_list)+0):
+    if 'PSF{0}.fits'.format(i) in psf_name_list:
+        psf_get = pyfits.getdata('PSF{0}.fits'.format(i)) - PSF_bkg_values[i]
+        psf_list.append(psf_get)
+    else:
+        psf_list.append(None)
+#PSF_mask_name_list = glob.glob("*PSF?_msk.fits") + glob.glob("*PSF??_msk.fits")   # Read *_msk.fits.
+#PSF_mask_name_list = sorted(PSF_mask_name_list,key=lambda x:x.split()[-1])
+PSF_mask_name_list = ['PSF{0}_msk.fits'.format(i) for i in range(len(psf_name_list))]
+PSF_mask_img_list = [pyfits.getdata(PSF_mask_name_list[i]) for i in range(len(psf_list))]
+QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID)) - QSO_bkg_value
+QSO_msk = pyfits.getdata('{0}_msk.fits'.format(ID))
+
+size = len(QSO_im)
+frame_size = 51
+ct = (size-frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
+#frame = '{0}'.format(frame_size)
 
 #==============================================================================
 # Compare the profile and derive the Average image
 #==============================================================================
-cut = 40      #cut_range
 #if_QSO_l = [False, True]
 #gridsp_l = ['log', None]
 #if_annuli_l = [False, True] 
@@ -44,99 +58,188 @@ cut = 40      #cut_range
 #            plt_which_PSF = None
 #            plt_QSO = False
 ##            if i+k+j == 0:
-##                plt_which_PSF = (0,1,2,3,4,5,6,7)
+##                plt_which_PSF = (0,1,2,3,4,5,6,7,8,9,10)
 #            if i==1 and j+k ==0:
 #                plt_QSO = True
-#            fig_psf_com = QSO_psfs_compare(QSO=QSO_im[cut:-cut,cut:-cut], psfs=psf_list,
+#            fig_psf_com = QSO_psfs_compare(QSO=QSO_im, QSO_msk=QSO_msk, psfs=psf_list,
 #                                               plt_which_PSF=plt_which_PSF,
-#                                               mask_list=mask_list, grids=40,
-#                                               include_QSO=if_QSO_l[i], 
-#                                               plt_QSO = plt_QSO, norm_pix = 5.0, astrodrz = True,
+#                                               PSF_mask_img=PSF_mask_img_list, grids=30,
+#                                               include_QSO=if_QSO_l[i], filt = filt,
+#                                               plt_QSO = plt_QSO, norm_pix = 5.0,
 #                                               gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
 #            fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
 #            if i==1 and k==1:
 #                plt.show()
 #            else:
 #                plt.close()
-
-
-psf_a, psf_a_std=psf_ave(psf_list,mode = 'CI', not_count=(0,4,7),
-                  mask_list=mask_list)
-
-psf_b, psf_b_std=psf_ave(psf_list,mode = 'CI', not_count=(0,4,5,6,7),
-                  mask_list=mask_list)
-
-prf_list = [QSO_im,psf_a, psf_b]
-scal_list = [1,1,1]
-prf_name_list = ['QSO', 'Plan a', 'Plan b']
-fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
-                                   gridspace = 'log',if_annuli=True,astrodrz=True)
-fig_pro_compare.savefig('PSFavd_vs_QSO_xlin_annu1.pdf')
-plt.show()
-
-#pyfits.PrimaryHDU(psf_b).writeto('../PSF_legacy/{0}_PSF.fits'.format(ID),overwrite=True)
-#pyfits.PrimaryHDU(psf_b_std).writeto('../PSF_legacy/{0}_PSF_std.fits'.format(ID),overwrite=True)
-
 # =============================================================================
 # Doing the fitting
 # =============================================================================
-from fit_qso import fit_qso
+from fit_qso import fit_qso, fit_ps
 from transfer_to_result import transfer_to_result
 #from flux_profile import cr_mask_img
-#mask_list = glob.glob("QSO_msk*.reg")   # Read *.reg files in a list.
-#QSO_msk = cr_mask_img(QSO_im[cut:-cut,cut:-cut], mask_list, mask_reg_cut=20)
-QSO_msk =None
-fit_result = open('fit_result.txt','w') 
-background_rms = 0.0024
+background_rms = 0.0026
+QSO_msk = QSO_msk[ct:-ct,ct:-ct]
+QSO_im = QSO_im[ct:-ct,ct:-ct]
+#QSO_msk = None
+QSO_std = None #pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
+#############################Fit
+#filename = 'fit_result_each/each_PSF_fit_ps.txt'
+#if_file = glob.glob(filename)   
+#if if_file == []:
+#    fit_result =  open(filename,'w') 
+#elif if_file is not []:
+#    fit_result = open(filename,"r+")
+#    fit_result.read()
+#count = 0
+#for i in np.array([6,7,8,9,10]):
+#    print "by PSF{0}".format(i)
+#    tag = 'fit_result_each/ps_fit_PSF{0}'.format(i)
+#    mask_list = glob.glob("PSF{0}_*.reg".format(i))
+#    print "mask_list", mask_list
+#    psf_i = psf_list[i] * PSF_mask_img_list[i]
+#    psf_size = len(psf_i)
+#    psf_frame_size = frame_size
+#    psf_ct = (psf_size-psf_frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
+#    psf_i = psf_i[psf_ct:-psf_ct,psf_ct:-psf_ct]
+#    source_result, ps_result, image_ps, image_host, error_map=fit_ps(QSO_im, psf_ave=psf_i, psf_std = None, exp_time=2028,
+#                                                                     background_rms=background_rms,
+#                                                                     source_params=None, QSO_msk = QSO_msk, fixcenter=False,
+#                                                                     pix_sz = 'acs', no_MCMC =True, tag=tag)
+#    if count == 0:
+#        fit_result.write("#QSO_img intensity: {0} \n".format(round(np.sum(QSO_im*QSO_msk),2)))
+#    fit_result.write("#fit by PSF{0}: \n".format(i))
+#    fit_result.write('PSF_intensity: {0} '.format(round(np.sum(psf_i),2)))
+#    ps_amp = round(ps_result[0]['point_amp'][0],2)
+#    host_amp = round((image_host*QSO_msk).sum(),2)
+#    ratio = round(host_amp/(host_amp+ps_amp)*100, 2)
+#    fit_result.write('Point_source_flux: '+repr(ps_amp) + ' host_flux: ' + repr(host_amp)+ ' host_ratio: '+ repr(ratio) + "%\n")
+#    count += 1
+#fit_result.close()    
+#
+#fixcenter = False
+#filename = 'fit_result_each/each_PSF_fit_qso.txt'
+#if_file = glob.glob(filename)   
+#if if_file == []:
+#    fit_result =  open(filename,'w') 
+#elif if_file is not []:
+#    fit_result = open(filename,"r+")
+#    fit_result.read()
+#count = 0
+#for i in np.array([6,7,8,9,10]):
+#    print "by PSF{0}".format(i)
+#    tag = 'fit_result_each/qso_fit_PSF{0}'.format(i)
+#    mask_list = glob.glob("PSF{0}_*.reg".format(i))
+#    print "mask_list", mask_list
+#    psf_i = psf_list[i] * PSF_mask_img_list[i]
+#    psf_size = len(psf_i)
+#    psf_frame_size = frame_size
+#    psf_ct = (psf_size-psf_frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
+#    psf_i = psf_i[psf_ct:-psf_ct,psf_ct:-psf_ct]
+#    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_i, psf_std = None,
+#                                                                     background_rms=background_rms,
+#                                                                     source_params=None, QSO_msk = QSO_msk, fixcenter=fixcenter,
+#                                                                     pix_sz = 'acs', no_MCMC =True,
+#                                                                     QSO_std =QSO_std, tag=tag)
+#    result = transfer_to_result(data=QSO_im, pix_sz = 'acs',
+#            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, error_map=error_map,
+#            filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk =QSO_msk, tag=tag)
+#    if count == 0:
+#        fit_result.write("#QSO_img intensity: {0} \n".format(round(np.sum(QSO_im*QSO_msk),2)))
+#    fit_result.write("#fit by PSF{0}: \n".format(i))
+#    fit_result.write('PSF_intensity:{0} \n'.format(round(np.sum(psf_i),2)))
+#    fit_result.write(repr(result) + "\n")
+#    count += 1
+#fit_result.close()
 
-##############################Fit
-print "by psf_a"
-fixcenter = True
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
-                                                       source_params=None, image_plot = True, corner_plot=True, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter=fixcenter, background_rms=background_rms,exp_time = 2028.,
-                                                       pix_sz = 'acs')
-result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut], pix_sz = 'acs',
-                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID)
-fit_result.write("#fit with PSF by Plan a: \n")
-fit_result.write(repr(result) + "\n")
+#from fit_qso import fit_single_host
+#from roundme import roundme
+#filename = 'fit_result_each/each_PSF_pure_galaxy.txt'
+#if_file = glob.glob(filename)   
+#if if_file == []:
+#    fit_result =  open(filename,'w') 
+#elif if_file is not []:
+#    fit_result = open(filename,"r+")
+#    fit_result.read()
+#count = 0
+#for i in np.array([???]):
+#    print "by PSF{0}".format(i)
+#    tag = 'fit_result_each/pure_galaxy_PSF{0}'.format(i)
+#    mask_list = glob.glob("PSF{0}_*.reg".format(i))
+#    print mask_list
+#    psf_i = psf_list[i] * PSF_mask_img_list[i]
+#    psf_i = psf_i[ct:-ct,ct:-ct]
+#    lens_light_result, image_host, error_map = fit_single_host(QSO_im, psf_ave=psf_i,
+#                                                              pix_sz = 'drz06',QSO_msk=QSO_msk,
+#                                                              QSO_std=QSO_std, tag=tag)
+#    if count == 0:
+#        fit_result.write("#QSO_img intensity: {0} \n".format(round(np.sum(QSO_im*QSO_msk),2)))
+#    fit_result.write("#fit by PSF{0}: \n".format(i))
+#    fit_result.write('PSF_intensity:{0} \n'.format(round(np.sum(psf_i),2)))
+#    fit_result.write(repr(roundme(lens_light_result[0])) + "\n")
+#    fit_result.write('Image_total_flux: '+repr(round(QSO_im.sum(),2))+' Galaxy_fitted_totflux: '+repr(round(image_host.sum(),2)))
+#    count += 1
+#fit_result.close()
 
-##############################Fit
-print "by psf_a, relax center"
-fixcenter = False
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_a, psf_std = psf_a_std,
-                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter, background_rms=background_rms,exp_time = 2028.,
-                                                       pix_sz = 'acs')
-result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'acs',
-                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)
-fit_result.write("#fit with PSF by Plan a, relax center: \n")
-fit_result.write(repr(result)+ "\n")
-##############################Fit
-print "by psf_b"
-fixcenter = True
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
-                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter, background_rms=background_rms,exp_time = 2028.,
-                                                       pix_sz = 'acs')
-result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'acs',
-                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, savepng=True, plot_compare= True)
-fit_result.write("#fit with PSF by Plan b: \n")
-fit_result.write(repr(result) + "\n")
-##############################Fit
-print "by psf_b, relax center"
-fixcenter = False
-source_result, ps_result, image_ps, image_host, data_C_D=fit_qso(QSO_im[cut:-cut,cut:-cut], psf_ave=psf_b, psf_std = psf_b_std,
-                                                       source_params=None, image_plot = True, corner_plot=False, flux_ratio_plot=True,
-                                                       deep_seed = False, fixcenter= fixcenter,background_rms=background_rms,exp_time = 2028.,
-                                                       pix_sz = 'acs')
-result = transfer_to_result(data=QSO_im[cut:-cut,cut:-cut],pix_sz = 'acs',
-                            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, data_C_D=data_C_D,
-                            cut=cut, filt=filt, fixcenter=fixcenter,ID=ID, plot_compare= False)
-fit_result.write("#fit with PSF by Plan b, relax center: \n")
-fit_result.write(repr(result)+ "\n")
+##==============================================================================
+## Combining fitting
+##==============================================================================
+PSF_mask_list = glob.glob("PSF*.reg")   # Read *.reg files in a list.
+count_ele = range(len(psf_name_list))
+import re
+count_list= [[3,6,10],[0,3,4]]  # 1,2,3,4
+psf_com = [re.sub('\W+', '',repr(count_list[i])) for i in range(len(count_list))] 
+#psf_com = ['0157', '57','01579', '579']
 
+not_count_list= [] #[(2,3,4,6,8,9), (0,1,2,3,4,6,8,9),(2,3,4,6,8) ,(0,1,2,3,4,6,8)]
+
+for i in range(len(count_list)):
+    count_i = [x for x in count_ele if x not in count_list[i]]
+    not_count_list.append(count_i)    
+    
+PSF_aves, PSF_stds = [], []
+for i in range(len(not_count_list)):
+    psf_ave_i, psf_std_i=psf_ave(psf_list,mode = 'CI', not_count=not_count_list[i],   #0157
+                  mask_img_list = PSF_mask_img_list)
+    psf_size = len(psf_ave_i)
+    psf_frame_size = frame_size
+    psf_ct = (psf_size-psf_frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
+    psf_ave_i = psf_ave_i[psf_ct:-psf_ct,psf_ct:-psf_ct]
+    psf_std_i = psf_std_i[psf_ct:-psf_ct,psf_ct:-psf_ct]
+    PSF_aves.append(psf_ave_i)
+    PSF_stds.append(psf_std_i)
+    
+prf_list = [QSO_im]+ PSF_aves
+scal_list = np.ones(len(PSF_aves)+1)
+prf_name_list = ['QSO']+ psf_com
+fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
+                                   gridspace = 'log',if_annuli=True,filt=filt)
+plt.show()
+fig_pro_compare.savefig('pro_compare.pdf')
+
+
+filename = 'fit_result/comb_PSF.txt'
+if_file = glob.glob(filename)   
+if if_file == []:
+    fit_result =  open(filename,'w') 
+elif if_file is not []:
+    fit_result = open(filename,"r+")
+    fit_result.read()
+for i in range(len(PSF_aves)):
+    print "NO.",i," For fit PSF", psf_com[i]
+    pyfits.PrimaryHDU(PSF_aves[i]).writeto('psf_ave_{0}.fits'.format(psf_com[i]),overwrite=True)
+    pyfits.PrimaryHDU(PSF_stds[i]).writeto('psf_std_{0}.fits'.format(psf_com[i]),overwrite=True)
+    
+    tag = 'fit_result/comb_PSF_{0}'.format(psf_com[i])
+    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=PSF_aves[i], psf_std = PSF_stds[i]**2,
+                                                                      background_rms=background_rms, pix_sz = 'drz06',  no_MCMC =True,
+                                                                      QSO_msk = QSO_msk, QSO_std =QSO_std, tag=tag)
+    result = transfer_to_result(data=QSO_im, pix_sz = 'drz06', source_result=source_result, ps_result=ps_result,
+                                image_ps=image_ps, image_host=image_host, error_map=error_map,
+                                filt=filt, fixcenter=False,ID=ID,QSO_msk = QSO_msk,tag=tag)
+    fit_result.write("#fit selected PSF{0}: \n".format(psf_com[i]))
+    fit_result.write(repr(result) + "\n")
 fit_result.close()
+
+import os
+os.system('say "your program has finished"')
