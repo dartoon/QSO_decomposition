@@ -48,3 +48,5 @@ Cycle25data/*
 */*/analysis/*sub*.fits
 */*/analysis/PSF*outer*.fits
 *~
+analysis_ACS/*/*_180mas_sci.fits
+analysis_ACS/*/sub_coadd.fits
