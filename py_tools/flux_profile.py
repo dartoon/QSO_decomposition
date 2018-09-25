@@ -54,7 +54,7 @@ def flux_in_region(image,region,mode='exact'):
     tot_flux= np.sum(mask.data * data)
     return tot_flux
 
-def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=False,
+def flux_profile(image, center, radius=35,start_p=1.5, grids=20, gridspace=None, ifplot=False,
                  fits_plot=False, mask_list=None, mask_cut=0., msk_image=None,
                  mask_plot = False):
     '''
@@ -76,11 +76,11 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
     '''
     if gridspace == None:
         r_grids=(np.linspace(0,1,grids+1)*radius)[1:]
-        diff = 1.5 - r_grids[0]
+        diff = start_p - r_grids[0]
         r_grids += diff             #starts from pixel 0.5
     elif gridspace == 'log':
         r_grids=(np.logspace(-2,0,grids+1)*radius)[1:]
-        diff = 1.5 - r_grids[0]
+        diff =  start_p - r_grids[0]
         r_grids += diff             #starts from pixel 0.5
     r_flux = np.empty(grids)
     regions = []
@@ -120,12 +120,12 @@ def flux_profile(image, center, radius=35, grids=20, gridspace=None, ifplot=Fals
         ax.set_xlabel("Pixels")
         if gridspace == 'log':
             ax.set_xscale('log')
-            plt.xlim(0.5, ) 
+            plt.xlim(start_p*0.7, ) 
         plt.grid(which="minor")
         plt.show()
     return r_flux, r_grids, regions
 
-def SB_profile(image, center, radius=35, grids=20, gridspace = None, 
+def SB_profile(image, center, radius=35, start_p=1.5, grids=20, gridspace = None, 
                ifplot=False, fits_plot=False,
                mask_list=None, mask_plot = False,
                mask_cut = 0., if_annuli= False, msk_image=None):
@@ -146,7 +146,7 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
         A 1-D array of the SB value of each 'grids' in the profile with the sampled radius.
     '''
     if mask_list is None and msk_image is None:
-        r_flux, r_grids, regions=flux_profile(image, center, radius=radius, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
+        r_flux, r_grids, regions=flux_profile(image, center, radius=radius,start_p=start_p, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
         region_area = np.zeros([len(r_flux)])
         for i in range(len(r_flux)):
             circle=regions[i].to_mask(mode='exact')
@@ -161,7 +161,7 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
             mask = msk_image
 #        plt.imshow(mask, origin='low')
 #        plt.show()
-        r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
+        r_flux, r_grids, regions=flux_profile(image*mask, center, radius=radius,start_p=start_p, grids=grids, gridspace=gridspace, ifplot=False, fits_plot=False)
         region_area = np.zeros([len(r_flux)])
         for i in range(len(r_flux)):
             circle=regions[i].to_mask(mode='exact')
@@ -203,7 +203,7 @@ def SB_profile(image, center, radius=35, grids=20, gridspace = None,
         ax.set_xlabel("Pixels")
         if gridspace == 'log':
             ax.set_xscale('log')
-            plt.xlim(1.25, ) 
+            plt.xlim(start_p*0.7, ) 
         plt.grid(which="minor")
         plt.show()
     return r_SB, r_grids
@@ -231,26 +231,32 @@ def text_in_string_list(text, string_list):
 
 def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=None, plt_which_PSF=None,
                      include_QSO = True, gridspace = None , grids=30, norm_pix = 3.0,
-                     if_annuli=False,plt_QSO=False,astrodrz=False, not_plt=()):
+                     if_annuli=False,plt_QSO=False, filt = None, not_plt=()):
     """
     Plot the QSO and PSFs SB compare.
     ------
     norm_pix : normalized position. If norm_pix = 'no', means no normalizaion.
     """
     psfs_not_none = [x for x in psfs if x is not None][0]
-    if gridspace == None and astrodrz==False:
+    if gridspace == None and filt != 'acs':
         radius = 6
-    elif gridspace == None and astrodrz==True:
-        radius = 8
+    elif gridspace == None and filt == 'acs':
+        radius = 6
     elif gridspace == 'log':
         radius = len(psfs_not_none)/2
-    frm_qrt = int(len(QSO)/2.5)
+        
+    if filt != 'acs':
+        start_p = 1.5
+    elif filt == 'acs':
+        start_p = 0.5
+#    frm_qrt = int(len(QSO)/2.5)
     if include_QSO == True:
         if plt_QSO ==True:
             print "Plot for QSO:"
-        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max())),(2))[::-1]
+        center_QSO = np.array([len(QSO)/2,len(QSO)/2])
+#        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max())),(2))[::-1]
 #        print "center_QSO:", center_QSO
-        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, radius=radius, grids=grids, 
+        r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, start_p=start_p, radius=radius, grids=grids, 
                                            fits_plot=plt_QSO, gridspace=gridspace, if_annuli=if_annuli,
                                            msk_image=QSO_msk)
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
@@ -259,7 +265,8 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
 #            print "idx:",idx
             r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves
     psfs_NO = len(psfs)
-    center = np.reshape(np.asarray(np.where(psfs_not_none== psfs_not_none[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max())),(2))[::-1]
+    center = np.array([len(psfs_not_none)/2,len(psfs_not_none)/2])
+#    center = np.reshape(np.asarray(np.where(psfs_not_none== psfs_not_none[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max())),(2))[::-1]
 #    print "center_PSF:", center
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):
@@ -268,14 +275,14 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
                 msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(j), psf_mask_list)
                 print "Plot for fits: PSF{0}.fits".format(j)
                 if msk_counts == 0:
-                    SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
+                    SB_profile(psfs[j], center, start_p=start_p, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
                 elif msk_counts >0:
                     print mask_lists
-                    SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
+                    SB_profile(psfs[j], center, start_p=start_p, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
                                            mask_plot = False, mask_list=mask_lists)
             else:
                 print "Plot for fits: PSF{0}.fits".format(j)
-                SB_profile(psfs[j], center, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
+                SB_profile(psfs[j], center, start_p=start_p, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
                                            mask_plot = False, msk_image=PSF_mask_img[j])
     minorLocator = AutoMinorLocator()
     fig, ax = plt.subplots(figsize=(10,7))
@@ -287,12 +294,12 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
             if PSF_mask_img is None:
                 msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(i), psf_mask_list)
                 if msk_counts == 0:
-                    r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli)
+                    r_SB, r_grids = SB_profile(psfs[i], center, start_p=start_p, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli)
                 elif msk_counts >0:
-                    r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
+                    r_SB, r_grids = SB_profile(psfs[i], center, start_p=start_p, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
                                                mask_list=mask_lists)
             else:
-                    r_SB, r_grids = SB_profile(psfs[i], center, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
+                    r_SB, r_grids = SB_profile(psfs[i], center, start_p=start_p, radius=radius, grids=grids, gridspace=gridspace, if_annuli=if_annuli,
                                                msk_image=PSF_mask_img[i])
             if isinstance(norm_pix,int) or isinstance(norm_pix,float):
                 count = r_grids <= norm_pix
@@ -300,9 +307,9 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
 #                print "idx:",idx
                 r_SB /= r_SB[idx]      #normalize the curves
             if gridspace == None:
-                plt.text(1.5-0.25,r_SB[0],i)
+                plt.text(start_p-0.25,r_SB[0],i)
             elif gridspace == 'log':
-                plt.text(1.5-0.1,r_SB[0],i)
+                plt.text(start_p-0.1,r_SB[0],i)
 #            print r_grids[idx]
             if i not in not_plt:
                 plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
@@ -319,13 +326,13 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
     ax.set_xlabel("Pixels")
     if gridspace == 'log':
         ax.set_xscale('log')
-        plt.xlim(1.3, ) 
+        plt.xlim(start_p*0.7, ) 
     plt.grid(which="minor")
 #    plt.close() 
     return fig
 
-def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None ,
-                     grids = 20,  norm_pix = 3, if_annuli=False, astrodrz=False,
+def profiles_compare(prf_list, scal_list, prf_name_list = None, gridspace = None ,
+                     grids = 20,  norm_pix = 3, if_annuli=False, filt = None,
                      y_log=False):
     '''
     Compare the profile between different profile (prf?). One can set the scal to uniformize the resolution.
@@ -338,10 +345,10 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None,gridspace = None 
     --------
         A plot of SB comparison.
     '''
-    if gridspace == None and astrodrz==False:
+    if gridspace == None and filt != 'acs':
         radius = 6
-    elif gridspace == None and astrodrz==True:
-        radius = 8
+    elif gridspace == None and filt == 'acs':
+        radius = 6
     elif gridspace == 'log':
         radius = len(prf_list[1])/2
     

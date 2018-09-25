@@ -264,7 +264,10 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
     '''
     # data specifics need to set up based on the data situation
     numPix = len(QSO_im)  #  cutout pixel size
-    deltaPix = 0.0642  #  pixel size
+    if pix_sz is not 'acs':
+        deltaPix = 0.0642  #  pixel size
+    else:
+        deltaPix = 0.03
     fwhm = 0.1  # full width half max of PSF (only valid when psf_type='gaussian')
     psf_type = 'PIXEL'  # 'gaussian', 'pixel', 'NONE'
     kernel_size = len(psf_ave)
