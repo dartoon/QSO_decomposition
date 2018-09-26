@@ -11,16 +11,17 @@ import matplotlib.pyplot as plt
 import re
 import matplotlib
 
-inp = raw_input('The name of the target:\n')
-f = open("../analysis_Astrodrz/{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(inp),"r")
+#inp = raw_input('The name of the target:\n')
+#f = open("../analysis_Astrodrz/{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(inp),"r")
 #f = open("/Users/Dartoon/Astro/analysis_back_up/second_run_with_smaller_frame_size/CID3242/analysis/fit_result/each_PSF_fit_qso.txt","r")
-#f = open("../analysis_Astrodrz/fit_summary_with_std**2.txt","r")
+f = open("../analysis_Astrodrz/fit_summary.txt","r")
 
 string = f.read()
 
 # findall
-labels = re.findall(r"PSF\d+", string)
+#labels = re.findall(r"PSF\d+", string)
 #labels = re.findall(r"CID\d+", string)
+labels = ['CID50', 'CID70', 'CID206', 'CID216', 'CID237', 'CID452', 'CID454', 'CID543', 'CID607', 'CID1174', 'CID3242', 'CID3570', 'LID360', 'LID1273', 'LID1538', 'XID2138', 'XID2202', 'XID2396']
 S_n_list = re.findall(r"n_sersic':(.*?),",string)
 Re = re.findall(r"R_sersic':(.*?),",string)
 host_flux_ratio = re.findall(r"host_flux_ratio_percent':(.*?)}",string)
@@ -48,16 +49,16 @@ for i in range(len(S_n_list)):
 ax.set_xlabel('Sersic Reff')
 ax.set_ylabel('Host flux ratio')
 plt.show()
-#host_flux_ratio = [float(value) for value in host_flux_ratio]
-#Re = [float(value) for value in Re]
-#plt.hist(host_flux_ratio, bins='auto')  # arguments are passed to np.histogram
-#plt.title("Histogram of host flux ratio percent")
-#plt.show()
-#
-#plt.hist(Re, bins='auto')  # arguments are passed to np.histogram
-#plt.title("Histogram of Sersic Reff")
-#plt.show()
-#
-#plt.hist(S_n_list, bins='auto')  # arguments are passed to np.histogram
-#plt.title("Histogram of Sersic Index")
-#plt.show()
+host_flux_ratio = [float(value) for value in host_flux_ratio]
+Re = [float(value) for value in Re]
+plt.hist(host_flux_ratio, bins='auto')  # arguments are passed to np.histogram
+plt.title("Histogram of host flux ratio percent")
+plt.show()
+
+plt.hist(Re, bins='auto')  # arguments are passed to np.histogram
+plt.title("Histogram of Sersic Reff")
+plt.show()
+
+plt.hist(S_n_list, bins='auto')  # arguments are passed to np.histogram
+plt.title("Histogram of Sersic Index")
+plt.show()
