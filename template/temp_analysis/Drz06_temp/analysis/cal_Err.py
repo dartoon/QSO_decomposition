@@ -17,7 +17,7 @@ ID = 'xxx'
 
 wht = pyfits.getdata('wht_map.fits')
 exp = 2400.
-mean_wht = 2395.399 * (0.0642/0.135)**2
+mean_wht = exp * (0.0642/0.135)**2
 exp_map = exp * wht/mean_wht
 
 
