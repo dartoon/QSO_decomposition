@@ -357,9 +357,9 @@ def string_find_between(s, first, last ):
     except ValueError:
         return ""
     
-def make_side_msk(img, snr=2.5, npixels=10, dilate_size=5):
+def make_side_msk(img, snr=2.5, npixels=5, dilate_size=5, ct_QSO_mask = False):
     from photutils import make_source_mask
-    mask_o = make_source_mask(img, snr=2.5, npixels=5, dilate_size=5)
+    mask_o = make_source_mask(img, snr=snr, npixels=npixels, dilate_size=dilate_size)
     exp_center = np.zeros_like(mask_o)
     cent = len(exp_center)/2
     exp_center[cent,cent] = 1
@@ -372,7 +372,24 @@ def make_side_msk(img, snr=2.5, npixels=10, dilate_size=5):
             x, y = np.where(exp_center==1)[0][i], np.where(exp_center==1)[1][i]
             for j in count:
                 for k in count:
-                    if exp_center[x+j,y+k] == 0 and mask_o [x+j,y+k] == 1:
+                    if exp_center[x+j,y+k] == 0 and mask_o[x+j,y+k] == 1:
                         exp_center[x+j,y+k] = 1
-    mask_ = mask_o * ~exp_center
-    return ~mask_
+    if ct_QSO_mask == False:
+        mask_ = mask_o * ~exp_center
+        return ~mask_
+    elif ct_QSO_mask == True:
+        return exp_center
+    
+def make_circle_msk(img,x=30,y=30, radius=5):
+    """
+    Create a mask for the image, at position x, y with radius as radius.
+    """
+    yi,xi = np.indices((len(img),len(img))).astype(np.float64)
+    mask = [np.sqrt((xi-x)**2+(yi-y)**2)<5]
+    return mask[0]
+    
+    
+    
+    
+    
+    

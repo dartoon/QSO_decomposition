@@ -42,7 +42,7 @@ QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID)) - QSO_bkg_value
 QSO_msk = pyfits.getdata('{0}_msk.fits'.format(ID))
 
 size = len(QSO_im)
-frame_size = 51
+frame_size = 71
 ct = (size-frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
 #frame = '{0}'.format(frame_size)
 
