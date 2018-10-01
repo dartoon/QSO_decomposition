@@ -28,7 +28,7 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     del result['e2']
     result['QSO_amp'] = ps_result[0]['point_amp'][0]
     result['host_amp'] = image_host.sum()
-    result['host_flux_ratio_percent']= image_host.sum()/(image_ps.sum() + image_host.sum())*100
+    result['host_flux_ratio_percent']= result['host_amp']/(result['QSO_amp'] + result['host_amp'])*100
     if filt == 'F140w':
         zp = 26.4524
     elif filt == 'F125w':

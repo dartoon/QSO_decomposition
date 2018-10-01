@@ -243,7 +243,7 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
     elif gridspace == None and filt == 'acs':
         radius = 6
     elif gridspace == 'log':
-        radius = len(psfs_not_none)/2
+        radius = len(psfs_not_none)/6
         
     if filt != 'acs':
         start_p = 1.5
@@ -254,8 +254,6 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
         if plt_QSO ==True:
             print "Plot for QSO:"
         center_QSO = np.array([len(QSO)/2,len(QSO)/2])
-#        center_QSO = np.reshape(np.asarray(np.where(QSO== QSO[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max())),(2))[::-1]
-#        print "center_QSO:", center_QSO
         r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, start_p=start_p, radius=radius, grids=grids, 
                                            fits_plot=plt_QSO, gridspace=gridspace, if_annuli=if_annuli,
                                            msk_image=QSO_msk)
@@ -266,8 +264,6 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
             r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves
     psfs_NO = len(psfs)
     center = np.array([len(psfs_not_none)/2,len(psfs_not_none)/2])
-#    center = np.reshape(np.asarray(np.where(psfs_not_none== psfs_not_none[frm_qrt:-frm_qrt,frm_qrt:-frm_qrt].max())),(2))[::-1]
-#    print "center_PSF:", center
     if plt_which_PSF != None:
         for i in range(len(plt_which_PSF)):
             j = plt_which_PSF[i]
@@ -326,7 +322,7 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
     ax.set_xlabel("Pixels")
     if gridspace == 'log':
         ax.set_xscale('log')
-        plt.xlim(start_p*0.7, ) 
+        plt.xlim(start_p*0.9, ) 
     plt.grid(which="minor")
 #    plt.close() 
     return fig
@@ -564,10 +560,12 @@ def total_compare(label_list, flux_list,
                                        radius= radi, grids = 50, mask_list=data_mask_list,
                                        mask_cut = data_cut, msk_image=msk_image)
         else:
-            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= radi, mask_list=None)
+            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= radi,grids = 30, mask_list=None)
         r_mag = - 2.5 * np.log10(r_SB) + zp 
         if label_SB_list[i] == 'data':
-            ax4.plot(r_grids, r_mag, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
+            ax4.plot(r_grids[:-5], r_mag[:-5], 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
+            ind = len(r_mag)-(r_mag == r_mag[-1]).sum()
+            r_max =  r_grids[ind] - 2
         else:
             ax4.plot(r_grids, r_mag, '-', label=label_SB_list[i])
     ax4.set_xlabel('pixel', fontsize=15)
@@ -577,7 +575,7 @@ def total_compare(label_list, flux_list,
     ax4.set_xticks([2,4,6,10,15,20,30])
     from matplotlib.ticker import ScalarFormatter
     ax4.xaxis.set_major_formatter(ScalarFormatter())
-    ax4.set_xlim([(r_grids).min()*0.85,(r_grids).max() + 5])
+    ax4.set_xlim([(r_grids).min()*0.85,r_max])
 
     ax4.invert_yaxis()
     ax4.set_ylabel('$\mu$(mag, pixel$^{-2}$)', fontsize=12)
@@ -594,11 +592,11 @@ def total_compare(label_list, flux_list,
     x = np.linspace(1.e-4, 100, 2)
     y = x * 0
     r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= radi,
-                                        mask_list=data_mask_list, mask_cut = data_cut,
+                                        mask_list=data_mask_list, mask_cut = data_cut,grids = 30,
                                         msk_image=msk_image)[0])
-    r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
+    r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', grids = 30,radius= radi)[0])
 #    r_mag_diff = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
-    ax5.plot(r_grids*delatPixel, r_mag_0-r_mag_1, 'ro')   
+    ax5.plot(r_grids[:-3]*delatPixel, (r_mag_0-r_mag_1)[:-3], 'ro')   
     ax5.set_ylabel('$\Delta\mu$', fontsize=15)
     ax5.set_xlabel('arcsec', fontsize=15)
     ax5.set_xscale('log')
@@ -610,7 +608,7 @@ def total_compare(label_list, flux_list,
     ax5.yaxis.set_label_position('right')
     ax5.yaxis.tick_right()
     ax5.yaxis.set_ticks_position('both')
-    ax5.set_xlim([(r_grids*delatPixel).min()*0.85, ((r_grids).max() + 5)*delatPixel])
+    ax5.set_xlim([(r_grids*delatPixel).min()*0.85, r_max*delatPixel])
     plt.ylim([-0.5,0.5])
     
     
