@@ -1,28 +1,19 @@
-#QSO_img intensity: 102.71 
+#QSO_img intensity: 92.9 
 #fit by PSF0: 
-PSF_intensity:176.42 
-Point_source_flux:62.6 host_flux:40.14 host_ratio:39.07%
+PSF_intensity: 22.79 Point_source_flux: 54.79 host_flux: 43.51 host_ratio: 44.26%
 #fit by PSF1: 
-PSF_intensity:22.09 
-Point_source_flux:47.57 host_flux:55.21 host_ratio:53.72%
+PSF_intensity: 83.45 Point_source_flux: 59.28 host_flux: 35.11 host_ratio: 37.2%
 #fit by PSF2: 
-PSF_intensity:66.39 
-Point_source_flux:49.09 host_flux:53.61 host_ratio:52.2%
+PSF_intensity: 22.38 Point_source_flux: 61.4 host_flux: 36.96 host_ratio: 37.58%
 #fit by PSF3: 
-PSF_intensity:20.99 
-Point_source_flux:50.62 host_flux:51.99 host_ratio:50.67%
+PSF_intensity: 35.31 Point_source_flux: 63.0 host_flux: 33.89 host_ratio: 34.98%
 #fit by PSF4: 
-PSF_intensity:83.45 
-Point_source_flux:58.34 host_flux:44.37 host_ratio:43.2%
+PSF_intensity: 177.51 Point_source_flux: 63.53 host_flux: 31.83 host_ratio: 33.38%
 #fit by PSF5: 
-PSF_intensity:35.42 
-Point_source_flux:59.66 host_flux:43.14 host_ratio:41.96%
+PSF_intensity: 67.04 Point_source_flux: 50.63 host_flux: 43.2 host_ratio: 46.04%
 #fit by PSF6: 
-PSF_intensity:87.31 
-Point_source_flux:56.5 host_flux:46.24 host_ratio:45.01%
+PSF_intensity: 87.96 Point_source_flux: 57.77 host_flux: 36.62 host_ratio: 38.8%
 #fit by PSF7: 
-PSF_intensity:28.64 
-Point_source_flux:37.51 host_flux:65.53 host_ratio:63.6%
+PSF_intensity: 29.45 Point_source_flux: 43.25 host_flux: 55.13 host_ratio: 56.04%
 #fit by PSF8: 
-PSF_intensity:17.12 
-Point_source_flux:40.32 host_flux:62.58 host_ratio:60.82%
+PSF_intensity: 18.28 Point_source_flux: 50.19 host_flux: 44.4 host_ratio: 46.94%
