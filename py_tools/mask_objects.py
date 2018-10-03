@@ -15,7 +15,7 @@ from photutils import detect_sources,deblend_sources
 from matplotlib.colors import LogNorm
 
 
-def mask_obj(img, snr=2.5, exp_sz= 1.2):
+def mask_obj(img, snr=2.5, exp_sz= 1.2, plt_show = True):
     threshold = detect_threshold(img, snr=snr)
     center_img = len(img)/2
     sigma = 3.0 * gaussian_fwhm_to_sigma# FWHM = 3.
@@ -24,7 +24,7 @@ def mask_obj(img, snr=2.5, exp_sz= 1.2):
     segm = detect_sources(img, threshold, npixels=10, filter_kernel=kernel)
     npixels = 20
     segm_deblend = deblend_sources(img, segm, npixels=npixels,
-                                    filter_kernel=kernel, nlevels=32,
+                                    filter_kernel=kernel, nlevels=20,
                                     contrast=0.001)
     #Number of objects segm_deblend.data.max()
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 10))
@@ -77,12 +77,15 @@ def mask_obj(img, snr=2.5, exp_sz= 1.2):
         aperture = apertures[i]
         aperture.plot(color='white', lw=1.5, ax=ax1)
         aperture.plot(color='white', lw=1.5, ax=ax2)
-    plt.show()
+    if plt_show == True:
+        plt.show()
+    else:
+        plt.close()
     
     from regions import PixCoord, EllipsePixelRegion
     from astropy.coordinates import Angle
     
-    obj_masks = []
+    obj_masks = []  # In the script, the objects are 1, emptys are 0.
     for i in range(len(apertures)):
         aperture = apertures[i]
         x, y = aperture.positions[0]
@@ -100,4 +103,6 @@ def mask_obj(img, snr=2.5, exp_sz= 1.2):
             obj_masks.append(mask)
         elif i == c_index:
             target_mask = mask
+    if obj_masks == []:
+        obj_masks.append(np.zeros_like(img))
     return target_mask, obj_masks

@@ -63,7 +63,9 @@ def cut_center_bright(image, center, radius,kernel = 'gaussian', return_center=F
         cut_c_b = cut_image(image=image, center=center, radius=radius)
         plt_center = img_test[frm_q:-frm_q,frm_q:-frm_q].shape
         if plot==True:
-            plt.plot(plt_center[0]/2, plt_center[1]/2, color='r', marker=marker, ms=ms, mew=mew)
+            marker = 'o'
+            ms, mew = 30, 1.
+            plt.plot(center[0], center[1], color='r', marker=marker, ms=ms, mew=mew)
             plt.imshow(img_test[frm_q:-frm_q,frm_q:-frm_q], origin='lower')
             plt.show()
     if return_center==False:
@@ -71,7 +73,7 @@ def cut_center_bright(image, center, radius,kernel = 'gaussian', return_center=F
     if return_center==True:
         return cut_c_b, center
  
-def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,
+def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None, label= None,
                  reg_ty=None,ifsave=True, label_shift_NO=(), shift_where=None):
     '''
     label shift_where: 1,2,3,4 --- up, right, down, left
@@ -108,18 +110,22 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,
     ax.add_patch(QSO_mask.bbox.as_artist(facecolor='none', edgecolor='white', linewidth=2))
     count=0
     count_shift = 0
+    if label == None:
+        name = 'PSF'
+    elif label is not None:
+        name = label
     if c_psf_list is not None:
         for i in range(len(c_psf_list)):
             PSF_reg = pix_region(c_psf_list[i], radius= PSF_box_size)
             PSF_mask = PSF_reg.to_mask(mode='center')
             ax.add_patch(PSF_mask.bbox.as_artist(facecolor='none', edgecolor='blue', linewidth=2))
             if count not in label_shift_NO:
-                ax.text(c_psf_list[i][0]-2*PSF_box_size, c_psf_list[i][1]+2*PSF_box_size, 'PSF{0}'.format(count),color='white', fontsize=15)
+                ax.text(c_psf_list[i][0]-2*PSF_box_size, c_psf_list[i][1]+2*PSF_box_size, '{1}{0}'.format(count,name),color='white', fontsize=15)
             else:
                 if count in label_shift_NO:
                     shift = shift_label_index(shift_where[count_shift])
                     ax.text(c_psf_list[i][0]+shift[0]*PSF_box_size, c_psf_list[i][1]+shift[1]*PSF_box_size,
-                            'PSF{0}'.format(count),color='white', fontsize=15)
+                            '{1}{0}'.format(count,name),color='white', fontsize=15)
                     count_shift += 1
             ax.xaxis.set_visible(False)
             ax.yaxis.set_visible(False)
@@ -131,13 +137,13 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,
             PSF_mask = PSF_reg.to_mask(mode='center')
             ax.add_patch(PSF_mask.bbox.as_artist(facecolor='none', edgecolor='yellow', linewidth=2))
             if count not in label_shift_NO:
-                ax.text(extra_psfs[i][0]-2*PSF_box_size, extra_psfs[i][1]+2*PSF_box_size, 'PSF{0}?'.format(count),color='white', fontsize=15)
+                ax.text(extra_psfs[i][0]-2*PSF_box_size, extra_psfs[i][1]+2*PSF_box_size, '{1}{0}?'.format(count,name),color='white', fontsize=15)
             else:
                 if count in label_shift_NO:
                     shift = shift_label_index(shift_where[count_shift])
                     print extra_psfs[i][0], shift[0]*PSF_box_size
                     ax.text(extra_psfs[i][0]+shift[0]*PSF_box_size, extra_psfs[i][1]+shift[1]*PSF_box_size,
-                            'PSF{0}?'.format(count),color='white', fontsize=15)
+                            '{1}{0}?'.format(count,name),color='white', fontsize=15)
                     count_shift += 1
             ax.xaxis.set_visible(False)
             ax.yaxis.set_visible(False)
@@ -146,7 +152,7 @@ def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None,
     if not ID == None:
         ax.text(len(img)*0.05, len(img)*0.8, ID,color='white', fontsize=30)
     if ifsave == True:
-        fig.savefig('QSO_PSF_loc.pdf')
+        fig.savefig('QSO_{0}_loc.pdf'.format(name))
 
 def shift_label_index(s):
     if s==1:

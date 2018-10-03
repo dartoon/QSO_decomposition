@@ -56,7 +56,7 @@ for i in range(2):
             plt_which_PSF = None
             plt_QSO = False
             if i+k+j == 0:
-                plt_which_PSF = (0,1,2,3,4,5,6,7)
+                plt_which_PSF = range(len(psf_name_list))
             if i==1 and j+k ==0:
                 plt_QSO = True
             fig_psf_com = QSO_psfs_compare(QSO=QSO_im, QSO_msk=None, psfs=psf_list,
@@ -96,7 +96,7 @@ for i in range(2):
 #    fit_result = open(filename,"r+")
 #    fit_result.read()
 #count = 0
-#for i in np.array([xxx]):
+#for i in np.array(range(len(psf_name_list))):
 #    print "by PSF{0}".format(i)
 #    tag = 'fit_result_each/ps_fit_PSF{0}'.format(i)
 #    mask_list = glob.glob("PSF{0}_*.reg".format(i))
@@ -128,7 +128,7 @@ for i in range(2):
 #    fit_result = open(filename,"r+")
 #    fit_result.read()
 #count = 0
-#for i in np.array([xxx]):
+#for i in np.array(range(len(psf_name_list))):
 #    print "by PSF{0}".format(i)
 #    tag = 'fit_result_each/qso_fit_PSF{0}'.format(i)
 #    mask_list = glob.glob("PSF{0}_*.reg".format(i))

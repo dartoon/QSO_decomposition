@@ -85,12 +85,12 @@ def flux_profile(image, center, radius=35,start_p=1.5, grids=20, gridspace=None,
     r_flux = np.empty(grids)
     regions = []
     mask = np.ones(image.shape)
-    if mask_list != None:
+    if msk_image is not None:
+        mask = msk_image
+    elif mask_list != None:
         if msk_image is None:
             for i in range(len(mask_list)):
                 mask *= cr_mask(image=image, filename=mask_list[i], mask_reg_cut = mask_cut)
-        else:
-            mask = msk_image
             if mask_plot == True:
                 plt.imshow(mask,origin='lower')
                 plt.show()
@@ -462,7 +462,7 @@ def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
 def total_compare(label_list, flux_list,
                   facility = 'F140w' , plot_type= 4, target_ID = 'target_ID',
                   add_background=0.0, data_mask_list = None, data_cut = 0.,plot_compare=False,
-                  pix_sz = 'drz06', msk_image=None):
+                  pix_sz = 'drz06', msk_image=None, if_annuli=False):
     if facility == 'F140w':
         zp = 26.4524
     elif facility == 'F125w':
@@ -537,8 +537,6 @@ def total_compare(label_list, flux_list,
     ax3.get_xaxis().set_visible(False)
     ax3.get_yaxis().set_visible(False)
     f.colorbar(im3, ax=ax3, shrink=0.55, pad=0.01,   orientation="horizontal", aspect=15) 
-    
-    
 #    plt.tight_layout()
     plt.subplots_adjust(wspace=-0.4, hspace=0)
 #    make_ticklabels_invisible(plt.gcf())
@@ -552,64 +550,122 @@ def total_compare(label_list, flux_list,
     label_SB_list = [label_list[0], label_list[-2], label_list[1], label_list[2]] 
     flux_SB_list = [flux_list[0], model_flux, flux_list[1], flux_list[2]]
     radi = len(flux_list[0])/2
-    for i in range(len(label_SB_list)):
-        center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
-        if label_SB_list[i] == 'data':
-            print "data_mask_lists:\t", data_mask_list
-            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log',
-                                       radius= radi, grids = 50, mask_list=data_mask_list,
-                                       mask_cut = data_cut, msk_image=msk_image)
-        else:
-            r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= radi,grids = 30, mask_list=None)
-        r_mag = - 2.5 * np.log10(r_SB) + zp 
-        if label_SB_list[i] == 'data':
-            ax4.plot(r_grids[:-5], r_mag[:-5], 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
-            ind = len(r_mag)-(r_mag == r_mag[-1]).sum()
-            r_max =  r_grids[ind] - 2
-        else:
-            ax4.plot(r_grids, r_mag, '-', label=label_SB_list[i])
-    ax4.set_xlabel('pixel', fontsize=15)
-    ax4.xaxis.set_label_position('top')
-    ax4.xaxis.tick_top() 
-    ax4.set_xscale('log')
-    ax4.set_xticks([2,4,6,10,15,20,30])
-    from matplotlib.ticker import ScalarFormatter
-    ax4.xaxis.set_major_formatter(ScalarFormatter())
-    ax4.set_xlim([(r_grids).min()*0.85,r_max])
-
-    ax4.invert_yaxis()
-    ax4.set_ylabel('$\mu$(mag, pixel$^{-2}$)', fontsize=12)
-    ax4.yaxis.set_label_position('right')
-    ax4.yaxis.tick_right()
-    ax4.yaxis.set_ticks_position('both') 
-    plt.gca().invert_yaxis()
+    if if_annuli == False:
+        for i in range(len(label_SB_list)):
+            center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
+            if label_SB_list[i] == 'data':
+#                print "data_mask_lists:\t", data_mask_list
+                r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log',
+                                           radius= radi, grids = 50, mask_list=data_mask_list,
+                                           mask_cut = data_cut, msk_image=msk_image, fits_plot=False)
+            else:
+                r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= radi,grids = 30, mask_list=None)
+            r_mag = - 2.5 * np.log10(r_SB) + zp 
+            if label_SB_list[i] == 'data':
+                ax4.plot(r_grids, r_mag, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
+                ind = len(r_mag)-(r_mag == r_mag[-1]).sum()
+                r_max =  r_grids[ind]
+            else:
+                ax4.plot(r_grids, r_mag, '-', label=label_SB_list[i])
+        ax4.set_xlabel('pixel', fontsize=15)
+        ax4.xaxis.set_label_position('top')
+        ax4.xaxis.tick_top() 
+        ax4.set_xscale('log')
+        ax4.set_xticks([2,4,6,10,15,20,30])
+        from matplotlib.ticker import ScalarFormatter
+        ax4.xaxis.set_major_formatter(ScalarFormatter())
+        ax4.set_xlim([(r_grids).min()*0.85,r_grids.max()+6])
     
-    ax4.legend()
-    pos4_o = ax4.get_position() # get the original position
-    pos4 = [pos4_o.x0+0.06, pos4_o.y0 + 0.12, pos4_o.width*0.62, pos4_o.height*0.9]
-    ax4.set_position(pos4) # set a new position
-
-    x = np.linspace(1.e-4, 100, 2)
-    y = x * 0
-    r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= radi,
-                                        mask_list=data_mask_list, mask_cut = data_cut,grids = 30,
-                                        msk_image=msk_image)[0])
-    r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', grids = 30,radius= radi)[0])
-#    r_mag_diff = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
-    ax5.plot(r_grids[:-3]*delatPixel, (r_mag_0-r_mag_1)[:-3], 'ro')   
-    ax5.set_ylabel('$\Delta\mu$', fontsize=15)
-    ax5.set_xlabel('arcsec', fontsize=15)
-    ax5.set_xscale('log')
-    ax5.set_xticks([0.1, 0.2, 0.5, 1, 2])
-    ax5.set_yticks([-0.5,-0.25, 0., 0.25])
-    import matplotlib
-    ax5.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
-    ax5.plot(x, y, 'k--')  
-    ax5.yaxis.set_label_position('right')
-    ax5.yaxis.tick_right()
-    ax5.yaxis.set_ticks_position('both')
-    ax5.set_xlim([(r_grids*delatPixel).min()*0.85, r_max*delatPixel])
-    plt.ylim([-0.5,0.5])
+        ax4.invert_yaxis()
+        ax4.set_ylabel('$\mu$(mag, pixel$^{-2}$)', fontsize=12)
+        ax4.yaxis.set_label_position('right')
+        ax4.yaxis.tick_right()
+        ax4.yaxis.set_ticks_position('both') 
+        plt.gca().invert_yaxis()
+        
+        ax4.legend()
+        pos4_o = ax4.get_position() # get the original position
+        pos4 = [pos4_o.x0+0.06, pos4_o.y0 + 0.12, pos4_o.width*0.62, pos4_o.height*0.9]
+        ax4.set_position(pos4) # set a new position
+    
+        x = np.linspace(1.e-4, 100, 2)
+        y = x * 0
+        r_mag_0 = 2.5 * np.log10(SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= radi,
+                                            mask_list=data_mask_list, mask_cut = data_cut,grids = 30,
+                                            msk_image=msk_image)[0])
+        r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', grids = 30,radius= radi)[0])
+    #    r_mag_diff = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
+        ax5.plot(r_grids*delatPixel, (r_mag_0-r_mag_1), 'ro')   
+        ax5.set_ylabel('$\Delta\mu$', fontsize=15)
+        ax5.set_xlabel('arcsec', fontsize=15)
+        ax5.set_xscale('log')
+        ax5.set_xticks([0.1, 0.2, 0.5, 1, 2])
+        ax5.set_yticks([-0.5,-0.25, 0., 0.25])
+        import matplotlib
+        ax5.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+        ax5.plot(x, y, 'k--')  
+        ax5.yaxis.set_label_position('right')
+        ax5.yaxis.tick_right()
+        ax5.yaxis.set_ticks_position('both')
+        ax5.set_xlim([(r_grids*delatPixel).min()*0.85, (r_grids.max()+6)*delatPixel])
+        plt.ylim([-0.5,0.5])
+    if if_annuli == True:
+        for i in range(len(label_SB_list)):
+            center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
+            if label_SB_list[i] == 'data':
+                print "data_mask_lists:\t", data_mask_list
+                r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log',
+                                           radius= radi, grids = 50, mask_list=data_mask_list,
+                                           mask_cut = data_cut, msk_image=msk_image, fits_plot=False, if_annuli = if_annuli)
+            else:
+                r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= radi,grids = 30, mask_list=None, if_annuli = if_annuli)
+            if label_SB_list[i] == 'data':
+                ax4.plot(r_grids, r_SB, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
+                ind = len(r_SB)-(r_SB == r_SB[-1]).sum()
+                r_max =  r_grids[ind]
+            else:
+                ax4.plot(r_grids, r_SB, '-', label=label_SB_list[i])
+        ax4.set_xlabel('pixel', fontsize=15)
+        ax4.xaxis.set_label_position('top')
+        ax4.xaxis.tick_top() 
+        ax4.set_xscale('log')
+        ax4.set_xticks([2,4,6,10,15,20,30])
+        from matplotlib.ticker import ScalarFormatter
+        ax4.xaxis.set_major_formatter(ScalarFormatter())
+        ax4.set_xlim([(r_grids).min()*0.85,(r_grids).max()+6])
+    
+        ax4.set_ylabel('$SB_{annuli}$(counts, pixel$^{-2}$)', fontsize=12)
+        ax4.yaxis.set_label_position('right')
+        ax4.yaxis.tick_right()
+        ax4.yaxis.set_ticks_position('both') 
+        plt.gca().invert_yaxis()
+        
+        ax4.legend()
+        pos4_o = ax4.get_position() # get the original position
+        pos4 = [pos4_o.x0+0.06, pos4_o.y0 + 0.12, pos4_o.width*0.62, pos4_o.height*0.9]
+        ax4.set_position(pos4) # set a new position
+    
+        x = np.linspace(1.e-4, 100, 2)
+        y = x * 0
+        r_SB_0 = (SB_profile(flux_SB_list[0], center, gridspace = 'log', radius= radi, if_annuli = if_annuli, 
+                                            mask_list=data_mask_list, mask_cut = data_cut,grids = 30,
+                                            msk_image=msk_image)[0])
+        r_SB_1 = (SB_profile(flux_SB_list[1], center, gridspace = 'log', grids = 30, if_annuli = if_annuli,radius= radi)[0])
+    #    r_mag_diff = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
+        ax5.plot(r_grids*delatPixel, (r_SB_0- r_SB_1), 'ro')   
+        ax5.set_ylabel('$\Delta\mu$', fontsize=15)
+        ax5.set_xlabel('arcsec', fontsize=15)
+        ax5.set_xscale('log')
+        ax5.set_xticks([0.1, 0.2, 0.5, 1, 2])
+        ax5.set_yticks([-0.5,-0.25, 0., 0.25])
+        import matplotlib
+        ax5.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+        ax5.plot(x, y, 'k--')  
+        ax5.yaxis.set_label_position('right')
+        ax5.yaxis.tick_right()
+        ax5.yaxis.set_ticks_position('both')
+        ax5.set_xlim([(r_grids*delatPixel).min()*0.85, (r_grids.max()+6)*delatPixel])
+        plt.ylim([-0.5,0.5])
     
     
 #    plt.ylim([-1,1])
