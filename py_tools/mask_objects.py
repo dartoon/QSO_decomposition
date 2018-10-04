@@ -15,7 +15,7 @@ from photutils import detect_sources,deblend_sources
 from matplotlib.colors import LogNorm
 
 
-def mask_obj(img, snr=2.5, exp_sz= 1.2, plt_show = True):
+def mask_obj(img, snr=2.8, exp_sz= 1.2, plt_show = True):
     threshold = detect_threshold(img, snr=snr)
     center_img = len(img)/2
     sigma = 3.0 * gaussian_fwhm_to_sigma# FWHM = 3.
@@ -24,7 +24,7 @@ def mask_obj(img, snr=2.5, exp_sz= 1.2, plt_show = True):
     segm = detect_sources(img, threshold, npixels=10, filter_kernel=kernel)
     npixels = 20
     segm_deblend = deblend_sources(img, segm, npixels=npixels,
-                                    filter_kernel=kernel, nlevels=20,
+                                    filter_kernel=kernel, nlevels=25,
                                     contrast=0.001)
     #Number of objects segm_deblend.data.max()
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 10))

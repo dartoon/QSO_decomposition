@@ -63,10 +63,10 @@ def cut_center_bright(image, center, radius,kernel = 'gaussian', return_center=F
         cut_c_b = cut_image(image=image, center=center, radius=radius)
         plt_center = img_test[frm_q:-frm_q,frm_q:-frm_q].shape
         if plot==True:
-            marker = 'o'
-            ms, mew = 30, 1.
-            plt.plot(center[0], center[1], color='r', marker=marker, ms=ms, mew=mew)
-            plt.imshow(img_test[frm_q:-frm_q,frm_q:-frm_q], origin='lower')
+            marker = '+'
+            ms, mew = 30, 2.
+            plt.plot(plt_center[0]/2, plt_center[1]/2, color='c', marker='+', ms=30, mew=2)
+            plt.imshow(cut_c_b[frm_q:-frm_q,frm_q:-frm_q], origin='lower')
             plt.show()
     if return_center==False:
         return cut_c_b
