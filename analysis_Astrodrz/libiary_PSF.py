@@ -8,8 +8,13 @@ Created on Wed Oct  3 16:45:01 2018
 import numpy as np
 import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
-
 import pickle
+import copy
+
+import matplotlib as matt
+import matplotlib.lines as mlines
+from matplotlib import colors
+matt.rcParams['font.family'] = 'STIXGeneral'
 
 filt_info = {'CDFS-1': 'F140w', 'CDFS-229': 'F125w', 'CDFS-724': 'F125w',\
 'CID1174': 'F140w', 'CID206': 'F140w', 'CID216': 'F140w', 'CID3242': 'F140w',\
@@ -30,37 +35,168 @@ for key in filt_info.keys():
     QSOs_dict.update({'{0}'.format(ID):QSOs})
 
 PSF_list = []
-PSF_msk_list = []
+PSF_id = []
 QSO_list = []
+filter_list = []
 for ID in PSFs_dict.keys():
     psfs_dict = PSFs_dict[ID]
-    psfs = [psfs_dict[i][0] for i in range(len(psfs_dict))]
-    psfs_msk = [psfs_dict[i][3] for i in range(len(psfs_dict))]
+    psfs = [psfs_dict[i] for i in range(len(psfs_dict))]
     PSF_list += psfs
-    PSF_msk_list += psfs_msk
-    
+    name_id = [ID+"_"+str(i) for i in range(len(psfs_dict))]
+    PSF_id = PSF_id + name_id
+    filt = [filt_info[ID]]
+    filter_list += filt * len(PSFs_dict[ID])
     qso = QSOs_dict[ID]
-    QSO_list += [qso[0]]
-#    if_ind += 
+    QSO_list.append(qso)
+    if len(PSF_list) != len(PSF_id):
+        raise ValueError("The PSF_list is not consistent with PSF_id")
+QSO_id = PSFs_dict.keys()
+
+
+#==============================================================================
+#Plot the flux distribution 
+#==============================================================================
+fluxs = [] 
+for i in range(len(QSO_id)):
+    PSFs = [PSF_list[j] for j in range(len(PSF_list)) if QSO_id[i] in PSF_id[j]]
+#    print len(PSFs)
+    flux = [np.sum(PSFs[j][0] * PSFs[j][3]) for j in range(len(PSFs))]
+    fluxs += flux
+plt.figure(figsize=(10,6))
+common_params = dict(bins=30)
+#                         label=QSO_id)
+plt.hist((fluxs), **common_params)
+plt.legend()
+plt.xticks(np.arange(0, 4500, step=500))
+plt.yticks(np.arange(0,65,step=5))
+plt.xlabel('Total Flux',fontsize=15)
+plt.ylabel('Number of PSFs', fontsize=15)
+plt.tick_params(labelsize=15)
+plt.show()
+
+#==============================================================================
+#Location 
+#==============================================================================
+#temp_frame = pyfits.getdata('CDFS-1/astrodrz/final_drz.fits')
+frame_y, frame_x = (2183, 2467) #temp_frame.shape
+x_len = 15.
+ratio = x_len/frame_x
+y_len = frame_y * ratio
+#fig, ax= plt.subplots(1)
+plt.figure(figsize=(x_len,y_len))
+color_label = copy.deepcopy(QSO_id)
+for i in range(len(QSO_id)):
+    loc = QSO_list[i][1]
+    plt.plot(loc[0]*ratio, loc[1]*ratio, marker='X', label = color_label[i], ms = 20,  linestyle = 'None')
+    color_label[i] = "_nolegend_"
+    PSFs = [PSF_list[j] for j in range(len(PSF_list)) if QSO_id[i] in PSF_id[j]]
+    for j in range(len(PSFs)):
+        loc = PSFs[j][2]
+        if PSFs[j][1] == 1:
+            plt.plot(loc[0]*ratio, loc[1]*ratio, marker='*', ms = 10, linestyle = 'None')
+        elif PSFs[j][1] == 0:
+            plt.plot(loc[0]*ratio, loc[1]*ratio, marker='o', ms = 7, linestyle = 'None')
+ 
+dith_fx, dith_fy = (2128,1916)
+dith_fx *= ratio
+dith_fy *= ratio
+box_wx, box_wy = dith_fx, dith_fy
+dx = (x_len-dith_fx)/5
+dy = (y_len-dith_fy)/5
+for i in range(6):
+    rectangle = plt.Rectangle((dx*i, dy*i), box_wx, box_wy, fill=None, alpha=1)
+    plt.gca().add_patch(rectangle)
+
+plt.tick_params(labelsize=20)
+plt.legend(bbox_to_anchor=(0.97, 1.14),prop={'size': 12},ncol=7)
+plt.xticks([]),plt.yticks([])
+plt.xlim(0, x_len)
+plt.ylim(0, y_len)
+plt.show()
+
+
+#==============================================================================
+# Plot mask
+#==============================================================================
+from matplotlib.colors import LogNorm
+ncols = 3
+nrows = 3
+count = 0
+import math
+ceils = math.ceil(len(PSF_list)/9.)
+for k in range(int(ceils)):
+    fig, axs = plt.subplots(ncols=ncols, nrows=nrows, figsize=(9,9))
+    for i in range(ncols):
+        for j in range(nrows):
+            if count < len(PSF_list) :
+                axs[i,j].imshow(PSF_list[count][0]*PSF_list[count][3], origin='low', norm=LogNorm())
+                t = axs[i,j].text(5,110,PSF_id[count], {'color': 'b', 'fontsize': 20})
+                t.set_bbox(dict(facecolor='yellow', alpha=0.5, edgecolor='red'))
+                if PSF_list[count][1] ==1:
+                    t1 = axs[i,j].text(100,5,'star', {'color': 'b', 'fontsize': 10})
+                    t1.set_bbox(dict(facecolor='yellow', alpha=0.5, edgecolor='red'))
+            axs[i,j].set_xticks([])
+            axs[i,j].set_yticks([])
+            count += 1
+    plt.tight_layout()
+    plt.show()
     
-PSFs_fluxs=[]
+#==============================================================================
+# Gaussian Fit
+#==============================================================================
+from scipy.optimize import curve_fit
+test_data = PSF_list[0][0]
+center = len(test_data)/2
+#def func(x, a, x0, sigma):
+#    return a*np.exp(-(x-x0)**2/(2*sigma**2))
+
+def measure_FWHM(image, line_range= (50,70)):
+    seed = range(line_range[0],line_range[1])
+    frm = len(image)
+    q_frm = frm/4
+    center = np.where(image == image[q_frm:-q_frm,q_frm:-q_frm].max())[0][0]
+    x_n = np.asarray([image[i][center] for i in seed]) # The x value, vertcial 
+    y_n = np.asarray([image[center][i] for i in seed]) # The y value, horizontal 
+    #popt, pcov = curve_fit(func, x, yn)
+    from astropy.modeling import models, fitting
+    g_init = models.Gaussian1D(amplitude=1., mean=60, stddev=1.)
+    fit_g = fitting.LevMarLSQFitter()
+    g_x = fit_g(g_init, seed, x_n)
+    g_y = fit_g(g_init, seed, y_n)
+    FWHM_ver = g_x.stddev.value * 2.355  # The FWHM = 2*np.sqrt(2*np.log(2)) * stdd = 2.355*stdd
+    FWHM_hor = g_y.stddev.value * 2.355
+#    fig = plt.figure()
+#    ax = fig.add_subplot(111)
+#    seed = np.linspace(seed.min(),seed.max(),50)
+#    ax.plot(seed, g_x(seed), c='r', label='Gaussian')
+#    ax.legend()
+#    ax.scatter(x, sample)
+#    plt.show()
+    return (FWHM_ver+FWHM_hor)/2., FWHM_ver, FWHM_hor
+FWHM = []
 for i in range(len(PSF_list)):
-    flux = np.sum(PSF_list[i] * PSF_msk_list[i])
-#    if flux< 1000:
-    PSFs_fluxs.append([flux])
-    
-plt.hist(np.asarray(PSFs_fluxs))
+    FWHM_i = measure_FWHM(PSF_list[i][0])[0]
+    FWHM.append(FWHM_i)
+FWHM = np.asarray(FWHM)
+
+fig, ax = plt.subplots(figsize=(10,6))
+color_dict = {"F140w": 'b', "F125w": 'g'}
+label = {"F140w1":'F140w star', "F140w0":'F140w selected', "F125w1":'F125w star', "F125w0":'F125w selected'}
+marker =  {1:'*', 0:'o'}
+for i in range(len(FWHM)):
+    filt = filter_list[i]
+    label_key = filt + str(PSF_list[i][1])
+    ax.scatter(FWHM[i], fluxs[i], color =color_dict[filt], label = label[label_key], marker=marker[PSF_list[i][1]])
+    label[label_key] = "_nolegend_"
+import matplotlib
+ax.set_yscale('log')
+ax.set_yticks([50,100, 200, 300, 500, 1000, 2000, 5000])
+ax.get_yaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
+plt.xlabel('FWHM (pixel)',fontsize=15)
+plt.ylabel('Total flux', fontsize=15)
+plt.legend(prop={'size': 12})
+plt.tick_params(labelsize=15)
+plt.ylim(30,6000)
 plt.show()
 
-QSOs_flux = [np.sum(QSO_list[i]) for i in range(len(QSO_list))]
-plt.hist(np.asarray(QSOs_flux))
-plt.show()
 
-import sys
-sys.path.insert(0,'../py_tools')
-from flux_profile import profiles_compare
-prf_list = PSF_list
-scal_list = np.ones(len(PSF_list))
-prf_name_list = ["PSF{0}".format(i) for i in range(len(PSF_list))]
-fig_pro_compare = profiles_compare(prf_list, scal_list, prf_name_list=prf_name_list,norm_pix = 5.0,
-                                   gridspace = 'log',if_annuli=True)
