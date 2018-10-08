@@ -27,7 +27,7 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     del result['e1']
     del result['e2']
     result['QSO_amp'] = ps_result[0]['point_amp'][0]
-    result['host_amp'] = image_host.sum()
+    result['host_amp'] = image_host[0].sum()
     result['host_flux_ratio_percent']= result['host_amp']/(result['QSO_amp'] + result['host_amp'])*100
     if filt == 'F140w':
         zp = 26.4524
@@ -50,7 +50,12 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     from flux_profile import total_compare
     data = data
     QSO = image_ps
-    host = image_host
+    if len(image_host) == 1:
+        host = image_host[0]
+    elif len(image_host) >1:
+        host = np.zeros_like(image_host[0])
+        for i in range(len(image_host)):
+            host += image_host[i]
     flux_list = [data, QSO, host, error_map]
     label = ['data', 'QSO', 'host', 'model', 'normalized residual']
     import glob
@@ -75,7 +80,7 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
         QSO_mask = cr_mask_img(data, mask_list, mask_reg_cut = cut)
     else:
         QSO_mask = QSO_msk
-    chiq_map = ((data-image_ps-image_host)/(error_map))**2 * QSO_mask
+    chiq_map = ((data-image_ps-host)/(error_map))**2 * QSO_mask
     pixels=len(error_map)**2 - (1-QSO_mask).sum()
     reduced_Chisq = chiq_map.sum()/pixels
     result=roundme(result)

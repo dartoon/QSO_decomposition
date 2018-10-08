@@ -13,8 +13,9 @@ sys.path.insert(0,'../../../py_tools')
 from cut_image import cut_image, cut_center_bright, save_loc_png, grab_pos
 import copy
 import astropy.io.fits as pyfits
-ID = 'xxx'
-
+import os
+path = os.getcwd()
+ID = path.split('/')[-2]
 fitsFile = pyfits.open('../astrodrz/final_drz.fits')
 
 img = fitsFile[1].data # check the back grounp

@@ -57,11 +57,17 @@ QSO_id = PSFs_dict.keys()
 #Plot the flux distribution 
 #==============================================================================
 fluxs = [] 
+locs = []
+id_star_s = []
 for i in range(len(QSO_id)):
     PSFs = [PSF_list[j] for j in range(len(PSF_list)) if QSO_id[i] in PSF_id[j]]
 #    print len(PSFs)
     flux = [np.sum(PSFs[j][0] * PSFs[j][3]) for j in range(len(PSFs))]
     fluxs += flux
+    loc = [PSFs[j][2] for j in range(len(PSFs))]
+    locs += loc
+    id_star = [PSFs[j][1] for j in range(len(PSFs))]
+    id_star_s += id_star
 plt.figure(figsize=(10,6))
 common_params = dict(bins=30)
 #                         label=QSO_id)
@@ -96,7 +102,7 @@ for i in range(len(QSO_id)):
             plt.plot(loc[0]*ratio, loc[1]*ratio, marker='*', ms = 10, linestyle = 'None')
         elif PSFs[j][1] == 0:
             plt.plot(loc[0]*ratio, loc[1]*ratio, marker='o', ms = 7, linestyle = 'None')
- 
+
 dith_fx, dith_fy = (2128,1916)
 dith_fx *= ratio
 dith_fy *= ratio
@@ -114,32 +120,32 @@ plt.xlim(0, x_len)
 plt.ylim(0, y_len)
 plt.show()
 
-
-#==============================================================================
-# Plot mask
-#==============================================================================
-from matplotlib.colors import LogNorm
-ncols = 3
-nrows = 3
-count = 0
-import math
-ceils = math.ceil(len(PSF_list)/9.)
-for k in range(int(ceils)):
-    fig, axs = plt.subplots(ncols=ncols, nrows=nrows, figsize=(9,9))
-    for i in range(ncols):
-        for j in range(nrows):
-            if count < len(PSF_list) :
-                axs[i,j].imshow(PSF_list[count][0]*PSF_list[count][3], origin='low', norm=LogNorm())
-                t = axs[i,j].text(5,110,PSF_id[count], {'color': 'b', 'fontsize': 20})
-                t.set_bbox(dict(facecolor='yellow', alpha=0.5, edgecolor='red'))
-                if PSF_list[count][1] ==1:
-                    t1 = axs[i,j].text(100,5,'star', {'color': 'b', 'fontsize': 10})
-                    t1.set_bbox(dict(facecolor='yellow', alpha=0.5, edgecolor='red'))
-            axs[i,j].set_xticks([])
-            axs[i,j].set_yticks([])
-            count += 1
-    plt.tight_layout()
-    plt.show()
+#
+##==============================================================================
+## Plot mask
+##==============================================================================
+#from matplotlib.colors import LogNorm
+#ncols = 3
+#nrows = 3
+#count = 0
+#import math
+#ceils = math.ceil(len(PSF_list)/9.)
+#for k in range(int(ceils)):
+#    fig, axs = plt.subplots(ncols=ncols, nrows=nrows, figsize=(9,9))
+#    for i in range(ncols):
+#        for j in range(nrows):
+#            if count < len(PSF_list) :
+#                axs[i,j].imshow(PSF_list[count][0]*PSF_list[count][3], origin='low', norm=LogNorm())
+#                t = axs[i,j].text(5,110,PSF_id[count], {'color': 'b', 'fontsize': 20})
+#                t.set_bbox(dict(facecolor='yellow', alpha=0.5, edgecolor='red'))
+#                if PSF_list[count][1] ==1:
+#                    t1 = axs[i,j].text(100,5,'star', {'color': 'b', 'fontsize': 10})
+#                    t1.set_bbox(dict(facecolor='yellow', alpha=0.5, edgecolor='red'))
+#            axs[i,j].set_xticks([])
+#            axs[i,j].set_yticks([])
+#            count += 1
+#    plt.tight_layout()
+#    plt.show()
     
 #==============================================================================
 # Gaussian Fit
@@ -150,7 +156,7 @@ center = len(test_data)/2
 #def func(x, a, x0, sigma):
 #    return a*np.exp(-(x-x0)**2/(2*sigma**2))
 
-def measure_FWHM(image, line_range= (50,70)):
+def measure_FWHM(image,count=0 ,line_range= (50,70)):
     seed = range(line_range[0],line_range[1])
     frm = len(image)
     q_frm = frm/4
@@ -165,6 +171,8 @@ def measure_FWHM(image, line_range= (50,70)):
     g_y = fit_g(g_init, seed, y_n)
     FWHM_ver = g_x.stddev.value * 2.355  # The FWHM = 2*np.sqrt(2*np.log(2)) * stdd = 2.355*stdd
     FWHM_hor = g_y.stddev.value * 2.355
+    if (FWHM_hor-FWHM_ver)/FWHM_ver > 0.20:
+        print "Warning, the {0} have inconsistent FWHM".format(count), FWHM_ver, FWHM_hor
 #    fig = plt.figure()
 #    ax = fig.add_subplot(111)
 #    seed = np.linspace(seed.min(),seed.max(),50)
@@ -175,7 +183,7 @@ def measure_FWHM(image, line_range= (50,70)):
     return (FWHM_ver+FWHM_hor)/2., FWHM_ver, FWHM_hor
 FWHM = []
 for i in range(len(PSF_list)):
-    FWHM_i = measure_FWHM(PSF_list[i][0])[0]
+    FWHM_i = measure_FWHM(PSF_list[i][0], count = i)[0]
     FWHM.append(FWHM_i)
 FWHM = np.asarray(FWHM)
 
@@ -199,4 +207,5 @@ plt.tick_params(labelsize=15)
 plt.ylim(30,6000)
 plt.show()
 
-
+#for i in range(len(PSF_list)):
+#    print PSF_id[i], round(fluxs[i],3), round(FWHM[i],3), locs[i], filter_list[i], id_star_s[i]

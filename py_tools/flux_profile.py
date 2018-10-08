@@ -563,8 +563,8 @@ def total_compare(label_list, flux_list,
             r_mag = - 2.5 * np.log10(r_SB) + zp 
             if label_SB_list[i] == 'data':
                 ax4.plot(r_grids, r_mag, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
-                ind = len(r_mag)-(r_mag == r_mag[-1]).sum()
-                r_max =  r_grids[ind]
+#                ind = len(r_mag)-(r_mag == r_mag[-1]).sum()
+#                r_max =  r_grids[ind]
             else:
                 ax4.plot(r_grids, r_mag, '-', label=label_SB_list[i])
         ax4.set_xlabel('pixel', fontsize=15)
@@ -594,7 +594,6 @@ def total_compare(label_list, flux_list,
                                             mask_list=data_mask_list, mask_cut = data_cut,grids = 30,
                                             msk_image=msk_image)[0])
         r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', grids = 30,radius= radi)[0])
-    #    r_mag_diff = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
         ax5.plot(r_grids*delatPixel, (r_mag_0-r_mag_1), 'ro')   
         ax5.set_ylabel('$\Delta\mu$', fontsize=15)
         ax5.set_xlabel('arcsec', fontsize=15)
@@ -609,7 +608,7 @@ def total_compare(label_list, flux_list,
         ax5.yaxis.set_ticks_position('both')
         ax5.set_xlim([(r_grids*delatPixel).min()*0.85, (r_grids.max()+6)*delatPixel])
         plt.ylim([-0.5,0.5])
-    if if_annuli == True:
+    elif if_annuli == True:
         for i in range(len(label_SB_list)):
             center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
             if label_SB_list[i] == 'data':
@@ -617,13 +616,9 @@ def total_compare(label_list, flux_list,
                 r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log',
                                            radius= radi, grids = 50, mask_list=data_mask_list,
                                            mask_cut = data_cut, msk_image=msk_image, fits_plot=False, if_annuli = if_annuli)
-            else:
-                r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= radi,grids = 30, mask_list=None, if_annuli = if_annuli)
-            if label_SB_list[i] == 'data':
                 ax4.plot(r_grids, r_SB, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
-                ind = len(r_SB)-(r_SB == r_SB[-1]).sum()
-                r_max =  r_grids[ind]
             else:
+                r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius=radi,grids = 30, mask_list=None, if_annuli = if_annuli)
                 ax4.plot(r_grids, r_SB, '-', label=label_SB_list[i])
         ax4.set_xlabel('pixel', fontsize=15)
         ax4.xaxis.set_label_position('top')
@@ -666,22 +661,12 @@ def total_compare(label_list, flux_list,
         ax5.yaxis.set_ticks_position('both')
         ax5.set_xlim([(r_grids*delatPixel).min()*0.85, (r_grids.max()+6)*delatPixel])
         plt.ylim([-0.5,0.5])
-    
-    
-#    plt.ylim([-1,1])
     pos5_o = ax5.get_position() # get the original position
     pos5 = [pos5_o.x0+0.06, pos5_o.y0+0.05, pos5_o.width*0.62, pos5_o.height*1.5]
     ax5.set_position(pos5) # set a new position
     if plot_compare == True:
         plt.show()
     return f
-#
-#def data_model_compare(label_list, flux_list, fig = None):
-#    center = len(flux_list[0])/2, len(flux_list[0])/2
-#    for i in range(len(label_list)):
-#        r_SB, r_grids = SB_profile(flux_list, center)
-#        fig.plot(r_grids, r_SB, 'x-', label="label_list{0}".format(i))
-#        fig.legend()
     
 def make_ticklabels_invisible(fig):
     for i, ax in enumerate(fig.axes):

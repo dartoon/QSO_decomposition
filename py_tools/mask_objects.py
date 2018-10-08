@@ -13,7 +13,52 @@ from astropy.convolution import Gaussian2DKernel
 from astropy.stats import gaussian_fwhm_to_sigma
 from photutils import detect_sources,deblend_sources
 from matplotlib.colors import LogNorm
+from photutils import source_properties
 
+def detect_obj(img, snr=2.8, exp_sz= 1.2, plt_show = True):
+    threshold = detect_threshold(img, snr=snr)
+    center_img = len(img)/2
+    sigma = 3.0 * gaussian_fwhm_to_sigma# FWHM = 3.
+    kernel = Gaussian2DKernel(sigma, x_size=5, y_size=5)
+    kernel.normalize()
+    segm = detect_sources(img, threshold, npixels=10, filter_kernel=kernel)
+    npixels = 20
+    segm_deblend = deblend_sources(img, segm, npixels=npixels,
+                                    filter_kernel=kernel, nlevels=25,
+                                    contrast=0.001)
+    #Number of objects segm_deblend.data.max()
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 10))
+    import copy, matplotlib
+    my_cmap = copy.copy(matplotlib.cm.get_cmap('gist_heat')) # copy the default cmap
+    my_cmap.set_bad('black')
+    vmin = 1.e-3
+    vmax = 2.1 
+    ax1.imshow(img, origin='lower', cmap=my_cmap, norm=LogNorm(), vmin=vmin, vmax=vmax)
+    ax1.set_title('Data')
+    ax2.imshow(segm_deblend, origin='lower', cmap=segm_deblend.cmap(random_state=12345))
+    ax2.set_title('Segmentation Image')
+    plt.show()
+    
+    columns = ['id', 'xcentroid', 'ycentroid', 'source_sum', 'area']
+    cat = source_properties(img, segm_deblend)
+    tbl = cat.to_table(columns=columns)
+    tbl['xcentroid'].info.format = '.2f'  # optional format
+    tbl['ycentroid'].info.format = '.2f'
+    print(tbl)
+    cat = source_properties(img, segm_deblend)
+    objs = []
+    for obj in cat:
+        position = (obj.xcentroid.value-center_img, obj.ycentroid.value-center_img)
+        a_o = obj.semimajor_axis_sigma.value
+        b_o = obj.semiminor_axis_sigma.value
+        Re = np.pi * a_o * b_o /2.
+        q = 1 - obj.ellipticity.to_value()
+        objs.append((position,Re,q))
+    dis_sq = [np.sqrt((objs[i][0][0])**2+(objs[i][0][1])**2) for i in range(len(objs))]
+    dis_sq = np.array(dis_sq)
+    c_index= np.where(dis_sq == dis_sq.min())[0][0]
+    return objs, c_index
+    
 
 def mask_obj(img, snr=2.8, exp_sz= 1.2, plt_show = True):
     threshold = detect_threshold(img, snr=snr)
@@ -38,8 +83,6 @@ def mask_obj(img, snr=2.8, exp_sz= 1.2, plt_show = True):
     ax2.imshow(segm_deblend, origin='lower', cmap=segm_deblend.cmap(random_state=12345))
     ax2.set_title('Segmentation Image')
     plt.close()
-    
-    from photutils import source_properties
     columns = ['id', 'xcentroid', 'ycentroid', 'source_sum', 'area']
     cat = source_properties(img, segm_deblend)
     tbl = cat.to_table(columns=columns)
@@ -47,7 +90,7 @@ def mask_obj(img, snr=2.8, exp_sz= 1.2, plt_show = True):
     tbl['ycentroid'].info.format = '.2f'
     print(tbl)
     
-    from photutils import source_properties, EllipticalAperture
+    from photutils import EllipticalAperture
     cat = source_properties(img, segm_deblend)
     segm_deblend_size = segm_deblend.areas
     apertures = []

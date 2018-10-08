@@ -16,7 +16,10 @@ import sys
 sys.path.insert(0,'../../../py_tools')
 from mask_objects import mask_obj
 
-ID='xxx'
+import os
+path = os.getcwd()
+ID = path.split('/')[-2]
+
 QSO_name = ID + "_cutout.fits"
 QSO_img  = pyfits.getdata(QSO_name)
 _,QSO_obj_mask  = mask_obj(img=QSO_img, exp_sz=1)

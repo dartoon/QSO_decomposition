@@ -17,7 +17,9 @@ from psfs_average import psf_ave
 from flux_profile import QSO_psfs_compare, profiles_compare
 from matplotlib.colors import LogNorm
 
-ID = 'xxx'
+import os
+path = os.getcwd()
+ID = path.split('/')[-2]
 filt = 'xxx'
 
 # =============================================================================

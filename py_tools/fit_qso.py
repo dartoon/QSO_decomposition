@@ -86,7 +86,6 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     center_x = 0.0
     center_y = 0.0
     point_amp = QSO_im.sum()/2.
-    
     fixed_ps = [{}]
     kwargs_ps = [{'ra_image': [center_x], 'dec_image': [center_y], 'point_amp': [point_amp]}]
     kwargs_ps_init = kwargs_ps
@@ -108,7 +107,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     data_class.update_data(QSO_im)
     
     from lenstronomy.LightModel.light_model import LightModel
-    light_model_list = ['SERSIC_ELLIPSE']
+    light_model_list = ['SERSIC_ELLIPSE'] * len(source_params[0])
     lightModel = LightModel(light_model_list=light_model_list)
     from lenstronomy.PointSource.point_source import PointSource
     point_source_list = ['UNLENSED']
@@ -123,10 +122,13 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
                     }
     # numerical options and fitting sequences
     
-    kwargs_constraints = {'joint_center_source_light': fixcenter,  # if set to True, all the components in the host galaxy will have a shared center
-                          'fix_to_point_source_list': [fixcenter],  # this results in a shared center of the host galaxy with the point source (quasar)
-                          'num_point_source_list': [1]
-                          }
+    if fixcenter == False:
+        kwargs_constraints = {'num_point_source_list': [1]
+                              }
+    elif fixcenter == True:
+        kwargs_constraints = {'joint_source_with_point_source': [[0, 0]],
+                              'num_point_source_list': [1]
+                              }
     
     kwargs_likelihood = {'check_bounds': True,  #Set the bonds, if exceed, reutrn "penalty"
                          'source_marg': False,  #In likelihood_module.LikelihoodModule -- whether to fully invert the covariance matrix for marginalization
@@ -159,8 +161,8 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     
     if deep_seed == False:
         fitting_kwargs_list = [
-            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 0.8, 'n_particles': 100,
-             'n_iterations': 100},
+            {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 0.8, 'n_particles': 80,
+             'n_iterations': 80},
             {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 20, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
                #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
             'sigma_scale': .1}
@@ -187,7 +189,12 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     # this is the linear inversion. The kwargs will be updated afterwards
     image_reconstructed, error_map, _, _ = imageModel.image_linear_solve(kwargs_source=source_result, kwargs_ps=ps_result)
     image_ps = imageModel.point_source(ps_result)
-    image_host = imageModel.source_surface_brightness(source_result)
+    print source_result
+    hostModel = ImageModel(data_class, psf_class, source_model_class=LightModel(light_model_list=['SERSIC_ELLIPSE']),
+                                    point_source_class=pointSource, kwargs_numerics=kwargs_numerics)
+    image_host = []
+    for i in range(len(source_result)):
+        image_host.append(hostModel.source_surface_brightness([source_result[i]]))
     # let's plot the output of the PSO minimizer
     from lenstronomy.Plots.output_plots import LensModelPlot
     lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
