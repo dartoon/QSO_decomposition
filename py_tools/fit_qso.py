@@ -185,7 +185,6 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     end_time = time.time()
     print(end_time - start_time, 'total time needed for computation')
     print('============ CONGRATULATION, YOUR JOB WAS SUCCESSFUL ================ ')
-    
     # this is the linear inversion. The kwargs will be updated afterwards
     image_reconstructed, error_map, _, _ = imageModel.image_linear_solve(kwargs_source=source_result, kwargs_ps=ps_result)
     image_ps = imageModel.point_source(ps_result)
@@ -256,7 +255,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     if QSO_std is None:
         return source_result, ps_result, image_ps, image_host, np.sqrt(data_class.C_D+np.abs(error_map))
     else:
-        return source_result, ps_result, image_ps, image_host, np.sqrt(QSO_std**2) #error_map=0
+        return source_result, ps_result, image_ps, image_host, np.sqrt(QSO_std**2+np.abs(error_map)) #error_map=0
 
 def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=None, pix_sz = None,
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
