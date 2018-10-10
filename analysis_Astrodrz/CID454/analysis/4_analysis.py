@@ -160,12 +160,22 @@ elif if_file is not []:
     fit_result = open(filename,"r+")
     fit_result.read()
 count = 0
-for i in np.array(range(len(psf_name_list))):
+
+#wht = pyfits.getdata('wht_map.fits')
+#exp = 2395.399
+#mean_wht = exp * (0.0642/0.135)**2
+#exp_map = exp * wht/mean_wht
+
+for j in np.array(range(1)):
+    i = 19
     print "by PSF: {0}".format(psf_name_list[i])
     tag = 'fit_result_each/qso_fit_PSF{0}'.format(psf_name_list[i])
 #    mask_list = glob.glob("PSF{0}_*.reg".format(i))
 #    print mask_list
     psf_i = psf_list[i] * PSF_mask_img_list[i]
+#    noise_level_psf_i = background_rms + psf_i/2395.399
+#    noise = np.random.normal(0, noise_level_psf_i, size=noise_level_psf_i.shape)
+#    psf_i += noise
     psf_i = psf_i[ct:-ct,ct:-ct]
     source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_i, psf_std = None,
                                                                      background_rms=background_rms,
