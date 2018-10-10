@@ -166,8 +166,7 @@ count = 0
 #mean_wht = exp * (0.0642/0.135)**2
 #exp_map = exp * wht/mean_wht
 
-for j in np.array(range(1)):
-    i = 19
+for i in np.array(range(len(psf_name_list))):
     print "by PSF: {0}".format(psf_name_list[i])
     tag = 'fit_result_each/qso_fit_PSF{0}'.format(psf_name_list[i])
 #    mask_list = glob.glob("PSF{0}_*.reg".format(i))
