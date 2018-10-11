@@ -60,7 +60,7 @@ def detect_obj(img, snr=2.8, exp_sz= 1.2, plt_show = True):
     return objs, c_index
     
 
-def mask_obj(img, snr=2.8, exp_sz= 1.2, plt_show = True):
+def mask_obj(img, snr=3.0, exp_sz= 1.2, plt_show = True):
     threshold = detect_threshold(img, snr=snr)
     center_img = len(img)/2
     sigma = 3.0 * gaussian_fwhm_to_sigma# FWHM = 3.

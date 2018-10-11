@@ -21,7 +21,7 @@ def cut_image(image, center, radius):
     cut_image = cut.cutout(image)
     return cut_image
 
-def cut_center_bright(image, center, radius,kernel = 'gaussian', return_center=False,plot=True):
+def cut_center_bright(image, center, radius,kernel = 'gaussian', return_center=False,plot=True,center_float = False):
     """
     Auto cut the image, with with brightest center in the center.
         kernel: define the center.
@@ -48,6 +48,7 @@ def cut_center_bright(image, center, radius,kernel = 'gaussian', return_center=F
             if i ==2 and plot==True :
                 print 'center_shift',center_shift
             center = (center.astype(int) + np.round(center_shift))
+            center_f = center.astype(int) + center_shift
             img_test = cut_image(image=image, center=center, radius=radius)
             if i ==2 and plot==True :
                 plt_center = img_test[frm_q:-frm_q,frm_q:-frm_q].shape
@@ -70,8 +71,10 @@ def cut_center_bright(image, center, radius,kernel = 'gaussian', return_center=F
             plt.show()
     if return_center==False:
         return cut_c_b
-    if return_center==True:
+    elif return_center==True and center_float==False:
         return cut_c_b, center
+    elif return_center==True and center_float==True:
+        return cut_c_b, center_f
  
 def save_loc_png(img, center_QSO, c_psf_list=None,extra_psfs=None,ID=None, label= None,
                  reg_ty=None,ifsave=True, label_shift_NO=(), shift_where=None):

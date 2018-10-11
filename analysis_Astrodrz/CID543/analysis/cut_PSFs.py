@@ -89,7 +89,7 @@ PSF_gauss_centers = []
 PSF_bright_centers = []
 for i in range(len(psf_list)):  
     print 'PSF',i
-    PSF, PSF_center = cut_center_bright(image=img, center=psf_list[i], radius=60, return_center=True, plot=False)
+    PSF, PSF_center = cut_center_bright(image=img, center=psf_list[i], radius=60, return_center=True, plot=False, center_float=True)
     PSFs.append([PSF, 1, PSF_center])
     PSF_gauss_centers.append(PSF_center)
     _, PSF_br_center = cut_center_bright(image=img, center=psf_list[i], radius=60, kernel = 'center_bright', return_center=True, plot=False)
@@ -97,12 +97,12 @@ for i in range(len(psf_list)):
     count += 1
 
 #extra_psfs = None
-extra_psfs = np.array([[342,1459],[503,2042],[1350,1807],[1615,869]])
+extra_psfs = np.array([[342,1459],[503,2042],[1350,1807],[1615,869],[1999,1107]])
 dist_extra = (extra_psfs-center_QSO)[:,0]**2+(extra_psfs-center_QSO)[:,1]**2
 extra_psfs = extra_psfs[dist_extra.argsort()]
 for i in range(len(extra_psfs)):
     print 'PSF',count
-    PSF, PSF_center = cut_center_bright(image=img, center=extra_psfs[i], radius=60,  return_center=True, plot=False)
+    PSF, PSF_center = cut_center_bright(image=img, center=extra_psfs[i], radius=60,  return_center=True, plot=False, center_float=True)
     PSFs.append([PSF,0, PSF_center])
     PSF_gauss_centers.append(PSF_center)
     _, PSF_br_center = cut_center_bright(image=img, center=extra_psfs[i], radius=60, kernel = 'center_bright', return_center=True, plot=False)
@@ -134,16 +134,21 @@ for i in range(len(PSFs)):
     PSF_mask = (1 - (PSF_mask != 0)*1.)
     PSFs[i].append(PSF_mask)
 
-center_match = (np.sum(abs(np.asarray(PSF_gauss_centers)-np.asarray(PSF_bright_centers)),axis = 1) == 0)
+#center_match = (np.sum(abs(np.asarray(PSF_gauss_centers)-np.asarray(PSF_bright_centers)),axis = 1) == 0)
+center_match = (np.sum(abs(np.asarray(PSF_gauss_centers)-np.asarray(PSF_bright_centers)<0.75),axis = 1) == 2)
+PSF_c = len(PSFs[0][0])/2
+bright_match = [(PSFs[i][0].max()-PSFs[i][0][PSF_c, PSF_c])/PSFs[i][0].max() < 0.1 for i in range(len(PSFs))]
 PSFs_all = copy.deepcopy(PSFs)
 PSFs=[]
 for i in range(len(PSFs_all)):
-    if center_match[i] == True:
+    if center_match[i] == True and bright_match[i] == True:
         print i
-        PSFs.append(PSFs_all[i])
+        if np.sum(PSFs_all[i][0] * PSFs_all[i][3]) >100:
+            print i
+            PSFs.append(PSFs_all[i])
 
-del_list = [0]  #del ID based on the second png
-PSFs = [PSFs[i] for i in range(len(PSFs)) if i not in del_list]
+#del_list = [0]  #del ID based on the second png
+#PSFs = [PSFs[i] for i in range(len(PSFs)) if i not in del_list]
 
 #==============================================================================
 # Compare the profile and derive the Average image
