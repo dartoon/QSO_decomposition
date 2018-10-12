@@ -62,18 +62,20 @@ PSF_list = []
 PSF_id = []
 filter_list = []
 for key in PSFs_dict.keys():
-    psfs_dict = PSFs_dict[key]
-    psfs = [psfs_dict[i] for i in range(len(psfs_dict))]
-    PSF_list += psfs
-    name_id = [key+"_"+str(i) for i in range(len(psfs_dict))]
-    PSF_id = PSF_id + name_id
-    filt_ = [filt_info[key]]
-    filter_list += filt_ * len(PSFs_dict[key])
-    if len(PSF_list) != len(PSF_id):
-        raise ValueError("The PSF_list is not consistent with PSF_id")
+    if filt_info[key] == filt:
+        psfs_dict = PSFs_dict[key]
+        psfs = [psfs_dict[i] for i in range(len(psfs_dict))]
+        PSF_list += psfs
+        name_id = [key+"_"+str(i) for i in range(len(psfs_dict))]
+        PSF_id = PSF_id + name_id
+        filt_ = [filt_info[key]]
+        filter_list += filt_ * len(PSFs_dict[key])
+        if len(PSF_list) != len(PSF_id):
+            raise ValueError("The PSF_list is not consistent with PSF_id")
 psf_list = [PSF_list[i][0] for i in range(len(PSF_list))]
 PSF_mask_img_list = [PSF_list[i][3] for i in range(len(PSF_list))]
 psf_name_list = PSF_id
+
 ##==============================================================================
 ## Compare the profile and derive the Average image
 ##==============================================================================
@@ -161,20 +163,10 @@ elif if_file is not []:
     fit_result.read()
 count = 0
 
-#wht = pyfits.getdata('wht_map.fits')
-#exp = 2395.399
-#mean_wht = exp * (0.0642/0.135)**2
-#exp_map = exp * wht/mean_wht
-
 for i in np.array(range(len(psf_name_list))):
     print "by PSF: {0}".format(psf_name_list[i])
     tag = 'fit_result_each/qso_fit_PSF{0}'.format(psf_name_list[i])
-#    mask_list = glob.glob("PSF{0}_*.reg".format(i))
-#    print mask_list
     psf_i = psf_list[i] * PSF_mask_img_list[i]
-#    noise_level_psf_i = background_rms + psf_i/2395.399
-#    noise = np.random.normal(0, noise_level_psf_i, size=noise_level_psf_i.shape)
-#    psf_i += noise
     psf_i = psf_i[ct:-ct,ct:-ct]
     source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_i, psf_std = None,
                                                                      background_rms=background_rms,

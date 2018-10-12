@@ -35,21 +35,6 @@ frame_size = 61
 QSO_fm = len(QSO_im)
 ct = (QSO_fm-frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
         
-    
-#psf_name_list = glob.glob("*PSF?.fits") + glob.glob("*PSF??.fits") # Read *.reg files in a list.
-#PSF_bkg_values = np.zeros(len(psf_name_list))
-#psf_list = []
-##if not count PSF?, just name the file to not_count_PSF?.fits and +1 in the following line.
-#for i in range(len(psf_name_list)+0):
-#    if 'PSF{0}.fits'.format(i) in psf_name_list:
-#        psf_get = pyfits.getdata('PSF{0}.fits'.format(i)) - PSF_bkg_values[i]
-#        psf_list.append(psf_get)
-#    else:
-#        psf_list.append(None)
-#PSF_mask_name_list = glob.glob("*PSF?_msk.fits") + glob.glob("*PSF??_msk.fits")   # Read *_msk.fits.
-#PSF_mask_name_list = sorted(PSF_mask_name_list,key=lambda x:x.split()[-1])
-#PSF_mask_img_list = [pyfits.getdata(PSF_mask_name_list[i]) for i in range(len(psf_list))]
-
 import pickle
 PSFs_dict = {}
 QSOs_dict = {}
@@ -62,44 +47,19 @@ PSF_list = []
 PSF_id = []
 filter_list = []
 for key in PSFs_dict.keys():
-    psfs_dict = PSFs_dict[key]
-    psfs = [psfs_dict[i] for i in range(len(psfs_dict))]
-    PSF_list += psfs
-    name_id = [key+"_"+str(i) for i in range(len(psfs_dict))]
-    PSF_id = PSF_id + name_id
-    filt_ = [filt_info[key]]
-    filter_list += filt_ * len(PSFs_dict[key])
-    if len(PSF_list) != len(PSF_id):
-        raise ValueError("The PSF_list is not consistent with PSF_id")
+    if filt_info[key] == filt:
+        psfs_dict = PSFs_dict[key]
+        psfs = [psfs_dict[i] for i in range(len(psfs_dict))]
+        PSF_list += psfs
+        name_id = [key+"_"+str(i) for i in range(len(psfs_dict))]
+        PSF_id = PSF_id + name_id
+        filt_ = [filt_info[key]]
+        filter_list += filt_ * len(PSFs_dict[key])
+        if len(PSF_list) != len(PSF_id):
+            raise ValueError("The PSF_list is not consistent with PSF_id")
 psf_list = [PSF_list[i][0] for i in range(len(PSF_list))]
 PSF_mask_img_list = [PSF_list[i][3] for i in range(len(PSF_list))]
 psf_name_list = PSF_id
-##==============================================================================
-## Compare the profile and derive the Average image
-##==============================================================================
-#if_QSO_l = [False, True]
-#gridsp_l = ['log', None]
-#if_annuli_l = [False, True] 
-#for i in range(2):
-#    for j in range(2):
-#        for k in range(2):
-#            plt_which_PSF = None
-#            plt_QSO = False
-#            if i+k+j == 0:
-#                plt_which_PSF = range(len(psf_name_list))
-#            if i==1 and j+k ==0:
-#                plt_QSO = True
-#            fig_psf_com = QSO_psfs_compare(QSO=QSO_im, QSO_msk=None, psfs=psf_list,
-#                                               plt_which_PSF=plt_which_PSF,
-#                                               PSF_mask_img=PSF_mask_img_list, grids=30,
-#                                               include_QSO=if_QSO_l[i], 
-#                                               plt_QSO = plt_QSO, norm_pix = 5.0,
-#                                               gridspace= gridsp_l[j], if_annuli=if_annuli_l[k])
-#            fig_psf_com.savefig('PSFvsQSO{0}_{1}_{2}.pdf'.format(i,['xlog','xlin'][j],['circ','annu'][k]))
-#            if i==1 and k==1:
-#                plt.show()
-#            else:
-#                plt.close()
 # =============================================================================
 # Doing the fitting
 # =============================================================================
@@ -209,7 +169,6 @@ t2 = time.time()
 t_tot= (t2-t1)/60
 print "total time:", t_tot, "mins"
 
-'''
 #from fit_qso import fit_single_host
 #from roundme import roundme
 #filename = 'fit_result_each/each_PSF_pure_galaxy.txt'
@@ -313,4 +272,3 @@ print "total time:", t_tot, "mins"
 
 import os
 os.system('say "your program has finished"')
-'''

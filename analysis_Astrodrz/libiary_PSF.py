@@ -120,7 +120,6 @@ plt.xlim(0, x_len)
 plt.ylim(0, y_len)
 plt.show()
 
-#
 ##==============================================================================
 ## Plot mask
 ##==============================================================================
@@ -207,5 +206,12 @@ plt.tick_params(labelsize=15)
 plt.ylim(30,6000)
 plt.show()
 
-#for i in range(len(PSF_list)):
-#    print PSF_id[i], round(fluxs[i],3), round(FWHM[i],3), locs[i], filter_list[i], id_star_s[i]
+for i in range(len(PSF_list)):
+    if filter_list[i] == 'F140w':
+        print PSF_id[i], round(fluxs[i],3), round(FWHM[i],3), locs[i], filter_list[i], id_star_s[i]
+print '\n'
+
+for i in range(len(PSF_list)):
+    if filter_list[i] == 'F125w':
+        print PSF_id[i], round(fluxs[i],3), round(FWHM[i],3), locs[i], filter_list[i], id_star_s[i]
+
