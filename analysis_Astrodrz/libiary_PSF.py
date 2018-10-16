@@ -206,12 +206,29 @@ plt.tick_params(labelsize=15)
 plt.ylim(30,6000)
 plt.show()
 
+flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict = {}, {}, {}, {}, {}
 for i in range(len(PSF_list)):
     if filter_list[i] == 'F140w':
         print PSF_id[i], round(fluxs[i],3), round(FWHM[i],3), locs[i], filter_list[i], id_star_s[i]
+        flux_dict.update({PSF_id[i]:fluxs[i]})
+        FWHM_dict.update({PSF_id[i]:FWHM[i]})
+        locs_dict.update({PSF_id[i]:locs[i]})
+        filter_dict.update({PSF_id[i]:filter_list[i]})
+        id_stars_dict.update({PSF_id[i]:id_star_s[i]})
 print '\n'
 
 for i in range(len(PSF_list)):
     if filter_list[i] == 'F125w':
         print PSF_id[i], round(fluxs[i],3), round(FWHM[i],3), locs[i], filter_list[i], id_star_s[i]
+        flux_dict.update({PSF_id[i]:fluxs[i]})
+        FWHM_dict.update({PSF_id[i]:FWHM[i]})
+        locs_dict.update({PSF_id[i]:locs[i]})
+        filter_dict.update({PSF_id[i]:filter_list[i]})
+        id_stars_dict.update({PSF_id[i]:id_star_s[i]})
 
+import pickle
+filename='PSFs_lib_dict'.format(ID)
+datafile = open(filename, 'wb')
+PSFs_lib = [flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict]
+pickle.dump(PSFs_lib, open(filename, 'wb'))
+datafile.close()
