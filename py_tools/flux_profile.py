@@ -562,8 +562,8 @@ def total_compare(label_list, flux_list,
                 r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log', radius= radi,grids = 30, mask_list=None)
             r_mag = - 2.5 * np.log10(r_SB) + zp 
             if label_SB_list[i] == 'data':
-                ax4.plot(r_grids, r_mag, 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
-#                ind = len(r_mag)-(r_mag == r_mag[-1]).sum()
+                ind = len(r_mag)-(r_mag == r_mag[-1]).sum()
+                ax4.plot(r_grids[:ind], r_mag[:ind], 'o', color = 'whitesmoke',markeredgecolor="black", label=label_SB_list[i])
 #                r_max =  r_grids[ind]
             else:
                 ax4.plot(r_grids, r_mag, '-', label=label_SB_list[i])
@@ -594,7 +594,8 @@ def total_compare(label_list, flux_list,
                                             mask_list=data_mask_list, mask_cut = data_cut,grids = 30,
                                             msk_image=msk_image)[0])
         r_mag_1 = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', grids = 30,radius= radi)[0])
-        ax5.plot(r_grids*delatPixel, (r_mag_0-r_mag_1), 'ro')   
+        ind = len(r_mag_0)-(r_mag_0 == r_mag_0[-1]).sum()
+        ax5.plot(r_grids[:ind]*delatPixel, (r_mag_0-r_mag_1)[:ind], 'ro')   
         ax5.set_ylabel('$\Delta\mu$', fontsize=15)
         ax5.set_xlabel('arcsec', fontsize=15)
         ax5.set_xscale('log')
