@@ -50,6 +50,10 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     from flux_profile import total_compare
     data = data
     QSO = image_ps
+    if QSO_msk is None:
+        QSO_mask = data*0 + 1
+    else:
+        QSO_mask = QSO_msk
     if len(image_host) == 1:
         host = image_host[0]
     elif len(image_host) >1:
@@ -63,23 +67,18 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
 #    print "mask_list,muhahah", mask_list
     fig = total_compare(label_list = label, flux_list = flux_list, target_ID = ID, pix_sz=pix_sz,
                   data_mask_list = mask_list, data_cut = cut, facility = filt,
-                  plot_compare = plot_compare, msk_image = QSO_msk)
+                  plot_compare = plot_compare, msk_image = QSO_mask)
     if tag is not None:
         fig.savefig("{0}_SB_profile.pdf".format(tag), bbox_inches = 'tight')
     fig1 = total_compare(label_list = label, flux_list = flux_list, target_ID = ID, pix_sz=pix_sz,
                   data_mask_list = mask_list, data_cut = cut, facility = filt,
-                  plot_compare = plot_compare, msk_image = QSO_msk, if_annuli=True)
+                  plot_compare = plot_compare, msk_image = QSO_mask, if_annuli=True)
     if tag is not None:
         fig1.savefig("{0}_SB_profile_annuli.pdf".format(tag), bbox_inches = 'tight')
     
     # =============================================================================
     # Calculate reduced Chisq and save to result
     # =============================================================================
-    from flux_profile import cr_mask_img
-    if QSO_msk is None:
-        QSO_mask = cr_mask_img(data, mask_list, mask_reg_cut = cut)
-    else:
-        QSO_mask = QSO_msk
     chiq_map = ((data-image_ps-host)/(error_map))**2 * QSO_mask
     pixels=len(error_map)**2 - (1-QSO_mask).sum()
     reduced_Chisq = chiq_map.sum()/pixels

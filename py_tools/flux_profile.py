@@ -634,7 +634,6 @@ def total_compare(label_list, flux_list,
         ax4.yaxis.set_label_position('right')
         ax4.yaxis.tick_right()
         ax4.yaxis.set_ticks_position('both') 
-        plt.gca().invert_yaxis()
         
         ax4.legend()
         pos4_o = ax4.get_position() # get the original position
@@ -649,11 +648,10 @@ def total_compare(label_list, flux_list,
         r_SB_1 = (SB_profile(flux_SB_list[1], center, gridspace = 'log', grids = 30, if_annuli = if_annuli,radius= radi)[0])
     #    r_mag_diff = 2.5 * np.log10(SB_profile(flux_SB_list[1], center, gridspace = 'log', radius= radi)[0])
         ax5.plot(r_grids*delatPixel, (r_SB_0- r_SB_1), 'ro')   
-        ax5.set_ylabel('$\Delta\mu$', fontsize=15)
+        ax5.set_ylabel('$\Delta SB$', fontsize=15)
         ax5.set_xlabel('arcsec', fontsize=15)
         ax5.set_xscale('log')
         ax5.set_xticks([0.1, 0.2, 0.5, 1, 2])
-        ax5.set_yticks([-0.5,-0.25, 0., 0.25])
         import matplotlib
         ax5.get_xaxis().set_major_formatter(matplotlib.ticker.ScalarFormatter())
         ax5.plot(x, y, 'k--')  
@@ -661,7 +659,8 @@ def total_compare(label_list, flux_list,
         ax5.yaxis.tick_right()
         ax5.yaxis.set_ticks_position('both')
         ax5.set_xlim([(r_grids*delatPixel).min()*0.85, (r_grids.max()+6)*delatPixel])
-        plt.ylim([-0.5,0.5])
+        plt.ylim([-5,5])
+        ax5.set_yticks([-5,-2.5, 0., 2.5])
     pos5_o = ax5.get_position() # get the original position
     pos5 = [pos5_o.x0+0.06, pos5_o.y0+0.05, pos5_o.width*0.62, pos5_o.height*1.5]
     ax5.set_position(pos5) # set a new position

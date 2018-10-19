@@ -70,7 +70,8 @@ weight = np.zeros(len(Chisq))
 for i in sort_Chisq[:count_n]:
     weight[i] = np.exp(-1/2. * (Chisq[i]-Chisq_best)/(Chisq_best* inf_alp))
 for i in sort_Chisq:
-    print PSF_id[i], Chisq[i], weight[i], host_flux_ratio[i], Re[i], S_n_list[i], round(total_flux[i],3), round(flux_dict[PSF_id[i]],3), round(FWHM_dict[PSF_id[i]],3), "[{0},{1}]".format(int(round(locs_dict[PSF_id[i]][0])) , int(round(locs_dict[PSF_id[i]][1]))), round(id_stars_dict[PSF_id[i]],3)
+    print PSF_id[i], Chisq[i], weight[i], host_flux_ratio[i], Re[i], S_n_list[i], round(total_flux[i],3),  round(host_amp[i],3),\
+round(flux_dict[PSF_id[i]],3), round(FWHM_dict[PSF_id[i]],3), "[{0},{1}]".format(int(round(locs_dict[PSF_id[i]][0])) , int(round(locs_dict[PSF_id[i]][1]))), round(id_stars_dict[PSF_id[i]],3)
 
 # =============================================================================
 # Weighting result
@@ -83,8 +84,12 @@ weighted_index = np.sum(np.array(S_n_list)*weight) / np.sum(weight)
 rms_index = np.sqrt(np.sum((np.array(S_n_list)-weighted_index)**2*weight) / np.sum(weight))
 weighted_total_flux = np.sum(total_flux*weight) / np.sum(weight)
 rms_total_flux = np.sqrt(np.sum((total_flux-weighted_total_flux)**2*weight) / np.sum(weight))
+weighted_host_flux = np.sum(np.asarray(host_amp)*weight) / np.sum(weight)
+rms_host_flux = np.sqrt(np.sum((np.asarray(host_amp)-weighted_host_flux)**2*weight) / np.sum(weight))
 
-print "Weighted: HOST_Ratio, Reff, Sersic_n, total_flux: {0}+-{1} {2}+-{3} {4}+-{5} {6}+-{7}".format(\
+
+print "Weighted: HOST_Ratio, Reff, Sersic_n, total_flux, host_flux: {0}+-{1} {2}+-{3} {4}+-{5} {6}+-{7} {8}+-{9}".format(\
 round(weighted_host_ratio,3), round(rms_host_ratio,3),\
 round(weighted_Re,3), round(rms_Re,3), round(weighted_index,3),round(rms_index,3),\
-round(weighted_total_flux,3), round(rms_total_flux,3))
+round(weighted_total_flux,3), round(rms_total_flux,3),\
+round(weighted_host_flux,3), round(rms_host_flux,3))

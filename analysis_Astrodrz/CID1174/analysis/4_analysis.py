@@ -63,7 +63,7 @@ psf_name_list = PSF_id
 # =============================================================================
 # Doing the fitting
 # =============================================================================
-from fit_qso import fit_qso, fit_ps
+from fit_qso import fit_qso
 from transfer_to_result import transfer_to_result
 #from flux_profile import cr_mask_img
 QSO_outer = pyfits.getdata('{0}_cutout_outer.fits'.format(ID))
@@ -75,37 +75,41 @@ background_rms = np.std(QSO_outer* (1-mask*1))
 print "background_rms: ", background_rms
 QSO_msk = QSO_msk[ct:-ct,ct:-ct]
 QSO_im = QSO_im[ct:-ct,ct:-ct]
-#QSO_msk = None
+QSO_msk = QSO_msk*0 +1    # This is no mask is added
 QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 ##############################Fit
-source_params = None
 #==============================================================================
 # Activate the following part if their is no objects around the QSO.
 #==============================================================================
-#from mask_objects import detect_obj
-#objs, Q_index = detect_obj(QSO_im)
-#obj = [objs[i] for i in range(len(objs)) if i != Q_index]
-#pix_s = 0.0642 
-#
-#fixed_source = []
-#kwargs_source_init = []
-#kwargs_source_sigma = []
-#kwargs_lower_source = []
-#kwargs_upper_source = []      
-#
-#fixed_source.append({})  # we fix the Sersic index to n=1 (exponential)
-#kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
-#kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
-#kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -10, 'center_y': -10})
-#kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 10, 'center_y': 10})
-#
-#fixed_source.append({})  # we fix the Sersic index to n=1 (exponential)
-#kwargs_source_init.append({'R_sersic': obj[0][2] * pix_s, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -obj[0][0][0]*pix_s, 'center_y': obj[0][0][1]*pix_s})
-#kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
-#kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -10, 'center_y': -10})
-#kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 10, 'center_y': 10})
-#
-#source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
+from mask_objects import detect_obj
+objs, Q_index = detect_obj(QSO_im)
+obj = [objs[i] for i in range(len(objs)) if i != Q_index]
+pix_s = 0.0642 
+
+fixed_source = []
+kwargs_source_init = []
+kwargs_source_sigma = []
+kwargs_lower_source = []
+kwargs_upper_source = []      
+
+fixed_source.append({})  
+kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
+kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
+kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -0.5, 'center_y': -0.5})
+kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 0.5, 'center_y': 0.5})
+
+if len(obj) >= 1:
+    for i in range(len(obj)):
+        fixed_source.append({})  
+        kwargs_source_init.append({'R_sersic': obj[i][2] * pix_s, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -obj[i][0][0]*pix_s, 'center_y': obj[i][0][1]*pix_s})
+        kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
+        kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -obj[i][0][0]*pix_s-10, 'center_y': obj[i][0][1]*pix_s-10})
+        kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': -obj[i][0][0]*pix_s+10, 'center_y': obj[i][0][1]*pix_s+10})
+
+source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
+
+if os.path.exists('fit_result_each')==False:
+    os.mkdir('fit_result_each')
 
 import time
 t1 = time.time()
@@ -119,7 +123,7 @@ elif if_file is not []:
     fit_result.read()
 count = 0
 for i in np.array(range(len(psf_name_list))):
-    print "by PSF: {0}".format(psf_name_list[i])
+    print "{2} by PSF: {0}, PSF NO. {1}".format(psf_name_list[i], i, ID)
     tag = 'fit_result_each/qso_fit_PSF{0}'.format(i)
     psf_i = psf_list[i] * PSF_mask_img_list[i]
     psf_i = psf_i[ct:-ct,ct:-ct]
