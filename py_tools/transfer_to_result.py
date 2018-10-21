@@ -56,12 +56,13 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
         QSO_mask = QSO_msk
     if len(image_host) == 1:
         host = image_host[0]
+        label = ['data', 'QSO', 'host', 'model', 'normalized residual']
     elif len(image_host) >1:
         host = np.zeros_like(image_host[0])
         for i in range(len(image_host)):
             host += image_host[i]
+        label = ['data', 'QSO', 'host+{0}objs'.format(i), 'model', 'normalized residual']  #Print the numbers of objects
     flux_list = [data, QSO, host, error_map]
-    label = ['data', 'QSO', 'host', 'model', 'normalized residual']
     import glob
     mask_list = glob.glob(QSO_msk_list)   # Read *.reg files in a list.
 #    print "mask_list,muhahah", mask_list

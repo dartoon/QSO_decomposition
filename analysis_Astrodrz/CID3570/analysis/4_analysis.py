@@ -73,7 +73,7 @@ plt.imshow(QSO_outer* (1-mask*1), origin='low')
 plt.close()
 background_rms = np.std(QSO_outer* (1-mask*1))
 print "background_rms: ", background_rms
-#QSO_msk = QSO_msk[ct:-ct,ct:-ct]
+QSO_msk = QSO_msk[ct:-ct,ct:-ct]
 QSO_im = QSO_im[ct:-ct,ct:-ct]
 QSO_msk = QSO_msk*0+1
 QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
@@ -103,7 +103,7 @@ if len(obj) >= 1:
         fixed_source.append({})  
         kwargs_source_init.append({'R_sersic': obj[i][2] * pix_s, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -obj[i][0][0]*pix_s, 'center_y': obj[i][0][1]*pix_s})
         kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
-        kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -obj[i][0][0]*pix_s-10, 'center_y': obj[i][0][1]*pix_s-10})
+        kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': obj[i][2] * pix_s/5, 'n_sersic': 0.3, 'center_x': -obj[i][0][0]*pix_s-10, 'center_y': obj[i][0][1]*pix_s-10})
         kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': -obj[i][0][0]*pix_s+10, 'center_y': obj[i][0][1]*pix_s+10})
 
 source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]

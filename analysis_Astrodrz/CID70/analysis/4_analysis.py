@@ -85,66 +85,66 @@ from mask_objects import detect_obj
 objs, Q_index = detect_obj(QSO_im)
 obj = [objs[i] for i in range(len(objs)) if i != Q_index]
 pix_s = 0.0642 
-
-fixed_source = []
-kwargs_source_init = []
-kwargs_source_sigma = []
-kwargs_lower_source = []
-kwargs_upper_source = []      
-
-fixed_source.append({})  
-kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
-kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
-kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -0.5, 'center_y': -0.5})
-kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 0.5, 'center_y': 0.5})
-
-if len(obj) >= 1:
-    for i in range(len(obj)):
-        fixed_source.append({})  
-        kwargs_source_init.append({'R_sersic': obj[i][2] * pix_s, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -obj[i][0][0]*pix_s, 'center_y': obj[i][0][1]*pix_s})
-        kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
-        kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -obj[i][0][0]*pix_s-10, 'center_y': obj[i][0][1]*pix_s-10})
-        kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': -obj[i][0][0]*pix_s+10, 'center_y': obj[i][0][1]*pix_s+10})
-
-source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
-
-if os.path.exists('fit_result_each')==False:
-    os.mkdir('fit_result_each')
-
-import time
-t1 = time.time()
-fixcenter = False
-filename = 'fit_result_each/each_PSF_fit_qso.txt'
-if_file = glob.glob(filename)   
-if if_file == []:
-    fit_result =  open(filename,'w') 
-elif if_file is not []:
-    fit_result = open(filename,"r+")
-    fit_result.read()
-count = 0
-for i in np.array(range(len(psf_name_list))):
-    print "{2} by PSF: {0}, PSF NO. {1}".format(psf_name_list[i], i, ID)
-    tag = 'fit_result_each/qso_fit_PSF{0}'.format(i)
-    psf_i = psf_list[i] * PSF_mask_img_list[i]
-    psf_i = psf_i[ct:-ct,ct:-ct]
-    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_i, psf_std = None,
-                                                                     background_rms=background_rms,
-                                                                     source_params=source_params, QSO_msk = QSO_msk, fixcenter=fixcenter,
-                                                                     pix_sz = 'drz06', no_MCMC =True,
-                                                                     QSO_std =QSO_std, tag=tag)
-    result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
-            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, error_map=error_map,
-            filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk =QSO_msk, tag=tag)
-    if count == 0:
-        fit_result.write("#QSO_img intensity: {0} \n".format(round(np.sum(QSO_im*QSO_msk),2)))
-    fit_result.write("#fit by PSF{0}: \n".format(psf_name_list[i]))
-    fit_result.write('PSF_intensity:{0} \n'.format(round(np.sum(psf_i),2)))
-    fit_result.write(repr(result) + "\n")
-    count += 1
-fit_result.close()
-t2 = time.time()
-t_tot= (t2-t1)/60
-print "total time:", t_tot, "mins"
-
-import os
-os.system('say "your program has finished"')
+#
+#fixed_source = []
+#kwargs_source_init = []
+#kwargs_source_sigma = []
+#kwargs_lower_source = []
+#kwargs_upper_source = []      
+#
+#fixed_source.append({})  
+#kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
+#kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
+#kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -0.5, 'center_y': -0.5})
+#kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 0.5, 'center_y': 0.5})
+#
+#if len(obj) >= 1:
+#    for i in range(len(obj)):
+#        fixed_source.append({})  
+#        kwargs_source_init.append({'R_sersic': obj[i][2] * pix_s, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -obj[i][0][0]*pix_s, 'center_y': obj[i][0][1]*pix_s})
+#        kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
+#        kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': obj[i][2] * pix_s/5, 'n_sersic': 0.3, 'center_x': -obj[i][0][0]*pix_s-10, 'center_y': obj[i][0][1]*pix_s-10})
+#        kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': -obj[i][0][0]*pix_s+10, 'center_y': obj[i][0][1]*pix_s+10})
+#
+#source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
+#
+#if os.path.exists('fit_result_each')==False:
+#    os.mkdir('fit_result_each')
+#
+#import time
+#t1 = time.time()
+#fixcenter = False
+#filename = 'fit_result_each/each_PSF_fit_qso.txt'
+#if_file = glob.glob(filename)   
+#if if_file == []:
+#    fit_result =  open(filename,'w') 
+#elif if_file is not []:
+#    fit_result = open(filename,"r+")
+#    fit_result.read()
+#count = 0
+#for i in np.array(range(len(psf_name_list))):
+#    print "{2} by PSF: {0}, PSF NO. {1}".format(psf_name_list[i], i, ID)
+#    tag = 'fit_result_each/qso_fit_PSF{0}'.format(i)
+#    psf_i = psf_list[i] * PSF_mask_img_list[i]
+#    psf_i = psf_i[ct:-ct,ct:-ct]
+#    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_i, psf_std = None,
+#                                                                     background_rms=background_rms,
+#                                                                     source_params=source_params, QSO_msk = QSO_msk, fixcenter=fixcenter,
+#                                                                     pix_sz = 'drz06', no_MCMC =True,
+#                                                                     QSO_std =QSO_std, tag=tag)
+#    result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
+#            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, error_map=error_map,
+#            filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk =QSO_msk, tag=tag)
+#    if count == 0:
+#        fit_result.write("#QSO_img intensity: {0} \n".format(round(np.sum(QSO_im*QSO_msk),2)))
+#    fit_result.write("#fit by PSF{0}: \n".format(psf_name_list[i]))
+#    fit_result.write('PSF_intensity:{0} \n'.format(round(np.sum(psf_i),2)))
+#    fit_result.write(repr(result) + "\n")
+#    count += 1
+#fit_result.close()
+#t2 = time.time()
+#t_tot= (t2-t1)/60
+#print "total time:", t_tot, "mins"
+#
+#import os
+#os.system('say "your program has finished"')
