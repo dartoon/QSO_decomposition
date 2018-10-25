@@ -113,7 +113,7 @@ def transfer_to_result_ps(data, ps_result, image_ps, image_host,
     if len(image_host) == 0:
         host = data*0
         label = ['data', 'QSO', 'host=0', 'model', 'normalized residual']
-    elif len(image_host) >1:
+    elif len(image_host) >0:
         host = np.zeros_like(image_host[0])
         for i in range(len(image_host)):
             host += image_host[i]

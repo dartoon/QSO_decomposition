@@ -30,7 +30,7 @@ filt = filt_info[ID]
 QSO_bkg_value= 0.
 QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID)) - QSO_bkg_value
 QSO_msk = pyfits.getdata('{0}_msk.fits'.format(ID))
-frame_size = 61
+frame_size = 41
 #frame = '{0}'.format(frame_size)
 QSO_fm = len(QSO_im)
 ct = (QSO_fm-frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
@@ -64,7 +64,7 @@ psf_name_list = PSF_id
 # Doing the fitting
 # =============================================================================
 from fit_qso import fit_qso
-from transfer_to_result import transfer_to_result
+from transfer_to_result import transfer_to_result_ps
 #from flux_profile import cr_mask_img
 QSO_outer = pyfits.getdata('{0}_cutout_outer.fits'.format(ID))
 from photutils import make_source_mask
@@ -92,29 +92,37 @@ kwargs_source_sigma = []
 kwargs_lower_source = []
 kwargs_upper_source = []      
 
+#fixed_source.append({})  
+#kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
+#kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
+#kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -0.5, 'center_y': -0.5})
+#kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 0.5, 'center_y': 0.5})
+
+m_obj_pos = [-18*pix_s, 14*pix_s]
 fixed_source.append({})  
-kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
+kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -m_obj_pos[0], 'center_y': m_obj_pos[1]})
 kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
-kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -0.5, 'center_y': -0.5})
-kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 0.5, 'center_y': 0.5})
+kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.01, 'n_sersic': 0.3, 'center_x':-m_obj_pos[0]-0.5, 'center_y': m_obj_pos[1]-0.5})
+kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': -m_obj_pos[0]+0.5, 'center_y': m_obj_pos[1]+0.5})
+
 
 if len(obj) >= 1:
     for i in range(len(obj)):
         fixed_source.append({})  
         kwargs_source_init.append({'R_sersic': obj[i][2] * pix_s, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -obj[i][0][0]*pix_s, 'center_y': obj[i][0][1]*pix_s})
         kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
-        kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': obj[i][2] * pix_s/5, 'n_sersic': 0.3, 'center_x': -obj[i][0][0]*pix_s-10, 'center_y': obj[i][0][1]*pix_s-10})
-        kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': -obj[i][0][0]*pix_s+10, 'center_y': obj[i][0][1]*pix_s+10})
+        kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.01, 'n_sersic': 0.3, 'center_x': -obj[i][0][0]*pix_s-0.3, 'center_y': obj[i][0][1]*pix_s-0.3})
+        kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': -obj[i][0][0]*pix_s+0.3, 'center_y': obj[i][0][1]*pix_s+0.3})
 
 source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
 
-if os.path.exists('fit_result_each')==False:
-    os.mkdir('fit_result_each')
+if os.path.exists('fit_ps_each')==False:
+    os.mkdir('fit_ps_each')
 
 import time
 t1 = time.time()
 fixcenter = False
-filename = 'fit_result_each/each_PSF_fit_qso.txt'
+filename = 'fit_ps_each/each_PSF_fit_ps.txt'
 if_file = glob.glob(filename)   
 if if_file == []:
     fit_result =  open(filename,'w') 
@@ -124,7 +132,7 @@ elif if_file is not []:
 count = 0
 for i in np.array(range(len(psf_name_list))):
     print "{2} by PSF: {0}, PSF NO. {1}".format(psf_name_list[i], i, ID)
-    tag = 'fit_result_each/qso_fit_PSF{0}'.format(i)
+    tag = 'fit_ps_each/qso_fit_PSF{0}'.format(i)
     psf_i = psf_list[i] * PSF_mask_img_list[i]
     psf_i = psf_i[ct:-ct,ct:-ct]
     source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_i, psf_std = None,
@@ -132,8 +140,8 @@ for i in np.array(range(len(psf_name_list))):
                                                                      source_params=source_params, QSO_msk = QSO_msk, fixcenter=fixcenter,
                                                                      pix_sz = 'drz06', no_MCMC =True,
                                                                      QSO_std =QSO_std, tag=tag)
-    result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
-            source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, error_map=error_map,
+    result = transfer_to_result_ps(data=QSO_im, pix_sz = 'drz06',
+            ps_result=ps_result, image_ps=image_ps, image_host=image_host, error_map=error_map,
             filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk =QSO_msk, tag=tag)
     if count == 0:
         fit_result.write("#QSO_img intensity: {0} \n".format(round(np.sum(QSO_im*QSO_msk),2)))

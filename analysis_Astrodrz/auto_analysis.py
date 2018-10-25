@@ -18,8 +18,14 @@ auto run the test
 #file_list= ['CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136']
 #file_list= ['SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202', 'XID2396']
 
+file_list = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
+'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
+'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
+'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
+'XID2396', 'CID206', 'ECDFS-358',\
+]
 
 for i in range(len(file_list)):
     print 'Run for: ',file_list[i]
-    runfile('/lhome/dxh/QSO_decomposition/analysis_Astrodrz/{0}/analysis/4_analysis.py'.format(file_list[i]),
+    runfile('/lhome/dxh/QSO_decomposition/analysis_Astrodrz/{0}/analysis/4-1_analysis_ps.py'.format(file_list[i]),
             wdir='/lhome/dxh/QSO_decomposition/analysis_Astrodrz/{0}/analysis'.format(file_list[i]))
