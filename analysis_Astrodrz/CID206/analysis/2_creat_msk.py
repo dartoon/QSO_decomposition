@@ -22,21 +22,27 @@ ID = path.split('/')[-2]
 
 QSO_name = ID + "_cutout.fits"
 QSO_img  = pyfits.getdata(QSO_name)
-_,QSO_obj_mask  = mask_obj(img=QSO_img, exp_sz=1)
-QSO_obj_mask = np.sum(QSO_obj_mask,axis=0)
+_,QSO_obj_mask  = mask_obj(img=QSO_img, exp_sz=0.7, snr=2.0)
+obj0_mask = QSO_obj_mask[1]
+_,QSO_obj_mask  = mask_obj(img=QSO_img, exp_sz=1.0, snr=2.0)
+obj1_mask = QSO_obj_mask[0]
+obj2_mask = QSO_obj_mask[2]
+QSO_obj_mask = obj0_mask + obj1_mask + obj2_mask
 QSO_obj_mask = (1 - (QSO_obj_mask != 0)*1.)
-QSO_fit_mask0,_  = mask_obj(img=QSO_img, exp_sz=1.4)
-QSO_msk0 = QSO_obj_mask*QSO_fit_mask0
-QSO_fit_mask1,_  = mask_obj(img=QSO_img, exp_sz=2.4)
-#QSO_msk1 = QSO_obj_mask*QSO_fit_mask1
-QSO_msk1 = QSO_fit_mask1
+QSO_msk1 = QSO_obj_mask
+#QSO_obj_mask = np.sum(QSO_obj_mask,axis=0)
+#QSO_obj_mask = (1 - (QSO_obj_mask != 0)*1.)
+#QSO_fit_mask0,_  = mask_obj(img=QSO_img, exp_sz=1.4)
+#QSO_msk0 = QSO_obj_mask*QSO_fit_mask0
+#QSO_fit_mask1,_  = mask_obj(img=QSO_img, exp_sz=2.4)
+##QSO_msk1 = QSO_obj_mask*QSO_fit_mask1
+#QSO_msk1 = QSO_fit_mask1
 
 print "QSO image:"
 plt.imshow((QSO_img), norm=LogNorm(),origin='lower')
 plt.show()
-plt.imshow((QSO_msk0), origin='low') 
-plt.show()
-plt.imshow((QSO_msk1), origin='low') 
+print "QSO msk image:"
+plt.imshow((QSO_msk1), norm=LogNorm(),origin='lower')
 plt.show()
 #pyfits.PrimaryHDU(QSO_msk0).writeto('{0}_msk0.fits'.format(ID),overwrite=True)
 pyfits.PrimaryHDU(QSO_msk1).writeto('{0}_msk.fits'.format(ID),overwrite=True)

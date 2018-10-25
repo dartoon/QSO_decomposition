@@ -22,24 +22,27 @@ ID = path.split('/')[-2]
 
 QSO_name = ID + "_cutout.fits"
 QSO_img  = pyfits.getdata(QSO_name)
-_,QSO_obj_mask  = mask_obj(img=QSO_img, exp_sz=1)
-QSO_obj_mask = np.sum(QSO_obj_mask,axis=0)
-QSO_obj_mask = (1 - (QSO_obj_mask != 0)*1.)
-QSO_fit_mask0,_  = mask_obj(img=QSO_img, exp_sz=1.4)
-QSO_msk0 = QSO_obj_mask*QSO_fit_mask0
-QSO_fit_mask1,_  = mask_obj(img=QSO_img, exp_sz=2.4)
-#QSO_msk1 = QSO_obj_mask*QSO_fit_mask1
-QSO_msk1 = QSO_fit_mask1
+_,QSO_obj_mask  = mask_obj(img=QSO_img, exp_sz=1.4)
+msk0 = QSO_obj_mask[4]
+
+from flux_profile import cr_mask
+msk1 = 1- cr_mask(QSO_img, filename='QSO_msk0_big.reg')
+msk2 = 1- cr_mask(QSO_img, filename='QSO_msk1_big.reg')
+
+QSO_obj_mask = msk0 + msk1 + msk2
+QSO_msk1 = (1 - (QSO_obj_mask != 0)*1.)
+plt.imshow(QSO_obj_mask,origin='low')
+plt.show()
 
 print "QSO image:"
 plt.imshow((QSO_img), norm=LogNorm(),origin='lower')
 plt.show()
-plt.imshow((QSO_msk0), origin='low') 
-plt.show()
+#plt.imshow((QSO_msk0), origin='low') 
+#plt.show()
 plt.imshow((QSO_msk1), origin='low') 
 plt.show()
-#pyfits.PrimaryHDU(QSO_msk0).writeto('{0}_msk0.fits'.format(ID),overwrite=True)
-pyfits.PrimaryHDU(QSO_msk1).writeto('{0}_msk.fits'.format(ID),overwrite=True)
+##pyfits.PrimaryHDU(QSO_msk0).writeto('{0}_msk0.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(QSO_msk1).writeto('{0}_msk_big.fits'.format(ID),overwrite=True)
 
 #import glob
 #PSFs = glob.glob("*PSF?.fits") + glob.glob("*PSF??.fits")
