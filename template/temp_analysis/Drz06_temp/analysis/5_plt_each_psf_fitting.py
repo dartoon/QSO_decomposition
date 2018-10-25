@@ -23,7 +23,7 @@ filt = filt_info[ID]
 f = open("fit_result_each/each_PSF_fit_qso.txt","r")
 string = f.read()
 
-#labels = re.findall(r"PSF\d+", string)
+PSF_id = re.findall(r"by PSF(.*?):",string)
 S_n_list = re.findall(r"n_sersic':(.*?),",string)
 Re = re.findall(r"R_sersic':(.*?),",string)
 host_flux_ratio = re.findall(r"host_flux_ratio_percent':(.*?)}",string)
@@ -44,15 +44,6 @@ for key in filt_info.keys():
     if filt_info[key] == filt:
         PSFs, _=pickle.load(open('../../{0}/analysis/{0}_PSFs_QSO'.format(key),'rb'))
         PSFs_dict.update({'{0}'.format(key):PSFs})
-PSF_id = []
-filter_list = []
-for key in PSFs_dict.keys():
-    psfs_dict = PSFs_dict[key]
-    name_id = [key+"_"+str(i) for i in range(len(psfs_dict))]
-    PSF_id = PSF_id + name_id
-    filt = [filt_info[key]]
-    filter_list += filt * len(PSFs_dict[key])
-psf_name_list = PSF_id
 
 flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('../../PSFs_lib_dict','rb'))
 
