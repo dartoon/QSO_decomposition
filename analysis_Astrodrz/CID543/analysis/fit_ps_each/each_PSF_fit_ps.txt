@@ -1,0 +1,106 @@
+#QSO_img intensity: 160.96 
+#fit by PSFCDFS-229_0: 
+PSF_intensity:103.45 
+{'redu_Chisq': 8.969647}
+#fit by PSFCDFS-229_1: 
+PSF_intensity:1217.62 
+{'redu_Chisq': 9.142191}
+#fit by PSFSXDS-X1136_0: 
+PSF_intensity:176.49 
+{'redu_Chisq': 8.969733}
+#fit by PSFSXDS-X1136_1: 
+PSF_intensity:424.25 
+{'redu_Chisq': 6.122375}
+#fit by PSFSXDS-X1136_2: 
+PSF_intensity:3098.67 
+{'redu_Chisq': 10.272346}
+#fit by PSFSXDS-X50_0: 
+PSF_intensity:1149.87 
+{'redu_Chisq': 7.151814}
+#fit by PSFSXDS-X50_1: 
+PSF_intensity:187.77 
+{'redu_Chisq': 7.717598}
+#fit by PSFSXDS-X50_2: 
+PSF_intensity:201.03 
+{'redu_Chisq': 5.468847}
+#fit by PSFCID50_0: 
+PSF_intensity:196.05 
+{'redu_Chisq': 9.457099}
+#fit by PSFSXDS-X763_0: 
+PSF_intensity:528.72 
+{'redu_Chisq': 4.735382}
+#fit by PSFSXDS-X763_1: 
+PSF_intensity:900.55 
+{'redu_Chisq': 5.029461}
+#fit by PSFSXDS-X763_2: 
+PSF_intensity:571.39 
+{'redu_Chisq': 6.204597}
+#fit by PSFCID452_0: 
+PSF_intensity:116.64 
+{'redu_Chisq': 17.231137}
+#fit by PSFCID452_1: 
+PSF_intensity:368.91 
+{'redu_Chisq': 7.999055}
+#fit by PSFCID543_0: 
+PSF_intensity:172.29 
+{'redu_Chisq': 7.622192}
+#fit by PSFCID543_1: 
+PSF_intensity:383.42 
+{'redu_Chisq': 10.740764}
+#fit by PSFCID543_2: 
+PSF_intensity:1279.86 
+{'redu_Chisq': 4.229419}
+#fit by PSFCID543_3: 
+PSF_intensity:1393.46 
+{'redu_Chisq': 15.831275}
+#fit by PSFCDFS-724_0: 
+PSF_intensity:1036.75 
+{'redu_Chisq': 3.864969}
+#fit by PSFCDFS-724_1: 
+PSF_intensity:614.22 
+{'redu_Chisq': 3.796102}
+#fit by PSFCDFS-724_2: 
+PSF_intensity:158.47 
+{'redu_Chisq': 7.792805}
+#fit by PSFCDFS-724_3: 
+PSF_intensity:800.31 
+{'redu_Chisq': 3.968262}
+#fit by PSFCDFS-724_4: 
+PSF_intensity:115.31 
+{'redu_Chisq': 10.912141}
+#fit by PSFCID607_0: 
+PSF_intensity:178.44 
+{'redu_Chisq': 8.612231}
+#fit by PSFCID607_1: 
+PSF_intensity:348.71 
+{'redu_Chisq': 5.649638}
+#fit by PSFCID607_2: 
+PSF_intensity:584.67 
+{'redu_Chisq': 8.495917}
+#fit by PSFCID607_3: 
+PSF_intensity:891.75 
+{'redu_Chisq': 5.266473}
+#fit by PSFCID607_4: 
+PSF_intensity:232.85 
+{'redu_Chisq': 9.205145}
+#fit by PSFCID607_5: 
+PSF_intensity:1524.72 
+{'redu_Chisq': 4.463822}
+#fit by PSFCID607_6: 
+PSF_intensity:2143.25 
+{'redu_Chisq': 4.484347}
+#fit by PSFSXDS-X717_0: 
+PSF_intensity:614.9 
+{'redu_Chisq': 10.088165}
+#fit by PSFSXDS-X717_1: 
+PSF_intensity:1131.92 
+{'redu_Chisq': 6.081663}
+#fit by PSFSXDS-X717_2: 
+PSF_intensity:128.24 
+{'redu_Chisq': 6.60049}
+#fit by PSFCID3570_0: 
+PSF_intensity:391.96 
+{'redu_Chisq': 13.206721}
+#fit by PSFCID3570_1: 
+PSF_intensity:830.47 
+{'redu_Chisq': 4.577906}
