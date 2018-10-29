@@ -237,5 +237,8 @@ for j in range(num_boxs):
 fig.tight_layout(h_pad=-1.,w_pad=-0.6)
 plt.show()
 
-for i in range(len(ID)):
-    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], host_amp_results[i][0], ratio_results[i][0]
+#for i in range(len(ID)):
+#    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], host_amp_results[i][0], ratio_results[i][0]
+#    
+#for i in range(len(ID)):
+#    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], Re_results[i][0], n_results[i][0]

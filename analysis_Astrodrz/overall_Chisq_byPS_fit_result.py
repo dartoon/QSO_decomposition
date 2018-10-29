@@ -29,12 +29,14 @@ flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PS
 for j in range(len(ID)):
     filt = filt_info[ID[j]]
     f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
+    f_ps = open("{0}/analysis/fit_ps_each/each_PSF_fit_ps.txt".format(ID[j]),"r")
     string = f.read()
+    string_ps = f_ps.read()
     PSF_id = re.findall(r"by PSF(.*?):",string)
     S_n_list = re.findall(r"n_sersic':(.*?),",string)
     Re = re.findall(r"R_sersic':(.*?),",string)
     host_flux_ratio = re.findall(r"host_flux_ratio_percent':(.*?)}",string)
-    Chisq = re.findall(r"redu_Chisq':(.*?),",string)
+    Chisq = re.findall(r"redu_Chisq':(.*?)}",string_ps)
     QSO_amp = re.findall(r"QSO_amp':(.*?),",string)
     host_amp = re.findall(r"host_amp':(.*?),",string)
     
@@ -237,5 +239,8 @@ for j in range(num_boxs):
 fig.tight_layout(h_pad=-1.,w_pad=-0.6)
 plt.show()
 
-for i in range(len(ID)):
-    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], host_amp_results[i][0], ratio_results[i][0]
+#for i in range(len(ID)):
+#    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], host_amp_results[i][0], ratio_results[i][0]
+#    
+#for i in range(len(ID)):
+#    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], Re_results[i][0], n_results[i][0]
