@@ -45,24 +45,24 @@ plt.scatter(pk[:,2],pk[:,1],c=pk[:,0],marker="^",s=80,zorder=100,vmin=0.3, vmax=
 # input Peng's data
 #==============================================================================
 from cal_peng import *
-#
-#Mg_cali=vec_Mgcal(L_Mg,FWHM_Mg)
-#Mg[:,3]=Mg[:,3]+0.21+dm*dmag(Mg[:,1])
-#Hb_cali=vec_Hcal(L_hb,FWHM_hb)
-#H[:,3]=H[:,3]+0.21+dm*dmag(H[:,1])   #change Mg from Vega to AB
-#C_cali=vec_Ccal(L_c,FWHM_c)
-#C[:,3]=C[:,3]+0.21+dm*dmag(C[:,1])   #change Mg from Vega to AB
-###################plot#############################
-################plot the data in Peng################
-##For lensed samples
-#C[:,3],Mg[:,3],H[:,3]=0.4*(4.61-C[:,3]),0.4*(4.61-Mg[:,3]),0.4*(4.61-H[:,3])  #transfer from Mag to Luminosity
-#plt.scatter(C[:21,3],C_cali[:21],c=C[:21,1],s=80,marker="o",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
-#plt.scatter(Mg[:18,3],Mg_cali[:18],c=Mg[:18,1],s=80,marker="o",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
-#plt.scatter(H[:,3],Hb_cali,c=H[:,1],s=80,marker="o",zorder=100, vmin=0.3, vmax=5, edgecolors='k')  #zorder is the position at z foreground.
-#
-##For non-lensed samples
-#plt.scatter(C[21:,3],C_cali[21:],c=C[21:,1],s=80,marker="s",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
-#plt.scatter(Mg[18:,3],Mg_cali[18:],c=Mg[18:,1],s=80,marker="s",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
+
+Mg_cali=vec_Mgcal(L_Mg,FWHM_Mg)
+Mg[:,3]=Mg[:,3]+0.21+dm*dmag(Mg[:,1])
+Hb_cali=vec_Hcal(L_hb,FWHM_hb)
+H[:,3]=H[:,3]+0.21+dm*dmag(H[:,1])   #change Mg from Vega to AB
+C_cali=vec_Ccal(L_c,FWHM_c)
+C[:,3]=C[:,3]+0.21+dm*dmag(C[:,1])   #change Mg from Vega to AB
+##################plot#############################
+###############plot the data in Peng################
+#For lensed samples
+C[:,3],Mg[:,3],H[:,3]=0.4*(4.61-C[:,3]),0.4*(4.61-Mg[:,3]),0.4*(4.61-H[:,3])  #transfer from Mag to Luminosity
+plt.scatter(C[:21,3],C_cali[:21],c=C[:21,1],s=80,marker="o",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
+plt.scatter(Mg[:18,3],Mg_cali[:18],c=Mg[:18,1],s=80,marker="o",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
+plt.scatter(H[:,3],Hb_cali,c=H[:,1],s=80,marker="o",zorder=100, vmin=0.3, vmax=5, edgecolors='k')  #zorder is the position at z foreground.
+
+#For non-lensed samples
+plt.scatter(C[21:,3],C_cali[21:],c=C[21:,1],s=80,marker="s",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
+plt.scatter(Mg[18:,3],Mg_cali[18:],c=Mg[18:,1],s=80,marker="s",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
 
 #==============================================================================
 # Two sample in H0licow VII: i.e. HE0435 and RXJ1131
@@ -95,7 +95,7 @@ if host==0:
 if host==1:
     Mag_1131=Mag_1131_tot
 L_1131 = 0.4*(4.61-Mag_1131)
-plt.scatter(L_1131,M_1131,c=0.65,s=880,marker="*",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
+plt.scatter(L_1131,M_1131,c=0.65,s=880,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
 
 #==============================================================================
 # My new inference
@@ -121,10 +121,20 @@ mags = np.array([22.656, 21.950, 21.865, 20.919, 21.568, 20.337, 21.415, 21.510,
 21.164, 21.176, 21.212, 20.915, 21.189, 20.939, 21.251, 21.483, 21.921, 21.943,\
 21.759, 24.134, 21.594, 21.845, 21.160, 21.404, 21.810, 21.340])
 
+from dmag import d_kcorr_R
+import sys
+sys.path.insert(0,'../py_tools')
+from filter_info import filt_info
+dm_k_R = []
+for i in range(len(zs)):
+    dm_k_R.append(d_kcorr_R(zs[i],filt_info[ID[i]]))
+dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
 dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
-host_mags=mags-5*(np.log10(dl)-1) + dm*dmag(zs)  # 0.7 is the k-correction value
+host_mags=mags -5*(np.log10(dl)-1) + dm_k_R + dm*dmag(zs)    # 0.7 is the k-correction value
+#R=mags -5*(np.log10(dl)-1) +0.717      
+
 lumi_s = 0.4*(4.61-host_mags)
-                    
+
 f = open("fmos_MBH_table","r")
 with f as g:
     lines = g.readlines()
@@ -159,8 +169,8 @@ for tar_in in range(len(ID)):
     if ser!=-99 and samples[ser][10] != 0:
         FWMH_a = float(samples[ser][8])
         logLHadr = float(samples[ser][6])
-#        cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
-        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
+        cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
+#        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
         MBs.append(cal_logMa)
     elif ser!=-99 and samples[ser][21] != 0:
         print "use Hb for", ID[tar_in]

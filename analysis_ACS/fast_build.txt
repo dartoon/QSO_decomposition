@@ -1,5 +1,5 @@
 #######
 
 mkdir xxx 
-cp -r ../template/temp_analysis/ACS_temp/* xxx
-cp ../Cycle25data/ACS_data/xxx_acs_I_mosaic_180mas_sci.fits xxx
+cp -r ../template/temp_analysis/ACS_temp/cut_PSFs_in_analysis.py xxx
+#cp ../Cycle25data/ACS_data/xxx*180mas_sci.fits xxx

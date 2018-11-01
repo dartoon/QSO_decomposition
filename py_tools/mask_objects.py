@@ -69,7 +69,7 @@ def mask_obj(img, snr=3.0, exp_sz= 1.2, plt_show = True):
     segm = detect_sources(img, threshold, npixels=10, filter_kernel=kernel)
     npixels = 20
     segm_deblend = deblend_sources(img, segm, npixels=npixels,
-                                    filter_kernel=kernel, nlevels=25,
+                                    filter_kernel=kernel, nlevels=15,
                                     contrast=0.001)
     #Number of objects segm_deblend.data.max()
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 10))

@@ -129,8 +129,16 @@ mags = np.array([22.656, 21.950, 21.865, 20.919, 21.568, 20.337, 21.415, 21.510,
 21.164, 21.176, 21.212, 20.915, 21.189, 20.939, 21.251, 21.483, 21.921, 21.943,\
 21.759, 24.134, 21.594, 21.845, 21.160, 21.404, 21.810, 21.340])
 
+from dmag import d_kcorr_R
+import sys
+sys.path.insert(0,'../py_tools')
+from filter_info import filt_info
+dm_k_R = []
+for i in range(len(zs)):
+    dm_k_R.append(d_kcorr_R(zs[i],filt_info[ID[i]]))
+dm_k_R = np.asarray(dm_k_R)   # Get the k-correction for each target as an array
 dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
-host_mags=mags-5*(np.log10(dl)-1) + dm*dmag(zs)  # 0.7 is the k-correction value
+host_mags=mags-5*(np.log10(dl)-1) + dm_k_R + dm*dmag(zs)  # 0.7 is the k-correction value
 lumi_s = 0.4*(4.61-host_mags)
                     
 f = open("fmos_MBH_table","r")
@@ -167,8 +175,8 @@ for tar_in in range(len(ID)):
     if ser!=-99 and samples[ser][10] != 0:
         FWMH_a = float(samples[ser][8])
         logLHadr = float(samples[ser][6])
-#        cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
-        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
+        cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
+#        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
         MBs.append(cal_logMa)
     elif ser!=-99 and samples[ser][21] != 0:
         print "use Hb for", ID[tar_in]
@@ -181,7 +189,7 @@ for tar_in in range(len(ID)):
         MBs.append(-99)
 #        print float(cal_logMa) - float(samples[ser][10])
 MBs = np.asarray(MBs)
-plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_mid*lumi_s[MBs!=-99]+b_mid),c='royalblue',s=880,marker="x",zorder=100, vmin=0.3, vmax=5, edgecolors='k')
+plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_mid*lumi_s[MBs!=-99]+b_mid),c='royalblue',s=880,marker="x",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
 #plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_mid*lumi_s[MBs!=-99]+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
 
 #####fit the evolution##########
@@ -273,6 +281,8 @@ Mg = mlines.Line2D([], [], color='goldenrod', ls='', marker='o', markersize=9, m
 H = mlines.Line2D([], [], color='goldenrod', ls='', marker='>', markersize=9, markeredgecolor='k')
 C = mlines.Line2D([], [], color='goldenrod', ls='', marker='s', markersize=9, markeredgecolor='k')
 unlens = mlines.Line2D([], [], color='dodgerblue', ls='', marker='s', markersize=9, markeredgecolor='k')
+new_sample = mlines.Line2D([], [], color='royalblue', ls='', marker='x', markersize=20)
+
 #
 plt.xlabel("log$(1+z)$",fontsize=35)
 plt.ylabel("$\Delta$log$M_{BH}$",fontsize=35)
@@ -294,7 +304,7 @@ ax2.set_xlabel('$z$',fontsize=35)
 plt.tick_params(labelsize=25)
 
 if inp_peng == 1:
-    plt.legend([HE0435,RXJ1131,park,SS13,Mg,H,C,unlens,Pkc],['HE0435',\
+    plt.legend([HE0435,RXJ1131,park,SS13,Mg,H,C,unlens,Pkc, new_sample],['HE0435',\
     'RXJ1131',\
     "AGNs in Park 15",\
     "AGNs in Schramm et al. 2013",\
@@ -302,13 +312,15 @@ if inp_peng == 1:
     "lensed AGNs in P06 using H${\\beta}$",\
     'lensed AGNs in P06 using C$_{IV}$',\
     "non-lensed AGNs in P06",\
-    "local AGNs"\
+    "local AGNs",\
+    "our new samples"
     ],scatterpoints=1,numpoints=1,loc=2,prop={'size':23},ncol=2,handletextpad=0)
 else:
-    plt.legend([HE0435,RXJ1131,park,SS13,Pkc],['HE0435',\
+    plt.legend([HE0435,RXJ1131,park,SS13,Pkc, new_sample],['HE0435',\
     'RXJ1131',\
     "AGNs from Park 15",\
     "AGNs from Schramm et al. 2013",\
-    "local AGNs"\
+    "local AGNs",\
+    "our new samples"
     ],scatterpoints=1,numpoints=1,loc=2,prop={'size':23},ncol=2,handletextpad=0)
 plt.show()

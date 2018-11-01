@@ -284,7 +284,7 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
     fig, ax = plt.subplots(figsize=(10,7))
     for i in range(psfs_NO):
         if i ==0 and include_QSO == True:
-            plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5)
+            plt.plot(r_grids_QSO, r_SB_QSO, '-', color = 'red', label="QSO", linewidth=5, zorder = 10, alpha=0.5)
             plt.legend()
         if psfs[i] is not None:
             if PSF_mask_img is None:
