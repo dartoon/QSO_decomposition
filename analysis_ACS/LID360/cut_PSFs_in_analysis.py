@@ -68,9 +68,9 @@ c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'acs', QSO_reg_return=True)
 center_QSO = c_psf_list[QSO_loc]
 
 QSO, cut_center = cut_center_bright(image=img, center=center_QSO, radius=60, return_center=True, plot=False)
-#QSO_outer = cut_image(image=img, center=cut_center, radius=200)
+QSO_outer = cut_image(image=img, center=cut_center, radius=200)
 pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
-#pyfits.PrimaryHDU(QSO_outer).writeto('{0}_cutout_outer.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(QSO_outer).writeto('{0}_cutout_outer.fits'.format(ID),overwrite=True)
 
 
 PSFs = []
@@ -78,21 +78,21 @@ PSF_gauss_centers = []
 PSF_bright_centers = []
 
 count=0
-#psf_list = None
-psf_list = np.delete(c_psf_list, (QSO_loc), axis=0)
-dist = (psf_list-center_QSO)[:,0]**2+(psf_list-center_QSO)[:,1]**2
-psf_list = psf_list[dist.argsort()]
-for i in range(len(psf_list)):  
-    print 'PSF',i
-    PSF, PSF_center = cut_center_bright(image=img, center=psf_list[i], radius=60, return_center=True, plot=False)
-    PSFs.append([PSF, 1, PSF_center])
-    PSF_gauss_centers.append(PSF_center)
-    _, PSF_br_center = cut_center_bright(image=img, center=psf_list[i], radius=60, kernel = 'center_bright', return_center=True, plot=False)
-    PSF_bright_centers.append(PSF_br_center)
-    count += 1
+psf_list = None
+#psf_list = np.delete(c_psf_list, (QSO_loc), axis=0)
+#dist = (psf_list-center_QSO)[:,0]**2+(psf_list-center_QSO)[:,1]**2
+#psf_list = psf_list[dist.argsort()]
+#for i in range(len(psf_list)):  
+#    print 'PSF',i
+#    PSF, PSF_center = cut_center_bright(image=img, center=psf_list[i], radius=60, return_center=True, plot=False)
+#    PSFs.append([PSF, 1, PSF_center])
+#    PSF_gauss_centers.append(PSF_center)
+#    _, PSF_br_center = cut_center_bright(image=img, center=psf_list[i], radius=60, kernel = 'center_bright', return_center=True, plot=False)
+#    PSF_bright_centers.append(PSF_br_center)
+#    count += 1
 
 #extra_psfs = None
-extra_psfs = np.array([[],[],[]])
+extra_psfs = np.array([[2937.1852,2767.4141], [2823.7593,2795.1919], [5250.6206,294.63478], [2197.1285,1170.972], [3640.34,5167.9497], [1239.4745,4872.4855]])
 dist_extra = (extra_psfs-center_QSO)[:,0]**2+(extra_psfs-center_QSO)[:,1]**2
 extra_psfs = extra_psfs[dist_extra.argsort()]
 for i in range(len(extra_psfs)):
@@ -116,7 +116,7 @@ elif len(QSO_mask) == 1:
 #plt.show()
 QSO_mask = (1 - (QSO_mask != 0)*1.)
 
-PSF_msk_list = []
+PSF_msk_list = [3]
 for i in range(len(PSFs)):
     print "PSF{0}:".format(i)
     _, PSF_mask = mask_obj(img=PSFs[i][0], snr=3., exp_sz=2.4)

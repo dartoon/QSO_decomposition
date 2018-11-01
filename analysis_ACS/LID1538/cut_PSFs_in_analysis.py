@@ -68,9 +68,9 @@ c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'acs', QSO_reg_return=True)
 center_QSO = c_psf_list[QSO_loc]
 
 QSO, cut_center = cut_center_bright(image=img, center=center_QSO, radius=60, return_center=True, plot=False)
-#QSO_outer = cut_image(image=img, center=cut_center, radius=200)
+QSO_outer = cut_image(image=img, center=cut_center, radius=200)
 pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
-#pyfits.PrimaryHDU(QSO_outer).writeto('{0}_cutout_outer.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(QSO_outer).writeto('{0}_cutout_outer.fits'.format(ID),overwrite=True)
 
 
 PSFs = []
@@ -92,7 +92,7 @@ for i in range(len(psf_list)):
     count += 1
 
 #extra_psfs = None
-extra_psfs = np.array([[],[],[]])
+extra_psfs = np.array([[4681.4702,2522.8453], [3585.4786,1218.5968], [1174.4916,1298.0487], [2186.1253,2798.5412], [1219.5025,2338.557]])
 dist_extra = (extra_psfs-center_QSO)[:,0]**2+(extra_psfs-center_QSO)[:,1]**2
 extra_psfs = extra_psfs[dist_extra.argsort()]
 for i in range(len(extra_psfs)):

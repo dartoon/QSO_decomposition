@@ -68,9 +68,9 @@ c_psf_list, QSO_loc = grab_pos(filename,reg_ty = 'acs', QSO_reg_return=True)
 center_QSO = c_psf_list[QSO_loc]
 
 QSO, cut_center = cut_center_bright(image=img, center=center_QSO, radius=60, return_center=True, plot=False)
-#QSO_outer = cut_image(image=img, center=cut_center, radius=200)
+QSO_outer = cut_image(image=img, center=cut_center, radius=200)
 pyfits.PrimaryHDU(QSO).writeto('{0}_cutout.fits'.format(ID),overwrite=True)
-#pyfits.PrimaryHDU(QSO_outer).writeto('{0}_cutout_outer.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(QSO_outer).writeto('{0}_cutout_outer.fits'.format(ID),overwrite=True)
 
 
 PSFs = []
@@ -92,7 +92,7 @@ for i in range(len(psf_list)):
     count += 1
 
 #extra_psfs = None
-extra_psfs = np.array([[],[],[]])
+extra_psfs = np.array([[250.58256,4461.1575], [169.32783,3110.1159], [3243.6427,582.85308], [4197.5878,206.87763], [5850.4972,4771.3182], [1850.6913,5544.5155], [527.99347,2082.4933]])
 dist_extra = (extra_psfs-center_QSO)[:,0]**2+(extra_psfs-center_QSO)[:,1]**2
 extra_psfs = extra_psfs[dist_extra.argsort()]
 for i in range(len(extra_psfs)):
@@ -116,7 +116,7 @@ elif len(QSO_mask) == 1:
 #plt.show()
 QSO_mask = (1 - (QSO_mask != 0)*1.)
 
-PSF_msk_list = []
+PSF_msk_list = [8]
 for i in range(len(PSFs)):
     print "PSF{0}:".format(i)
     _, PSF_mask = mask_obj(img=PSFs[i][0], snr=3., exp_sz=2.4)
@@ -161,8 +161,8 @@ for i in range(len(PSFs)):
     print "tot_flux for PSF{0}".format(i), flux
     flux_list.append(flux)
 
-#del_list = [4]
-#PSFs = [PSFs[i] for i in range(len(PSFs)) if i not in del_list]
+del_list = [1]
+PSFs = [PSFs[i] for i in range(len(PSFs)) if i not in del_list]
 
 #plot the first selection
 if extra_psfs is None:
