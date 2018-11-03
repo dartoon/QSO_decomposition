@@ -162,7 +162,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     if deep_seed == False:
         fitting_kwargs_list = [
             {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 0.8, 'n_particles': 80,
-             'n_iterations': 80},
+             'n_iterations': 60},
             {'fitting_routine': 'MCMC', 'n_burn': 10, 'n_run': 20, 'walkerRatio': 50, 'mpi': False,   ##Inputs  to CosmoHammer:
                #n_particles - particleCount; n_burn - burninIterations; n_run: sampleIterations (n_burn and n_run usually the same.); walkerRatio: walkersRatio.
             'sigma_scale': .1}
