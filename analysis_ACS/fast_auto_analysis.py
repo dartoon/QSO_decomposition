@@ -40,11 +40,13 @@ from subprocess import call
     
 
 #CID1281, CID255, CID526, CID597 is not in our targets
-IDs = ['CID50','CID70','XID2138','CID3242',\
-'LID1273','XID2202','CID206','CID3570',\
-'LID1538','XID2396','CID452','CID543',\
-'LID360','CID237','CID454','CID607']
-for i in range(len(IDs)):
-    print 'Run for: ',IDs[i]
-    runfile('/Users/Dartoon/Astro/QSO_decomposition/analysis_ACS/{0}/4_analysis.py'.format(IDs[i]),
-            wdir='/Users/Dartoon/Astro/QSO_decomposition/analysis_ACS/{0}'.format(IDs[i]))
+#CID50, LID1273,LID1538,LID360
+
+#run_list = ['CID70','XID2138','CID3242']
+#run_list = ['XID2202','CID206','CID3570']
+#run_list = ['XID2396','CID452','CID543']
+#run_list = ['CID237','CID454','CID607']
+for i in range(len(run_list)):
+    print 'Run for: ',run_list[i]
+    runfile('/lhome/dxh/QSO_decomposition/analysis_ACS/{0}/4_analysis.py'.format(run_list[i]),
+            wdir='/lhome/dxh/QSO_decomposition/analysis_ACS/{0}'.format(run_list[i]))
