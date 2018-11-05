@@ -32,7 +32,7 @@ filt = 'acs'
 QSO_bkg_value= 0.
 QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID)) - QSO_bkg_value
 QSO_msk = pyfits.getdata('{0}_msk.fits'.format(ID))
-frame_size = 61
+frame_size = 81
 #frame = '{0}'.format(frame_size)
 QSO_fm = len(QSO_im)
 ct = (QSO_fm-frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
