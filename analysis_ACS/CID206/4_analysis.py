@@ -130,7 +130,7 @@ elif if_file is not []:
     fit_result = open(filename,"r+")
     fit_result.read()
 count = 0
-for i in np.array(range(len(psf_name_list))):
+for i in np.array(range(157,len(psf_name_list))):
     print "{2} by PSF: {0}, PSF NO. {1}".format(psf_name_list[i], i, ID)
     tag = 'fit_result_each/qso_fit_PSF{0}'.format(i)
     psf_i = psf_list[i] * PSF_mask_img_list[i]
