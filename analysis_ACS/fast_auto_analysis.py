@@ -51,15 +51,15 @@ from subprocess import call
 #    runfile('/lhome/dxh/QSO_decomposition/analysis_ACS/{0}/4_analysis.py'.format(run_list[i]),
 #            wdir='/lhome/dxh/QSO_decomposition/analysis_ACS/{0}'.format(run_list[i]))
 
-run_files = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
-'LID1273','XID2202','CID206','CID543','LID1538','XID2396','CID452',\
-'LID360','CID237','CID454','CID607','CID3570']
-#for key in run_files:
-#    ID = key
-##    print key
-#    print "sed -n 's/fit_result_each_fix/&/p' {0}/4_analysis_fix_Re_n.py".format(ID)
-
+run_files = ['CID1174','CID216', 'CID50','CID70','XID2138']
+run_files = ['CID3242', 'LID1273','XID2202','CID206']
+run_files = ['CID543','LID1538','XID2396','CID452', 'LID360']
+run_files = ['CID237','CID454','CID607','CID3570']
 for i in range(len(run_files)):
     print 'Run for: ',run_files[i]
     run_files('/lhome/dxh/QSO_decomposition/analysis_ACS/{0}/4_analysis_fix_Re_n.py'.format(run_files[i]),
             wdir='/lhome/dxh/QSO_decomposition/analysis_ACS/{0}'.format(run_files[i]))
+#for key in run_files:
+#    ID = key
+##    print key
+#    print "sed -n 's/fit_result_each_fix/&/p' {0}/4_analysis_fix_Re_n.py".format(ID)
