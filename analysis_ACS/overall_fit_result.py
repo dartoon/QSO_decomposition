@@ -15,7 +15,7 @@ import sys
 sys.path.insert(0,'../py_tools')
 from filter_info import filt_info, redshift_info
 
-ID = ['CID50','CID70','XID2138','CID3242',\
+ID = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
 'LID1273','XID2202','CID206','CID543','LID1538','XID2396','CID452',\
 'LID360','CID237','CID454','CID607','CID3570']
 
@@ -233,7 +233,10 @@ fig.tight_layout(h_pad=-1.,w_pad=-0.6)
 plt.show()
 
 #for i in range(len(ID)):
-#    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], host_amp_results[i][0], ratio_results[i][0]
-#    
+#    print ID[i], redshift_info[ID[i]], fit_mag[i], host_amp_results[i][0], ratio_results[i][0]
+    
 #for i in range(len(ID)):
-#    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], Re_results[i][0], n_results[i][0]
+#    print ID[i], redshift_info[ID[i]], fit_mag[i], Re_results[i][0], n_results[i][0]
+
+for i in range(len(ID)):
+    print ID[i], redshift_info[ID[i]], ratio_results[i][0], Re_results[i][0], n_results[i][0]

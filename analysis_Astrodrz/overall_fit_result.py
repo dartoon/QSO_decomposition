@@ -45,11 +45,11 @@ for j in range(len(ID)):
     QSO_amp = [float(i) for i in QSO_amp]
     host_amp =  [float(i) for i in host_amp]
     
-    PSFs_dict = {}
-    for key in filt_info.keys():
-        if filt_info[key] == filt:
-            PSFs, _=pickle.load(open('{0}/analysis/{0}_PSFs_QSO'.format(key),'rb'))
-            PSFs_dict.update({'{0}'.format(key):PSFs})
+#    PSFs_dict = {}
+#    for key in filt_info.keys():
+#        if filt_info[key] == filt:
+#            PSFs, _=pickle.load(open('{0}/analysis/{0}_PSFs_QSO'.format(key),'rb'))
+#            PSFs_dict.update({'{0}'.format(key):PSFs})
     total_flux = np.asarray(QSO_amp) + np.asarray(host_amp)
     
     sort_Chisq = np.argsort(np.asarray(Chisq))
@@ -242,3 +242,6 @@ plt.show()
 #    
 #for i in range(len(ID)):
 #    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], Re_results[i][0], n_results[i][0]
+
+for i in range(len(ID)):
+    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], ratio_results[i][0],'%', Re_results[i][0], n_results[i][0]

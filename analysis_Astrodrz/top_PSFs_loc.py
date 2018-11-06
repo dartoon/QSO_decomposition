@@ -22,6 +22,11 @@ file_list = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', '
 'XID2396', 'CID206', 'ECDFS-358',\
 ]
 
+
+'''
+#==============================================================================
+# Plot the best 8 PSFs locations
+#==============================================================================
 for ID in file_list:
     f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID),"r")
     string = f.read()
@@ -76,4 +81,38 @@ for ID in file_list:
     plt.xlim(0, x_len)
     plt.ylim(0, y_len)
     plt.savefig('top8_PSFs_loc/{0}.pdf'.format(ID))
+'''
+
+#==============================================================================
+# Compare the brightness of the PSFs with the QSO
+#==============================================================================
+flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PSFs_lib_dict','rb'))
+for ID in file_list:
+    f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID),"r")
+    string = f.read()
     
+    PSF_id = re.findall(r"by PSF(.*?):",string)
+    Chisq = re.findall(r"redu_Chisq':(.*?),",string)
+    Chisq = [float(i) for i in Chisq]
+    sort_Chisq = np.argsort(np.asarray(Chisq))
+    count_n = 8
+    host_amp = re.findall(r"host_amp':(.*?),",string)
+    QSO_amp = re.findall(r"QSO_amp':(.*?),",string)
+    
+    QSO_amp = [float(i) for i in QSO_amp]
+    host_amp =  [float(i) for i in host_amp]
+    
+    Chisq_best = Chisq[sort_Chisq[0]]
+    Chisq_last= Chisq[sort_Chisq[count_n-1]]
+    inf_alp = (Chisq_last-Chisq_best) / (2*2.* Chisq_best)
+    weight = np.zeros(len(Chisq))
+    for i in sort_Chisq[:count_n]:
+        weight[i] = np.exp(-1/2. * (Chisq[i]-Chisq_best)/(Chisq_best* inf_alp))
+    total_flux = np.asarray(QSO_amp) + np.asarray(host_amp)
+    weighted_host_flux = np.sum(np.asarray(host_amp)*weight) / np.sum(weight)
+    print ID
+    print weighted_host_flux
+    PSF_name = []
+    for i in range(count_n):
+        PSF_name.append(PSF_id[sort_Chisq[i]])
+    print [round(flux_dict[PSF_name[i]],1) for i in range(count_n)]

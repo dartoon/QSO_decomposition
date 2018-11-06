@@ -50,3 +50,6 @@ Cycle25data/*
 *~
 analysis_ACS/*/*_180mas_sci.fits
 analysis_ACS/*/sub_coadd.fits
+
+*fitted_image.pdf
+*_annuli.pdf
