@@ -153,7 +153,7 @@ for i in np.array(range(len(psf_name_list))):
     count += 1
     t_i = time.time()
     print "assuming time need for this target:", (t_i-t1)/(i+1)*len(psf_name_list)/60, 'mins'
-    print "time remaining:", "{0}%".format(round(float(i)/len(psf_name_list)),2),'mins left:'(t_i-t1)/(i+1)*len(psf_name_list)/60*(float(i)/len(psf_name_list))
+    print "time remaining:", "{0}%".format(round(float(i+1)/len(psf_name_list)*100,2)),'mins left:',round((t_i-t1)/(i+1)*len(psf_name_list)/60*(float(len(psf_name_list)-i-1)/len(psf_name_list)),2)
 fit_result.close()
 t2 = time.time()
 t_tot= (t2-t1)/60
