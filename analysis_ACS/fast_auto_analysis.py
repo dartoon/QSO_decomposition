@@ -55,11 +55,19 @@ from subprocess import call
 #run_fileba = ['CID3242', 'LID1273','XID2202','CID206']
 #run_fileba = ['CID543','LID1538','XID2396','CID452', 'LID360']
 #run_fileba = ['CID237','CID454','CID607','CID3570']
-for i in range(len(run_fileba)):
-    print 'Run for: ',run_fileba[i]
-    runfile('/lhome/dxh/QSO_decomposition/analysis_ACS/{0}/4_analysis_fix_Re_n.py'.format(run_fileba[i]),
-            wdir='/lhome/dxh/QSO_decomposition/analysis_ACS/{0}'.format(run_fileba[i]))
+#for i in range(len(run_fileba)):
+#    print 'Run for: ',run_fileba[i]
+#    runfile('/lhome/dxh/QSO_decomposition/analysis_ACS/{0}/4_analysis_fix_Re_n.py'.format(run_fileba[i]),
+#            wdir='/lhome/dxh/QSO_decomposition/analysis_ACS/{0}'.format(run_fileba[i]))
+
+#CID70, LID360, CID3570
 #for key in run_files:
 #    ID = key
 ##    print key
 #    print "sed -n 's/fit_result_each_fix/&/p' {0}/4_analysis_fix_Re_n.py".format(ID)
+
+ID = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
+'LID1273','XID2202','CID206','CID543','LID1538','XID2396','CID452',\
+'LID360','CID237','CID454','CID607','CID3570']
+for i in range(len(ID)):
+    print ""

@@ -1,0 +1,126 @@
+\documentclass[apj]{emulateapj}
+\usepackage{times}
+%\newcommand{\mdot}{M$_{\odot}$\,}
+\usepackage{natbib}
+
+\usepackage[backref,breaklinks,colorlinks,citecolor=cyan]{hyperref} 
+%\setlength{\parindent}{0pt}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{bm}
+%\usepackage{deluxetable}
+\usepackage{multirow}
+\usepackage{enumitem}
+\shorttitle{TDLMC. l}
+\shortauthors{X. Ding et al.}
+
+\begin{document}
+
+\def\lcdm{$\Lambda$CDM}
+\def\hst{{\it HST}}
+\def\efr{$R_{\mathrm{eff}}$}
+\def\galfit{\sc Galfit}
+\def\mbh{$\mathcal M_{\rm BH}$}
+\def\lhost{$L_{\rm host}$}
+\def\jcap{Journal of Cosmology and Astroparticle Physics}
+\def\halpha{${\it H}\alpha$}
+\def\hbeta{${\it H}\beta$}
+
+\title{QSO decomposition}
+
+\author{Xuheng Ding\altaffilmark{1, 2}, Tommaso Treu\altaffilmark{2}, Anowar J. Shajib\altaffilmark{2}, Dandan Xu\altaffilmark{3}, Geoff C.-F. Chen\altaffilmark{4},  Anupreeta More\altaffilmark{5},
+}
+\email{dxh@astro.ucla.edu}
+% Dandan Xu, Giulia, Anupreeta, Chih-Fan, Daniel, Chris, Phil Marshall, Dominique, 
+
+\altaffiltext{1}{School of Physics and Technology, Wuhan University, Wuhan 430072, China}
+\altaffiltext{2}{Department of Physics and Astronomy, University of California, Los Angeles, CA, 90095-1547, USA}
+\altaffiltext{3}{Heidelberg Institute for Theoretical Studies, Schloss-Wolfsbrunnenweg 35, D-69118 Heidelberg, Germany}
+\altaffiltext{4}{Department of Physics, University of California, Davis, CA 95616, USA}
+\altaffiltext{5}{Kavli IPMU (WPI), UTIAS, The University of Tokyo, Kashiwa, Chiba 277-8583, Japan}
+\altaffiltext{6}{Max Planck Institute for Astrophysics, Karl-Schwarzschild-Strasse 1, D-85740 Garching, Germany}
+\altaffiltext{7}{Exzellenzcluster Universe, Boltzmannstr. 2, 85748 Garching, Germany}
+\altaffiltext{8}{Ludwig-Maximilians-Universit{\"a}t, Universit{\"a}ts-Sternwarte, Scheinerstr. 1, 81679 M{\"u}nchen, Germany}
+\altaffiltext{9}{Kavli Institute for Particle Astrophysics and Cosmology, Stanford University, 452 Lomita Mall, Stanford, CA 94035, USA}
+\altaffiltext{10}{STAR Institute, Quartier Agora - All\'ee du six Ao\^ut, 19c B-4000 Li\`ege, Belgium}
+
+\begin{abstract}
+To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. 
+\end{abstract}
+
+\keywords{galaxies: active --- galaxies: evolution}
+
+\section{Introduction}
+\label{sec:introduction}
+skeleton
+\\
+1. The ML relation and why understand its evolution is important.\\
+2. To understand this evolution, it is important to trace to high redshift. So, why it is difficult.\\
+3. Introduce reference. Woo's. SS13, Treu's, Park79. In the theory, DeGraf...\\
+4. This work, we introduces samples till redshift 1.7.
+
+\section{Observations and data reduction}
+\label{sec:data}
+In this section, we summarize the sample selection, observations, and data reduction of our sample. 
+
+\subsection{Sample selection}
+%How the samples are selection.\\
+%Where are they from?
+%\\The redshift range? In a table?
+
+We aim to study the relation between the BH masses (\mbh) and their host galaxy properties including luminosities (\lhost) stellar mass to redshift at $z>1$. For this propose, we focus on the broad-line (type-1) AGNs as provided by the X-ray coverage of COSMOS \citep{Civano2016}, (E)-CDFS-S \citep{Lehmer2005, Xue2011}, and SXDS \citep{Ueda2008} fields. We select the broad-line AGNs at redshift region $1.2<z<1.7$ which cover a BH range $7.5<{\rm log}$\mbh $<8.5$. The Near IR spectra of AGNs are available from the survey of Subaru's Fiber Multi-Object Spectrograph \citep[FMOS, ][]{Kimura2010, Schulze2018}, a near-infrared (0.9-1.8 $\mu m$) spectrograph have with 400 apertures. The FMOS survey provides the best \mbh\ estimates by \halpha\ and \hbeta\ lines out to $z\sim1.7$ \citep{Greene2005, Matsuoka2013, Nobuta2012}.
+
+Our final sample is composed of 36  AGNs; 32 of them are new systems \textcolor{red}{\bf (32+4?, the information of these four sample?)}. To compare with the samples in the literature, we adopt the samples from ... \textcolor{blue}{\bf The samples from H0licow7}
+For the calibration with the local relation, we introduce the well-defined 19 local AGN measurements \citep{Ben++10, Peterson2004} which defines the zero-point. Table ? list all the samples.
+
+\subsection{Observation and reduction}
+\label{observation}
+Introduce the QSO surface photometry\\
+Introduce the AGN broad line Emission
+
+\subsubsection{HST image for photometry}
+The QSO surface photometry in IR Channel Filters.\\
+The ACS data.
+\subsubsection{AGN Emission line}
+\label{sec:bh_mass}
+The introduction of the BH inferred by the board emission line.
+
+\section{Analysis}
+\label{sec:Analysis}
+
+\subsection{QSO image decomposition}
+\subsubsection{PSF library}	
+\label{sec:psf_library}
+Introduce the PSF library
+
+\subsubsection{Modeling method}
+Introduce the lenstronomy. Model the PSF in each library.\\
+Inspired by Simon's work, we rank the performance of the each PSF and weight for the final fitting result. 
+
+\subsubsection{host luminosity and stellar mass estimates}
+k-correction by the galaxy model assumption\\
+stellar mass \\
+
+\subsection{BH masses}
+Introduce different recipes as used in the paper.
+
+\section{Results}
+\label{sec:result}
+
+
+\section{Summary}
+\label{sec:sum}
+We presented the study of the Mbh and host property's evolution to high redshift until 1.8.
+
+\section*{Acknowledgments}
+We thank Vivien Bonvin, Simon Birrer, Matthew W. Auger, Xiao-Lei Meng for useful suggestions and technical supports. X.D. acknowledges support by China Postdoctoral Science Foundation Funded Project; he is also grateful for Zong-Hong Zhu's support and funding. T.T. acknowledges support by the Packard Foundation in the form of a Packard Research Fellowship.
+
+\bibliographystyle{apj.bst}
+\bibliography{references}
+
+
+%\appendix
+%\section{If needed}
+%\label{app:warp}
+
+\end{document}

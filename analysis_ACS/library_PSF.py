@@ -63,8 +63,8 @@ common_params = dict(bins=30)
 #                         label=QSO_id)
 plt.hist((fluxs), **common_params)
 plt.legend()
-plt.xticks(np.arange(0, 1500, step=500))
-plt.yticks(np.arange(0,65,step=5))
+plt.xticks(np.arange(0, 1000, step=100))
+plt.yticks(np.arange(0,75,step=5))
 plt.xlabel('Total Flux (counts)',fontsize=15)
 plt.ylabel('Number of PSFs', fontsize=15)
 plt.tick_params(labelsize=15)
@@ -178,7 +178,7 @@ for i in range(len(PSF_list)):
 FWHM = np.asarray(FWHM)
 
 fig, ax = plt.subplots(figsize=(10,6))
-label = {"1":'star', "0":'selected', "F125w1":'F125w star', "F125w0":'F125w selected'}
+label = {"1":'identified star', "0":'selected'}
 marker =  {1:'*', 0:'o'}
 for i in range(len(FWHM)):
     label_key = str(PSF_list[i][1])

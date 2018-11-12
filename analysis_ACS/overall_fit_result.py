@@ -13,7 +13,7 @@ import matplotlib
 from adjustText import adjust_text   # avoid the overlapping while ploting
 import sys
 sys.path.insert(0,'../py_tools')
-from filter_info import filt_info, redshift_info
+from filter_info import redshift_info
 
 ID = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
 'LID1273','XID2202','CID206','CID543','LID1538','XID2396','CID452',\
@@ -25,8 +25,10 @@ import pickle
 ratio_results, Re_results, n_results, total_flux_results, host_amp_results = [], [], [], [], []
 chisq_list, inf_list, best_PSF_id = [],[], []
 flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PSFs_lib_dict','rb'))
+folder = "fit_result_each_fix"
+
 for j in range(len(ID)):
-    f = open("{0}/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
+    f = open("{0}/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
     string = f.read()
     PSF_id = re.findall(r"by PSF(.*?):",string)
     S_n_list = re.findall(r"n_sersic':(.*?),",string)
@@ -101,10 +103,6 @@ colors = [cmap(normalize(value[0])) for value in S_n_list]
 
 fig, ax = plt.subplots(figsize=(15,9))
 for i in range(len(ID)):
-    filt = filt_info[ID[i]]
-#    if filt == "F140w":
-#        s = 'o'
-#    elif filt == "F125w":
     s = 's'
     ax.errorbar(Re_results[i][0], ratio_results[i][0], xerr= Re_results[i][1], yerr=ratio_results[i][1],
                 fmt=s, color=colors[i],ecolor='gray' )
@@ -122,7 +120,7 @@ cbar.set_label('Sersic n',  fontsize=12)
 plt.show()
 
 for i in range(len(ID)):
-    print "open {0}/fit_result_each/*_PSF{1}_f*".format(ID[i],best_PSF_id[i][0])
+    print "open {0}/{2}/*_PSF{1}_SB_profile.pdf".format(ID[i],best_PSF_id[i][0],folder)
 
 #==============================================================================
 # Plot Chisq and alpha distribution
@@ -142,7 +140,6 @@ fit_mag= []
 fit_mag_lh = []
 from math import log10
 for i in range(len(ID)):
-    filt = filt_info[ID[i]]
     zp = 25.94333
     amp_min, amp, amp_max = host_amp_results[i][0] - host_amp_results[i][1],host_amp_results[i][0], host_amp_results[i][0] + host_amp_results[i][1]
     mag_min =-2.5*log10(amp_min) + zp
@@ -154,10 +151,6 @@ for i in range(len(ID)):
 
 fig, ax = plt.subplots(figsize=(15,9))
 for i in range(len(ID)):
-    filt = filt_info[ID[i]]
-#    if filt == "F140w":
-#        s = 'o'
-#    elif filt == "F125w":
     s = 's'
     ax.errorbar(Re_results[i][0], fit_mag[i], xerr= Re_results[i][1], yerr=np.array([fit_mag_lh[i]]).T,
                 fmt=s, color=colors[i],ecolor='gray' )
@@ -201,10 +194,7 @@ for j in range(num_boxs):
             texts = []
             for k in range(len(value)):
                 filt = filt_info[ID[i]]
-                if filt == "F140w":
-                    ma = 'o'
-                elif filt == "F125w":
-                    ma = 's'
+                ma = 'o'
                 ax.errorbar(value[k][i][0], value[k][y_j][0], xerr= value[k][i][1], yerr= value[k][y_j][1], marker = ma, color = colors[k])
                 texts.append(ax.text(value[k][i][0], value[k][y_j][0], ID[k], fontsize=15))
             adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red')) 
@@ -238,5 +228,8 @@ plt.show()
 #for i in range(len(ID)):
 #    print ID[i], redshift_info[ID[i]], fit_mag[i], Re_results[i][0], n_results[i][0]
 
+#for i in range(len(ID)):
+#    print ID[i], redshift_info[ID[i]], ratio_results[i][0], Re_results[i][0], n_results[i][0]
+
 for i in range(len(ID)):
-    print ID[i], redshift_info[ID[i]], ratio_results[i][0], Re_results[i][0], n_results[i][0]
+    print ID[i], redshift_info[ID[i]], fit_mag[i], fit_mag_lh[i]
