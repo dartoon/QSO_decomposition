@@ -101,9 +101,13 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     #Doing the QSO fitting 
     #==============================================================================
     from lenstronomy.SimulationAPI.simulations import Simulation
+    from lenstronomy.Data.imaging_data import Data
     SimAPI = Simulation()
-    data_class = SimAPI.data_configure(numPix, deltaPix, exp_time, background_rms)
-    psf_class = SimAPI.psf_configure(psf_type=psf_type, fwhm=fwhm, kernelsize=kernel_size, deltaPix=deltaPix, kernel=kernel)
+    kwargs_data = SimAPI.data_configure(numPix, deltaPix, exp_time, background_rms)
+    data_class = Data(kwargs_data)
+    kwargs_psf =  SimAPI.psf_configure(psf_type=psf_type, fwhm=fwhm, kernelsize=kernel_size, deltaPix=deltaPix, kernel=kernel)
+    from lenstronomy.Data.psf import PSF
+    psf_class = PSF(kwargs_psf)
     data_class.update_data(QSO_im)
     
     from lenstronomy.LightModel.light_model import LightModel
@@ -134,16 +138,12 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
                          'source_marg': False,  #In likelihood_module.LikelihoodModule -- whether to fully invert the covariance matrix for marginalization
                           'check_positive_flux': True,        
                          }
-    kwargs_data = data_class.constructor_kwargs() # The "dec_at_xy_0" means the dec at the (0,0) point.
+    kwargs_data['image_data'] = QSO_im
     if QSO_std is not None:
         kwargs_data['noise_map'] = QSO_std
     
-    kwargs_psf = psf_class.constructor_kwargs()
     if psf_std is not None:
         kwargs_psf['psf_error_map'] = psf_std
-    
-    from lenstronomy.Data.psf import PSF
-    psf_class = PSF(kwargs_psf)
     
     
     imageModel = ImageModel(data_class, psf_class, source_model_class=lightModel,
@@ -194,11 +194,11 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     # let's plot the output of the PSO minimizer
     from lenstronomy.Plots.output_plots import LensModelPlot
     lensPlot = LensModelPlot(kwargs_data, kwargs_psf, kwargs_numerics, kwargs_model, lens_result, source_result,
-                                 lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat")
+                             lens_light_result, ps_result, arrow_size=0.02, cmap_string="gist_heat")
     
     if image_plot:
         f, axes = plt.subplots(3, 3, figsize=(16, 16), sharex=False, sharey=False)
-        lensPlot.data_plot(ax=axes[0,0])
+        lensPlot.data_plot(ax=axes[0,0], text="D")
         lensPlot.model_plot(ax=axes[0,1])
         lensPlot.normalized_residual_plot(ax=axes[0,2], v_min=-6, v_max=6)
         
@@ -303,10 +303,15 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
     #Doing the QSO fitting 
     #==============================================================================
     from lenstronomy.SimulationAPI.simulations import Simulation
+    from lenstronomy.Data.imaging_data import Data
     SimAPI = Simulation()
-    data_class = SimAPI.data_configure(numPix, deltaPix, exp_time, background_rms)
-    psf_class = SimAPI.psf_configure(psf_type=psf_type, fwhm=fwhm, kernelsize=kernel_size, deltaPix=deltaPix, kernel=kernel)
+    kwargs_data = SimAPI.data_configure(numPix, deltaPix, exp_time, background_rms)
+    data_class = Data(kwargs_data)
+    kwargs_psf =  SimAPI.psf_configure(psf_type=psf_type, fwhm=fwhm, kernelsize=kernel_size, deltaPix=deltaPix, kernel=kernel)
+    from lenstronomy.Data.psf import PSF
+    psf_class = PSF(kwargs_psf)
     data_class.update_data(QSO_im)
+    
     from lenstronomy.PointSource.point_source import PointSource
     point_source_list = ['UNLENSED']
     pointSource = PointSource(point_source_type_list=point_source_list)
@@ -338,8 +343,6 @@ def fit_ps(QSO_im, psf_ave, psf_std=None, background_rms=0.04, source_params=Non
     kwargs_psf = psf_class.constructor_kwargs()
     if psf_std is not None:
         kwargs_psf['psf_error_map'] = psf_std
-    from lenstronomy.Data.psf import PSF
-    psf_class = PSF(kwargs_psf)
     
     image_band = [kwargs_data, kwargs_psf, kwargs_numerics]
     multi_band_list = [image_band]
