@@ -198,7 +198,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     
     if image_plot:
         f, axes = plt.subplots(3, 3, figsize=(16, 16), sharex=False, sharey=False)
-        lensPlot.data_plot(ax=axes[0,0], text="D")
+        lensPlot.data_plot(ax=axes[0,0], text="Data")
         lensPlot.model_plot(ax=axes[0,1])
         lensPlot.normalized_residual_plot(ax=axes[0,2], v_min=-6, v_max=6)
         
