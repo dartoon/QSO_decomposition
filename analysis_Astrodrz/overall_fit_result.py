@@ -14,15 +14,14 @@ from adjustText import adjust_text   # avoid the overlapping while ploting
 import sys
 sys.path.insert(0,'../py_tools')
 from filter_info import filt_info, redshift_info
-
+'''
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
 'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724'\
 ]
-
-ID = ['CID1174']
+#ID = ['CID1174']
 
 import pickle
 ratio_results, Re_results, n_results, total_flux_results, host_amp_results = [], [], [], [], []
@@ -62,10 +61,9 @@ for j in range(len(ID)):
     weight = np.zeros(len(Chisq))
     for i in sort_Chisq[:count_n]:
         weight[i] = np.exp(-1/2. * (Chisq[i]-Chisq_best)/(Chisq_best* inf_alp))
-    for i in sort_Chisq:
-        print PSF_id[i], Chisq[i], weight[i], host_flux_ratio[i], Re[i], S_n_list[i], round(total_flux[i],3),  round(host_amp[i],3),\
+#    for i in sort_Chisq:
+#        print PSF_id[i], Chisq[i], weight[i], host_flux_ratio[i], Re[i], S_n_list[i], round(total_flux[i],3),  round(host_amp[i],3),\
     round(flux_dict[PSF_id[i]],3), round(FWHM_dict[PSF_id[i]],3), "[{0},{1}]".format(int(round(locs_dict[PSF_id[i]][0])) , int(round(locs_dict[PSF_id[i]][1]))), round(id_stars_dict[PSF_id[i]],3)
-    
     # =============================================================================
     # Weighting result
     # =============================================================================
@@ -79,7 +77,6 @@ for j in range(len(ID)):
     rms_total_flux = np.sqrt(np.sum((total_flux-weighted_total_flux)**2*weight) / np.sum(weight))
     weighted_host_flux = np.sum(np.asarray(host_amp)*weight) / np.sum(weight)
     rms_host_flux = np.sqrt(np.sum((np.asarray(host_amp)-weighted_host_flux)**2*weight) / np.sum(weight))
-    
     print "ID:{0}, filt:{1}".format(ID[j], filt[0])
     print "the best PSFs for {0} is ID ".format(ID[j]), sort_Chisq[:8]
     best_PSF_id.append(sort_Chisq[:8])
@@ -96,7 +93,6 @@ for j in range(len(ID)):
     chisq_list.append(Chisq_best)
     inf_list.append(inf_alp)
 
-'''
 import matplotlib as matt
 matt.rcParams['font.family'] = 'STIXGeneral'
 cmap = matplotlib.cm.get_cmap('viridis')
@@ -181,7 +177,7 @@ cbar = matplotlib.colorbar.ColorbarBase(cax, cmap=cmap, norm=normalize)
 cbar.set_label('Sersic n',  fontsize=12)
 plt.tick_params(labelsize=15)
 plt.show()   
-               
+'''               
         
 #==============================================================================
 # Sersic_n, R_eff relation, host_flux_ratio corner relation
@@ -189,10 +185,9 @@ plt.show()
 num_boxs = 2
 gridshape = (num_boxs, num_boxs)
 print "Our multivariate grid will therefore be of shape", gridshape
-
 fig = plt.figure(figsize=(20, 15))
 axes = [[False for i in range(num_boxs)] for j in range(num_boxs)]
-axis_lab = [ "Effective Radius", "Sersic n", "host_flux_ratio"]
+axis_lab = [ "Effective Radius(arcsec)", "S\'ersic $n$", "host flux ratio percent"]
 value = [[Re_results[i], n_results[i], ratio_results[i]] for i in range(len(ratio_results))]
 n=1
 for j in range(num_boxs):
@@ -233,11 +228,17 @@ for j in range(num_boxs):
             if y_j <2:
                 ax.xaxis.set_ticklabels([])
             plt.tick_params(labelsize=25)     
+        fig.tight_layout(h_pad=-1.,w_pad=-0.3)
+        if i== 0 and j ==0:
+            cax, _ = matplotlib.colorbar.make_axes(ax)
+            cbar = matplotlib.colorbar.ColorbarBase(cax, cmap=cmap, norm=normalize)
+            cbar.set_label('Sersic n',  fontsize=25)
+            cax.tick_params(labelsize=30)
+            pos_o = cax.get_position()
+            pos = [pos_o.x0+0.09, pos_o.y0, pos_o.width, pos_o.height]
+            cax.set_position(pos)
         n += 1
-#        if i==1 and j ==0:
-#            ax.legend(bbox_to_anchor=(1.5, 1), loc=2, borderaxespad=0.,prop={'size': 16})
-#            axes[j][i] = ax
-fig.tight_layout(h_pad=-1.,w_pad=-0.6)
+#plt.savefig('flux_r_n_corner.pdf')
 plt.show()
 
 #for i in range(len(ID)):
@@ -246,6 +247,5 @@ plt.show()
 #for i in range(len(ID)):
 #    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], fit_mag[i], Re_results[i][0], n_results[i][0]
 
-for i in range(len(ID)):
-    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], ratio_results[i][0],'%', Re_results[i][0], n_results[i][0]
-'''
+#for i in range(len(ID)):
+#    print ID[i], redshift_info[ID[i]], filt_info[ID[i]], ratio_results[i][0],'%', Re_results[i][0], n_results[i][0]

@@ -54,12 +54,12 @@ To be written. To be written. To be written. To be written. To be written. To be
 
 \section{Introduction}
 \label{sec:introduction}
-skeleton
+skeleton of introduction
 \\
-1. The ML relation and why understand its evolution is important.\\
-2. To understand this evolution, it is important to trace to high redshift. So, why it is difficult.\\
-3. Introduce reference. Woo's. SS13, Treu's, Park79. In the theory, DeGraf...\\
-4. This work, we introduces samples till redshift 1.7.
+1. Introduce the ML relation and why understand its evolution is important.\\
+2. To understand this evolution, it is important to trace to high redshift. Why it is difficult.\\
+3. Introduce reference. Woo's. SS13, Treu's, Park79. In the theory, DeGraf...Highlight the redshift range $z>1.2$\\
+4. In this paper, we study the ML relation up to redshift 1.7.
 
 \section{Observations and data reduction}
 \label{sec:data}
@@ -134,12 +134,12 @@ where the $\alpha$ is the inflation parameter so that when $i=8$:
 
 %ECDFS-358 and CID206
 
-In figure, we demonstrate the optimized result of each system inferred by \lenstronomy. We also show the weighting process for an example system -- CID1174 in Table~\ref{tab:weight_CID1174}.
+In Figure~\ref{fig:QSO_decomp}, we demonstrate the optimized result of each system inferred by \lenstronomy. We also show the weighting process for an example system -- CID1174 in Table~\ref{tab:weight_CID1174}. In Figure~\ref{fig:flux_r_n_corner}, we summarize the relation among the inferred values of: \Reff, \sersic\ $n$, and host to total flux ratio. 
 
 %The inference of F814w data.
 Likewise, for the 18 systems with ACS/F184W images, we infer their host properties using the same approach. There are in total 174 star-like PSFs in the fitting library. We assumed the shape of the galaxy are consistent between the ACS and WFC3. Since the effects of dust extinction and contrast between the (blue) AGN and (red) host is more favorable in IR band, we believe the inferred information of the galaxy shape by IR band are superior to the one by UV band. Thus, while fitting the host flux at ACS band, we fix the \Reff\ and \sersic\ $n$ to the value by IR.
 
-We list all the inference of the host galaxy properties in the Table.
+We list all the inference of the host galaxy properties in the Table~\ref{tab:result_sersic}.
 
 %The overall fitting plot: 1. Host-R-n corner for f140w and f814w. 2. The histogram with different selection.
 
@@ -150,8 +150,11 @@ We list all the inference of the host galaxy properties in the Table.
 
 Having inferred the value of the rest-frame R-band magnitude, the luminosity is derived by $\log L_R/L_{R, \odot} = 0.4 (M_{R, \odot}-M_R)$, where $M_{R, \odot}=4.61$ \citep{Blanton07}.
 
+\textcolor{blue}{Introduce the passive evolution?}
+To directly compare with local samples, we consider the passive evolution scenario for the inferred \lhost\ and transfer to its expected value at today.
+
 We summarized the homogenized R-band luminosities
-in Table?
+in Table~\ref{tab:result_sersic}.
 
 \subsection{BH masses}
 \label{mbh}
@@ -173,27 +176,33 @@ and
 &~+~& 2 \log \left(\frac{\rm FWHM(H\alpha)}{1000 ~{\rm km~s^{-1}}}\right) , 
 \end {eqnarray}
 
-With the self-consistent cross-calibration, we estimate the \mbh\ by adopting the emission line properties measured by \citet{Schulze2018}. For the system with both \halpha\ and \hbeta\ emission line information, we adopt the average \mbh\ value by these two. We summarized the inference of the \mbh\ together with the details on the emission line in Table.
+With the self-consistent cross-calibration, we estimate the \mbh\ by adopting the emission line properties measured by \citet{Schulze2018}. For the system with both \halpha\ and \hbeta\ emission line information, we adopt the average \mbh\ value by these two. We summarized the inference of the \mbh\ together with the details on the emission line in Table~\ref{tab:result_mbh}.
 
 
 \section{Results}
 \label{sec:result}
-\subsection{M-L relation}
+\subsection{\mbh-\lhost\ relation}
+
+\subsection{\mbh-M$_*$ relation}
 \subsubsection{Stellar mass estimates}
 stellar mass \\
-\subsection{M-M$_*$ relation}
 
 \section{Summary}
 \label{sec:sum}
 We presented the study of the Mbh and host property's evolution to high redshift until 1.8.
 
+\section{discuss}
+\label{sec:dis}
+\subsection{Systematic error}
+\subsection{Fitting mask for CID1174 and ECDFS-358}
+
 \section*{Acknowledgments}
-We thank the people who discuss with the paper. X.D. acknowledges support by China Postdoctoral Science Foundation Funded Project; he is also grateful for Zong-Hong Zhu's support and funding. T.T. acknowledges support by the Packard Foundation in the form of a Packard Research Fellowship.
+We thank the people who discuss with the paper.
 
 \bibliographystyle{apj.bst}
 \bibliography{references}
 
-\begin{deluxetable*}{llccc}
+\begin{deluxetable}{llccc}
 \tablecolumns{5}
 \tablewidth{0pt}
 \tablecaption{The sample information for the 32 systems.} 
@@ -250,14 +259,15 @@ SXDS-X969 & 1.585 & F140W & 34.7594 & -5.4291\\
 \tablecomments{
 Column 1: Object field and ID.
 Column 2: Redshifts.
-Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
+Column 3: HST filter by WFC3. The marker $^*$ indicate the corresponding sample also has the ACS/F814W image.
+Column 4 and 5: The $RA$ and $DEC$ of the system.
 }
-\end{deluxetable*}
+\end{deluxetable}
 
 \begin{deluxetable*}{ccccccc}
 \tablecolumns{7}
 \tablewidth{0pt}
-\tablecaption{The process of weighting for COSMOS-CID1174 } 
+\tablecaption{Details of the weighting for the inference of CID1174. } 
 \tablehead{ 
 \colhead{PSF rank} &
 \colhead{total $\chi ^2$} & 
@@ -291,15 +301,19 @@ Weighted value & & & 103.534 $\pm$ 34.267 & 44.0\%$\pm$14.2\%& 0\farcs{}296$\pm$
 \enddata
 \label{tab:weight_CID1174}
 \tablecomments{
-The detailed information of the weights for the inference of CID1174. The inflation value $\alpha$ calculated by Eq.~\ref{eq:alpha} is 16.671.
+Column~1: The rank of the PSF from the library.
+Column~2: Total $\chi ^2$ for the corresponding PSF.
+Column~3: Weights for co-adding the inference.
+Column~4-7: Fitted value for the host flux, host/total flux ratio, effective radius, and \sersic\ index.
+For this sample, the inflation value $\alpha$ calculated by Eq.~\ref{eq:alpha} is 16.671.
 }
 \end{deluxetable*}
 
 \begin{deluxetable*}
-{@{\extracolsep{4pt}}lcccccccc}   % need for the gap between the clines.
+{@{\extracolsep{4pt}}lccccccccc}   % need for the gap between the clines.
 \tablecolumns{9}
 \tablewidth{0pt}
-\tablecaption{The sample information for the 32 systems.} 
+\tablecaption{The inference of the host information by the QSO decomposition for the 32 systems.} 
 \tablehead
 { 
 \colhead{Target ID}&
@@ -310,17 +324,17 @@ The detailed information of the weights for the inference of CID1174. The inflat
 \colhead{reduced $\chi ^2$}& \colhead{host flux ratio}& 
 \colhead{\Reff}& \colhead{\sersic\ $n$}& 
 \colhead{magnitude}&
-\colhead{reduced $\chi ^2$}& \colhead{host flux ratio}& \colhead{magnitude}\\
+\colhead{reduced $\chi ^2$}& \colhead{host flux ratio}& \colhead{magnitude} & \colhead{$\log L_R$}\\
 \colhead{}& 
 \colhead{}& \colhead{}& 
 \colhead{($\arcsec$)}& \colhead{}& 
 \colhead{(AB system)}& \colhead{}& 
-\colhead{}& \colhead{(AB system)} \\
+\colhead{}& \colhead{(AB system)}&\colhead{($L_{\odot,R}$)} \\
 \colhead{(1)}& 
 \colhead{(2)}& \colhead{(3)}& 
 \colhead{(4)}& \colhead{(5)}& 
 \colhead{(6)}& \colhead{(7)}& 
-\colhead{(8)}& \colhead{(9)}
+\colhead{(8)}& \colhead{(9)}&\colhead{(10)}
 }
 \startdata 
 CID1174 & 2.324 & 44.0\%$\pm$14.2\% & 0.296$\pm$0.079 & 2.173$\pm$1.5 & $21.415\substack{+0.436 \\ -0.31}$ & 2.484074 & 11.7\%$\pm$1.4\% & $23.165\substack{+0.138 \\ -0.122}$\\
@@ -358,9 +372,11 @@ SXDS-X969 & 1.613 & 29.0\%$\pm$11.7\% & 0.115$\pm$0.026 & 2.149$\pm$1.147 & $21.
 \enddata
 \label{tab:result_sersic}
 \tablecomments{
-Column 1: Object field and ID.
-Column 2: Redshifts.
-Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
+Column~1: Object ID.
+Column~2: Reduced $\chi ^2$ value by the best PSF in the library.
+Column~3-6: Host inference by the WFC3 image.
+Column~7-9: Host inference by the ACS image. 
+Column~10: The inferred host Luminosity in the rest-frame R band.
 }
 \end{deluxetable*}
 
@@ -376,12 +392,12 @@ Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
   \multicolumn{3}{c}{using emission line \hbeta} \\
   \cline{2-4}  \cline{5-7} \\
 \colhead{}& 
-\colhead{FWHM}& \colhead{$\lambda \rm L _{H\alpha}$}& \colhead{\mbh}&
-\colhead{FWHM(5100)}& \colhead{$\lambda \rm L _{\lambda5100}$}& \colhead{\mbh}\\
+\colhead{FWHM}& \colhead{$\log(\lambda \rm L _{H\alpha}$)}& \colhead{\mbh}&
+\colhead{FWHM(5100)}& \colhead{$\log(\lambda \rm L _{\lambda5100})$}& \colhead{\mbh}\\
 \colhead{}& 
-\colhead{(\kms)}& \colhead{($10^{42}{\rm erg~s^{-1}}$)}& 
+\colhead{(\kms)}& \colhead{(${\rm erg~s^{-1}}$)}& 
 \colhead{(M$_{\odot}$)}& \colhead{(\kms)}& 
-\colhead{($10^{44}{\rm erg~s^{-1}}$)}&\colhead{(M$_{\odot}$)}\\
+\colhead{(${\rm erg~s^{-1}}$)}&\colhead{(M$_{\odot}$)}\\
 \colhead{(1)}& 
 \colhead{(2)}& \colhead{(3)}& 
 \colhead{(4)}& \colhead{(5)}& 
@@ -391,13 +407,13 @@ Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
 CID1174 & 1906.3037 & 43.43237 & 7.807 & 5898.264 & 44.76243 & 8.818 \\
 CID1281 & 1619.4891 & 43.23945 & 7.559 & ... & ... & ... \\
 CID206 & 3333.5527 & 43.4776 & 8.317 & ... & ... & ... \\
-CID216 & 2229.5232 & 42.84509 & 7.62 & ... & ... & ... \\
+CID216 & 2229.5232 & 42.84509 & 7.620 & ... & ... & ... \\
 CID237 & 2112.3306 & 43.85546 & 8.129 & ... & ... & ... \\
 CID255 & 1932.0933 & 43.9924 & 8.127 & 3709.241 & 45.37122 & 8.731 \\
 CID3242 & 2543.2202 & 43.83323 & 8.278 & 3774.503 & 45.09891 & 8.605 \\
 CID3570 & 1958.8551 & 43.16374 & 7.683 & ... & ... & ... \\
 CID452 & 3457.8801 & 42.92298 & 8.044 & 3127.3306 & 44.63353 & 8.201 \\
-CID454 & 2824.2693 & 43.34466 & 8.1 & ... & ... & ... \\
+CID454 & 2824.2693 & 43.34466 & 8.100 & ... & ... & ... \\
 CID50 & 2339.9104 & 43.93786 & 8.263 & 1938.5676 & 45.32766 & 8.145 \\
 CID543 & 2188.8447 & 43.57404 & 8.005 & ... & ... & ... \\
 CID597 & 1656.3296 & 43.32955 & 7.629 & ... & ... & ... \\
@@ -415,16 +431,16 @@ CDFS-321 & 2441.93 & 43.92714 & 8.294 & ... & ... & ... \\
 CDFS-724 & ... & ... & ... & ... & ... & ... \\
 ECDFS-358 & 2237.2314 & 43.39674 & 7.927 & ... & ... & ... \\
 SXDS-X1136 & 2759.8953 & 43.43305 & 8.129 & 6761.222 & 44.71429 & 8.912 \\
-SXDS-X50 & 1816.672 & 43.421 & 7.759 & ... & ... & ... \\
-SXDS-X717 & 2930.7417 & 43.04988 & 7.97 & ... & ... & ... \\
+SXDS-X50 & 1816.672 & 43.42100 & 7.759 & ... & ... & ... \\
+SXDS-X717 & 2930.7417 & 43.04988 & 7.970 & ... & ... & ... \\
 SXDS-X735 & 2702.0962 & 43.69804 & 8.256 & 3519.6052 & 45.07463 & 8.532 \\
 SXDS-X763 & 2961.1743 & 43.57321 & 8.267 & 4508.5146 & 44.51285 & 8.456 \\
 SXDS-X969 & 2296.0566 & 43.50066 & 8.006 & 1695.7146 & 45.05337 & 7.886 \\
 \enddata
-\label{tab:result_sersic}
+\label{tab:result_mbh}
 \tablecomments{
-Column 1: Object field and ID.
-Column 2: Redshifts.
+Column 1: Object ID.
+Column 2: .
 Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
 }
 \end{deluxetable*}
@@ -438,10 +454,10 @@ Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID206_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID216_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID237_SB_profile.pdf}
-\caption{\label{fig:ML} WFC3 F110W images for 12 objects. In each row, observed data (first column), best-fit models (second column), and residuals (third column) are presented with the object name. All images are $10.8\arcsec\times10.8\arcsec$ in size and
- displayed with an inverted asinh stretch.
-	    The fourth column shows the corresponding one-dimensional surface brightness profiles. In each top panel, the profiles measured from the data (open circles), the best-fit model (black solid line), and the sub-components of the model for bulge (blue solid line), disk (green solid line), AGN (red solid line) are shown. Residuals (gray circles), the difference of the profiles between the data and the best-fit model, are presented in each bottom panel. Note that the one-dimensional surface brightness profiles are shown for illustration purposes only, the actual fitting made use of the full two-dimensional images.}
-}
+\caption{\label{fig:QSO_decomp} 
+\textcolor{red}{need to be written:}
+%WFC3 images for 12 objects. In each row, observed data (first column), best-fit models (second column), and residuals (third column) are presented with the object name. All images are $10.8\arcsec\times10.8\arcsec$ in size and  displayed with an inverted asinh stretch. The fourth column shows the corresponding one-dimensional surface brightness profiles. In each top panel, the profiles measured from the data (open circles), the best-fit model (black solid line), and the sub-components of the model for bulge (blue solid line), disk (green solid line), AGN (red solid line) are shown. Residuals (gray circles), the difference of the profiles between the data and the best-fit model, are presented in each bottom panel. Note that the one-dimensional surface brightness profiles are shown for illustration purposes only, the actual fitting made use of the full two-dimensional images.
+}}
 \end{figure*} 
 
 \begin{figure*}
@@ -455,7 +471,7 @@ Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID50_SB_profile.pdf}
 }
 \figurenum{1}
-\caption{\label{fig:ML} Continued.}
+\caption{Continued.}
 \end{figure*} 
 
 \begin{figure*}
@@ -469,7 +485,7 @@ Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
 \includegraphics[height=0.25\textwidth]{fig/best_fit_XID2202_SB_profile.pdf}
 }
 \figurenum{1}
-\caption{\label{fig:ML} Continued.}
+\caption{Continued.}
 \end{figure*} 
 
 \begin{figure*}
@@ -483,7 +499,7 @@ Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
 \includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X1136_SB_profile.pdf}
 }
 \figurenum{1}
-\caption{\label{fig:ML} Continued.}
+\caption{Continued.}
 \end{figure*} 
 
 \begin{figure*}
@@ -497,7 +513,7 @@ Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
 \includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X969_SB_profile.pdf}
 }
 \figurenum{1}
-\caption{\label{fig:ML} Continued.}
+\caption{Continued.}
 \end{figure*} 
 
 \begin{figure*}
@@ -511,9 +527,16 @@ Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
 \includegraphics[height=0.25\textwidth]{fig/best_fit_ECDFS-358_SB_profile.pdf}
 }
 \figurenum{1}
-\caption{\label{fig:ML} Continued.}
+\caption{Continued.}
 \end{figure*} 
 
+\begin{figure*}
+\centering
+{
+\includegraphics[height=0.75\textwidth]{fig/flux_r_n_corner.pdf}
+}
+\caption{\label{fig:flux_r_n_corner} The relations among these values.}
+\end{figure*} 
 
 %\appendix
 %\section{If needed}
