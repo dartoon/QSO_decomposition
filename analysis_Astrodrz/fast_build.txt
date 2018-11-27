@@ -1,5 +1,0 @@
-#######
-
-mkdir xxx 
-cp -r ../template/temp_analysis/Drz06_temp/* xxx
-cp ../Cycle25data/xxx/*_flt.fits xxx/astrodrz

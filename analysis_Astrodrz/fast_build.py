@@ -50,3 +50,10 @@ filt_info = {'CDFS-1': 'F140w', 'CDFS-229': 'F125w', 'CDFS-724': 'F125w',\
 #    if ID not in ['XID2202', 'CID50', 'CID1174', 'CID206']:
 #        print key
 #        print call("cp ../template/temp_analysis/Drz06_temp/analysis/cut_PSFs.py {0}/analysis/".format(ID), shell=True)
+
+#for key in filt_info.keys():
+#    ID = key
+#    if ID not in ['CDFS-1']:
+#        print ID
+#        print call("cp {0}/analysis/4_analysis.py {0}/analysis/best_fit_plot_for_paper.py".format(ID), shell=True)
+    

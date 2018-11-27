@@ -2,15 +2,17 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 ############### with evolution-corrected or not? #################
-select = 1
+#select = 1
 host = 1
 
-#select= input('with evolution-corrected or not??? 0 = no;   1= yes, with dmag using dmag.py:')
+select= input('with evolution-corrected or not??? 0 = no;   1= yes, with dmag using dmag.py:')
 if select == 0:
    dm=0
 if select == 1:
    dm=1
-from dmag import dmag
+import sys
+sys.path.insert(0,'../py_tools')
+from dmag import pass_dmag
 ########input Park local data ############
 f1 ='data/parklocal'
 Pklc = np.loadtxt(f1)
@@ -23,7 +25,7 @@ if host == 0:
 if host == 1:
    ploc[:,1]= Pklc[:,5]    #LgV_total
 ploc[:,0]= Pklc[:,0]    #redshift
-ploc[:,1]=0.4*(4.61+0.46-4.83)+ploc[:,1]-0.4*dm*dmag(ploc[:,0])  #Change to LgR_sph, -0.4 is in L, be fainter
+ploc[:,1]=0.4*(4.61+0.46-4.83)+ploc[:,1]-0.4*dm*pass_dmag(ploc[:,0])  #Change to LgR_sph, -0.4 is in L, be fainter
 ploc[:,2]= Pklc[:,8]-0.03    #LogBHmass
 ploc[:,3]= Pklc[:,9]    #delta mass
 loc=np.zeros([len(ploc),3])

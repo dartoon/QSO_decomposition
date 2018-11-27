@@ -11,7 +11,7 @@ import numpy as np
 def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
                        error_map, filt, fixcenter,ID, cut=0, plot_compare=True,
                        QSO_msk_list = "",pix_sz = 'drz06', QSO_msk = None,
-                       tag=None):
+                       tag=None, plot_annuli=False):
     #==============================================================================
     # Translate the e1, e2 to phi_G and q
     #==============================================================================
@@ -71,10 +71,10 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
                   plot_compare = plot_compare, msk_image = QSO_mask)
     if tag is not None:
         fig.savefig("{0}_SB_profile.pdf".format(tag), bbox_inches = 'tight')
-    fig1 = total_compare(label_list = label, flux_list = flux_list, target_ID = ID, pix_sz=pix_sz,
-                  data_mask_list = mask_list, data_cut = cut, facility = filt,
-                  plot_compare = plot_compare, msk_image = QSO_mask, if_annuli=True)
-    if tag is not None:
+    if tag is not None and plot_annuli == True:
+        fig1 = total_compare(label_list = label, flux_list = flux_list, target_ID = ID, pix_sz=pix_sz,
+                      data_mask_list = mask_list, data_cut = cut, facility = filt,
+                      plot_compare = plot_compare, msk_image = QSO_mask, if_annuli=True)
         fig1.savefig("{0}_SB_profile_annuli.pdf".format(tag), bbox_inches = 'tight')
     
     # =============================================================================
@@ -85,7 +85,6 @@ def transfer_to_result(data, source_result, ps_result, image_ps, image_host,
     reduced_Chisq = chiq_map.sum()/pixels
     result=roundme(result)
     result['redu_Chisq'] = round(reduced_Chisq,6)
-    
     return result
 
 def transfer_to_result_ps(data, ps_result, image_ps, image_host,

@@ -157,7 +157,7 @@ for i in range(len(ID)):
     mag_max =-2.5*log10(amp_max) + zp
 #    print "mag for", ID[i], "{0}~{1}~{2}".format(round(mag_min,3),round(mag,3),round(mag_max,3))
     fit_mag.append(mag)
-    fit_mag_lh.append([mag_min-mag, mag-mag_max])
+    fit_mag_lh.append([mag-mag_max, mag_min-mag])
 
 fig, ax = plt.subplots(figsize=(15,9))
 for i in range(len(ID)):

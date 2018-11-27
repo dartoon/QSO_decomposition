@@ -1,0 +1,79 @@
+\begin{thebibliography}{}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{Bennert} {et~al.}(2010){Bennert}, {Treu}, {Woo}, {Malkan}, {Le
+  Bris}, {Auger}, {Gallagher}, \& {Blandford}}]{Ben++10}
+{Bennert}, V.~N., {Treu}, T., {Woo}, J., {et~al.} 2010, \apj, 708, 1507
+
+\bibitem[{{Blanton} \& {Roweis}(2007)}]{Blanton07}
+{Blanton}, M.~R., \& {Roweis}, S. 2007, \aj, 133, 734
+
+\bibitem[{{Civano} {et~al.}(2016){Civano}, {Marchesi}, {Comastri}, {Urry},
+  {Elvis}, {Cappelluti}, {Puccetti}, {Brusa}, {Zamorani}, {Hasinger},
+  {Aldcroft}, {Alexander}, {Allevato}, {Brunner}, {Capak}, {Finoguenov},
+  {Fiore}, {Fruscione}, {Gilli}, {Glotfelty}, {Griffiths}, {Hao}, {Harrison},
+  {Jahnke}, {Kartaltepe}, {Karim}, {LaMassa}, {Lanzuisi}, {Miyaji}, {Ranalli},
+  {Salvato}, {Sargent}, {Scoville}, {Schawinski}, {Schinnerer}, {Silverman},
+  {Smolcic}, {Stern}, {Toft}, {Trakhtenbrot}, {Treister}, \&
+  {Vignali}}]{Civano2016}
+{Civano}, F., {Marchesi}, S., {Comastri}, A., {et~al.} 2016, \apj, 819, 62
+
+\bibitem[{{Greene} \& {Ho}(2005)}]{Greene2005}
+{Greene}, J.~E., \& {Ho}, L.~C. 2005, \apj, 630, 122
+
+\bibitem[{{Kimura} {et~al.}(2010){Kimura}, {Maihara}, {Iwamuro}, {Akiyama},
+  {Tamura}, {Dalton}, {Takato}, {Tait}, {Ohta}, {Eto}, {Mochida}, {Elms},
+  {Kawate}, {Kurakami}, {Moritani}, {Noumaru}, {Ohshima}, {Sumiyoshi}, {Yabe},
+  {Brzeski}, {Farrell}, {Frost}, {Gillingham}, {Haynes}, {Moore}, {Muller},
+  {Smedley}, {Smith}, {Bonfield}, {Brooks}, {Holmes}, {Curtis Lake}, {Lee},
+  {Lewis}, {Froud}, {Tosh}, {Woodhouse}, {Blackburn}, {Content}, {Dipper},
+  {Murray}, {Sharples}, \& {Robertson}}]{Kimura2010}
+{Kimura}, M., {Maihara}, T., {Iwamuro}, F., {et~al.} 2010, \pasj, 62, 1135
+
+\bibitem[{{Lehmer} {et~al.}(2005){Lehmer}, {Brandt}, {Alexander}, {Bauer},
+  {Schneider}, {Tozzi}, {Bergeron}, {Garmire}, {Giacconi}, {Gilli}, {Hasinger},
+  {Hornschemeier}, {Koekemoer}, {Mainieri}, {Miyaji}, {Nonino}, {Rosati},
+  {Silverman}, {Szokoly}, \& {Vignali}}]{Lehmer2005}
+{Lehmer}, B.~D., {Brandt}, W.~N., {Alexander}, D.~M., {et~al.} 2005, \apjs,
+  161, 21
+
+\bibitem[{{Matsuoka} {et~al.}(2013){Matsuoka}, {Silverman}, {Schramm},
+  {Steinhardt}, {Nagao}, {Kartaltepe}, {Sanders}, {Treister}, {Hasinger},
+  {Akiyama}, {Ohta}, {Ueda}, {Bongiorno}, {Brandt}, {Brusa}, {Capak}, {Civano},
+  {Comastri}, {Elvis}, {Lilly}, {Mainieri}, {Masters}, {Mignoli}, {Salvato},
+  {Trump}, {Taniguchi}, {Zamorani}, {Alexander}, \&
+  {Schawinski}}]{Matsuoka2013}
+{Matsuoka}, K., {Silverman}, J.~D., {Schramm}, M., {et~al.} 2013, \apj, 771, 64
+
+\bibitem[{{Nobuta} {et~al.}(2012){Nobuta}, {Akiyama}, {Ueda}, {Watson},
+  {Silverman}, {Hiroi}, {Ohta}, {Iwamuro}, {Yabe}, {Tamura}, {Moritani},
+  {Sumiyoshi}, {Takato}, {Kimura}, {Maihara}, {Dalton}, {Lewis}, {Bonfield},
+  {Lee}, {Curtis-Lake}, {Macaulay}, {Clarke}, {Sekiguchi}, {Simpson}, {Croom},
+  {Ouchi}, {Hanami}, \& {Yamada}}]{Nobuta2012}
+{Nobuta}, K., {Akiyama}, M., {Ueda}, Y., {et~al.} 2012, \apj, 761, 143
+
+\bibitem[{Peterson {et~al.}(2004)Peterson, Ferrarese, Gilbert, Kaspi, Malkan,
+  Maoz, Merritt, Netzer, Onken, Pogge, Vestergaard, \& Wandel}]{Peterson2004}
+Peterson, B.~M., Ferrarese, L., Gilbert, K.~M., {et~al.} 2004, The
+  Astrophysical Journal, 613, 682
+
+\bibitem[{{Schulze} {et~al.}(2018){Schulze}, {Silverman}, {Kashino}, {Akiyama},
+  {Schramm}, {Sanders}, {Kartaltepe}, {Daddi}, {Rodighiero}, {Renzini},
+  {Arimoto}, {Nagao}, {Puglisi}, {Trakhtenbrot}, {Civano}, \&
+  {Suh}}]{Schulze2018}
+{Schulze}, A., {Silverman}, J.~D., {Kashino}, D., {et~al.} 2018, ArXiv
+  e-prints, arXiv:1810.07445
+
+\bibitem[{{Ueda} {et~al.}(2008){Ueda}, {Watson}, {Stewart}, {Akiyama},
+  {Schwope}, {Lamer}, {Ebrero}, {Carrera}, {Sekiguchi}, {Yamada}, {Simpson},
+  {Hasinger}, \& {Mateos}}]{Ueda2008}
+{Ueda}, Y., {Watson}, M.~G., {Stewart}, I.~M., {et~al.} 2008, \apjs, 179, 124
+
+\bibitem[{{Xue} {et~al.}(2011){Xue}, {Luo}, {Brandt}, {Bauer}, {Lehmer},
+  {Broos}, {Schneider}, {Alexander}, {Brusa}, {Comastri}, {Fabian}, {Gilli},
+  {Hasinger}, {Hornschemeier}, {Koekemoer}, {Liu}, {Mainieri}, {Paolillo},
+  {Rafferty}, {Rosati}, {Shemmer}, {Silverman}, {Smail}, {Tozzi}, \&
+  {Vignali}}]{Xue2011}
+{Xue}, Y.~Q., {Luo}, B., {Brandt}, W.~N., {et~al.} 2011, \apjs, 195, 10
+
+\end{thebibliography}

@@ -25,7 +25,7 @@ import pickle
 ratio_results, Re_results, n_results, total_flux_results, host_amp_results = [], [], [], [], []
 chisq_list, inf_list, best_PSF_id = [],[], []
 flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PSFs_lib_dict','rb'))
-folder = "fit_result_each_fix"
+folder = "fit_result_each_fix" #"fit_result_each_fix" or "fit_result_each"
 
 for j in range(len(ID)):
     f = open("{0}/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
@@ -147,7 +147,7 @@ for i in range(len(ID)):
     mag_max =-2.5*log10(amp_max) + zp
 #    print "mag for", ID[i], "{0}~{1}~{2}".format(round(mag_min,3),round(mag,3),round(mag_max,3))
     fit_mag.append(mag)
-    fit_mag_lh.append([mag_min-mag, mag-mag_max])
+    fit_mag_lh.append([mag-mag_max, mag_min-mag])
 
 fig, ax = plt.subplots(figsize=(15,9))
 for i in range(len(ID)):

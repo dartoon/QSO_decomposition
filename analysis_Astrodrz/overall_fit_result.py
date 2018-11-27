@@ -19,8 +19,10 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358',\
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724'\
 ]
+
+ID = ['CID1174']
 
 import pickle
 ratio_results, Re_results, n_results, total_flux_results, host_amp_results = [], [], [], [], []
@@ -60,9 +62,9 @@ for j in range(len(ID)):
     weight = np.zeros(len(Chisq))
     for i in sort_Chisq[:count_n]:
         weight[i] = np.exp(-1/2. * (Chisq[i]-Chisq_best)/(Chisq_best* inf_alp))
-#    for i in sort_Chisq:
-#        print PSF_id[i], Chisq[i], weight[i], host_flux_ratio[i], Re[i], S_n_list[i], round(total_flux[i],3),  round(host_amp[i],3),\
-#    round(flux_dict[PSF_id[i]],3), round(FWHM_dict[PSF_id[i]],3), "[{0},{1}]".format(int(round(locs_dict[PSF_id[i]][0])) , int(round(locs_dict[PSF_id[i]][1]))), round(id_stars_dict[PSF_id[i]],3)
+    for i in sort_Chisq:
+        print PSF_id[i], Chisq[i], weight[i], host_flux_ratio[i], Re[i], S_n_list[i], round(total_flux[i],3),  round(host_amp[i],3),\
+    round(flux_dict[PSF_id[i]],3), round(FWHM_dict[PSF_id[i]],3), "[{0},{1}]".format(int(round(locs_dict[PSF_id[i]][0])) , int(round(locs_dict[PSF_id[i]][1]))), round(id_stars_dict[PSF_id[i]],3)
     
     # =============================================================================
     # Weighting result
@@ -94,6 +96,7 @@ for j in range(len(ID)):
     chisq_list.append(Chisq_best)
     inf_list.append(inf_alp)
 
+'''
 import matplotlib as matt
 matt.rcParams['font.family'] = 'STIXGeneral'
 cmap = matplotlib.cm.get_cmap('viridis')
@@ -155,7 +158,7 @@ for i in range(len(ID)):
     mag_max =-2.5*log10(amp_max) + zp
 #    print "mag for", ID[i], "{0}~{1}~{2}".format(round(mag_min,3),round(mag,3),round(mag_max,3))
     fit_mag.append(mag)
-    fit_mag_lh.append([mag_min-mag, mag-mag_max])
+    fit_mag_lh.append([mag-mag_max, mag_min-mag])
 
 fig, ax = plt.subplots(figsize=(15,9))
 for i in range(len(ID)):
@@ -245,3 +248,4 @@ plt.show()
 
 for i in range(len(ID)):
     print ID[i], redshift_info[ID[i]], filt_info[ID[i]], ratio_results[i][0],'%', Re_results[i][0], n_results[i][0]
+'''

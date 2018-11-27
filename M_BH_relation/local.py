@@ -5,16 +5,18 @@ import matplotlib as mat
 #mat.rcParams['font.family'] = 'STIXGeneral'
 #plt.figure(figsize=(14.5,12))
 ############### with evolution-corrected or not? #################
-select = 1
+#select = 1
 host = 1
 
-#select= input('with evolution-corrected or not??? 0 = no;   1= yes, with dmag using dmag.py:')
+select= input('with evolution-corrected or not??? 0 = no;   1= yes, with dmag using dmag.py:')
 if select == 0:
    dm=0
 if select == 1:
    dm=1
-   
-from dmag import dmag
+
+import sys
+sys.path.insert(0,'../py_tools')
+from dmag import pass_dmag
 ########input Park local data ############
 f1 ='data/parklocal'
 Pklc = np.loadtxt(f1)
@@ -26,7 +28,7 @@ if host == 0:
 if host == 1:
    ploc[:,1]= Pklc[:,5]    #LgV_total
 ploc[:,0]= Pklc[:,0]    #redshift
-ploc[:,1]=0.4*(4.61+0.46-4.83)+ploc[:,1]-0.4*dm*dmag(ploc[:,0])  #Change to LgR_sph, -0.4 times fainter
+ploc[:,1]=0.4*(4.61+0.46-4.83)+ploc[:,1]-0.4*dm*pass_dmag(ploc[:,0])  #Change to LgR_sph, -0.4 times fainter
 ploc[:,2]= Pklc[:,8]-0.03    #LogBHmassc, 0.03 is the updated recipe according to Daeseong's Email.
 ploc[:,3]= Pklc[:,9]    #delta mass
 #Pkc=plt.errorbar(ploc[:,1],ploc[:,2],yerr=ploc[:,3],fmt='*',color='green',markersize=18)

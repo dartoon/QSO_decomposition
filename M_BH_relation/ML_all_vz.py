@@ -17,10 +17,11 @@ ax=host.add_subplot(111)   #to get the log(1+z) and z label
 
 import matplotlib as mpl
 mpl.rc('image', cmap='jet')
+import sys
+sys.path.insert(0,'../py_tools')
+from dmag import pass_dmag
 
-from dmag import dmag
-
-inp_peng = 0
+inp_peng = 1
 
 ########## input local data ####
 #==============================================================================
@@ -41,7 +42,7 @@ if host == 1:
 pk = np.loadtxt(f0)  #0 redshift; 1 BH mass; 2 Lv,obs,solar=0.4*(4.83-M_v)
 pk[:,2]=4.83-pk[:,2]/0.4  # tansfer from L to Magnitude 
 pk[:,2]=pk[:,2]-0.46  # transfer from V to R; 0.46 is the mean value of the data from Taka
-pk[:,2]=pk[:,2]+dm*dmag(pk[:,0])  #evolution of stellar population makes the mag fainter.
+pk[:,2]=pk[:,2]+dm*pass_dmag(pk[:,0])  #evolution of stellar population makes the mag fainter.
 pk[:,2]=0.4*(4.61-pk[:,2])
 park=plt.errorbar(np.log10(1+pk[:,0]),pk[:,1]-(m_mid*pk[:,2]+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='.',color='darkseagreen')#,markersize=1)
 SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_mid*pk[63:,2]+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='.',color='tomato')#,markersize=1)
@@ -52,11 +53,11 @@ SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_mid*pk[63:,2]+b_mid),yerr=(
 from cal_peng import *
 
 Mg_cali=vec_Mgcal(L_Mg,FWHM_Mg)
-Mg[:,3]=Mg[:,3]+0.21+dm*dmag(Mg[:,1])
+Mg[:,3]=Mg[:,3]+0.21+dm*pass_dmag(Mg[:,1])
 Hb_cali=vec_Hcal(L_hb,FWHM_hb)
-H[:,3]=H[:,3]+0.21+dm*dmag(H[:,1])   #change Mg from Vega to AB
+H[:,3]=H[:,3]+0.21+dm*pass_dmag(H[:,1])   #change Mg from Vega to AB
 C_cali=vec_Ccal(L_c,FWHM_c)
-C[:,3]=C[:,3]+0.21+dm*dmag(C[:,1])   #change Mg from Vega to AB
+C[:,3]=C[:,3]+0.21+dm*pass_dmag(C[:,1])   #change Mg from Vega to AB
 ##################plot#############################
 ###############plot the data in Peng################
 #For lensed samples
@@ -76,7 +77,7 @@ if inp_peng == 1:
 ###########HE0435 information using Mg#############
 z_0435,L_0435,FWHM_0435=1.69,46-np.log10(5.15),4930
 M_0435=Mgcal(L_0435,FWHM_0435)
-mag_0435=21.75 -1.2514 + dm*dmag(z_0435) #to vega for K correction, -1.2514 is the filter at F160w
+mag_0435=21.75 -1.2514 + dm*pass_dmag(z_0435) #to vega for K correction, -1.2514 is the filter at F160w
 Mag_0435=mag_0435-(20.09-(-23.40))  #23.40 and 20.09 are in Vege system, the K-correction value is the same as AB.
 Mag_0435=Mag_0435+0.21     #change Mg from Vega to AB in R band
 L_0435=0.4*(4.61-Mag_0435)
@@ -94,8 +95,8 @@ from RXJ_Mr import Mr_bulge, Mr_disk ###1=bulge; 2=disk, K_correction inferred b
 Mag_1131_1= Mr_bulge   
 Mag_1131_2= Mr_disk
 #print "L_bulge_1131=",0.4*(4.61-Mag_1131_1),"L_disk_1131=",0.4*(4.61-Mag_1131_2) 
-Mag_1131_tot=-2.5*np.log10(10**((Mag_1131_1+dm*dmag(0.65))/-2.5)+10**((Mag_1131_2+dm*dmag(0.65))/-2.5))  # with brightness correction
-Mag_1131_b=Mag_1131_1+dm*dmag(0.65)  #-21.85 for the bulge, -23.183 for the disk
+Mag_1131_tot=-2.5*np.log10(10**((Mag_1131_1+dm*pass_dmag(0.65))/-2.5)+10**((Mag_1131_2+dm*pass_dmag(0.65))/-2.5))  # with brightness correction
+Mag_1131_b=Mag_1131_1+dm*pass_dmag(0.65)  #-21.85 for the bulge, -23.183 for the disk
 M_1131=np.log10((10**M_Hb_1131+10**M_Mg_1131)/2)
 if host==0:
     Mag_1131=Mag_1131_b
@@ -123,22 +124,20 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358']
-zs = np.array([1.630, 1.301, 1.667, 1.447, 1.326, 1.570, 1.552, 1.567, 1.618, 1.532, 1.244, 1.407, 1.478, 1.239, 1.294, 1.617, 1.527, 1.579, 1.325, 1.411, 1.276, 1.412, 1.585, 1.551, 1.516, 1.600, 1.483, 1.626])
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724']
+zs = np.array([1.630, 1.301, 1.667, 1.447, 1.326, 1.570, 1.552, 1.567, 1.618, 1.532, 1.244, 1.407, 1.478, 1.239, 1.294, 1.617, 1.527, 1.579, 1.325, 1.411, 1.276, 1.412, 1.585, 1.551, 1.516, 1.600, 1.483, 1.626, 1.337])
 mags = np.array([22.656, 21.950, 21.865, 20.919, 21.568, 20.337, 21.415, 21.510, 21.279, 21.161,\
 21.164, 21.176, 21.212, 20.915, 21.189, 20.939, 21.251, 21.483, 21.921, 21.943,\
-21.759, 24.134, 21.594, 21.845, 21.160, 21.404, 21.810, 21.340])
+21.759, 24.134, 21.594, 21.845, 21.160, 21.404, 21.810, 21.340, 23.695])
 
-from dmag import d_kcorr_R
-import sys
-sys.path.insert(0,'../py_tools')
+from dmag import k_corr_R
 from filter_info import filt_info
 dm_k_R = []
 for i in range(len(zs)):
-    dm_k_R.append(d_kcorr_R(zs[i],filt_info[ID[i]]))
+    dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '5Gyrs'))
 dm_k_R = np.asarray(dm_k_R)   # Get the k-correction for each target as an array
 dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
-host_mags=mags-5*(np.log10(dl)-1) + dm_k_R + dm*dmag(zs)  # 0.7 is the k-correction value
+host_mags=mags-5*(np.log10(dl)-1) + dm_k_R + dm*pass_dmag(zs)  # 0.7 is the k-correction value
 lumi_s = 0.4*(4.61-host_mags)
                     
 f = open("fmos_MBH_table","r")
@@ -156,7 +155,7 @@ MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','LID1820','LID1622',\
-'LID1878', 'CID206', 'ECDFS-358']
+'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724']
 
 for j in range(len(ID)):
     count = 0
@@ -323,4 +322,5 @@ else:
     "local AGNs",\
     "our new samples"
     ],scatterpoints=1,numpoints=1,loc=2,prop={'size':23},ncol=2,handletextpad=0)
+plt.savefig("MBHL-z.pdf")
 plt.show()
