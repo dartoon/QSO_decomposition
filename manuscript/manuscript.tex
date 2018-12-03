@@ -72,8 +72,11 @@ In this section, we summarize the sample selection, observations, and data reduc
 
 We aim to study the relation between the BH masses (\mbh) and their host galaxy properties including luminosities (\lhost) and stellar mass to redshift at $z>1$. For this propose, we focus on the broad-line (type-1) AGNs as provided by the X-ray coverage of COSMOS \citep{Civano2016}, (E)-CDFS-S \citep{Lehmer2005, Xue2011}, and SXDS \citep{Ueda2008} fields. We select the broad-line AGNs at redshift region $1.2<z<1.7$ which cover a BH range $7.5<{\rm log}$\mbh $<8.5$. The Near IR spectra of AGNs are available from the survey of Subaru's Fiber Multi-Object Spectrograph \citep[FMOS, ][]{Kimura2010, Schulze2018}, a near-infrared (0.9-1.8 $\mu m$) spectrograph have with 400 apertures. The FMOS survey provides the best \mbh\ estimates by \halpha\ and \hbeta\ lines out to $z\sim1.7$ \citep{Greene2005, Matsuoka2013, Nobuta2012}.
 
-Our final sample is composed of 36  AGNs; 32 of them are new systems \textcolor{red}{\bf (32+4?, the information of these four sample?)}. To compare with the samples in the literature, we adopt the samples from ... \textcolor{blue}{\bf The samples from H0licow7}
-For the calibration with the local relation, we introduce the well-defined 19 local AGN measurements \citep{Ben++10, Peterson2004} which defines the zero-point. Table~\ref{tab:objlist} list all the AGN systems analyzed in this work.
+Our final sample is composed of 36  AGNs; 32 of them are new observations by HST/WFC3 \textcolor{red}{\bf (32+4?, the information of these four sample?)}. Table~\ref{tab:objlist} list all the AGN systems analyzed in this work.
+
+
+To compare with the samples in the literature, we adopt the samples from ... \textcolor{blue}{\bf (H0licow7)}.
+For the calibration with the local relation, we introduce the well-defined 19 local AGN measurements \citep{Ben++10, Peterson2004} which defines the zero-point. 
 
 \subsection{Observation and reduction}
 \label{observation}
@@ -176,7 +179,7 @@ and
 &~+~& 2 \log \left(\frac{\rm FWHM(H\alpha)}{1000 ~{\rm km~s^{-1}}}\right) , 
 \end {eqnarray}
 
-With the self-consistent cross-calibration, we estimate the \mbh\ by adopting the emission line properties measured by \citet{Schulze2018}. For the system with both \halpha\ and \hbeta\ emission line information, we adopt the average \mbh\ value by these two. We summarized the inference of the \mbh\ together with the details on the emission line in Table~\ref{tab:result_mbh}.
+Having defined the recipes, we estimate the \mbh\ by adopting the emission line properties measured by \citet{Schulze2018}. 14 of the overall systems have both \halpha\ and \hbeta\ emission line information; we adopt the average \mbh\ value by these two lines. We summarized the inference of the \mbh\ together with the details on the emission line in Table~\ref{tab:result_mbh}.
 
 
 \section{Results}
@@ -194,7 +197,7 @@ We presented the study of the Mbh and host property's evolution to high redshift
 \section{discuss}
 \label{sec:dis}
 \subsection{Systematic error}
-\subsection{Fitting mask for CID1174 and ECDFS-358}
+\subsection{Fitting mask for CID206 and ECDFS-358}
 
 \section*{Acknowledgments}
 We thank the people who discuss with the paper.
@@ -267,7 +270,7 @@ Column 4 and 5: The $RA$ and $DEC$ of the system.
 \begin{deluxetable*}{ccccccc}
 \tablecolumns{7}
 \tablewidth{0pt}
-\tablecaption{Details of the weighting for the inference of CID1174. } 
+\tablecaption{Details of the weighting CID1174's inference. } 
 \tablehead{ 
 \colhead{PSF rank} &
 \colhead{total $\chi ^2$} & 
@@ -404,44 +407,44 @@ Column~10: The inferred host Luminosity in the rest-frame R band.
 \colhead{(6)}&\colhead{(7)}
 }
 \startdata 
-CID1174 & 1906.3037 & 43.43237 & 7.807 & 5898.264 & 44.76243 & 8.818 \\
-CID1281 & 1619.4891 & 43.23945 & 7.559 & ... & ... & ... \\
-CID206 & 3333.5527 & 43.4776 & 8.317 & ... & ... & ... \\
-CID216 & 2229.5232 & 42.84509 & 7.620 & ... & ... & ... \\
-CID237 & 2112.3306 & 43.85546 & 8.129 & ... & ... & ... \\
-CID255 & 1932.0933 & 43.9924 & 8.127 & 3709.241 & 45.37122 & 8.731 \\
-CID3242 & 2543.2202 & 43.83323 & 8.278 & 3774.503 & 45.09891 & 8.605 \\
-CID3570 & 1958.8551 & 43.16374 & 7.683 & ... & ... & ... \\
-CID452 & 3457.8801 & 42.92298 & 8.044 & 3127.3306 & 44.63353 & 8.201 \\
-CID454 & 2824.2693 & 43.34466 & 8.100 & ... & ... & ... \\
-CID50 & 2339.9104 & 43.93786 & 8.263 & 1938.5676 & 45.32766 & 8.145 \\
-CID543 & 2188.8447 & 43.57404 & 8.005 & ... & ... & ... \\
-CID597 & 1656.3296 & 43.32955 & 7.629 & ... & ... & ... \\
-CID607 & 3009.1816 & 43.67079 & 8.335 & 4241.526 & 44.78209 & 8.542 \\
-CID70 & 2480.4058 & 43.50531 & 8.076 & 3981.8574 & 45.1582 & 8.682 \\
-LID1273 & 3223.8484 & 43.61001 & 8.361 & ... & ... & ... \\
-LID1538 & 2941.422 & 43.59594 & 8.274 & ... & ... & ... \\
-LID360 & 2481.7253 & 43.88091 & 8.283 & 2868.8992 & 45.08676 & 8.36 \\
-XID2138 & 3185.8613 & 43.6148 & 8.354 & 2944.7766 & 44.80782 & 8.239 \\
-XID2202 & 2973.2378 & 43.56249 & 8.265 & ... & ... & ... \\
-XID2396 & 2271.2617 & 44.06196 & 8.306 & 2657.8386 & 45.50467 & 8.51 \\
+CID1174 & 1906.3037 & 43.43237 & 7.992 & 5898.264 & 44.76243 & 8.833 \\
+CID1281 & 1619.4891 & 43.23945 & 7.749 & ... & ... & ... \\
+CID206 & 3333.5527 & 43.4776 & 8.528 & ... & ... & ... \\
+CID216 & 2229.5232 & 42.84509 & 7.854 & ... & ... & ... \\
+CID237 & 2112.3306 & 43.85546 & 8.289 & ... & ... & ... \\
+CID255 & 1932.0933 & 43.9924 & 8.273 & 3709.241 & 45.37122 & 8.734 \\
+CID3242 & 2543.2202 & 43.83323 & 8.449 & 3774.503 & 45.09891 & 8.613 \\
+CID3570 & 1958.8551 & 43.16374 & 7.888 & ... & ... & ... \\
+CID452 & 3457.8801 & 42.92298 & 8.295 & 3127.3306 & 44.63353 & 8.217 \\
+CID454 & 2824.2693 & 43.34466 & 8.311 & ... & ... & ... \\
+CID50 & 2339.9104 & 43.93786 & 8.423 & 1938.5676 & 45.32766 & 8.149 \\
+CID543 & 2188.8447 & 43.57404 & 8.187 & ... & ... & ... \\
+CID597 & 1656.3296 & 43.32955 & 7.813 & ... & ... & ... \\
+CID607 & 3009.1816 & 43.67079 & 8.526 & 4241.526 & 44.78209 & 8.556 \\
+CID70 & 2480.4058 & 43.50531 & 8.269 & 3981.8574 & 45.1582 & 8.689 \\
+LID1273 & 3223.8484 & 43.61001 & 8.561 & ... & ... & ... \\
+LID1538 & 2941.422 & 43.59594 & 8.469 & ... & ... & ... \\
+LID360 & 2481.7253 & 43.88091 & 8.45 & 2868.8992 & 45.08676 & 8.369 \\
+XID2138 & 3185.8613 & 43.6148 & 8.552 & 2944.7766 & 44.80782 & 8.252 \\
+XID2202 & 2973.2378 & 43.56249 & 8.463 & ... & ... & ... \\
+XID2396 & 2271.2617 & 44.06196 & 8.455 & 2657.8386 & 45.50467 & 8.511 \\
 CDFS-1 & ... & ... & ... & ... & ... & ... \\
 CDFS-229 & ... & ... & ... & ... & ... & ... \\
-CDFS-321 & 2441.93 & 43.92714 & 8.294 & ... & ... & ... \\
+CDFS-321 & 2441.93 & 43.92714 & 8.457 & ... & ... & ... \\
 CDFS-724 & ... & ... & ... & ... & ... & ... \\
-ECDFS-358 & 2237.2314 & 43.39674 & 7.927 & ... & ... & ... \\
-SXDS-X1136 & 2759.8953 & 43.43305 & 8.129 & 6761.222 & 44.71429 & 8.912 \\
-SXDS-X50 & 1816.672 & 43.42100 & 7.759 & ... & ... & ... \\
-SXDS-X717 & 2930.7417 & 43.04988 & 7.970 & ... & ... & ... \\
-SXDS-X735 & 2702.0962 & 43.69804 & 8.256 & 3519.6052 & 45.07463 & 8.532 \\
-SXDS-X763 & 2961.1743 & 43.57321 & 8.267 & 4508.5146 & 44.51285 & 8.456 \\
-SXDS-X969 & 2296.0566 & 43.50066 & 8.006 & 1695.7146 & 45.05337 & 7.886 \\
+ECDFS-358 & 2237.2314 & 43.39674 & 8.122 & ... & ... & ... \\
+SXDS-X1136 & 2759.8953 & 43.43305 & 8.333 & 6761.222 & 44.71429 & 8.927 \\
+SXDS-X50 & 1816.672 & 43.421 & 7.942 & ... & ... & ... \\
+SXDS-X717 & 2930.7417 & 43.04988 & 8.204 & ... & ... & ... \\
+SXDS-X735 & 2702.0962 & 43.69804 & 8.44 & 3519.6052 & 45.07463 & 8.54 \\
+SXDS-X763 & 2961.1743 & 43.57321 & 8.465 & 4508.5146 & 44.51285 & 8.474 \\
+SXDS-X969 & 2296.0566 & 43.50066 & 8.196 & 1695.7146 & 45.05337 & 7.895 \\
 \enddata
 \label{tab:result_mbh}
 \tablecomments{
 Column 1: Object ID.
-Column 2: .
-Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
+Column 2-4: The emission line width (FWHM), continuum luminosity and inferred \mbh by \halpha\ emission line. 
+Column 5-7: The inference by \hbeta\ emission line. 
 }
 \end{deluxetable*}
 
@@ -456,7 +459,9 @@ Column 3: HST filter. The samples with marker $^*$ have the ACS/F814W.
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID237_SB_profile.pdf}
 \caption{\label{fig:QSO_decomp} 
 \textcolor{red}{need to be written:}
-%WFC3 images for 12 objects. In each row, observed data (first column), best-fit models (second column), and residuals (third column) are presented with the object name. All images are $10.8\arcsec\times10.8\arcsec$ in size and  displayed with an inverted asinh stretch. The fourth column shows the corresponding one-dimensional surface brightness profiles. In each top panel, the profiles measured from the data (open circles), the best-fit model (black solid line), and the sub-components of the model for bulge (blue solid line), disk (green solid line), AGN (red solid line) are shown. Residuals (gray circles), the difference of the profiles between the data and the best-fit model, are presented in each bottom panel. Note that the one-dimensional surface brightness profiles are shown for illustration purposes only, the actual fitting made use of the full two-dimensional images.
+Figure illustrates the inference by WFC3 images for the 34 objects.
+In each row, observed data (first column), best-fit models (second column), data subtracted by the inferred point source (third column),  normalized residuals (fourth column) are presented together with the target ID. In the fifth column, we present the 1-D surface brightness profiles and the corresponding residual. \textcolor{blue}{The different colors means blash blash...}
+%In each row, observed data (first column), best-fit models (second column), and residuals (third column) are presented with the object name. All images are $10.8\arcsec\times10.8\arcsec$ in size and  displayed with an inverted asinh stretch. The fourth column shows the corresponding one-dimensional surface brightness profiles. In each top panel, the profiles measured from the data (open circles), the best-fit model (black solid line), and the sub-components of the model for bulge (blue solid line), disk (green solid line), AGN (red solid line) are shown. Residuals (gray circles), the difference of the profiles between the data and the best-fit model, are presented in each bottom panel. Note that the one-dimensional surface brightness profiles are shown for illustration purposes only, the actual fitting made use of the full two-dimensional images.
 }}
 \end{figure*} 
 

@@ -38,7 +38,7 @@ plt.imshow((QSO_msk0), origin='low')
 plt.show()
 plt.imshow((QSO_msk1), origin='low') 
 plt.show()
-#pyfits.PrimaryHDU(QSO_msk0).writeto('{0}_msk0.fits'.format(ID),overwrite=True)
+pyfits.PrimaryHDU(QSO_msk0).writeto('{0}_msk0.fits'.format(ID),overwrite=True)
 pyfits.PrimaryHDU(QSO_msk1).writeto('{0}_msk.fits'.format(ID),overwrite=True)
 
 #import glob

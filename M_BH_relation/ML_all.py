@@ -174,13 +174,13 @@ for tar_in in range(len(ID)):
     t_name = ID[tar_in]
     ser = ID_ser_dic[t_name]
 #    print ser
-    if ser!=-99 and samples[ser][10] != 0:
+    if ser!=-99 and float(samples[ser][10]) != 0:
         FWMH_a = float(samples[ser][8])
         logLHadr = float(samples[ser][6])
         cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
 #        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
         MBs.append(cal_logMa)
-    elif ser!=-99 and samples[ser][21] != 0:
+    elif ser!=-99 and float(samples[ser][21]) != 0:
         print "use Hb for", ID[tar_in]
         FWMH_b = float(samples[ser][19])
         logL5100dr = float(samples[ser][16])

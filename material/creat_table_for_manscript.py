@@ -181,16 +181,16 @@ for tar_in in range(len(tab_list)):
     if ser!=-99 and float(samples[ser][10]) != 0:
         FWMH_a = float(samples[ser][8])
         logLHadr = float(samples[ser][6])
-#        cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
-        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
+        cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
+#        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
         MB_info_a.append([FWMH_a, logLHadr, cal_logMa])
     else:
         MB_info_a.append([-99,-99,-99])
     if ser!=-99 and float(samples[ser][21]) != 0:
         FWMH_b = float(samples[ser][19])
         logL5100dr = float(samples[ser][16])
-#        cal_logMb = 6.91+0.5*(logL5100dr-44)+2.*np.log10(FWMH_b/1000)  # as used in Andreas
-        cal_logMb = 6.882+0.518*(logL5100dr-44)+2.*np.log10(FWMH_b/1000)        # calibrated in H0liCOW 7
+        cal_logMb = 6.91+0.5*(logL5100dr-44)+2.*np.log10(FWMH_b/1000)  # as used in Andreas
+#        cal_logMb = 6.882+0.518*(logL5100dr-44)+2.*np.log10(FWMH_b/1000)        # calibrated in H0liCOW 7
         MB_info_b.append([FWMH_b, logL5100dr, cal_logMb])
     else:
         MB_info_b.append([-99,-99,-99])

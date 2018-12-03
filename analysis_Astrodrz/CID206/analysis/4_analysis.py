@@ -30,7 +30,7 @@ filt = filt_info[ID]
 QSO_bkg_value= 0.
 QSO_im = pyfits.getdata('{0}_cutout.fits'.format(ID)) - QSO_bkg_value
 QSO_msk = pyfits.getdata('{0}_msk.fits'.format(ID))
-frame_size = 61
+frame_size = 41
 #frame = '{0}'.format(frame_size)
 QSO_fm = len(QSO_im)
 ct = (QSO_fm-frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
@@ -98,11 +98,15 @@ kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0
 kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -0.2, 'center_y': -0.2})
 kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 0.2, 'center_y': 0.2})
 
-#fixed_source.append({})  # The object like
-#kwargs_source_init.append({'R_sersic': 0.1, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -0.2, 'center_y': -0.2})
-#kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
-#kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -0.5, 'center_y': -0.5})
-#kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 0.5, 'center_y': 0.5})
+## If want to add obj manually
+#pos = np.array([31, 13])
+#pos -= np.array([len(QSO_im)/2, len(QSO_im)/2])
+#pos = pos * pix_s
+#fixed_source.append({})  
+#kwargs_source_init.append({'R_sersic': 0.1, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -pos[0], 'center_y': pos[1]})
+#kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.2, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
+#kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.01, 'n_sersic': 0.3, 'center_x': -pos[0]-0.1, 'center_y': pos[1]-0.1})
+#kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 0.1, 'n_sersic': 3., 'center_x': -pos[0]+0.1, 'center_y': pos[1]+0.1})
 
 #if len(obj) >= 1:
 #    for i in range(len(obj)):
@@ -113,15 +117,15 @@ kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7.
 #        kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': -obj[i][0][0]*pix_s+0.15, 'center_y': obj[i][0][1]*pix_s+0.15})
 
 source_params = [kwargs_source_init, kwargs_source_sigma, fixed_source, kwargs_lower_source, kwargs_upper_source]
+deep_seed = True
 
-
-if os.path.exists('fit_result_each')==False:
-    os.mkdir('fit_result_each')
+if os.path.exists('fit_result_each_sm_frame')==False:
+    os.mkdir('fit_result_each_sm_frame')
 
 import time
 t1 = time.time()
 fixcenter = False
-filename = 'fit_result_each/each_PSF_fit_qso.txt'
+filename = 'fit_result_each_sm_frame/each_PSF_fit_qso.txt'
 if_file = glob.glob(filename)   
 if if_file == []:
     fit_result =  open(filename,'w') 
@@ -131,10 +135,10 @@ elif if_file is not []:
 count = 0
 for i in np.array(range(len(psf_name_list))):
     print "{2} by PSF: {0}, PSF NO. {1}".format(psf_name_list[i], i, ID)
-    tag = 'fit_result_each/qso_fit_PSF{0}'.format(i)
+    tag = 'fit_result_each_sm_frame/qso_fit_PSF{0}'.format(i)
     psf_i = psf_list[i] * PSF_mask_img_list[i]
     psf_i = psf_i[ct:-ct,ct:-ct]
-    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_i, psf_std = None,
+    source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_i, psf_std = None, deep_seed=deep_seed,
                                                                      background_rms=background_rms,
                                                                      source_params=source_params, QSO_msk = QSO_msk, fixcenter=fixcenter,
                                                                      pix_sz = 'drz06', no_MCMC =True,
@@ -153,5 +157,5 @@ t2 = time.time()
 t_tot= (t2-t1)/60
 print "total time:", t_tot, "mins"
 
-import os
-os.system('say "your program has finished"')
+#import os
+#os.system('say "your program has finished"')
