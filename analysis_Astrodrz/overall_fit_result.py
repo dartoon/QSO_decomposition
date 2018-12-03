@@ -14,12 +14,11 @@ from adjustText import adjust_text   # avoid the overlapping while ploting
 import sys
 sys.path.insert(0,'../py_tools')
 from filter_info import filt_info, redshift_info
-'''
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724'\
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
 ]
 #ID = ['CID1174']
 
@@ -177,7 +176,6 @@ cbar = matplotlib.colorbar.ColorbarBase(cax, cmap=cmap, norm=normalize)
 cbar.set_label('Sersic n',  fontsize=12)
 plt.tick_params(labelsize=15)
 plt.show()   
-'''               
         
 #==============================================================================
 # Sersic_n, R_eff relation, host_flux_ratio corner relation

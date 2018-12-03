@@ -104,3 +104,9 @@ PSF_intensity:401.09
 #fit by PSFCID3570_1: 
 PSF_intensity:847.29 
 {'n_sersic': 2.434, 'host_mag': 22.679, 'R_sersic': 0.101, 'qso_y': 0.03, 'qso_x': -0.045, 'QSO_amp': 100.175, 'q': 0.334, 'redu_Chisq': 3.419993, 'center_x': -0.039, 'center_y': 0.031, 'host_amp': 26.34, 'phi_G': 0.676, 'amp': 2.065, 'host_flux_ratio_percent': 20.819}
+#fit by PSFCID597_0: 
+PSF_intensity:820.99 
+{'n_sersic': 2.673, 'host_mag': 22.652, 'R_sersic': 0.102, 'qso_y': 0.026, 'qso_x': -0.02, 'QSO_amp': 103.346, 'q': 0.828, 'redu_Chisq': 2.371296, 'center_x': -0.098, 'center_y': -0.005, 'host_amp': 26.988, 'phi_G': 1.544, 'amp': 0.792, 'host_flux_ratio_percent': 20.707}
+#fit by PSFCID597_1: 
+PSF_intensity:713.85 
+{'n_sersic': 2.459, 'host_mag': 22.009, 'R_sersic': 0.101, 'qso_y': 0.032, 'qso_x': 0.018, 'QSO_amp': 80.784, 'q': 0.391, 'redu_Chisq': 3.03932, 'center_x': -0.061, 'center_y': 0.057, 'host_amp': 48.794, 'phi_G': 1.147, 'amp': 2.165, 'host_flux_ratio_percent': 37.656}

@@ -90,7 +90,7 @@ kwargs_source_sigma = []
 kwargs_lower_source = []
 kwargs_upper_source = []      
 
-fix_re, fix_n = 0.296, 2.173
+fix_re, fix_n = 0.309, 1.862
 fixed_source.append({'R_sersic': fix_re,'n_sersic': fix_n})  
 kwargs_source_init.append({'R_sersic': fix_re, 'n_sersic': fix_n, 'e1': 0., 'e2': 0., 'center_x': 0., 'center_y': 0.})
 kwargs_source_sigma.append({'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})

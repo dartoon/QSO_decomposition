@@ -38,6 +38,7 @@ ct = (QSO_fm-frame_size)/2     # If want to cut to 61, i.e. (121-61)/2=30
 import pickle
 PSFs_dict = {}
 QSOs_dict = {}
+
 for key in filt_info.keys():
     PSFs, QSOs=pickle.load(open('../../{0}/analysis/{0}_PSFs_QSO'.format(key),'rb'))
     PSFs_dict.update({'{0}'.format(key):PSFs})
@@ -46,7 +47,15 @@ for key in filt_info.keys():
 PSF_list = []
 PSF_id = []
 filter_list = []
-for key in PSFs_dict.keys():
+PSF_keys = PSFs_dict.keys()
+index1 = PSF_keys.index('CID1281')
+del PSF_keys[index1]
+index2 = PSF_keys.index('CID597')
+del PSF_keys[index2]
+PSF_keys.append('CID1281')
+PSF_keys.append('CID597')
+
+for key in PSF_keys:
     if filt_info[key] == filt:
         psfs_dict = PSFs_dict[key]
         psfs = [psfs_dict[i] for i in range(len(psfs_dict))]

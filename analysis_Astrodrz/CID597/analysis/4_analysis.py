@@ -54,7 +54,7 @@ del PSF_keys[index2]
 PSF_keys.append('CID1281')
 PSF_keys.append('CID597')
 
-for key in PSFs_dict.keys():
+for key in PSF_keys:
     if filt_info[key] == filt:
         psfs_dict = PSFs_dict[key]
         psfs = [psfs_dict[i] for i in range(len(psfs_dict))]
