@@ -38,6 +38,7 @@ file_list = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', '
 #            wdir='/Users/Dartoon/Astro/QSO_decomposition/analysis_Astrodrz/{0}/analysis'.format(file_list[i]))
     
 
+'''
 #
 #file_list = ['CID1174', 'CID206', 'CID216', 'CID237', 'CID3242', 'CID3570', 'CID452',\
 #'CID454', 'CID50', 'CID543', 'CID607', 'CID70', 'XID2138', 'XID2202', 'XID2396',\
@@ -62,3 +63,4 @@ for i in range(len(name_list)):
         print name_list[i], "+ACS/F814W"
     else:
         print '\n'
+'''

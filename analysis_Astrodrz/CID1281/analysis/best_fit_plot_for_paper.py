@@ -92,7 +92,7 @@ background_rms = np.std(QSO_outer* (1-mask*1))
 print "background_rms: ", background_rms
 QSO_msk = QSO_msk[ct:-ct,ct:-ct]
 QSO_im = QSO_im[ct:-ct,ct:-ct]
-QSO_msk = QSO_msk*0 +1    # This is no mask is added
+QSO_msk = QSO_msk*0 +1    # This means no mask is added
 QSO_std = pyfits.getdata('wht_err.fits')[ct:-ct,ct:-ct]
 ##############################Fit
 #==============================================================================
@@ -114,6 +114,16 @@ kwargs_source_init.append({'R_sersic': 0.3, 'n_sersic': 2., 'e1': 0., 'e2': 0., 
 kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
 kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.1, 'n_sersic': 0.3, 'center_x': -0.5, 'center_y': -0.5})
 kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': 0.5, 'center_y': 0.5})
+
+# If want to add obj manually
+pos = np.array([43, 28])
+pos -= np.array([len(QSO_im)/2, len(QSO_im)/2])
+pos = pos * pix_s
+fixed_source.append({})  
+kwargs_source_init.append({'R_sersic': 0.1, 'n_sersic': 2., 'e1': 0., 'e2': 0., 'center_x': -pos[0], 'center_y': pos[1]})
+kwargs_source_sigma.append({'n_sersic': 0.5, 'R_sersic': 0.5, 'e1': 0.1, 'e2': 0.1, 'center_x': 0.1, 'center_y': 0.1})
+kwargs_lower_source.append({'e1': -0.5, 'e2': -0.5, 'R_sersic': 0.01, 'n_sersic': 0.3, 'center_x': -pos[0]-0.5, 'center_y': pos[1]-0.5})
+kwargs_upper_source.append({'e1': 0.5, 'e2': 0.5, 'R_sersic': 3., 'n_sersic': 7., 'center_x': -pos[0]+0.5, 'center_y': pos[1]+0.5})
 
 if len(obj) >= 1:
     for i in range(len(obj)):

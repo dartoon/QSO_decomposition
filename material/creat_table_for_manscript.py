@@ -111,9 +111,11 @@ WFC3_list = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', '
     
 ACS_IDs = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
 'LID1273','XID2202','CID206','CID3570','CID543','LID1538','XID2396','CID452',\
-'LID360','CID237','CID454','CID607']     
+'LID360','CID237','CID454','CID607', 'CID597', 'CID1281']     
 
 tab_list = ['CID1174', 'CID1281', 'CID206', 'CID216', 'CID237', 'CID255', 'CID3242', 'CID3570', 'CID452', 'CID454', 'CID50', 'CID543', 'CID597', 'CID607', 'CID70', 'LID1273', 'LID1538', 'LID360', 'XID2138', 'XID2202', 'XID2396', 'CDFS-1', 'CDFS-229', 'CDFS-321', 'CDFS-724', 'ECDFS-358', 'SXDS-X1136', 'SXDS-X50', 'SXDS-X717', 'SXDS-X735', 'SXDS-X763', 'SXDS-X969']
+
+'''
 filt_list, ACS_list = [],[]
 z_list = []
 IR_result, UV_result = [], []
@@ -139,7 +141,15 @@ for i in range(len(tab_list)):
     if UV_result[i]=='xxx':
         UV_result[i] = [np.asarray(UV_result[0][j])*0-99 for j in range(len(UV_result[0]))]
     print(tab_list[i], round(IR_result[i][-1],3),
-    "{0}%pm{1}%".format(round(IR_result[i][0][0],1), round(IR_result[i][0][1],1)))
+    "{0}%pm{1}%".format(round(IR_result[i][0][0],1), round(IR_result[i][0][1],1)),  #host flux ratio
+    "{0}pm{1}".format(round(IR_result[i][1][0],3), round(IR_result[i][1][1],3)),  #host Re
+    "{0}pm{1}".format(round(IR_result[i][2][0],3), round(IR_result[i][2][1],3)),  #host n
+    "{0}+{1}-{2}".format(round(IR_result[i][5],3), round(IR_result[i][6][0],3),round(IR_result[i][6][1],3)),  #host mag, l, h
+    UV_result[i][-1],
+    "{0}%pm{1}%".format(round(UV_result[i][0][0],1), round(UV_result[i][0][1],1)),  #host flux ratio
+    "{0}+{1}-{2}".format(round(UV_result[i][5],3), round(UV_result[i][6][0],3),round(UV_result[i][6][1],3))) #host mag, l, h
+
+    
 '''           
 #XID2202 to LID1622
 #XID2138 to LID1820
@@ -191,4 +201,3 @@ for tar_in in range(len(tab_list)):
         
 for i in range(len(tab_list)):
     print(tab_list[i], MB_info_a[i][0], MB_info_a[i][1], round(MB_info_a[i][2],3), MB_info_b[i][0],MB_info_b[i][1],round(MB_info_b[i][2],3))
-    '''

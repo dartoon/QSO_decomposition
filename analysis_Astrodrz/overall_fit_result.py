@@ -20,7 +20,7 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
 'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
 ]
-#ID = ['CID1174']
+#ID = ['CID1281']
 
 import pickle
 ratio_results, Re_results, n_results, total_flux_results, host_amp_results = [], [], [], [], []
@@ -61,8 +61,10 @@ for j in range(len(ID)):
     for i in sort_Chisq[:count_n]:
         weight[i] = np.exp(-1/2. * (Chisq[i]-Chisq_best)/(Chisq_best* inf_alp))
 #    for i in sort_Chisq:
-#        print PSF_id[i], Chisq[i], weight[i], host_flux_ratio[i], Re[i], S_n_list[i], round(total_flux[i],3),  round(host_amp[i],3),\
-    round(flux_dict[PSF_id[i]],3), round(FWHM_dict[PSF_id[i]],3), "[{0},{1}]".format(int(round(locs_dict[PSF_id[i]][0])) , int(round(locs_dict[PSF_id[i]][1]))), round(id_stars_dict[PSF_id[i]],3)
+##        print PSF_id[i], Chisq[i], weight[i], host_flux_ratio[i], Re[i], S_n_list[i], round(total_flux[i],3),  round(host_amp[i],3),\
+##    round(flux_dict[PSF_id[i]],3), round(FWHM_dict[PSF_id[i]],3), "[{0},{1}]".format(int(round(locs_dict[PSF_id[i]][0])) , int(round(locs_dict[PSF_id[i]][1]))), round(id_stars_dict[PSF_id[i]],3)
+#        print i, round(Chisq[i],3), round(weight[i],3),round(host_amp[i],3), round(host_flux_ratio[i],1),round(Re[i], 3), round(S_n_list[i],3)
+
     # =============================================================================
     # Weighting result
     # =============================================================================
@@ -108,7 +110,6 @@ for i in range(len(ID)):
         s = 's'
     ax.errorbar(Re_results[i][0], ratio_results[i][0], xerr= Re_results[i][1], yerr=ratio_results[i][1],
                 fmt=s, color=colors[i],ecolor='gray' )
-plt.tick_params(labelsize=15)
 plt.xlabel('Effective Radius',fontsize=15)
 plt.ylabel('Host flux ratio', fontsize=15)
 plt.tick_params(labelsize=15)
@@ -185,7 +186,7 @@ gridshape = (num_boxs, num_boxs)
 print "Our multivariate grid will therefore be of shape", gridshape
 fig = plt.figure(figsize=(20, 15))
 axes = [[False for i in range(num_boxs)] for j in range(num_boxs)]
-axis_lab = [ "Effective Radius(arcsec)", "S\'ersic $n$", "host flux ratio percent"]
+axis_lab = [ "Effective Radius(arcsec)", "S\'ersic $n$", "host flux ratio percent (%)"]
 value = [[Re_results[i], n_results[i], ratio_results[i]] for i in range(len(ratio_results))]
 n=1
 for j in range(num_boxs):

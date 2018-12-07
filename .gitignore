@@ -29,6 +29,7 @@ ompiled source #
 *_ima.fits
 coadd*fits
 *.xml
+qso_fit_PSF*.pdf
 
 # OS generated files #
 ######################
@@ -51,5 +52,5 @@ Cycle25data/*
 analysis_ACS/*/*_180mas_sci.fits
 analysis_ACS/*/sub_coadd.fits
 
-qso_fit_PSF*.pdf
+analysis_ACS/*/*/*.pdf
 

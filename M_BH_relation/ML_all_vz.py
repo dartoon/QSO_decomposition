@@ -322,5 +322,5 @@ else:
     "local AGNs",\
     "our new samples"
     ],scatterpoints=1,numpoints=1,loc=2,prop={'size':23},ncol=2,handletextpad=0)
-plt.savefig("MBHL-z.pdf")
+#plt.savefig("MBHL-z.pdf")
 plt.show()

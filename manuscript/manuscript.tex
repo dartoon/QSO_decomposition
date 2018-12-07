@@ -31,7 +31,10 @@
 \def\lenstronomy{{\sc Lenstronomy}}
 \def\Reff{{$R_{\mathrm{eff}}$}}
 \def\kms{km~s$^{\rm -1}$}
-
+\def\sigstar{{$\sigma_*$}}
+\def\smass{{$M_*$}}
+\newcommand{\Mgii}{Mg$_{\rm II}$}
+\newcommand{\Civ}{C$_{\rm IV}$}
 
 \title{QSO decomposition}
 
@@ -47,19 +50,38 @@
 \altaffiltext{5}{Kavli IPMU (WPI), UTIAS, The University of Tokyo, Kashiwa, Chiba 277-8583, Japan}
 
 \begin{abstract}
-To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. 
+To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written.  To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. To be written. 
 \end{abstract}
 
 \keywords{galaxies: active --- galaxies: evolution}
 
 \section{Introduction}
 \label{sec:introduction}
-skeleton of introduction
-\\
-1. Introduce the ML relation and why understand its evolution is important.\\
-2. To understand this evolution, it is important to trace to high redshift. Why it is difficult.\\
-3. Introduce reference. Woo's. SS13, Treu's, Park79. In the theory, DeGraf...Highlight the redshift range $z>1.2$\\
-4. In this paper, we study the ML relation up to redshift 1.7.
+%skeleton of introduction
+%\\
+%1. Introduce the ML relation and why understand its evolution is important.\\
+%2. To understand this evolution, it is important to trace to high redshift. Why it is difficult.\\
+%3. The 4000A by HST band.
+%3. Introduce reference. Woo's. SS13, Treu's, Park79. In the theory, DeGraf...Highlight the redshift range $z>1.2$. Recent works by H0liCOW7\\
+%4. In this paper, we study the ML relation up to redshift 1.7.
+
+Most galactic nuclei harbor a supermassive black hole (BH), whose mass (\mbh) is well known to be correlated with the host properties, such as \mbh-host luminosity (\lhost), \mbh- stellar mass (\smass)  and \mbh-stellar velocity dispersion(\sigstar). These tight correlations indicates a connection between nuclear activity and galaxy formation and evolution. 
+Currently, the physical mechanism that can produce such a tight relationship is unknown, due to the daunting range of scales between the BHs dynamical sphere and their host galaxy. In theory, cosmological simulations of structure formation are able to reproduce the mean local correlations considering the active galactic nucleus (AGN) feedback as the physical driver. 
+However, for a different view, \textcolor{blue}{Peng 2007 and Jahnke 2011} show that, without the need of a physical coupling, another possibility is a statistical convergence from the galaxy mergers which reproduces the observed correlations.
+
+One key is to trace their correlation to higher redshift, determining how and when they emerged and evolved over cosmic time. During past decade, there has been much progress on our understand at $z<1$ using the type 1 AGN. The work by \textcolor{blue}{Park, Treu, Woo, P06, H0licow7} demonstrated that, \mbh\ are elevated as compared to the bulge luminosity from the local relations, thus indicating that the supermassive BHs were built up first with galaxy then growing around their deep potential wells. Similarly, the recent works by \textcolor{blue}{Bennert et al. 2011, Woo 2008} agreed to this scenario by studying the \mbh-\smass and \mbh-\sigstar relations. Nevertheless, some studies are consistent with no evolution \textcolor{blue}{Schramm+Silverman 2013, Sun et al. 2015, Cisternas et al. 2011}.
+
+Despite the great amount of effort, there are still uncertainties stems from different aspects which could lead to the inconsistency among these works. First, the inherent uncertainties in BH mass estimates using the virial method. Especially, many studies rely on \mbh\ estimates using the \Mgii\ or \Civ\ line that may have unknown systematics when compared to local samples with masses based on broad Balmer lines (i.e. \halpha\ and \hbeta). Second, since the host information is swamped by the bright nuclear light, measurement systematics exist in the host galaxy properties. It is worth noting that strong gravitational lensing provides a unique opportunity to make progress in the study by extend the host image to lensed arcs \textcolor{blue}{H0licow6, Peng06, H0licow7}. Equally important,
+the selection effects and their impact on the observed need to be taken well into account. For instance, it has been demonstrated \textcolor{blue}{Schulze + Wisotzki (2011, 2014))} that selecting bright AGNs at high redshift results in display steeper slopes than random ones, suggesting the selecting effects can exhibit faster evolution than a random sample. Even considering this selection effect, an evolution of the scaling relations is expected from simulations \textcolor{blue}{DeGraf et al. (2015} and with respect to the bulge mass.
+
+To make progress, on one hand, it is essential to making use of a larger sample of high-quality data in respect of the measurement of both the host properties and the \mbh. On the other hand, extending the correlations to higher redshift ($z>1$) would effectively improves the statistics, where the \mbh-\lhost\ is steeper than the current observational measurements at lower redshift, before self-regulation slows the black hole growth and galaxies settle onto the local mass relation.
+
+In this study, we aim to determine whether AGN have begun to couple to their host galaxy at $1.2<z<1.7$, an epoch when supermassive BH close to its peak accretion history \textcolor{blue}{(Aird et al. 2015)}.  At this redshift range, we measure 32 host galaxies properties using \hst/WFC3 imaging data and estimate their \mbh\ based on the robust \halpha\ and \hbeta, using the multi-object spectrograph Subaru/FMOS. Our study overcomes the biases in the following way. First, to minimize selection bias, we select AGNs that fall below the knee of the black hole mass function. Second, we estimate \mbh\ using Balmer lines which avoid the systematics by \Mgii. Third, our X-ray selected sample have lower nuclear-to-host ratios which facilitate the galaxy mass measurements. Moreover, 21/32 systems of our sample also have \hst/ACS-F814W image. The multi-band information provide reliable K-correction and stellar mass inference. Given the high-quality data at such redshift, we test whether the growth of BH predates that of the host by a factor of at least $1.7 (\sim0.23$ dex). 
+
+The paper is organized as follows. We briefly describe the sample selection, observation and data reduction in Section~\ref{sec:data}. We infer the host galaxy surface photometry and \mbh\ in Section~\ref{sec:analysis}. In Section~\ref{sec:result}, we present our main result by adopting K-correction and SED fitting, to infer the rest-frame R band \lhost\ and \smass in order to compare with the local samples. Discussion and conclusion are presented in Section~\ref{sec:sum} and Section~\ref{sec:dis}. 
+
+Throughout this paper, we adopt a standard concordance cosmology with $H_0= 70$ km s$^{-1}$ Mpc$^{-1}$, $\Omega{_m} = 0.30$, and $\Omega{_\Lambda} =
+0.70$. Magnitudes are given in the AB system.
 
 \section{Observations and data reduction}
 \label{sec:data}
@@ -82,7 +104,7 @@ For the calibration with the local relation, we introduce the well-defined 19 lo
 \label{observation}
 \subsubsection{HST image Observation}
 % The QSO surface photometry in IR Channel Filters.\\
-The high spatial resolution of the host image is required for the decomposition of the nuclear/host emission and the accurate estimate of the stellar of the host stellar mass. All the new 32 AGN systems were observed with the HST/WFC3 infrared channel, as the HST program GO-15115, PI: John Silverman. We selected to use the filters F125W $(1.2<z<1.44)$ and F140W $(1.44<z<1.7)$ according to the redshift of the targets. This selection could ensure that the broad \halpha line ($4000\AA$) is not present in the bandpass which could contaminate the host emissions due to the broad wings of the PSF.
+The high spatial resolution of the host image is required for the decomposition of the nuclear/host emission and the accurate estimate of the stellar of the host stellar mass. All the new 32 AGN systems were observed with the HST/WFC3 infrared channel, as the HST program GO-15115, PI: John Silverman. We selected to use the filters F125W $(1.2<z<1.44)$ and F140W $(1.44<z<1.7)$ according to the redshift of the targets. This selection could ensure that the broad \halpha\ line ($4000\AA$) is not present in the bandpass which could contaminate the host emissions due to the broad wings of the PSF.
 
 %Drizzling, background noise...
 For the new 32 AGN systems, each target one has six separate exposures with $\sim399s$ (i.e. total exposure time $\sim2394s$). The six exposures for each dither image were combined by the {\sc astrodrizzle} software package, with an output pixel scale of 0\farcs{0642} by setting \texttt{pixfrac} parameter of 0.8 and a \texttt{gaussian} kernel. The other four AGNs in our sample have been observed with WFC3 serendipitously (2 in COSMOS from Kartaltepe (PI); PID: 13657).
@@ -90,7 +112,7 @@ The noise level maps of the imaging data are a requirement in the study. The ori
 
 %With 27/36 of our AGNs having rest-frame UV imaging with HST (COSMOS: F814W, PI: Nicholas Scoville; GEMS: F606W+F850LP), we are able to infer the host color and assess the contribution of both the young and old stellar population to the stellar mass budge \textcolor{blue}{citet Gallazzi+Bell 2009}. 
 
-With 18/32 of our sample have rest-frame UV images by \textcolor{blue}{Scoville, et al. 2007} %arxiv: 0702359}.
+21/32 of our sample have rest-frame UV images by \textcolor{blue}{Scoville, et al. 2007} %arxiv: 0702359}.
 Images were taken through the wide ACS/F814W filter at four dither pointing with $507s$ exposures. The final image is drizzled to 0\farcs{03} pixel scale. Given the multi-band image for these systems, we are able to infer their host color and assess the contribution of both the young and old stellar population to the stellar mass budge \textcolor{blue}{citet Gallazzi+Bell 2009} which insures an accurate inference of rest-frame R-band luminosity by K-correction, stellar mass and star formation rate (SFR). 
 
 \subsubsection{AGN Emission Line}
@@ -101,7 +123,7 @@ The \mbh\ of type-1 AGNs can be inferred using the so-called virial method. The 
 For our targets, the \halpha\ and \hbeta\ emission-line properties have been investigated by \citet{Schulze2018} using the multi-object spectrograph Subaru/FMOS. We referred to this paper for the details of continuum fitting and emission line modeling. Since the other compared AGNs in the literature used different calibrations of the virial method, we adopt the list of consistent recipes \textcolor{blue}{McGill et al. (2008), H0licow7} to cross-calibrate the \mbh\ for all the samples in order to avoid any systematic bias in Section~\ref{mbh}.
  
 \section{Analysis}
-\label{sec:Analysis}
+\label{sec:analysis}
 
 \subsection{Surface Photometry}
 \subsubsection{PSF library}    
@@ -109,7 +131,7 @@ For our targets, the \halpha\ and \hbeta\ emission-line properties have been inv
 %Introduce the PSF library
 The knowledge of the PSF is crucial for this study, especially when the nuclear image is unresolved with light distributed as the point source. Moreover, the PSF in known to be vary according to their frame position and the intensity. Thus, we build a library of PSFs which we select the bright, isolated, unsaturated PSF stars across all the observed field. Thanks to the available multi-wavelength data \textcolor{blue}{(Laigle et al. 2016)}, we are able to know the positions of stars nearby the QSO field and thus select a proper position and orientation of the HST frame to cover as much PSFs stars as possible. 
 
-We claim that, by building this library, the assumption is that the overall PSFs herein indicates all the possible PSF shape for each QSO. Since two filter, i.e. F140W and F125W, are selected for different samples, we selected 74 and 34 PSFs for the samples observed by F140W and F125W, respectively.
+We claim that, by building this library, the assumption is that the overall PSFs herein indicates all the possible PSF shape for each QSO. Since two filter, i.e. F140W and F125W, are selected for different samples, we selected 78 and 36 PSFs for the samples observed by F140W and F125W, respectively.
 
 In the next subsection, we carry out the QSO decomposition using each PSF. We rank their performance based on the goodness so that the final inference of the host properties are weighted from the top-rank PSFs.
 
@@ -167,16 +189,16 @@ To avoid any systematic bias between our samples and the literature samples, we 
 
 \begin{eqnarray}
 \label{eq:Hb}
-\log \left(\frac{\mathcal M_{\rm BH}(H\beta) }{M_{\odot}}\right)&~=~& 6.882+0.518\log \left(\frac{ \lambda \rm L _{\lambda_{5100}}}{10^{44}{\rm erg~s^{-1}}}\right) \nonumber\\
-&~+~& 2 \log \left(\frac{\rm FWHM(5100)}{1000 ~{\rm km~s^{-1}}}\right) , 
+\log \left(\frac{\mathcal M_{\rm BH}(H\beta) }{M_{\odot}}\right)&~=~& 6.91+0.50\log \left(\frac{ \lambda \rm L _{\lambda_{5100}}}{10^{44}{\rm erg~s^{-1}}}\right) \nonumber\\
+&~+~& 2.0 \log \left(\frac{\rm FWHM(5100)}{1000 ~{\rm km~s^{-1}}}\right) , 
 \end {eqnarray}
 
 and
 
 \begin{eqnarray}
 \label{eq:Ha}
-\log \left(\frac{\mathcal M_{\rm BH} (H\alpha)}{M_{\odot}}\right)&~=~& 6.459+0.55 \log \left(\frac{ \lambda \rm L _{H\alpha}}{10^{42}{\rm erg~s^{-1}}}\right) \nonumber\\
-&~+~& 2 \log \left(\frac{\rm FWHM(H\alpha)}{1000 ~{\rm km~s^{-1}}}\right) , 
+\log \left(\frac{\mathcal M_{\rm BH} (H\alpha)}{M_{\odot}}\right)&~=~& 6.710+0.48 \log \left(\frac{ \lambda \rm L _{H\alpha}}{10^{42}{\rm erg~s^{-1}}}\right) \nonumber\\
+&~+~& 2.12 \log \left(\frac{\rm FWHM(H\alpha)}{1000 ~{\rm km~s^{-1}}}\right) , 
 \end {eqnarray}
 
 Having defined the recipes, we estimate the \mbh\ by adopting the emission line properties measured by \citet{Schulze2018}. 14 of the overall systems have both \halpha\ and \hbeta\ emission line information; we adopt the average \mbh\ value by these two lines. We summarized the inference of the \mbh\ together with the details on the emission line in Table~\ref{tab:result_mbh}.
@@ -225,30 +247,30 @@ We thank the people who discuss with the paper.
 \startdata
 %\multicolumn{5}{c}{Sample presented in \citet{Treu+07}}\\
 %\\
-COSMOS-CID1174 & 1.552 & F140W$^*$ & 150.2789 & 1.9595\\
-COSMOS-CID1281 & 1.445 & ??? & 150.4160 & 2.5258\\
+COSMOS-CID1174 & 1.552 & F140W & 150.2789 & 1.9595\\
+COSMOS-CID1281 & 1.445 & F140W & 150.4160 & 2.5258\\
 COSMOS-CID206 & 1.483 & F140W & 149.8371 & 2.0088\\
-COSMOS-CID216 & 1.567 & F140W$^*$ & 149.7918 & 1.8729\\
-COSMOS-CID237 & 1.618 & F140W$^*$ & 149.9916 & 1.7243\\
-COSMOS-CID255 & 1.664 & ???$^*$ & 150.1017 & 1.8483\\
+COSMOS-CID216 & 1.567 & F140W & 149.7918 & 1.8729\\
+COSMOS-CID237 & 1.618 & F140W & 149.9916 & 1.7243\\
+COSMOS-CID255 & 1.664 & F140W & 150.1017 & 1.8483\\
 COSMOS-CID3242 & 1.532 & F140W & 149.7113 & 2.1452\\
 COSMOS-CID3570 & 1.244 & F125W & 149.6411 & 2.1076\\
-COSMOS-CID452 & 1.407 & F125W$^*$ & 150.0045 & 2.2371\\
-COSMOS-CID454 & 1.478 & F140W$^*$ & 149.8681 & 2.3307\\
-COSMOS-CID50 & 1.239 & F125W$^*$ & 150.2080 & 2.0833\\
-COSMOS-CID543 & 1.301 & F125W$^*$ & 150.4519 & 2.1448\\
-COSMOS-CID597 & 1.272 & ???$^*$ & 150.5262 & 2.2449\\
-COSMOS-CID607 & 1.294 & F125W$^*$ & 150.6097 & 2.3231\\
+COSMOS-CID452 & 1.407 & F125W & 150.0045 & 2.2371\\
+COSMOS-CID454 & 1.478 & F140W & 149.8681 & 2.3307\\
+COSMOS-CID50 & 1.239 & F125W & 150.2080 & 2.0833\\
+COSMOS-CID543 & 1.301 & F125W & 150.4519 & 2.1448\\
+COSMOS-CID597 & 1.272 & F125W & 150.5262 & 2.2449\\
+COSMOS-CID607 & 1.294 & F125W & 150.6097 & 2.3231\\
 COSMOS-CID70 & 1.667 & F140W & 150.4051 & 2.2701\\
 COSMOS-LID1273 & 1.617 & F140W & 150.0565 & 1.6275\\
-COSMOS-LID1538 & 1.527 & F140W$^*$ & 150.6215 & 2.1588\\
-COSMOS-LID360 & 1.579 & F140W$^*$ & 150.1251 & 2.8617\\
-COSMOS-XID2138 & 1.551 & F140W$^*$ & 149.7036 & 2.5781\\
-COSMOS-XID2202 & 1.516 & F140W$^*$ & 150.6530 & 1.9969\\
-COSMOS-XID2396 & 1.600 & F140W$^*$ & 149.4779 & 2.6425\\
-CDFS-1 & 1.630 & F140W$^*$ & 52.8990 & -27.8600\\ 
-CDFS-229 & 1.326 & F125W$^*$ & 53.0680 & -27.6580\\ 
-CDFS-321 & 1.570 & F140W$^*$ & 53.0486 & -27.6239\\ 
+COSMOS-LID1538 & 1.527 & F140W & 150.6215 & 2.1588\\
+COSMOS-LID360 & 1.579 & F140W & 150.1251 & 2.8617\\
+COSMOS-XID2138 & 1.551 & F140W & 149.7036 & 2.5781\\
+COSMOS-XID2202 & 1.516 & F140W & 150.6530 & 1.9969\\
+COSMOS-XID2396 & 1.600 & F140W & 149.4779 & 2.6425\\
+CDFS-1 & 1.630 & F140W & 52.8990 & -27.8600\\ 
+CDFS-229 & 1.326 & F125W & 53.0680 & -27.6580\\ 
+CDFS-321 & 1.570 & F140W & 53.0486 & -27.6239\\ 
 CDFS-724 & 1.337 & F125W & 53.2870 & -27.6940\\ 
 ECDFS-358 & 1.626 & F140W & 53.0850 & -28.0370\\ 
 SXDS-X1136 & 1.325 & F125W & 34.8925 & -5.1498\\ 
@@ -262,7 +284,7 @@ SXDS-X969 & 1.585 & F140W & 34.7594 & -5.4291\\
 \tablecomments{
 Column 1: Object field and ID.
 Column 2: Redshifts.
-Column 3: HST filter by WFC3. The marker $^*$ indicate the corresponding sample also has the ACS/F814W image.
+Column 3: HST filter by WFC3. Note that the samples from COSMOS field also has the ACS/F814W image.
 Column 4 and 5: The $RA$ and $DEC$ of the system.
 }
 \end{deluxetable}
@@ -291,16 +313,16 @@ Column 4 and 5: The $RA$ and $DEC$ of the system.
 \startdata
 %\multicolumn{5}{c}{Sample presented in \citet{Treu+07}}\\
 %\\
-1 & 8646.711 & 1.000 & 99.102 & 41.9\% & 0\farcs{}298 & 1.932 \\
-2 & 8816.947 & 0.849 & 76.740 & 33.0\% & 0\farcs{}365 & 1.102 \\
-3 & 9304.841 & 0.530 & 128.618 & 54.7\% & 0\farcs{}231 & 2.780 \\
-4 & 9652.575 & 0.379 & 187.498 & 79.0\% & 0\farcs{}116 & 6.175 \\
-5 & 10018.324 & 0.267 & 75.061 & 32.3\%& 0\farcs{}365 & 1.226 \\
-6 & 10087.456 & 0.249 & 79.835 & 34.3\% & 0\farcs{}358 & 1.195 \\
-7 & 10457.811 & 0.174 & 108.580 & 46.4\% & 0\farcs{}262 & 2.190 \\
-8 & 10721.421 & 0.135 & 63.994 & 27.8\% & 0\farcs{}406 & 0.720 \\
+1 & $8584.429$ & $1.000$ & $82.209$ & $35.4\%$ & $0\farcs{}345$ & $1.114$ \\
+2 & $8646.711$ & $0.920$ & $99.102$ & $41.9\%$ & $0\farcs{}298$ & $1.932$ \\
+3 & $8816.947$ & $0.734$ & $76.74$ & $33.0\%$ & $0\farcs{}365$ & $1.102$ \\
+4 & $9304.841$ & $0.383$ & $128.618$ & $54.7\%$ & $0\farcs{}231$ & $2.78$ \\
+5 & $9652.575$ & $0.241$ & $187.498$ & $79.0\%$ & $0\farcs{}116$ & $6.175$ \\
+6 & $9917.101$ & $0.170$ & $100.166$ & $42.3\%$ & $0\farcs{}287$ & $2.066$ \\
+7 & $10018.324$ & $0.148$ & $75.061$ & $32.3\%$ & $0\farcs{}365$ & $1.226$ \\
+8 & $10087.456$ & $0.135$ & $79.835$ & $34.3\%$ & $0\farcs{}358$ & $1.195$ \\
 \hline\\
-Weighted value & & & 103.534 $\pm$ 34.267 & 44.0\%$\pm$14.2\%& 0\farcs{}296$\pm$0\farcs{}079 & 2.173$\pm$1.500  \\
+Weighted value & & & $97.322\pm28.336$ & $41.5\%\pm11.7\%$& $0\farcs{}309\pm0\farcs{}065$  & $1.862\pm1.26$  \\
 \enddata
 \label{tab:weight_CID1174}
 \tablecomments{
@@ -312,6 +334,7 @@ For this sample, the inflation value $\alpha$ calculated by Eq.~\ref{eq:alpha} i
 }
 \end{deluxetable*}
 
+\tabcolsep=0.05cm
 \begin{deluxetable*}
 {@{\extracolsep{4pt}}lccccccccc}   % need for the gap between the clines.
 \tablecolumns{9}
@@ -340,38 +363,38 @@ For this sample, the inflation value $\alpha$ calculated by Eq.~\ref{eq:alpha} i
 \colhead{(8)}& \colhead{(9)}&\colhead{(10)}
 }
 \startdata 
-CID1174 & 2.324 & 44.0\%$\pm$14.2\% & 0.296$\pm$0.079 & 2.173$\pm$1.5 & $21.415\substack{+0.436 \\ -0.31}$ & 2.484074 & 11.7\%$\pm$1.4\% & $23.165\substack{+0.138 \\ -0.122}$\\
-CID1281 & ... & ... & ... & ... & ... & ... & ... & ...\\
-CID206 & 2.054 & 35.7\%$\pm$24.1\% & 0.282$\pm$0.151 & 3.191$\pm$2.51 & $21.81\substack{+1.247 \\ -0.565}$ & 1.903449 & 7.7\%$\pm$2.4\% & $23.671\substack{+0.403 \\ -0.293}$\\
-CID216 & 1.514 & 93.9\%$\pm$4.7\% & 0.251$\pm$0.063 & 6.159$\pm$1.205 & $21.51\substack{+0.052 \\ -0.049}$ & 1.424993 & 35.1\%$\pm$1.5\% & $23.446\substack{+0.053 \\ -0.051}$\\
-CID237 & 2.349 & 29.9\%$\pm$6.3\% & 0.872$\pm$0.172 & 4.736$\pm$1.701 & $21.279\substack{+0.26 \\ -0.209}$ & 2.353571 & 3.2\%$\pm$2.0\% & $23.718\substack{+1.037 \\ -0.52}$\\
+CID1174 & $2.307$ & $41.5\%\pm11.7\%$ & $0\farcs{}309\pm0\farcs{}065$ & $1.862\pm1.26$ & $21.482\substack{+0.374\\-0.277}$ & $2.496$ & $11.2\%\pm1.1\%$ & $23.214\substack{+0.113\\-0.103}$ \\
+CID1281 & $1.322$ & $49.3\%\pm13.7\%$ & $0\farcs{}239\pm0\farcs{}094$ & $3.146\pm1.483$ & $22.879\substack{+0.362\\-0.271}$ & $1.378$ & $18.5\%\pm7.7\%$ & $24.828\substack{+0.595\\-0.382}$ \\
+CID206 & $2.054$ & $35.3\%\pm24.3\%$ & $0\farcs{}286\pm0\farcs{}146$ & $3.072\pm2.476$ & $21.822\substack{+1.298\\-0.575}$ & $1.903$ & $7.7\%\pm2.4\%$ & $23.671\substack{+0.403\\-0.293}$ \\
+CID216 & $1.514$ & $93.9\%\pm4.7\%$ & $0\farcs{}251\pm0\farcs{}063$ & $6.159\pm1.205$ & $21.51\substack{+0.052\\-0.049}$ & $1.425$ & $35.1\%\pm1.5\%$ & $23.446\substack{+0.053\\-0.051}$ \\
+CID237 & $2.349$ & $29.9\%\pm6.3\%$ & $0\farcs{}872\pm0\farcs{}172$ & $4.736\pm1.701$ & $21.279\substack{+0.26\\-0.209}$ & $2.354$ & $3.2\%\pm2.0\%$ & $23.718\substack{+1.037\\-0.52}$ \\
 CID255 & ... & ... & ... & ... & ... & ... & ... & ...\\
-CID3242 & 2.751 & 46.1\%$\pm$12.7\% & 0.201$\pm$0.159 & 6.142$\pm$1.874 & $21.161\substack{+0.35 \\ -0.264}$ & 2.595594 & 4.8\%$\pm$1.3\% & $23.595\substack{+0.337 \\ -0.257}$\\
-CID3570 & 1.665 & 76.5\%$\pm$1.6\% & 0.698$\pm$0.007 & 0.728$\pm$0.054 & $21.164\substack{+0.021 \\ -0.021}$ & 1.331913 & 85.6\%$\pm$1.5\% & $22.971\substack{+0.012 \\ -0.012}$\\
-CID452 & 1.684 & 75.4\%$\pm$3.9\% & 0.365$\pm$0.015 & 1.402$\pm$0.175 & $21.176\substack{+0.063 \\ -0.06}$ & 1.451608 & 37.8\%$\pm$0.7\% & $22.732\substack{+0.022 \\ -0.022}$\\
-CID454 & 2.203 & 35.3\%$\pm$2.1\% & 0.391$\pm$0.013 & 0.602$\pm$0.092 & $21.212\substack{+0.067 \\ -0.063}$ & 1.29101 & 9.2\%$\pm$0.5\% & $23.352\substack{+0.058 \\ -0.055}$\\
-CID50 & 5.576 & 16.8\%$\pm$8.7\% & 0.152$\pm$0.102 & 3.371$\pm$2.154 & $20.915\substack{+0.796 \\ -0.454}$ & 4.940352 & 5.0\%$\pm$3.3\% & $22.504\substack{+1.145 \\ -0.545}$\\
-CID543 & 1.902 & 31.8\%$\pm$10.0\% & 0.1$\pm$0.0 & 0.505$\pm$0.333 & $21.95\substack{+0.405 \\ -0.294}$ & 1.434799 & 5.2\%$\pm$2.0\% & $23.765\substack{+0.534 \\ -0.357}$\\
-CID597 & ... & ... & ... & ... & ... & ... & ... & ...\\
-CID607 & 1.692 & 43.6\%$\pm$17.9\% & 0.206$\pm$0.087 & 3.418$\pm$1.097 & $21.189\substack{+0.575 \\ -0.374}$ & 2.590398 & 4.7\%$\pm$1.8\% & $23.566\substack{+0.511 \\ -0.346}$\\
-CID70 & 2.041 & 19.6\%$\pm$5.1\% & 0.426$\pm$0.101 & 3.543$\pm$1.154 & $21.865\substack{+0.323 \\ -0.248}$ & 2.36054 & 2.3\%$\pm$1.1\% & $24.625\substack{+0.677 \\ -0.414}$\\
-LID1273 & 1.697 & 53.3\%$\pm$9.1\% & 0.302$\pm$0.04 & 1.22$\pm$0.49 & $20.939\substack{+0.211 \\ -0.176}$ & 2.136592 & 6.4\%$\pm$0.8\% & $23.289\substack{+0.153 \\ -0.134}$\\
-LID1538 & 2.362 & 43.5\%$\pm$7.8\% & 0.177$\pm$0.042 & 2.819$\pm$0.475 & $21.251\substack{+0.221 \\ -0.184}$ & 2.172992 & 7.5\%$\pm$1.2\% & $23.088\substack{+0.189 \\ -0.161}$\\
-LID360 & 3.918 & 17.9\%$\pm$1.1\% & 0.629$\pm$0.018 & 0.672$\pm$0.04 & $21.483\substack{+0.068 \\ -0.064}$ & 4.913659 & 3.7\%$\pm$0.5\% & $23.254\substack{+0.172 \\ -0.149}$\\
-XID2138 & 1.597 & 39.7\%$\pm$6.1\% & 0.49$\pm$0.035 & 1.293$\pm$0.437 & $21.845\substack{+0.188 \\ -0.16}$ & 2.73139 & 5.0\%$\pm$1.3\% & $23.898\substack{+0.313 \\ -0.243}$\\
-XID2202 & 3.23 & 33.3\%$\pm$8.0\% & 0.1$\pm$0.001 & 3.957$\pm$1.017 & $21.16\substack{+0.302 \\ -0.236}$ & 3.851762 & 8.3\%$\pm$1.9\% & $22.592\substack{+0.286 \\ -0.226}$\\
-XID2396 & 3.669 & 23.9\%$\pm$10.5\% & 0.584$\pm$0.085 & 0.772$\pm$1.36 & $21.404\substack{+0.652 \\ -0.404}$ & 5.346128 & 2.3\%$\pm$0.5\% & $23.364\substack{+0.243 \\ -0.198}$\\
-CDFS-1 & 1.358 & 54.4\%$\pm$17.3\% & 0.158$\pm$0.077 & 4.574$\pm$1.387 & $22.656\substack{+0.414 \\ -0.299}$ & ... & ... & ...\\
-CDFS-229 & 4.329 & 17.6\%$\pm$2.1\% & 0.507$\pm$0.026 & 0.463$\pm$0.195 & $21.568\substack{+0.144 \\ -0.127}$ & ... & ... & ...\\
-CDFS-321 & 3.998 & 24.5\%$\pm$11.7\% & 0.378$\pm$0.122 & 2.26$\pm$2.007 & $20.337\substack{+0.703 \\ -0.423}$ & ... & ... & ...\\
-CDFS-724 & 1.355 & 34.7\%$\pm$14.6\% & 0.118$\pm$0.03 & 1.618$\pm$1.099 & $23.695\substack{+0.582 \\ -0.377}$ & ... & ... & ...\\
-ECDFS-358 & 2.012 & 56.4\%$\pm$13.5\% & 0.359$\pm$0.043 & 1.671$\pm$0.542 & $21.34\substack{+0.302 \\ -0.236}$ & ... & ... & ...\\
-SXDS-X1136 & 1.937 & 40.5\%$\pm$7.8\% & 0.101$\pm$0.003 & 1.986$\pm$0.483 & $21.921\substack{+0.231 \\ -0.19}$ & ... & ... & ...\\
-SXDS-X50 & 1.423 & 42.4\%$\pm$9.1\% & 0.184$\pm$0.041 & 1.755$\pm$0.655 & $21.943\substack{+0.266 \\ -0.214}$ & ... & ... & ...\\
-SXDS-X717 & 1.426 & 61.4\%$\pm$9.1\% & 0.264$\pm$0.066 & 5.58$\pm$1.421 & $21.759\substack{+0.176 \\ -0.151}$ & ... & ... & ...\\
-SXDS-X735 & 2.203 & 32.4\%$\pm$8.5\% & 0.22$\pm$0.057 & 2.027$\pm$1.012 & $20.919\substack{+0.333 \\ -0.254}$ & ... & ... & ...\\
-SXDS-X763 & 2.376 & 6.0\%$\pm$4.0\% & 0.694$\pm$0.532 & 2.394$\pm$0.796 & $24.134\substack{+1.172 \\ -0.55}$ & ... & ... & ...\\
-SXDS-X969 & 1.613 & 29.0\%$\pm$11.7\% & 0.115$\pm$0.026 & 2.149$\pm$1.147 & $21.594\substack{+0.553 \\ -0.365}$ & ... & ... & ...\\
+CID3242 & $2.751$ & $46.1\%\pm12.7\%$ & $0\farcs{}201\pm0\farcs{}159$ & $6.142\pm1.874$ & $21.161\substack{+0.35\\-0.264}$ & $2.596$ & $4.8\%\pm1.3\%$ & $23.595\substack{+0.337\\-0.257}$ \\
+CID3570 & $1.665$ & $76.5\%\pm1.6\%$ & $0\farcs{}698\pm0\farcs{}007$ & $0.728\pm0.054$ & $21.164\substack{+0.021\\-0.021}$ & $1.332$ & $85.6\%\pm1.5\%$ & $22.971\substack{+0.012\\-0.012}$ \\
+CID452 & $1.684$ & $75.4\%\pm3.9\%$ & $0\farcs{}365\pm0\farcs{}015$ & $1.402\pm0.175$ & $21.176\substack{+0.063\\-0.06}$ & $1.452$ & $37.8\%\pm0.7\%$ & $22.732\substack{+0.022\\-0.022}$ \\
+CID454 & $2.203$ & $35.8\%\pm2.5\%$ & $0\farcs{}388\pm0\farcs{}016$ & $0.624\pm0.106$ & $21.196\substack{+0.08\\-0.074}$ & $1.291$ & $9.2\%\pm0.5\%$ & $23.352\substack{+0.058\\-0.055}$ \\
+CID50 & $5.576$ & $16.5\%\pm9.0\%$ & $0\farcs{}163\pm0\farcs{}11$ & $3.217\pm2.223$ & $20.934\substack{+0.863\\-0.475}$ & $4.940$ & $5.0\%\pm3.3\%$ & $22.504\substack{+1.145\\-0.545}$ \\
+CID543 & $1.902$ & $30.6\%\pm9.7\%$ & $0\farcs{}1\pm0\farcs{}0$ & $0.493\pm0.325$ & $21.994\substack{+0.406\\-0.295}$ & $1.435$ & $5.2\%\pm2.0\%$ & $23.765\substack{+0.534\\-0.357}$ \\
+CID597 & $1.565$ & $42.4\%\pm16.6\%$ & $0\farcs{}173\pm0\farcs{}058$ & $1.752\pm0.784$ & $21.868\substack{+0.543\\-0.36}$ & $1.254$ & $11.5\%\pm1.3\%$ & $23.563\substack{+0.126\\-0.113}$ \\
+CID607 & $1.692$ & $43.6\%\pm17.9\%$ & $0\farcs{}206\pm0\farcs{}087$ & $3.418\pm1.097$ & $21.189\substack{+0.575\\-0.374}$ & $2.590$ & $4.7\%\pm1.8\%$ & $23.566\substack{+0.511\\-0.346}$ \\
+CID70 & $2.041$ & $19.7\%\pm4.9\%$ & $0\farcs{}422\pm0\farcs{}095$ & $3.616\pm1.028$ & $21.862\substack{+0.304\\-0.237}$ & $2.361$ & $2.3\%\pm1.1\%$ & $24.625\substack{+0.677\\-0.414}$ \\
+LID1273 & $1.697$ & $53.3\%\pm9.1\%$ & $0\farcs{}302\pm0\farcs{}04$ & $1.22\pm0.49$ & $20.939\substack{+0.211\\-0.176}$ & $2.137$ & $6.4\%\pm0.8\%$ & $23.289\substack{+0.153\\-0.134}$ \\
+LID1538 & $2.362$ & $43.5\%\pm7.8\%$ & $0\farcs{}177\pm0\farcs{}042$ & $2.819\pm0.475$ & $21.251\substack{+0.221\\-0.184}$ & $2.173$ & $7.5\%\pm1.2\%$ & $23.088\substack{+0.189\\-0.161}$ \\
+LID360 & $3.918$ & $18.4\%\pm2.0\%$ & $0\farcs{}626\pm0\farcs{}02$ & $0.752\pm0.355$ & $21.455\substack{+0.136\\-0.121}$ & $4.914$ & $3.7\%\pm0.5\%$ & $23.254\substack{+0.172\\-0.149}$ \\
+XID2138 & $1.597$ & $38.9\%\pm5.5\%$ & $0\farcs{}498\pm0\farcs{}033$ & $1.24\pm0.391$ & $21.869\substack{+0.172\\-0.148}$ & $2.731$ & $5.0\%\pm1.3\%$ & $23.898\substack{+0.313\\-0.243}$ \\
+XID2202 & $3.23$ & $33.3\%\pm8.0\%$ & $0\farcs{}1\pm0\farcs{}001$ & $3.957\pm1.017$ & $21.16\substack{+0.302\\-0.236}$ & $3.852$ & $8.3\%\pm1.9\%$ & $22.592\substack{+0.286\\-0.226}$ \\
+XID2396 & $3.669$ & $23.9\%\pm10.5\%$ & $0\farcs{}584\pm0\farcs{}085$ & $0.772\pm1.36$ & $21.404\substack{+0.652\\-0.404}$ & $5.346$ & $2.3\%\pm0.5\%$ & $23.364\substack{+0.243\\-0.198}$ \\
+CDFS-1 & $1.358$ & $64.5\%\pm19.7\%$ & $0\farcs{}137\pm0\farcs{}069$ & $4.806\pm1.112$ & $22.468\substack{+0.397\\-0.29}$ & ... & ... & ... \\
+CDFS-229 & $4.329$ & $17.6\%\pm2.1\%$ & $0\farcs{}507\pm0\farcs{}026$ & $0.463\pm0.195$ & $21.568\substack{+0.144\\-0.127}$ & ... & ... & ... \\
+CDFS-321 & $3.998$ & $24.5\%\pm11.7\%$ & $0\farcs{}378\pm0\farcs{}122$ & $2.26\pm2.007$ & $20.337\substack{+0.703\\-0.423}$ & ... & ... & ... \\
+CDFS-724 & $1.355$ & $34.7\%\pm14.6\%$ & $0\farcs{}118\pm0\farcs{}03$ & $1.618\pm1.099$ & $23.695\substack{+0.582\\-0.377}$ & ... & ... & ... \\
+ECDFS-358 & $2.012$ & $56.4\%\pm13.5\%$ & $0\farcs{}359\pm0\farcs{}043$ & $1.671\pm0.542$ & $21.34\substack{+0.302\\-0.236}$ & ... & ... & ... \\
+SXDS-X1136 & $1.937$ & $40.5\%\pm7.8\%$ & $0\farcs{}101\pm0\farcs{}003$ & $1.986\pm0.483$ & $21.921\substack{+0.231\\-0.19}$ & ... & ... & ... \\
+SXDS-X50 & $1.423$ & $40.7\%\pm8.6\%$ & $0\farcs{}192\pm0\farcs{}04$ & $1.648\pm0.621$ & $21.988\substack{+0.267\\-0.214}$ & ... & ... & ... \\
+SXDS-X717 & $1.426$ & $61.4\%\pm9.1\%$ & $0\farcs{}264\pm0\farcs{}066$ & $5.58\pm1.421$ & $21.759\substack{+0.176\\-0.151}$ & ... & ... & ... \\
+SXDS-X735 & $2.203$ & $32.4\%\pm8.5\%$ & $0\farcs{}22\pm0\farcs{}057$ & $2.027\pm1.012$ & $20.919\substack{+0.333\\-0.254}$ & ... & ... & ... \\
+SXDS-X763 & $2.376$ & $6.0\%\pm4.0\%$ & $0\farcs{}694\pm0\farcs{}532$ & $2.394\pm0.796$ & $24.134\substack{+1.172\\-0.55}$ & ... & ... & ... \\
+SXDS-X969 & $1.613$ & $29.1\%\pm11.1\%$ & $0\farcs{}11\pm0\farcs{}019$ & $2.053\pm1.071$ & $21.591\substack{+0.515\\-0.348}$ & ... & ... & ... \\
 \enddata
 \label{tab:result_sersic}
 \tablecomments{
@@ -454,6 +477,7 @@ Column 5-7: The inference by \hbeta\ emission line.
 %\hspace{-5.5em}
 {
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID1174_SB_profile.pdf}
+\includegraphics[height=0.25\textwidth]{fig/best_fit_CID1281_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID206_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID216_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID237_SB_profile.pdf}
@@ -473,7 +497,6 @@ In each row, observed data (first column), best-fit models (second column), data
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID3570_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID452_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID454_SB_profile.pdf}
-\includegraphics[height=0.25\textwidth]{fig/best_fit_CID50_SB_profile.pdf}
 }
 \figurenum{1}
 \caption{Continued.}
@@ -483,11 +506,11 @@ In each row, observed data (first column), best-fit models (second column), data
 \centering
 %\hspace{-5.5em}
 {
+\includegraphics[height=0.25\textwidth]{fig/best_fit_CID50_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID543_SB_profile.pdf}
+\includegraphics[height=0.25\textwidth]{fig/best_fit_CID597_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID607_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID70_SB_profile.pdf}
-\includegraphics[height=0.25\textwidth]{fig/best_fit_XID2138_SB_profile.pdf}
-\includegraphics[height=0.25\textwidth]{fig/best_fit_XID2202_SB_profile.pdf}
 }
 \figurenum{1}
 \caption{Continued.}
@@ -497,39 +520,50 @@ In each row, observed data (first column), best-fit models (second column), data
 \centering
 %\hspace{-5.5em}
 {
+\includegraphics[height=0.25\textwidth]{fig/best_fit_XID2138_SB_profile.pdf}
+\includegraphics[height=0.25\textwidth]{fig/best_fit_XID2202_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_XID2396_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_LID1273_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_LID1538_SB_profile.pdf}
+}
+\figurenum{1}
+\caption{Continued.}
+\end{figure*} 
+
+\begin{figure*}
+\centering
+%\hspace{-5.5em}
+{
 \includegraphics[height=0.25\textwidth]{fig/best_fit_LID360_SB_profile.pdf}
-\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X1136_SB_profile.pdf}
-}
-\figurenum{1}
-\caption{Continued.}
-\end{figure*} 
-
-\begin{figure*}
-\centering
-%\hspace{-5.5em}
-{
-\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X50_SB_profile.pdf}
-\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X717_SB_profile.pdf}
-\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X735_SB_profile.pdf}
-\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X763_SB_profile.pdf}
-\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X969_SB_profile.pdf}
-}
-\figurenum{1}
-\caption{Continued.}
-\end{figure*} 
-
-\begin{figure*}
-\centering
-%\hspace{-5.5em}
-{
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CDFS-1_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CDFS-229_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CDFS-321_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CDFS-724_SB_profile.pdf}
+}
+\figurenum{1}
+\caption{Continued.}
+\end{figure*} 
+
+\begin{figure*}
+\centering
+%\hspace{-5.5em}
+{
 \includegraphics[height=0.25\textwidth]{fig/best_fit_ECDFS-358_SB_profile.pdf}
+\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X1136_SB_profile.pdf}
+\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X50_SB_profile.pdf}
+\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X717_SB_profile.pdf}
+\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X735_SB_profile.pdf}
+}
+\figurenum{1}
+\caption{Continued.}
+\end{figure*} 
+
+\begin{figure*}
+\centering
+%\hspace{-5.5em}
+{
+\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X763_SB_profile.pdf}
+\includegraphics[height=0.25\textwidth]{fig/best_fit_SXDS-X969_SB_profile.pdf}
 }
 \figurenum{1}
 \caption{Continued.}

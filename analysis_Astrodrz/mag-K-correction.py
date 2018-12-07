@@ -139,7 +139,7 @@ from dmag import k_corr_R
 #]
 ID = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
 'LID1273','XID2202','CID206','CID543','LID1538','XID2396','CID452',\
-'LID360','CID237','CID454','CID607','CID3570']
+'LID360','CID237','CID454','CID607','CID3570', 'CID597', 'CID1281']
 mags_obs_IR, mag_IR_err = load_result(ID, count_rank=8, cam = 'WFC3')
 mags_obs_UV, mag_UV_err = load_result(ID, count_rank=8, cam = 'ACS')
 zs = np.array([redshift_info[ID[i]] for i in range(len(ID))])

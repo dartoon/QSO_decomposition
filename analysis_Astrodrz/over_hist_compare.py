@@ -117,19 +117,26 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724'\
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID1281', 'CID597'\
 ]
 
 ratio_results_0 = np.asarray(load_result(ID, count_rank=5)[0])
 ratio_results_1 = np.asarray(load_result(ID, count_rank=8)[0])
 ratio_results_2 = np.asarray(load_result(ID, count_rank=10)[0])
-ratio_results_3 = np.asarray(load_result(ID, count_rank=8, sort_PSF_by = 'fit_ps_each')[0])
+#ratio_results_3 = np.asarray(load_result(ID, count_rank=8, sort_PSF_by = 'fit_ps_each')[0])
 
+
+import matplotlib as matt
+matt.rcParams['font.family'] = 'STIXGeneral'
+cmap = matplotlib.cm.get_cmap('viridis')
 
 plt.figure(figsize=(10,6))
 common_params = dict(label=('Rank5','Rank8','Rank10','fit_PS'))
-plt.hist((ratio_results_0[:,0], ratio_results_1[:,0], ratio_results_2[:,0], ratio_results_3[:,0]), **common_params)
-plt.legend()
+plt.hist((ratio_results_0[:,0], ratio_results_1[:,0], ratio_results_2[:,0]), **common_params)
+plt.xlabel('Host flux ratio (%)',fontsize=25)
+plt.ylabel('#', fontsize=25)
+plt.tick_params(labelsize=25)
+plt.legend(fontsize=15)
 plt.show()
 
 
