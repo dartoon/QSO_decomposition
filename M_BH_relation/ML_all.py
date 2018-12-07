@@ -119,15 +119,15 @@ h0=70.             #km/s/Mpc
 om=0.3
 c=299790.        #speed of light [km/s]
 
+from load_result import load_zs, load_mag
+
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724']
-zs = np.array([1.630, 1.301, 1.667, 1.447, 1.326, 1.570, 1.552, 1.567, 1.618, 1.532, 1.244, 1.407, 1.478, 1.239, 1.294, 1.617, 1.527, 1.579, 1.325, 1.411, 1.276, 1.412, 1.585, 1.551, 1.516, 1.600, 1.483, 1.626, 1.337])
-mags = np.array([22.656, 21.950, 21.865, 20.919, 21.568, 20.337, 21.415, 21.510, 21.279, 21.161,\
-21.164, 21.176, 21.212, 20.915, 21.189, 20.939, 21.251, 21.483, 21.921, 21.943,\
-21.759, 24.134, 21.594, 21.845, 21.160, 21.404, 21.810, 21.340, 23.695])
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
+zs = np.asarray(load_zs(ID))
+mags = np.array(load_mag(ID)[0])
 
 from dmag import k_corr_R
 import sys
@@ -158,7 +158,7 @@ MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','LID1820','LID1622',\
-'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724']
+'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
 
 for j in range(len(ID)):
     count = 0
@@ -184,8 +184,8 @@ for tar_in in range(len(ID)):
         print "use Hb for", ID[tar_in]
         FWMH_b = float(samples[ser][19])
         logL5100dr = float(samples[ser][16])
-#        cal_logMb = 6.91+0.5*(logL5100dr-44)+2.*np.log10(FWMH_b/1000)  # as used in Andreas
-        cal_logMb = 6.882+0.518*(logL5100dr-44)+2.*np.log10(FWMH_b/1000)        # calibrated in H0liCOW 7
+        cal_logMb = 6.91+0.5*(logL5100dr-44)+2.*np.log10(FWMH_b/1000)  # as used in Andreas
+#        cal_logMb = 6.882+0.518*(logL5100dr-44)+2.*np.log10(FWMH_b/1000)        # calibrated in H0liCOW 7
         MBs.append(cal_logMb)
     elif ser==-99:
         MBs.append(-99)
