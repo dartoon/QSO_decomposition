@@ -7,6 +7,7 @@ ompiled source #
 *.o
 *.so
 *.pyc
+*.pdf
 
 # Packages #
 ############
@@ -29,8 +30,6 @@ ompiled source #
 *_ima.fits
 coadd*fits
 *.xml
-qso_fit_PSF*.pdf
-
 # OS generated files #
 ######################
 .DS_Store
@@ -52,5 +51,4 @@ Cycle25data/*
 analysis_ACS/*/*_180mas_sci.fits
 analysis_ACS/*/sub_coadd.fits
 
-analysis_ACS/*/*/*.pdf
 
