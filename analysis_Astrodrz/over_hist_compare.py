@@ -131,12 +131,13 @@ matt.rcParams['font.family'] = 'STIXGeneral'
 cmap = matplotlib.cm.get_cmap('viridis')
 
 plt.figure(figsize=(10,6))
-common_params = dict(label=('Rank5','Rank8','Rank10','fit_PS'))
+common_params = dict(label=('Rank 5 PSFs','Rank 8 PSFs','Rank 10 PSFs'))
 plt.hist((ratio_results_0[:,0], ratio_results_1[:,0], ratio_results_2[:,0]), **common_params)
 plt.xlabel('Host flux ratio (%)',fontsize=25)
 plt.ylabel('#', fontsize=25)
 plt.tick_params(labelsize=25)
 plt.legend(fontsize=15)
+#plt.savefig('hist_compare.pdf')
 plt.show()
 
 

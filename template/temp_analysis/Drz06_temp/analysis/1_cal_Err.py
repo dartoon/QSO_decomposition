@@ -27,7 +27,7 @@ from photutils import make_source_mask
 mask = make_source_mask(QSO_outer, snr=2, npixels=5, dilate_size=11)
 plt.imshow(QSO_outer* (1-mask*1), origin='low')
 plt.show()
-stdd = np.std(QSO_outer* (1-mask*1))
+stdd = np.std(QSO_outer[mask==False])
 print "stdd:",stdd
 #stdd = 0.0076
 

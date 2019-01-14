@@ -20,7 +20,7 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
 'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
 ]
-#ID = ['CID1281']
+#ID = ['CID1281']  # note the others and active the line 63,
 
 import pickle
 ratio_results, Re_results, n_results, total_flux_results, host_amp_results = [], [], [], [], []

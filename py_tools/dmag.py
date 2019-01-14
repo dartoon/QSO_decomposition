@@ -42,7 +42,7 @@ def k_corr_R(z, filt = 'F140w', galaxy_age = '5Gyrs'):
 #z_d = np.linspace(1,2,20)
 #k_c_140_5gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '5Gyrs')
 #k_c_814_5gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '5Gyrs')
-#k_c_140_1gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '1Gyrs')
+#k_c_140_1gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '1Gyrs')
 #k_c_814_1gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '1Gyrs')
 #plt.plot(z_d,k_c_140_5gy-k_c_814_5gy, label = '5gy', c='r')
 #plt.plot(z_d,k_c_140_1gy-k_c_814_1gy, label = '1gy', c='b')
