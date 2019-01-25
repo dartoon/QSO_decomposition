@@ -50,5 +50,4 @@ Cycle25data/*
 *~
 analysis_ACS/*/*_180mas_sci.fits
 analysis_ACS/*/sub_coadd.fits
-
-
+analysis_Astrodrz/QSOs_cutout/*
