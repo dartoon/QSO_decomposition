@@ -173,5 +173,37 @@ val_min, val_max = np.min([mag_k_corrected_UV, mag_k_corrected_IR]), np.max([mag
 plt.xlim(val_min-0.5, val_max+0.5)
 plt.ylim(val_min-0.5, val_max+0.5)
 plt.tick_params(labelsize=25)     
-plt.savefig('/Users/Dartoon/Desktop/Comp_gtemp_{0}.pdf'.format(galay_temp))
+#plt.savefig('/Users/Dartoon/Desktop/Comp_gtemp_{0}.pdf'.format(galay_temp))
 plt.show()
+
+#Plot the color and compare with the Tommaso's color value:
+#Plot TT's figure:
+from dmag import k_corr_R
+plt.figure(figsize=(10, 8))
+z_d = np.linspace(1,2,40)
+k_c_140_5gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '5Gyrs')
+k_c_814_5gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '5Gyrs')
+k_c_125_5gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '5Gyrs')
+k_c_140_1gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '1Gyrs')
+k_c_814_1gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '1Gyrs')
+k_c_125_1gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '1Gyrs')
+plt.plot(z_d[z_d>1.44],(k_c_140_5gy-k_c_814_5gy)[z_d>1.44], label = '5gy', c='r')
+plt.plot(z_d[z_d<1.44],(k_c_125_5gy-k_c_814_5gy)[z_d<1.44], c='r')
+plt.plot(z_d[z_d>1.44],(k_c_140_1gy-k_c_814_1gy)[z_d>1.44], label = '1gy', c='b')
+plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], c='b')
+plt.legend(fontsize=25)
+texts = []
+for i in range(len(ID)):
+    if zs[i] > 1.44 :
+        plt.plot(zs[i], mags_obs_UV[i] - mags_obs_IR[i], 'go')
+    else:
+        plt.plot(zs[i], mags_obs_UV[i] - mags_obs_IR[i], 'ko')
+    texts.append(plt.text(zs[i], mags_obs_UV[i] - mags_obs_IR[i], ID[i], fontsize=17))
+adjust_text(texts, arrowprops=dict(arrowstyle='->', color='green'))  
+plt.xlabel('redshift',fontsize=25)
+plt.ylabel('Observed Color', fontsize=25)
+plt.tick_params(labelsize=15)    
+plt.show()
+
+
+    

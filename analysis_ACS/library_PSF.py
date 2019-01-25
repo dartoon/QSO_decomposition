@@ -206,7 +206,5 @@ for i in range(len(PSF_list)):
 
 import pickle
 filename='PSFs_lib_dict'.format(ID)
-datafile = open(filename, 'wb')
 PSFs_lib = [flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict]
 pickle.dump(PSFs_lib, open(filename, 'wb'))
-datafile.close()
