@@ -13,8 +13,8 @@ import corner
 
 def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.04, pix_sz = 'drz06',
             exp_time = 2400., fix_n=None, image_plot = True, corner_plot=True,
-            flux_ratio_plot=True, deep_seed = False, fixcenter = False, QSO_msk=None, QSO_std=None,
-            tag = None, no_MCMC= False):
+            flux_ratio_plot=True, deep_seed = True, fixcenter = False, QSO_msk=None, QSO_std=None,
+            tag = None, no_MCMC= False, subg=3):
     '''
     A quick fit for the QSO image with (so far) single sersice + one PSF. The input psf noise is optional.
     
@@ -54,9 +54,9 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
     kernel = psf_ave
     
     if psf_std is not None:
-        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False, 'psf_error_map': True}     #Turn on the PSF error map
+        kwargs_numerics = {'subgrid_res': subg, 'psf_subgrid': False, 'psf_error_map': True}     #Turn on the PSF error map
     else: 
-        kwargs_numerics = {'subgrid_res': 1, 'psf_subgrid': False}
+        kwargs_numerics = {'subgrid_res': subg, 'psf_subgrid': False}
     
     if source_params is None:
         # here are the options for the host galaxy fitting
@@ -168,6 +168,7 @@ def fit_qso(QSO_im, psf_ave, psf_std=None, source_params=None, background_rms=0.
             'sigma_scale': .1}
             ]
     elif deep_seed == True:
+         print "subg:", subg, "deep_seed", deep_seed
          fitting_kwargs_list = [
             {'fitting_routine': 'PSO', 'mpi': False, 'sigma_scale': 1., 'n_particles': 150,
              'n_iterations': 150},

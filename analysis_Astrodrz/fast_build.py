@@ -12,15 +12,33 @@ import matplotlib.pyplot as plt
 from subprocess import call
 #print call('ls', shell=True)
 
-filt_info = {'CDFS-1': 'F140w', 'CDFS-229': 'F125w', 'CDFS-724': 'F125w',\
-'CID1174': 'F140w', 'CID206': 'F140w', 'CID216': 'F140w', 'CID3242': 'F140w',\
-'CID3570': 'F125w', 'CID452': 'F125w', 'CID454': 'F140w', 'CID50': 'F125w',\
-'CID607': 'F125w', 'CID70': 'F140w', 'LID1273': 'F140w', 'LID360': 'F140w',\
-'XID2138': 'F140w', 'XID2202': 'F140w', 'XID2396': 'F140w', 'ECDFS-358': 'F140w',\
-'SXDS-X1136': 'F125w', 'SXDS-X50': 'F125w', 'SXDS-X735': 'F140w',\
-'CID543': 'F125w', 'LID1538': 'F140w', 'CID237': 'F140w', 'SXDS-X717': 'F125w',\
-'SXDS-X763': 'F125w', 'SXDS-X969': 'F140w', 'CDFS-321': 'F140w'}
+import sys
+sys.path.insert(0,'../py_tools')
+from filter_info import filt_info, redshift_info
 
+IDs = filt_info.keys()
+IDs.sort()
+
+# =============================================================================
+# For re-fit the sample
+# =============================================================================
+for key in IDs:
+    ID = key
+    print key
+    print call("mkdir {0}/deep_analysis".format(ID), shell=True)
+    print call("mkdir {0}/deep_analysis/fit_result_each/".format(ID), shell=True)
+    print call("cp {0}/analysis/{0}*.fits {0}/analysis/wht_err.fits {0}/analysis/*.pdf {0}/deep_analysis/".format(ID), shell=True)
+    print call("cp {0}/analysis/4_analysis.py {0}/deep_analysis/".format(ID), shell=True)
+    with open("{0}/deep_analysis/4_analysis.py".format(ID)) as f:
+            contents = f.readlines()
+    for i in range(len(contents)):
+        if 'deep_seed' in contents[i] and 'False' in contents[i]:
+            print ID, "is deep_seed = False", "line:", i
+
+#    print call("cp ../Cycle25data/{0}/*_flt.fits {0}/astrodrz".format(ID), shell=True)
+# =============================================================================
+# Before
+# =============================================================================
 #for key in filt_info.keys():
 #    ID = key
 #    print key
