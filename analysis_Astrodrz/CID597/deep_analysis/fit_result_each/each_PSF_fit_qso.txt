@@ -1,0 +1,40 @@
+#QSO_img intensity: 130.51 
+#fit by PSFCDFS-229_0: 
+PSF_intensity:106.8 
+{'n_sersic': 2.966, 'host_mag': 21.415, 'R_sersic': 0.1, 'qso_y': -0.043, 'qso_x': -0.016, 'QSO_amp': 46.793, 'q': 0.946, 'redu_Chisq': 2.714931, 'center_x': 0.04, 'center_y': -0.034, 'host_amp': 84.382, 'phi_G': -1.501, 'amp': 1.917, 'host_flux_ratio_percent': 64.328}
+#fit by PSFCDFS-229_1: 
+PSF_intensity:1243.23 
+{'n_sersic': 2.688, 'host_mag': 21.487, 'R_sersic': 0.1, 'qso_y': -0.071, 'qso_x': 0.033, 'QSO_amp': 47.633, 'q': 0.713, 'redu_Chisq': 3.218229, 'center_x': 0.086, 'center_y': 0.021, 'host_amp': 78.945, 'phi_G': -0.488, 'amp': 1.751, 'host_flux_ratio_percent': 62.369}
+#fit by PSFSXDS-X1136_0: 
+PSF_intensity:180.4 
+{'n_sersic': 0.3, 'host_mag': 23.656, 'R_sersic': 0.331, 'qso_y': -0.039, 'qso_x': 0.04, 'QSO_amp': 115.337, 'q': 0.91, 'redu_Chisq': 3.249602, 'center_x': 0.007, 'center_y': -0.086, 'host_amp': 10.709, 'phi_G': -0.595, 'amp': 0.063, 'host_flux_ratio_percent': 8.496}
+#fit by PSFSXDS-X1136_1: 
+PSF_intensity:431.31 
+{'n_sersic': 3.015, 'host_mag': 21.581, 'R_sersic': 0.1, 'qso_y': -0.013, 'qso_x': -0.016, 'QSO_amp': 58.048, 'q': 0.86, 'redu_Chisq': 1.98987, 'center_x': 0.032, 'center_y': 0.022, 'host_amp': 72.387, 'phi_G': -0.861, 'amp': 1.8, 'host_flux_ratio_percent': 55.496}
+#fit by PSFSXDS-X1136_2: 
+PSF_intensity:3147.03 
+{'n_sersic': 3.201, 'host_mag': 21.267, 'R_sersic': 0.1, 'qso_y': -0.028, 'qso_x': -0.0, 'QSO_amp': 34.04, 'q': 0.973, 'redu_Chisq': 1.964814, 'center_x': 0.043, 'center_y': -0.042, 'host_amp': 96.672, 'phi_G': -0.657, 'amp': 1.762, 'host_flux_ratio_percent': 73.958}
+#fit by PSFSXDS-X50_0: 
+PSF_intensity:1168.68 
+{'n_sersic': 3.705, 'host_mag': 21.374, 'R_sersic': 0.1, 'qso_y': 0.007, 'qso_x': 0.029, 'QSO_amp': 45.154, 'q': 0.809, 'redu_Chisq': 2.417533, 'center_x': 0.042, 'center_y': -0.041, 'host_amp': 87.572, 'phi_G': 0.45, 'amp': 1.718, 'host_flux_ratio_percent': 65.979}
+#fit by PSFSXDS-X50_1: 
+PSF_intensity:190.03 
+{'n_sersic': 2.801, 'host_mag': 21.695, 'R_sersic': 0.104, 'qso_y': -0.005, 'qso_x': 0.014, 'QSO_amp': 63.673, 'q': 0.795, 'redu_Chisq': 2.201254, 'center_x': 0.042, 'center_y': 0.064, 'host_amp': 65.201, 'phi_G': 0.016, 'amp': 1.5, 'host_flux_ratio_percent': 50.593}
+#fit by PSFSXDS-X50_2: 
+PSF_intensity:205.6 
+{'n_sersic': 2.776, 'host_mag': 21.577, 'R_sersic': 0.107, 'qso_y': -0.0, 'qso_x': 0.011, 'QSO_amp': 56.198, 'q': 0.884, 'redu_Chisq': 2.515531, 'center_x': 0.041, 'center_y': 0.044, 'host_amp': 72.696, 'phi_G': -0.242, 'amp': 1.5, 'host_flux_ratio_percent': 56.4}
+#fit by PSFCID50_0: 
+PSF_intensity:198.87 
+{'n_sersic': 3.036, 'host_mag': 21.507, 'R_sersic': 0.1, 'qso_y': -0.0, 'qso_x': 0.031, 'QSO_amp': 50.551, 'q': 0.913, 'redu_Chisq': 2.277861, 'center_x': 0.06, 'center_y': 0.038, 'host_amp': 77.518, 'phi_G': 0.142, 'amp': 1.793, 'host_flux_ratio_percent': 60.528}
+#fit by PSFSXDS-X763_0: 
+PSF_intensity:542.75 
+{'n_sersic': 2.851, 'host_mag': 21.835, 'R_sersic': 0.1, 'qso_y': -0.018, 'qso_x': 0.033, 'QSO_amp': 70.511, 'q': 0.841, 'redu_Chisq': 2.750345, 'center_x': 0.072, 'center_y': 0.034, 'host_amp': 57.297, 'phi_G': -0.407, 'amp': 1.539, 'host_flux_ratio_percent': 44.831}
+#fit by PSFSXDS-X763_1: 
+PSF_intensity:914.1 
+{'n_sersic': 1.561, 'host_mag': 22.008, 'R_sersic': 0.172, 'qso_y': 0.005, 'qso_x': 0.03, 'QSO_amp': 82.415, 'q': 0.893, 'redu_Chisq': 1.907733, 'center_x': 0.035, 'center_y': 0.02, 'host_amp': 48.845, 'phi_G': 0.01, 'amp': 0.52, 'host_flux_ratio_percent': 37.212}
+#fit by PSFSXDS-X763_2: 
+PSF_intensity:580.77 
+{'n_sersic': 3.329, 'host_mag': 21.726, 'R_sersic': 0.1, 'qso_y': -0.029, 'qso_x': -0.026, 'QSO_amp': 65.258, 'q': 0.953, 'redu_Chisq': 2.159839, 'center_x': 0.038, 'center_y': -0.024, 'host_amp': 63.324, 'phi_G': -1.227, 'amp': 1.342, 'host_flux_ratio_percent': 49.248}
+#fit by PSFCID452_0: 
+PSF_intensity:119.72 
+{'n_sersic': 2.693, 'host_mag': 21.323, 'R_sersic': 0.1, 'qso_y': -0.032, 'qso_x': -0.004, 'QSO_amp': 33.586, 'q': 0.862, 'redu_Chisq': 3.896965, 'center_x': 0.028, 'center_y': 0.031, 'host_amp': 91.835, 'phi_G': -0.315, 'amp': 2.416, 'host_flux_ratio_perc

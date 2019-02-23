@@ -1,0 +1,40 @@
+#QSO_img intensity: 395.85 
+#fit by PSFCDFS-1_0: 
+PSF_intensity:1092.41 
+{'n_sersic': 2.811, 'host_mag': 21.618, 'R_sersic': 0.905, 'qso_y': 0.008, 'qso_x': 0.03, 'QSO_amp': 302.706, 'q': 0.715, 'redu_Chisq': 3.283764, 'center_x': -0.092, 'center_y': -0.063, 'host_amp': 85.881, 'phi_G': 1.54, 'amp': 0.04, 'host_flux_ratio_percent': 22.101}
+#fit by PSFCDFS-1_1: 
+PSF_intensity:567.8 
+{'n_sersic': 1.454, 'host_mag': 21.781, 'R_sersic': 0.817, 'qso_y': -0.031, 'qso_x': 0.041, 'QSO_amp': 309.183, 'q': 0.763, 'redu_Chisq': 4.496082, 'center_x': -0.048, 'center_y': -0.07, 'host_amp': 73.894, 'phi_G': 1.274, 'amp': 0.048, 'host_flux_ratio_percent': 19.29}
+#fit by PSFCDFS-1_2: 
+PSF_intensity:218.46 
+{'n_sersic': 7.0, 'host_mag': 20.716, 'R_sersic': 0.287, 'qso_y': -0.026, 'qso_x': 0.028, 'QSO_amp': 192.331, 'q': 0.813, 'redu_Chisq': 4.624971, 'center_x': -0.042, 'center_y': -0.04, 'host_amp': 196.963, 'phi_G': -1.561, 'amp': 0.423, 'host_flux_ratio_percent': 50.595}
+#fit by PSFXID2138_0: 
+PSF_intensity:1919.67 
+{'n_sersic': 0.921, 'host_mag': 22.267, 'R_sersic': 1.035, 'qso_y': -0.002, 'qso_x': 0.046, 'QSO_amp': 315.627, 'q': 0.646, 'redu_Chisq': 12.340734, 'center_x': -0.171, 'center_y': -0.201, 'host_amp': 47.206, 'phi_G': 1.456, 'amp': 0.029, 'host_flux_ratio_percent': 13.01}
+#fit by PSFXID2138_1: 
+PSF_intensity:198.37 
+{'n_sersic': 3.037, 'host_mag': 20.283, 'R_sersic': 0.1, 'qso_y': 0.018, 'qso_x': -0.051, 'QSO_amp': 49.887, 'q': 0.819, 'redu_Chisq': 7.671483, 'center_x': 0.064, 'center_y': 0.0, 'host_amp': 293.61, 'phi_G': 1.349, 'amp': 5.605, 'host_flux_ratio_percent': 85.477}
+#fit by PSFXID2138_2: 
+PSF_intensity:1097.52 
+{'n_sersic': 7.0, 'host_mag': 20.726, 'R_sersic': 0.448, 'qso_y': 0.015, 'qso_x': 0.032, 'QSO_amp': 193.812, 'q': 0.834, 'redu_Chisq': 3.652073, 'center_x': 0.064, 'center_y': -0.042, 'host_amp': 195.17, 'phi_G': 1.104, 'amp': 0.155, 'host_flux_ratio_percent': 50.175}
+#fit by PSFCDFS-321_0: 
+PSF_intensity:481.62 
+{'n_sersic': 6.39, 'host_mag': 21.209, 'R_sersic': 0.622, 'qso_y': -0.029, 'qso_x': 0.039, 'QSO_amp': 269.598, 'q': 0.789, 'redu_Chisq': 2.950056, 'center_x': 0.007, 'center_y': -0.055, 'host_amp': 125.14, 'phi_G': 1.36, 'amp': 0.077, 'host_flux_ratio_percent': 31.702}
+#fit by PSFCDFS-321_1: 
+PSF_intensity:176.57 
+{'n_sersic': 7.0, 'host_mag': 21.111, 'R_sersic': 0.477, 'qso_y': -0.03, 'qso_x': 0.035, 'QSO_amp': 252.741, 'q': 0.838, 'redu_Chisq': 3.985181, 'center_x': 0.009, 'center_y': -0.056, 'host_amp': 136.976, 'phi_G': 1.391, 'amp': 0.127, 'host_flux_ratio_percent': 35.148}
+#fit by PSFCID70_0: 
+PSF_intensity:2001.52 
+{'n_sersic': 1.108, 'host_mag': 21.867, 'R_sersic': 0.974, 'qso_y': -0.015, 'qso_x': 0.018, 'QSO_amp': 311.714, 'q': 0.705, 'redu_Chisq': 5.996078, 'center_x': -0.129, 'center_y': -0.111, 'host_amp': 68.244, 'phi_G': 1.347, 'amp': 0.039, 'host_flux_ratio_percent': 17.961}
+#fit by PSFCID70_1: 
+PSF_intensity:2962.55 
+{'n_sersic': 7.0, 'host_mag': 21.076, 'R_sersic': 0.602, 'qso_y': -0.033, 'qso_x': 0.028, 'QSO_amp': 252.054, 'q': 0.754, 'redu_Chisq': 2.830588, 'center_x': -0.059, 'center_y': -0.048, 'host_amp': 141.381, 'phi_G': 1.559, 'amp': 0.093, 'host_flux_ratio_percent': 35.935}
+#fit by PSFECDFS-358_0: 
+PSF_intensity:1590.32 
+{'n_sersic': 1.927, 'host_mag': 21.627, 'R_sersic': 0.865, 'qso_y': -0.004, 'qso_x': 0.029, 'QSO_amp': 307.925, 'q': 0.754, 'redu_Chisq': 4.389191, 'center_x': -0.022, 'center_y': -0.045, 'host_amp': 85.132, 'phi_G': 1.374, 'amp': 0.044, 'host_flux_ratio_percent': 21.659}
+#fit by PSFECDFS-358_1: 
+PSF_intensity:398.2 
+{'n_sersic': 4.878, 'host_mag': 21.216, 'R_sersic': 0.989, 'qso_y': -0.035, 'qso_x': -0.006, 'QSO_amp': 270.918, 'q': 0.782, 'redu_Chisq': 4.269347, 'center_x': -0.021, 'center_y': -0.107, 'host_amp': 124.29, 'phi_G': 1.336, 'amp': 0.029, 'host_flux_ratio_percent': 31.449}
+#fit by PSFECDFS-358_2: 
+PSF_intensity:989.63 
+{'n_sersic': 6.641, 'host_mag': 20.767, 'R_sersic': 1.059, 'qso_y': -0.029, 'qso_x': 0.023, 'QSO_amp': 202.393, 'q': 0.72, 'redu_Chisq': 3.914432, 'center_x': -0.043, 'center_y': -0.021, 'host_amp': 187.973, 'phi_G': 1.411, 'a

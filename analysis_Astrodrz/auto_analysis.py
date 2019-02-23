@@ -20,10 +20,10 @@ cmap = matplotlib.cm.get_cmap('viridis')
 import os 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
-file_list = ['CDFS-1',  'CDFS-229',  'CDFS-321',  'CDFS-724',  'CID1174',  'CID1281', 'CID206',  'CID216']
-file_list = ['CID237',  'CID3242',  'CID3570',  'CID452', 'CID454',  'CID50',  'CID543']
-file_list = ['CID597',  'CID607',  'CID70',  'ECDFS-358', 'LID1273',  'LID1538',  'LID360',  'SXDS-X1136']
-file_list = ['SXDS-X50',  'SXDS-X717', 'SXDS-X735',  'SXDS-X763',  'SXDS-X969',  'XID2138',  'XID2202',  'XID2396']
+#file_list = ['CDFS-1',  'CDFS-229',  'CDFS-321',  'CDFS-724',  'CID1174',  'CID1281', 'CID206',  'CID216']
+#file_list = ['CID237',  'CID3242',  'CID3570',  'CID452', 'CID454',  'CID50',  'CID543']
+#file_list = ['CID597',  'CID607',  'CID70',  'ECDFS-358', 'LID1273',  'LID1538',  'LID360',  'SXDS-X1136']
+#file_list = ['SXDS-X50',  'SXDS-X717', 'SXDS-X735',  'SXDS-X763',  'SXDS-X969',  'XID2138',  'XID2202',  'XID2396']
 
 for i in range(len(file_list)):
     print 'Run for: ',file_list[i]

@@ -17,6 +17,49 @@ import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 
 from subprocess import call
+
+import sys
+sys.path.insert(0,'../py_tools')
+
+## =============================================================================
+## For re-fit the sample for the deep fit and subgrid
+## =============================================================================
+IDs = ['CID1174',  'CID1281', 'CID206', 'CID216', 'CID237', 'CID3242', 'CID3570', 'CID452',
+       'CID454', 'CID50', 'CID543', 'CID597', 'CID607', 'CID70', 'LID1273', 'LID1538',
+       'LID360', 'XID2138', 'XID2202', 'XID2396']
+for key in IDs:
+    ID = key
+    print key
+    print call("rm -r {0}/deep_analysis".format(ID), shell=True)
+#    print call("mkdir {0}/deep_analysis/fit_result_each_fix/".format(ID), shell=True)
+#    print call("cp {0}/analysis/{0}*.fits {0}/analysis/wht_err.fits {0}/analysis/*.pdf {0}/deep_analysis/".format(ID), shell=True)
+#    print call("cp {0}/analysis/4_analysis_fix_Re_n.py {0}/deep_analysis/".format(ID), shell=True)
+#    with open("{0}/deep_analysis/4_analysis_fix_Re_n.py".format(ID)) as f:
+#            contents = f.readlines()
+#    for i in range(len(contents)):
+#        if 'deep_seed' in contents[i] and 'False' in contents[i]:
+#            print ID, "is deep_seed = False", "line:", i
+#        if 'fix_re, fix_n' in contents[i]:
+#            print "the fix_re, fix_n is OK"
+            
+            
+            
+## =============================================================================
+## For re-fit the sample long before 2019.
+## =============================================================================
+#for key in IDs:
+#    ID = key
+#    print key
+#    print call("mkdir {0}/deep_analysis".format(ID), shell=True)
+#    print call("mkdir {0}/deep_analysis/fit_result_each/".format(ID), shell=True)
+#    print call("cp {0}/analysis/{0}*.fits {0}/analysis/wht_err.fits {0}/analysis/*.pdf {0}/deep_analysis/".format(ID), shell=True)
+#    print call("cp {0}/analysis/4_analysis.py {0}/deep_analysis/".format(ID), shell=True)
+#    with open("{0}/deep_analysis/4_analysis.py".format(ID)) as f:
+#            contents = f.readlines()
+#    for i in range(len(contents)):
+#        if 'deep_seed' in contents[i] and 'False' in contents[i]:
+#            print ID, "is deep_seed = False", "line:", i
+
 #print call('ls', shell=True)
 
 #IDs = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
@@ -65,9 +108,9 @@ from subprocess import call
 #    ID = key
 ##    print key
 #    print "sed -n 's/fit_result_each_fix/&/p' {0}/4_analysis_fix_Re_n.py".format(ID)
-
-ID = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
-'LID1273','XID2202','CID206','CID543','LID1538','XID2396','CID452',\
-'LID360','CID237','CID454','CID607','CID3570']
-for i in range(len(ID)):
-    print ""
+#
+#ID = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
+#'LID1273','XID2202','CID206','CID543','LID1538','XID2396','CID452',\
+#'LID360','CID237','CID454','CID607','CID3570']
+#for i in range(len(ID)):
+#    print ""
