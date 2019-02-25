@@ -37,4 +37,76 @@ PSF_intensity:580.77
 {'n_sersic': 3.329, 'host_mag': 21.726, 'R_sersic': 0.1, 'qso_y': -0.029, 'qso_x': -0.026, 'QSO_amp': 65.258, 'q': 0.953, 'redu_Chisq': 2.159839, 'center_x': 0.038, 'center_y': -0.024, 'host_amp': 63.324, 'phi_G': -1.227, 'amp': 1.342, 'host_flux_ratio_percent': 49.248}
 #fit by PSFCID452_0: 
 PSF_intensity:119.72 
-{'n_sersic': 2.693, 'host_mag': 21.323, 'R_sersic': 0.1, 'qso_y': -0.032, 'qso_x': -0.004, 'QSO_amp': 33.586, 'q': 0.862, 'redu_Chisq': 3.896965, 'center_x': 0.028, 'center_y': 0.031, 'host_amp': 91.835, 'phi_G': -0.315, 'amp': 2.416, 'host_flux_ratio_perc
+{'n_sersic': 2.693, 'host_mag': 21.323, 'R_sersic': 0.1, 'qso_y': -0.032, 'qso_x': -0.004, 'QSO_amp': 33.586, 'q': 0.862, 'redu_Chisq': 3.896965, 'center_x': 0.028, 'center_y': 0.031, 'host_amp': 91.835, 'phi_G': -0.315, 'amp': 2.416, 'host_flux_ratio_percent': 73.222}
+#fit by PSFCID452_1: 
+PSF_intensity:373.56 
+{'n_sersic': 3.204, 'host_mag': 21.555, 'R_sersic': 0.1, 'qso_y': -0.039, 'qso_x': -0.026, 'QSO_amp': 54.901, 'q': 0.943, 'redu_Chisq': 1.962703, 'center_x': 0.034, 'center_y': -0.02, 'host_amp': 74.167, 'phi_G': -1.385, 'amp': 1.643, 'host_flux_ratio_percent': 57.464}
+#fit by PSFCID543_0: 
+PSF_intensity:174.35 
+{'n_sersic': 2.81, 'host_mag': 21.498, 'R_sersic': 0.104, 'qso_y': -0.03, 'qso_x': 0.02, 'QSO_amp': 51.689, 'q': 0.912, 'redu_Chisq': 2.15116, 'center_x': 0.075, 'center_y': -0.008, 'host_amp': 78.175, 'phi_G': -1.012, 'amp': 1.761, 'host_flux_ratio_percent': 60.198}
+#fit by PSFCID543_1: 
+PSF_intensity:390.66 
+{'n_sersic': 2.47, 'host_mag': 21.417, 'R_sersic': 0.11, 'qso_y': -0.012, 'qso_x': -0.001, 'QSO_amp': 47.929, 'q': 0.968, 'redu_Chisq': 1.778566, 'center_x': 0.045, 'center_y': 0.005, 'host_amp': 84.174, 'phi_G': 1.122, 'amp': 1.64, 'host_flux_ratio_percent': 63.719}
+#fit by PSFCID543_2: 
+PSF_intensity:1302.15 
+{'n_sersic': 2.969, 'host_mag': 21.683, 'R_sersic': 0.106, 'qso_y': -0.006, 'qso_x': 0.051, 'QSO_amp': 63.387, 'q': 0.932, 'redu_Chisq': 2.196701, 'center_x': 0.074, 'center_y': 0.031, 'host_amp': 65.889, 'phi_G': -0.08, 'amp': 1.376, 'host_flux_ratio_percent': 50.968}
+#fit by PSFCID543_3: 
+PSF_intensity:1414.07 
+{'n_sersic': 2.604, 'host_mag': 21.337, 'R_sersic': 0.1, 'qso_y': -0.048, 'qso_x': -0.006, 'QSO_amp': 38.141, 'q': 0.85, 'redu_Chisq': 2.303397, 'center_x': 0.041, 'center_y': 0.014, 'host_amp': 90.652, 'phi_G': -0.512, 'amp': 2.426, 'host_flux_ratio_percent': 70.386}
+#fit by PSFCDFS-724_0: 
+PSF_intensity:1055.68 
+{'n_sersic': 2.767, 'host_mag': 21.789, 'R_sersic': 0.131, 'qso_y': 0.001, 'qso_x': 0.016, 'QSO_amp': 68.217, 'q': 0.892, 'redu_Chisq': 2.436151, 'center_x': 0.064, 'center_y': 0.043, 'host_amp': 59.765, 'phi_G': -0.282, 'amp': 0.72, 'host_flux_ratio_percent': 46.698}
+#fit by PSFCDFS-724_1: 
+PSF_intensity:626.87 
+{'n_sersic': 2.966, 'host_mag': 21.664, 'R_sersic': 0.1, 'qso_y': -0.018, 'qso_x': 0.029, 'QSO_amp': 63.402, 'q': 0.916, 'redu_Chisq': 2.089443, 'center_x': 0.048, 'center_y': 0.032, 'host_amp': 67.083, 'phi_G': -0.207, 'amp': 1.589, 'host_flux_ratio_percent': 51.411}
+#fit by PSFCDFS-724_2: 
+PSF_intensity:161.03 
+{'n_sersic': 1.737, 'host_mag': 22.094, 'R_sersic': 0.163, 'qso_y': -0.015, 'qso_x': 0.011, 'QSO_amp': 85.351, 'q': 0.89, 'redu_Chisq': 1.914188, 'center_x': -0.021, 'center_y': -0.043, 'host_amp': 45.146, 'phi_G': -0.578, 'amp': 0.508, 'host_flux_ratio_percent': 34.595}
+#fit by PSFCDFS-724_3: 
+PSF_intensity:816.45 
+{'n_sersic': 0.607, 'host_mag': 22.663, 'R_sersic': 0.274, 'qso_y': -0.031, 'qso_x': 0.029, 'QSO_amp': 104.334, 'q': 0.979, 'redu_Chisq': 1.887469, 'center_x': 0.012, 'center_y': -0.018, 'host_amp': 26.714, 'phi_G': -0.27, 'amp': 0.154, 'host_flux_ratio_percent': 20.385}
+#fit by PSFCDFS-724_4: 
+PSF_intensity:116.34 
+{'n_sersic': 2.989, 'host_mag': 21.459, 'R_sersic': 0.1, 'qso_y': -0.018, 'qso_x': 0.036, 'QSO_amp': 48.498, 'q': 0.905, 'redu_Chisq': 2.032312, 'center_x': 0.034, 'center_y': 0.039, 'host_amp': 80.981, 'phi_G': 0.35, 'amp': 1.907, 'host_flux_ratio_percent': 62.544}
+#fit by PSFCID607_0: 
+PSF_intensity:182.49 
+{'n_sersic': 2.661, 'host_mag': 21.476, 'R_sersic': 0.1, 'qso_y': -0.016, 'qso_x': -0.007, 'QSO_amp': 51.043, 'q': 0.9, 'redu_Chisq': 2.090128, 'center_x': 0.014, 'center_y': 0.022, 'host_amp': 79.755, 'phi_G': -0.057, 'amp': 1.974, 'host_flux_ratio_percent': 60.976}
+#fit by PSFCID607_1: 
+PSF_intensity:356.48 
+{'n_sersic': 2.654, 'host_mag': 21.573, 'R_sersic': 0.104, 'qso_y': -0.0, 'qso_x': 0.023, 'QSO_amp': 57.478, 'q': 0.893, 'redu_Chisq': 2.205242, 'center_x': 0.029, 'center_y': 0.057, 'host_amp': 72.905, 'phi_G': 0.061, 'amp': 1.711, 'host_flux_ratio_percent': 55.916}
+#fit by PSFCID607_2: 
+PSF_intensity:594.89 
+{'n_sersic': 2.862, 'host_mag': 21.452, 'R_sersic': 0.105, 'qso_y': -0.038, 'qso_x': 0.018, 'QSO_amp': 50.146, 'q': 0.854, 'redu_Chisq': 1.790191, 'center_x': 0.016, 'center_y': 0.007, 'host_amp': 81.507, 'phi_G': 0.214, 'amp': 1.852, 'host_flux_ratio_percent': 61.91}
+#fit by PSFCID607_3: 
+PSF_intensity:905.26 
+{'n_sersic': 3.231, 'host_mag': 21.517, 'R_sersic': 0.1, 'qso_y': 0.016, 'qso_x': -0.004, 'QSO_amp': 52.464, 'q': 0.914, 'redu_Chisq': 2.007656, 'center_x': 0.042, 'center_y': 0.003, 'host_amp': 76.825, 'phi_G': 0.503, 'amp': 1.644, 'host_flux_ratio_percent': 59.421}
+#fit by PSFCID607_4: 
+PSF_intensity:239.54 
+{'n_sersic': 2.746, 'host_mag': 21.535, 'R_sersic': 0.1, 'qso_y': -0.014, 'qso_x': 0.009, 'QSO_amp': 55.821, 'q': 0.84, 'redu_Chisq': 2.293753, 'center_x': 0.027, 'center_y': 0.047, 'host_amp': 75.52, 'phi_G': 0.222, 'amp': 1.991, 'host_flux_ratio_percent': 57.499}
+#fit by PSFCID607_5: 
+PSF_intensity:1556.92 
+{'n_sersic': 1.047, 'host_mag': 22.658, 'R_sersic': 0.253, 'qso_y': -0.012, 'qso_x': 0.052, 'QSO_amp': 100.885, 'q': 0.805, 'redu_Chisq': 2.700123, 'center_x': 0.054, 'center_y': 0.008, 'host_amp': 26.846, 'phi_G': 0.368, 'amp': 0.184, 'host_flux_ratio_percent': 21.018}
+#fit by PSFCID607_6: 
+PSF_intensity:2181.28 
+{'n_sersic': 2.367, 'host_mag': 21.866, 'R_sersic': 0.142, 'qso_y': -0.003, 'qso_x': 0.016, 'QSO_amp': 73.367, 'q': 0.903, 'redu_Chisq': 2.13065, 'center_x': 0.064, 'center_y': 0.043, 'host_amp': 55.692, 'phi_G': 0.004, 'amp': 0.682, 'host_flux_ratio_percent': 43.152}
+#fit by PSFSXDS-X717_0: 
+PSF_intensity:629.29 
+{'n_sersic': 3.111, 'host_mag': 21.949, 'R_sersic': 0.1, 'qso_y': -0.015, 'qso_x': -0.018, 'QSO_amp': 71.936, 'q': 0.535, 'redu_Chisq': 4.254263, 'center_x': 0.042, 'center_y': 0.064, 'host_amp': 51.595, 'phi_G': -0.675, 'amp': 1.489, 'host_flux_ratio_percent': 41.767}
+#fit by PSFSXDS-X717_1: 
+PSF_intensity:1151.58 
+{'n_sersic': 2.951, 'host_mag': 21.541, 'R_sersic': 0.1, 'qso_y': -0.013, 'qso_x': -0.008, 'QSO_amp': 55.339, 'q': 0.856, 'redu_Chisq': 2.021149, 'center_x': 0.017, 'center_y': 0.028, 'host_amp': 75.087, 'phi_G': -0.708, 'amp': 1.869, 'host_flux_ratio_percent': 57.571}
+#fit by PSFSXDS-X717_2: 
+PSF_intensity:131.48 
+{'n_sersic': 2.715, 'host_mag': 21.626, 'R_sersic': 0.1, 'qso_y': -0.047, 'qso_x': 0.037, 'QSO_amp': 61.058, 'q': 0.938, 'redu_Chisq': 2.524933, 'center_x': 0.049, 'center_y': -0.017, 'host_amp': 69.459, 'phi_G': -0.822, 'amp': 1.659, 'host_flux_ratio_percent': 53.218}
+#fit by PSFCID3570_0: 
+PSF_intensity:401.09 
+{'n_sersic': 0.3, 'host_mag': 23.941, 'R_sersic': 0.372, 'qso_y': 0.005, 'qso_x': 0.014, 'QSO_amp': 116.568, 'q': 0.829, 'redu_Chisq': 4.000872, 'center_x': -0.009, 'center_y': -0.043, 'host_amp': 8.238, 'phi_G': 0.001, 'amp': 0.043, 'host_flux_ratio_percent': 6.601}
+#fit by PSFCID3570_1: 
+PSF_intensity:847.29 
+{'n_sersic': 2.527, 'host_mag': 22.1, 'R_sersic': 0.155, 'qso_y': -0.027, 'qso_x': 0.003, 'QSO_amp': 82.675, 'q': 0.771, 'redu_Chisq': 2.568986, 'center_x': 0.021, 'center_y': 0.043, 'host_amp': 44.871, 'phi_G': 0.121, 'amp': 0.514, 'host_flux_ratio_percent': 35.18}
+#fit by PSFCID597_0: 
+PSF_intensity:820.99 
+{'n_sersic': 1.096, 'host_mag': 22.273, 'R_sersic': 0.219, 'qso_y': -0.015, 'qso_x': 0.026, 'QSO_amp': 92.313, 'q': 0.925, 'redu_Chisq': 1.564888, 'center_x': -0.011, 'center_y': -0.024, 'host_amp': 38.285, 'phi_G': -0.663, 'amp': 0.289, 'host_flux_ratio_percent': 29.315}
+#fit by PSFCID597_1: 
+PSF_intensity:713.85 
+{'n_sersic': 3.11, 'host_mag': 21.164, 'R_sersic': 0.1, 'qso_y': 0.028, 'qso_x': -0.0, 'QSO_amp': 21.429, 'q': 0.961, 'redu_Chisq': 2.24447, 'center_x': 0.043, 'center_y': -0.0, 'host_amp': 106.328, 'phi_G': 1.288, 'amp': 1.534, 'host_flux_ratio_percent': 83.227}
