@@ -28,7 +28,7 @@ chisq_list, inf_list, best_PSF_id = [],[], []
 flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PSFs_lib_dict','rb'))
 for j in range(len(ID)):
     filt = filt_info[ID[j]]
-    f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
+    f = open("{0}/deep_analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
     string = f.read()
     PSF_id = re.findall(r"by PSF(.*?):",string)
     S_n_list = re.findall(r"n_sersic':(.*?),",string)
@@ -78,14 +78,14 @@ for j in range(len(ID)):
     rms_total_flux = np.sqrt(np.sum((total_flux-weighted_total_flux)**2*weight) / np.sum(weight))
     weighted_host_flux = np.sum(np.asarray(host_amp)*weight) / np.sum(weight)
     rms_host_flux = np.sqrt(np.sum((np.asarray(host_amp)-weighted_host_flux)**2*weight) / np.sum(weight))
-    print "ID:{0}, filt:{1}".format(ID[j], filt[0])
-    print "the best PSFs for {0} is ID ".format(ID[j]), sort_Chisq[:8]
+#    print "ID:{0}, filt:{1}".format(ID[j], filt)
+#    print "the best PSFs for {0} is ID ".format(ID[j]), sort_Chisq[:8]
     best_PSF_id.append(sort_Chisq[:8])
-    print "Weighted: HOST_Ratio, Reff, Sersic_n, total_flux, host_flux: {0}+-{1} {2}+-{3} {4}+-{5} {6}+-{7} {8}+-{9}".format(\
-    round(weighted_host_ratio,3), round(rms_host_ratio,3),\
-    round(weighted_Re,3), round(rms_Re,3), round(weighted_index,3),round(rms_index,3),\
-    round(weighted_total_flux,3), round(rms_total_flux,3),\
-    round(weighted_host_flux,3), round(rms_host_flux,3))
+#    print "Weighted: HOST_Ratio, Reff, Sersic_n, total_flux, host_flux: {0}+-{1} {2}+-{3} {4}+-{5} {6}+-{7} {8}+-{9}".format(\
+#    round(weighted_host_ratio,3), round(rms_host_ratio,3),\
+#    round(weighted_Re,3), round(rms_Re,3), round(weighted_index,3),round(rms_index,3),\
+#    round(weighted_total_flux,3), round(rms_total_flux,3),\
+#    round(weighted_host_flux,3), round(rms_host_flux,3))
     ratio_results.append([round(weighted_host_ratio,3), round(rms_host_ratio,3)])
     Re_results.append([round(weighted_Re,3), round(rms_Re,3)])
     n_results.append([round(weighted_index,3),round(rms_index,3)])
@@ -149,6 +149,8 @@ for i in range(len(ID)):
     elif filt == "F125w":
         zp = 26.2303
     amp_min, amp, amp_max = host_amp_results[i][0] - host_amp_results[i][1],host_amp_results[i][0], host_amp_results[i][0] + host_amp_results[i][1]
+    if amp_min <0:
+        amp_min = amp/2
     mag_min =-2.5*log10(amp_min) + zp
     mag =-2.5*log10(amp) + zp
     mag_max =-2.5*log10(amp_max) + zp
@@ -237,7 +239,7 @@ for j in range(num_boxs):
             pos = [pos_o.x0+0.09, pos_o.y0, pos_o.width, pos_o.height]
             cax.set_position(pos)
         n += 1
-#plt.savefig('flux_r_n_corner.pdf')
+plt.savefig('flux_r_n_corner_updated_deepseed.pdf')
 plt.show()
 
 #for i in range(len(ID)):

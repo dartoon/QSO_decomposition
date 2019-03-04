@@ -134,7 +134,7 @@ from dmag import k_corr_R
 from filter_info import filt_info
 dm_k_R = []
 for i in range(len(zs)):
-    dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '5Gyrs'))
+    dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '1Gyrs'))
 dm_k_R = np.asarray(dm_k_R)   # Get the k-correction for each target as an array
 dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
 host_mags=mags-5*(np.log10(dl)-1) + dm_k_R + dm*pass_dmag(zs)  # 0.7 is the k-correction value

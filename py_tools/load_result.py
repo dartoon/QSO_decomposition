@@ -12,6 +12,7 @@ import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 import re
 from filter_info import filt_info
+import pickle
 
 redshift_info = {'CID50': 1.239, 'CID206': 1.483, 'CID216': 1.567, 'CID237': 1.618,\
 'CID255': 1.664, 'CID452': 1.407, 'CID597': 1.272, 'CID607': 1.294, 'CID1174': 1.552,\
@@ -21,13 +22,13 @@ redshift_info = {'CID50': 1.239, 'CID206': 1.483, 'CID216': 1.567, 'CID237': 1.6
 'CDFS-229': 1.326, 'ECDFS-358': 1.626, 'SXDS-X50': 1.411, 'SXDS-X717': 1.276,\
 'SXDS-X735': 1.447, 'SXDS-X763': 1.412, 'SXDS-X969': 1.585, 'SXDS-X1136': 1.325}
 
-def load_result(ID, count_rank=8, sort_PSF_by='fit_result_each', cam = 'WFC3'):
+def load_result(IDs, flt, count_rank=8, outputBHmag = 0, folder = '../',result_folder = 'analysis'):
     '''
     Read the fitting result by given the ID, 
     
     Parameter
     --------
-        ID: The blash of blash
+        IDs: A list of ID
         b: The blash of blash
         sort_PSF_by: 'fit_result_each' or 'fit_ps_each'
     Return
@@ -35,30 +36,21 @@ def load_result(ID, count_rank=8, sort_PSF_by='fit_result_each', cam = 'WFC3'):
         A sth sth
     '''
     ratio_results, Re_results, n_results, total_flux_results, host_amp_results, mag_result, mag_lh_result = [], [], [], [], [], [], []
-#    chisq_list, inf_list, best_PSF_id = [],[], []
-    for j in range(len(ID)):
-        if cam == 'WFC3':
-            filt = filt_info[ID[j]]
-            f = open("../analysis_Astrodrz/{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
-            if sort_PSF_by == 'fit_result_each':
-                f_ps = open("../analysis_Astrodrz/{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
-            elif sort_PSF_by == 'fit_ps_each':
-                f_ps = open("../analysis_Astrodrz/{0}/analysis/fit_ps_each/each_PSF_fit_ps.txt".format(ID[j]),"r")
-        elif cam == 'ACS':
+    chisq_list, inf_list, best_PSF_id = [],[], []
+#    flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('{0}analysis_Astrodrz/PSFs_lib_dict'.format(folder),'rb'))
+    for j in range(len(IDs)):
+        if flt == 'WFC3':
+            filt = filt_info[IDs[j]]
+            f = open("{1}analysis_Astrodrz/{0}/{2}/fit_result_each/each_PSF_fit_qso.txt".format(IDs[j],folder,result_folder),"r")
+        elif flt == 'ACS':
             filt = 'F814w'
-            folder = "fit_result_each_fix"
-            f = open("../analysis_ACS/{0}/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
-            f_ps = open("../analysis_ACS/{0}/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
+            f = open("{1}analysis_ACS/{0}/first_analysis/fit_result_each_fix/each_PSF_fit_qso.txt".format(IDs[j],folder,result_folder),"r")
         string = f.read()
-        string_ps = f_ps.read()
-#        PSF_id = re.findall(r"by PSF(.*?):",string)
+    #    PSF_id = re.findall(r"by PSF(.*?):",string)
         S_n_list = re.findall(r"n_sersic':(.*?),",string)
         Re = re.findall(r"R_sersic':(.*?),",string)
         host_flux_ratio = re.findall(r"host_flux_ratio_percent':(.*?)}",string)
-        if sort_PSF_by == 'fit_result_each':
-            Chisq = re.findall(r"redu_Chisq':(.*?),",string)
-        elif sort_PSF_by == 'fit_ps_each':
-            Chisq = re.findall(r"redu_Chisq':(.*?)}",string_ps)
+        Chisq = re.findall(r"redu_Chisq':(.*?),",string)
         re.findall(r"redu_Chisq':(.*?),",string)
         QSO_amp = re.findall(r"QSO_amp':(.*?),",string)
         host_amp = re.findall(r"host_amp':(.*?),",string)
@@ -69,6 +61,7 @@ def load_result(ID, count_rank=8, sort_PSF_by='fit_result_each', cam = 'WFC3'):
         Chisq = [float(i) for i in Chisq]
         QSO_amp = [float(i) for i in QSO_amp]
         host_amp =  [float(i) for i in host_amp]
+        bh_amp = [host_amp[i]*(1/host_flux_ratio[i]*100. -1) for i in range(len(host_amp))]
         total_flux = np.asarray(QSO_amp) + np.asarray(host_amp)
         sort_Chisq = np.argsort(np.asarray(Chisq))
         count_n = count_rank
@@ -91,28 +84,42 @@ def load_result(ID, count_rank=8, sort_PSF_by='fit_result_each', cam = 'WFC3'):
         rms_total_flux = np.sqrt(np.sum((total_flux-weighted_total_flux)**2*weight) / np.sum(weight))
         weighted_host_flux = np.sum(np.asarray(host_amp)*weight) / np.sum(weight)
         rms_host_flux = np.sqrt(np.sum((np.asarray(host_amp)-weighted_host_flux)**2*weight) / np.sum(weight))
+        weighted_bh_flux = np.sum(np.asarray(bh_amp)*weight) / np.sum(weight)
+        rms_bh_flux = np.sqrt(np.sum((np.asarray(bh_amp)-weighted_bh_flux)**2*weight) / np.sum(weight))
         if filt == "F140w":
             zp = 26.4524
         elif filt == "F125w":
             zp = 26.2303
         elif filt == "F814w":
             zp = 25.94333
+            
         amp_min, amp, amp_max = weighted_host_flux - rms_host_flux, weighted_host_flux, weighted_host_flux + rms_host_flux
         mag_min =-2.5*np.log10(amp_min) + zp
         mag =-2.5*np.log10(amp) + zp
         mag_max =-2.5*np.log10(amp_max) + zp
         mag_result.append(mag)
         mag_lh_result.append([mag_min-mag, mag-mag_max])
+        
+        bh_min, bh_amp, bh_max = weighted_bh_flux - rms_bh_flux, weighted_bh_flux, weighted_bh_flux + rms_bh_flux
+        bh_mag_min =-2.5*np.log10(bh_min) + zp
+        bh_mag =-2.5*np.log10(bh_amp) + zp
+        bh_mag_max =-2.5*np.log10(bh_max) + zp
+        bh_mag_result =bh_mag
+        bh_mag_lh_result = [bh_mag_min-bh_mag, bh_mag-bh_mag_max]
+    
+        best_PSF_id.append([sort_Chisq[:8]])
         ratio_results.append([weighted_host_ratio, rms_host_ratio])
-        total_flux_results.append([weighted_total_flux, rms_total_flux])
         Re_results.append([weighted_Re, rms_Re])
         n_results.append([weighted_index,rms_index])
         host_amp_results.append([weighted_host_flux, rms_host_flux])
-#        best_PSF_id.append(sort_Chisq[:count_n])
-#        chisq_list.append(Chisq_best)
-#        inf_list.append(inf_alp)  
-    return mag_result, mag_lh_result, ratio_results, Re_results, n_results, host_amp_results, total_flux_results
-#    return np.asarray(mag_result), np.asarray(mag_lh_result)
+        total_flux_results.append([weighted_total_flux, rms_total_flux])
+        chisq_list.append([Chisq_best])
+        inf_list.append([inf_alp])  
+    if outputBHmag != 1 :
+        return ratio_results, Re_results, n_results, host_amp_results, total_flux_results, mag_result, mag_lh_result, Chisq_best
+    elif outputBHmag == 1 :
+        return ratio_results, Re_results, n_results, host_amp_results, total_flux_results, mag_result, mag_lh_result, Chisq_best, bh_mag_result, bh_mag_lh_result
+    
 
 def load_zs(ID):
     '''
@@ -132,7 +139,7 @@ def load_zs(ID):
     return zs_list
         
     
-def load_mag(ID, cam = 'WFC3'):
+def load_mag(ID, flt = 'WFC3', folder='../',result_folder = 'analysis'):
     '''
     Load the name as a list based on the ID list 
     
@@ -144,11 +151,26 @@ def load_mag(ID, cam = 'WFC3'):
     --------
         A list of the zs
     '''
-    mag, mag_lh_result,_ ,_ ,_ ,_ , _ = load_result(ID, cam = cam)
-    return mag, mag_lh_result
+    _, _, _, _, _, mag_result, mag_lh_result, _ = load_result(ID, flt = flt, folder=folder,result_folder=result_folder)
+    return mag_result, mag_lh_result
+    
+        
+def load_host_ratio(ID, flt = 'WFC3', folder='../',result_folder = 'analysis'):
+    '''
+    Load the name as a list based on the ID list 
+    
+    Parameter
+    --------
+        list: The list of the file name
+        
+    Return
+    --------
+        A list of the zs
+    '''
+    ratio_results, _, _, _, _, _, _, _ = load_result(ID, flt = flt, folder=folder,result_folder=result_folder)
+    return ratio_results
     
     
-#    
 ##test:
 #ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 #'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\

@@ -12,6 +12,10 @@ import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 from scipy import interpolate
 
+
+import os 
+dir_path = os.path.dirname(os.path.realpath(__file__))
+
 def pass_dmag(z): 
     '''
     Calculate the changes of magntidues for the passive mag evolution.
@@ -20,7 +24,7 @@ def pass_dmag(z):
 
 def k_corr_R(z, filt = 'F140w', galaxy_age = '5Gyrs'):
     filename = 'K_{0}.dat'.format(galaxy_age)
-    with open('../material/{0}'.format(filename)) as f:
+    with open('{1}/../material/{0}'.format(filename,dir_path)) as f:
         content = f.readlines()
     lines = [x.strip() for x in content] 
     arr_lines = []
