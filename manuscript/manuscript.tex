@@ -104,18 +104,19 @@ To compare with the samples in the literature, we also adopt the samples from \c
 \label{mbh}
  %Our selected systems are broad-line (type-1) AGNs whose \mbh\ can be estimated from single-epoch spectroscopy using the so-called virial method \textcolor{blue}{FMOS (e.g. McLure 2002; Shen 2013)}. This estimation is achieved by the assumption that the empirical scaling size of the BLR and the line-of-sight velocity width can be inferred in turn continuum luminosity ($L _{\lambda_{\rm line}}$) and emission line width (FWHM), respectively.
 To avoid any systematic bias between our samples and the literature ones, we compared the recipes as introduced by \citet{Schulze2018, Ding2017b}. We find that the \hbeta\ estimator is very consistent ($<0.03$~dex) between the two references. Moreover, in \citet{Schulze2018}, the cross-calibrate between the \halpha\ and \hbeta\ are consistent. Thus, we adopt the virial formalism from \citet{Schulze2018}:
-\begin{eqnarray}
-\label{eq:Hb}
-\log \left(\frac{\mathcal M_{\rm BH}(H\beta) }{M_{\odot}}\right)&~=~& 6.91+0.50\log \left(\frac{ \lambda \rm L _{\lambda_{5100}}}{10^{44}{\rm erg~s^{-1}}}\right) \nonumber\\
-&~+~& 2.0 \log \left(\frac{\rm FWHM(5100)}{1000 ~{\rm km~s^{-1}}}\right) , 
-\end {eqnarray}
-
-and
 
 \begin{eqnarray}
 \label{eq:Ha}
 \log \left(\frac{\mathcal M_{\rm BH} (H\alpha)}{M_{\odot}}\right)&~=~& 6.71+0.48 \log \left(\frac{ \lambda \rm L _{H\alpha}}{10^{42}{\rm erg~s^{-1}}}\right) \nonumber\\
 &~+~& 2.12 \log \left(\frac{\rm FWHM(H\alpha)}{1000 ~{\rm km~s^{-1}}}\right).
+\end {eqnarray}
+
+and
+
+\begin{eqnarray}
+\label{eq:Hb}
+\log \left(\frac{\mathcal M_{\rm BH}(H\beta) }{M_{\odot}}\right)&~=~& 6.91+0.50\log \left(\frac{ \lambda \rm L _{\lambda_{5100}}}{10^{44}{\rm erg~s^{-1}}}\right) \nonumber\\
+&~+~& 2.0 \log \left(\frac{\rm FWHM(5100)}{1000 ~{\rm km~s^{-1}}}\right) , 
 \end {eqnarray}
 
 Having defined the recipes, we estimate the \mbh\ by adopting the emission line properties measured by \citet{Schulze2018}. 14 of the overall systems have both \halpha\ and \hbeta\ emission line information; we adopt the averaged \mbh\ value. We summarized the inference of the \mbh\ together with the properties of the emission line in Table~\ref{tab:result_mbh}.
@@ -248,8 +249,8 @@ We thank the people who discuss with the paper.
 \bibliographystyle{apj.bst}
 \bibliography{references}
 
-\begin{deluxetable}{llccc}
-\tablecolumns{5}
+\begin{deluxetable}{llcccc}
+\tablecolumns{6}
 \tablewidth{0pt}
 \tablecaption{Sample properties.} 
 \tablehead{ 
@@ -257,49 +258,51 @@ We thank the people who discuss with the paper.
 \colhead{$z$} & 
 \colhead{WFC3/Filter} &
 \colhead{$RA$}&
-\colhead{$DEC$}
- \\ 
+\colhead{$DEC$}&
+\colhead{Observing date}
+\\ 
 \colhead{(1)} &
 \colhead{(2)} &
 \colhead{(3)} &
 \colhead{(4)} &
-\colhead{(5)} 
+\colhead{(5)} &
+\colhead{(6)}
 } 
 \startdata
 %\multicolumn{5}{c}{Sample presented in \citet{Treu+07}}\\
 %\\
-COSMOS-CID1174 & 1.552 & F140W & 150.2789 & 1.9595\\
-COSMOS-CID1281 & 1.445 & F140W & 150.4160 & 2.5258\\
-COSMOS-CID206 & 1.483 & F140W & 149.8371 & 2.0088\\
-COSMOS-CID216 & 1.567 & F140W & 149.7918 & 1.8729\\
-COSMOS-CID237 & 1.618 & F140W & 149.9916 & 1.7243\\
-COSMOS-CID255 & 1.664 & F140W & 150.1017 & 1.8483\\
-COSMOS-CID3242 & 1.532 & F140W & 149.7113 & 2.1452\\
-COSMOS-CID3570 & 1.244 & F125W & 149.6411 & 2.1076\\
-COSMOS-CID452 & 1.407 & F125W & 150.0045 & 2.2371\\
-COSMOS-CID454 & 1.478 & F140W & 149.8681 & 2.3307\\
-COSMOS-CID50 & 1.239 & F125W & 150.2080 & 2.0833\\
-COSMOS-CID543 & 1.301 & F125W & 150.4519 & 2.1448\\
-COSMOS-CID597 & 1.272 & F125W & 150.5262 & 2.2449\\
-COSMOS-CID607 & 1.294 & F125W & 150.6097 & 2.3231\\
-COSMOS-CID70 & 1.667 & F140W & 150.4051 & 2.2701\\
-COSMOS-LID1273 & 1.617 & F140W & 150.0565 & 1.6275\\
-COSMOS-LID1538 & 1.527 & F140W & 150.6215 & 2.1588\\
-COSMOS-LID360 & 1.579 & F140W & 150.1251 & 2.8617\\
-COSMOS-XID2138 & 1.551 & F140W & 149.7036 & 2.5781\\
-COSMOS-XID2202 & 1.516 & F140W & 150.6530 & 1.9969\\
-COSMOS-XID2396 & 1.600 & F140W & 149.4779 & 2.6425\\
-CDFS-1 & 1.630 & F140W & 52.8990 & -27.8600\\ 
-CDFS-229 & 1.326 & F125W & 53.0680 & -27.6580\\ 
-CDFS-321 & 1.570 & F140W & 53.0486 & -27.6239\\ 
-CDFS-724 & 1.337 & F125W & 53.2870 & -27.6940\\ 
-ECDFS-358 & 1.626 & F140W & 53.0850 & -28.0370\\ 
-SXDS-X1136 & 1.325 & F125W & 34.8925 & -5.1498\\ 
-SXDS-X50 & 1.411 & F125W & 34.0267 & -5.0602\\ 
-SXDS-X717 & 1.276 & F125W & 34.5400 & -5.0334\\ 
-SXDS-X735 & 1.447 & F140W & 34.5581 & -4.8781\\ 
-SXDS-X763 & 1.412 & F125W & 34.5849 & -4.7864\\ 
-SXDS-X969 & 1.585 & F140W & 34.7594 & -5.4291\\ 
+COSMOS-CID1174 & 1.552 & F140W & 150.2789 & 1.9595 & 2017-10-26 \\
+COSMOS-CID1281 & 1.445 & F140W & 150.4160 & 2.5258 & 2018-11-26 \\
+COSMOS-CID206 & 1.483 & F140W & 149.8371 & 2.0088 & 2017-10-23 \\
+COSMOS-CID216 & 1.567 & F140W & 149.7918 & 1.8729 & 2017-10-23 \\
+COSMOS-CID237 & 1.618 & F140W & 149.9916 & 1.7243 & 2018-06-03 \\
+COSMOS-CID255 & 1.664 & F140W & 150.1017 & 1.8483 & 2019-03-16 \\
+COSMOS-CID3242 & 1.532 & F140W & 149.7113 & 2.1452 & 2017-10-26 \\
+COSMOS-CID3570 & 1.244 & F125W & 149.6411 & 2.1076 & 2017-10-27 \\
+COSMOS-CID452 & 1.407 & F125W & 150.0045 & 2.2371 & 2017-10-25 \\
+COSMOS-CID454 & 1.478 & F140W & 149.8681 & 2.3307 & 2018-02-26 \\
+COSMOS-CID50 & 1.239 & F125W & 150.2080 & 2.0833 & 2017-10-23 \\
+COSMOS-CID543 & 1.301 & F125W & 150.4519 & 2.1448 & 2018-04-30 \\
+COSMOS-CID597 & 1.272 & F125W & 150.5262 & 2.2449 & 2018-11-25 \\
+COSMOS-CID607 & 1.294 & F125W & 150.6097 & 2.3231 & 2017-10-25 \\
+COSMOS-CID70 & 1.667 & F140W & 150.4051 & 2.2701 & 2017-10-27 \\
+COSMOS-LID1273 & 1.617 & F140W & 150.0565 & 1.6275 & 2017-10-31 \\
+COSMOS-LID1538 & 1.527 & F140W & 150.6215 & 2.1588 & 2018-05-01 \\
+COSMOS-LID360 & 1.579 & F140W & 150.1251 & 2.8617 & 2017-10-30 \\
+COSMOS-XID2138 & 1.551 & F140W & 149.7036 & 2.5781 & 2017-11-01 \\
+COSMOS-XID2202 & 1.516 & F140W & 150.6530 & 1.9969 & 2017-11-05 \\
+COSMOS-XID2396 & 1.600 & F140W & 149.4779 & 2.6425 & 2017-11-12\\
+CDFS-1 & 1.630 & F140W & 52.8990 & -27.8600 & 2018-04-03 \\ 
+CDFS-229 & 1.326 & F125W & 53.0680 & -27.6580 & 2018-04-04 \\ 
+CDFS-321 & 1.570 & F140W & 53.0486 & -27.6239 & 2018-08-18\\ 
+CDFS-724 & 1.337 & F125W & 53.2870 & -27.6940 & 2018-04-05 \\ 
+ECDFS-358 & 1.626 & F140W & 53.0850 & -28.0370 & 2018-02-09\\ 
+SXDS-X1136 & 1.325 & F125W & 34.8925 & -5.1498 & 2018-01-29\\ 
+SXDS-X50 & 1.411 & F125W & 34.0267 & -5.0602 & 2018-03-01\\ 
+SXDS-X717 & 1.276 & F125W & 34.5400 & -5.0334 & 2018-07-02 \\ 
+SXDS-X735 & 1.447 & F140W & 34.5581 & -4.8781 & 2017-11-14 \\ 
+SXDS-X763 & 1.412 & F125W & 34.5849 & -4.7864 & 2018-07-03 \\ 
+SXDS-X969 & 1.585 & F140W & 34.7594 & -5.4291 & 2018-07-02 \\ 
 \enddata
 \label{tab:objlist}
 \tablecomments{
@@ -307,6 +310,7 @@ Column 1: Object field and ID.
 Column 2: Redshifts.
 Column 3: WFC3 filter. Note that the targets from the COSMOS field also have ACS/F814W imaging.
 Column 4 and 5: J2000 $RA$ and $DEC$ coordinates.
+Column 6: The observing start date.
 }
 \end{deluxetable}
 
@@ -472,10 +476,10 @@ LID360 & 2481.7253 & 43.88091 & 8.45 & 2868.8992 & 45.08676 & 8.369 \\
 XID2138 & 3185.8613 & 43.6148 & 8.552 & 2944.7766 & 44.80782 & 8.252 \\
 XID2202 & 2973.2378 & 43.56249 & 8.463 & ... & ... & ... \\
 XID2396 & 2271.2617 & 44.06196 & 8.455 & 2657.8386 & 45.50467 & 8.511 \\
-CDFS-1 & ... & ... & ... & ... & ... & ... \\
-CDFS-229 & ... & ... & ... & ... & ... & ... \\
+CDFS-1 & 5449.4022 & 43.08 & 8.789 & ... & ... & ... \\
+CDFS-229 & 2254.0105 & 43.3 & 8.082 & ... & ... & ... \\
 CDFS-321 & 2441.93 & 43.92714 & 8.457 & ... & ... & ... \\
-CDFS-724 & ... & ... & ... & ... & ... & ... \\
+CDFS-724 & 3342.3888 & 42.81 & 8.21 & ... & ... & ... \\
 ECDFS-358 & 2237.2314 & 43.39674 & 8.122 & ... & ... & ... \\
 SXDS-X1136 & 2759.8953 & 43.43305 & 8.333 & 6761.222 & 44.71429 & 8.927 \\
 SXDS-X50 & 1816.672 & 43.421 & 7.942 & ... & ... & ... \\
