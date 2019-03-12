@@ -57,6 +57,8 @@ for j in range(len(ID)):
     if count == 0:
         ID_ser_dic.update({ID[j]: -99})
 MBs = []
+CDFS_FWHMa = {'CDFS-1': 5449.4022,'CDFS-229': 2254.0105, 'CDFS-724': 3342.3888}
+CDFS_logLHadr = {'CDFS-1': 43.08,'CDFS-229': 43.30, 'CDFS-724': 42.81}
 for tar_in in range(len(ID)):       
     t_name = ID[tar_in]
     ser = ID_ser_dic[t_name]
@@ -77,6 +79,11 @@ for tar_in in range(len(ID)):
         mbh = (cal_logMa + cal_logMb)/2
 #        print mbh
         MBs[-1] = mbh
+    if ser==-99 and t_name in ['CDFS-1','CDFS-229', 'CDFS-724']:
+        FWMH_a = float(CDFS_FWHMa[t_name])
+        logLHadr = float(CDFS_logLHadr[t_name])
+        cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
+        MBs.append(cal_logMa)
     elif ser==-99:
         MBs.append(-99)
 #        print float(cal_logMa) - float(samples[ser][10])

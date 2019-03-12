@@ -34,7 +34,7 @@ def load_result(ID, flt, count_rank=8, outputBHmag = 0):
         f = open("../analysis_Astrodrz/{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID),"r")
     elif flt == 'ACS':
         filt = 'F814w'
-        f = open("../analysis_ACS/{0}/fit_result_each_fix/each_PSF_fit_qso.txt".format(ID),"r")
+        f = open("../analysis_ACS/{0}/first_analysis/fit_result_each_fix/each_PSF_fit_qso.txt".format(ID),"r")
     string = f.read()
 #    PSF_id = re.findall(r"by PSF(.*?):",string)
     S_n_list = re.findall(r"n_sersic':(.*?),",string)
@@ -128,7 +128,10 @@ ACS_IDs = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
 'LID1273','XID2202','CID206','CID3570','CID543','LID1538','XID2396','CID452',\
 'LID360','CID237','CID454','CID607', 'CID597', 'CID1281']     
 
-tab_list = ['CID1174', 'CID1281', 'CID206', 'CID216', 'CID237', 'CID255', 'CID3242', 'CID3570', 'CID452', 'CID454', 'CID50', 'CID543', 'CID597', 'CID607', 'CID70', 'LID1273', 'LID1538', 'LID360', 'XID2138', 'XID2202', 'XID2396', 'CDFS-1', 'CDFS-229', 'CDFS-321', 'CDFS-724', 'ECDFS-358', 'SXDS-X1136', 'SXDS-X50', 'SXDS-X717', 'SXDS-X735', 'SXDS-X763', 'SXDS-X969']
+tab_list = ['CID1174', 'CID1281', 'CID206', 'CID216', 'CID237', 'CID255', 'CID3242', 'CID3570',
+            'CID452', 'CID454', 'CID50', 'CID543', 'CID597', 'CID607', 'CID70', 'LID1273',
+            'LID1538', 'LID360', 'XID2138', 'XID2202', 'XID2396', 'CDFS-1', 'CDFS-229',
+            'CDFS-321', 'CDFS-724', 'ECDFS-358', 'SXDS-X1136', 'SXDS-X50', 'SXDS-X717', 'SXDS-X735', 'SXDS-X763', 'SXDS-X969']
 
 filt_list, ACS_list = [],[]
 z_list = []
@@ -162,7 +165,7 @@ for i in range(len(tab_list)):
 #    UV_result[i][-1],
 #    "{0}%pm{1}%".format(round(UV_result[i][0][0],1), round(UV_result[i][0][1],1)),  #host flux ratio
 #    "{0}+{1}-{2}".format(round(UV_result[i][5],3), round(UV_result[i][6][0],3),round(UV_result[i][6][1],3))) #host mag, l, h
-
+'''
 for i in range(len(tab_list)):
     if IR_result[i]=='xxx':
         IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
@@ -184,7 +187,10 @@ for i in range(len(tab_list)):
 #XID2396 to LID1878
 #CDFS-321 to ECDFS321
 ext_ID = {'XID2202':'LID1622', 'XID2138':'LID1820', 'XID2396':'LID1878', 'CDFS-321':'ECDFS-321'}
-MBs = []
+
+CDFS_FWHMa = {'CDFS-1': 5449.4022,'CDFS-229': 2254.0105, 'CDFS-724': 3342.3888}
+CDFS_logLHadr = {'CDFS-1': 43.08,'CDFS-229': 43.30, 'CDFS-724': 42.81}
+
 f_mbh = open("../M_BH_relation/fmos_MBH_table","r")
 with f_mbh as g:
     lines = g.readlines()
@@ -216,6 +222,12 @@ for tar_in in range(len(tab_list)):
         cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
 #        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
         MB_info_a.append([FWMH_a, logLHadr, cal_logMa])
+    elif ser==-99 and t_name in CDFS_FWHMa.keys():
+        FWMH_a = float(CDFS_FWHMa[t_name])
+        logLHadr = float(CDFS_logLHadr[t_name])
+        cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
+#        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill        
+        MB_info_a.append([FWMH_a, logLHadr, cal_logMa])        
     else:
         MB_info_a.append([-99,-99,-99])
     if ser!=-99 and float(samples[ser][21]) != 0:
@@ -229,4 +241,3 @@ for tar_in in range(len(tab_list)):
         
 for i in range(len(tab_list)):
     print(tab_list[i], MB_info_a[i][0], MB_info_a[i][1], round(MB_info_a[i][2],3), MB_info_b[i][0],MB_info_b[i][1],round(MB_info_b[i][2],3))
-'''

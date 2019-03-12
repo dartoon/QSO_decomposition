@@ -184,6 +184,21 @@ def load_n(ID, folder='../',result_folder = 'analysis'):
     '''
     _, _, n_results, _, _, _, _, _ = load_result(ID, flt = 'WFC3', folder=folder,result_folder=result_folder)
     return n_results
+
+def load_re(ID, folder='../',result_folder = 'analysis'):
+    '''
+    Load the name as a list based on the ID list 
+    
+    Parameter
+    --------
+        list: The list of the file name
+        
+    Return
+    --------
+        A list of the zs
+    '''
+    _, re_results, _, _, _, _, _, _ = load_result(ID, flt = 'WFC3', folder=folder,result_folder=result_folder)
+    return re_results
     
     
 ##test:
