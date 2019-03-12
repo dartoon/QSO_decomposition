@@ -81,8 +81,8 @@ da_result = 1/(1+results[:,0])*c*vec_EE(results[:,0])/h0  #in Mpc
 
 #%% Plot and input my sample
 
-relation = 0  # 0 M*- Reff ; 1 M*-Sersic_n
-z_range = [0,0.5]
+relation = 1  # 0 M*- Reff ; 1 M*-Sersic_n
+z_range = [5,6]
 
 z_cut = ((results[:,0]>z_range[0]) * (results[:,0]<z_range[1]))
 
@@ -91,7 +91,7 @@ z_cut = ((results[:,0]>z_range[0]) * (results[:,0]<z_range[1]))
 #red_galaxy = ([results[:,5]<ssfr_break])[0]
 #z_cut = ([results[:,0]>0]) 
 
-cmap_r = matplotlib.cm.get_cmap('cool_r')
+cmap_r = matplotlib.cm.get_cmap('jet_r')
 
 plt.figure(figsize=(18, 11))
 #plt.scatter(results[:,2][z_cut and red_galaxy],np.log10(results[:,1][z_cut and red_galaxy]),c=results[:,0][z_cut and red_galaxy],s=280,marker=".",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
@@ -99,12 +99,12 @@ plt.figure(figsize=(18, 11))
 if relation == 0:
     Reff_kpc = da_result * 10 **3 * (results[:,1]/3600./180.*np.pi)
     plt.scatter(results[:,3][z_cut],np.log10(Reff_kpc[z_cut]),
-                c=results[:,5][z_cut] ,s=280,marker=".",zorder=100, vmin=-20, vmax=0, alpha=0.6, edgecolors='white', cmap=cmap_r)
+                c=results[:,5][z_cut] ,s=280,marker=".",zorder=100, vmin=-16, vmax=-4, alpha=0.6, edgecolors='white', cmap=cmap_r)
 #    plt.scatter(results[:,3][z_cut * blue_galaxy],np.log10(Reff_kpc[z_cut * blue_galaxy]),
 #                c=np.zeros(len(results[:,1][z_cut * blue_galaxy]))+1,s=280,marker=".",zorder=100, vmin=1.2, vmax=1.8,alpha=0.6, edgecolors='white')
 elif relation == 1:
     plt.scatter(results[:,3][z_cut ],results[:,2][z_cut ],
-                c=results[:,5][z_cut],s=280,marker=".",zorder=100, vmin=-20, vmax=0, alpha=0.6, edgecolors='white')
+                c=results[:,5][z_cut],s=280,marker=".",zorder=100, vmin=-16, vmax=-4, alpha=0.6, edgecolors='white')
 #    plt.scatter(results[:,3][z_cut * blue_galaxy],results[:,2][z_cut * blue_galaxy],
 #                c=np.zeros(len(results[:,1][z_cut * blue_galaxy]))+1,s=280,marker=".",zorder=100, vmin=1.2, vmax=1.8,alpha=0.6, edgecolors='white')
     
@@ -153,16 +153,18 @@ elif relation ==1:
 cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
 plt.clim(1.2,1.8)
 plt.xlim([8, 12.5])
-plt.ylim([-1.5, 2.6])
 cl.set_label('Source redshift',rotation=270,size=20)
 cl.ax.tick_params(labelsize=15)   #the labe size
 plt.xlabel("log$(M_*)/M_{\odot}$",fontsize=35)
-plt.ylabel("log$log(Reff)$ (kpc)",fontsize=35)
 plt.tick_params(labelsize=25)
 if relation ==0:
+    plt.ylabel("log$log(Reff)$ (kpc)",fontsize=35)
     plt.title('$M_* - Reff$ relation, CANDLES sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.ylim([-1.5, 2.6])
     plt.savefig('Mstar-Reff_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))
 elif relation ==1:
-    plt.title('$M_* - Sersic n$ relation, CANDLES sample redshift range {0}'.format(z_range), fontsize = 25)
-    plt.savefig('Mstar-Sn_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))    
+    plt.ylabel("Sersic n",fontsize=35)
+    plt.title('$M_* -$ Sersic_n relation, CANDLES sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.ylim([0, 7])
+    plt.savefig('Mstar-Sn_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))  
 plt.show()
