@@ -13,7 +13,7 @@ import pickle, re
 import numpy as np
 from math import log10
 
-def load_result(ID, flt, count_rank=8, outputBHmag = 0):
+def load_result_here(ID, flt, count_rank=8, outputBHmag = 0):
     '''
     Read the fitting result by given the ID, 
     
@@ -140,14 +140,14 @@ for i in range(len(tab_list)):
     if tab_list[i] in WFC3_list:   #Input the WFC3 filter
         filt_list.append(filt_info[tab_list[i]])
         z_list.append(redshift_info[tab_list[i]])
-        IR_result.append(load_result(tab_list[i],'WFC3', outputBHmag=1))
+        IR_result.append(load_result_here(tab_list[i],'WFC3', outputBHmag=1))
     else:
         filt_list.append("xxx")
         z_list.append('xxx')
         IR_result.append('xxx')
     if tab_list[i] in ACS_IDs:
         ACS_list.append('ACS')
-        UV_result.append(load_result(tab_list[i],'ACS'))
+        UV_result.append(load_result_here(tab_list[i],'ACS'))
     else:
         ACS_list.append("xxx")
         UV_result.append('xxx')
@@ -188,8 +188,8 @@ for i in range(len(tab_list)):
 #CDFS-321 to ECDFS321
 ext_ID = {'XID2202':'LID1622', 'XID2138':'LID1820', 'XID2396':'LID1878', 'CDFS-321':'ECDFS-321'}
 
-CDFS_FWHMa = {'CDFS-1': 5449.4022,'CDFS-229': 2254.0105, 'CDFS-724': 3342.3888}
-CDFS_logLHadr = {'CDFS-1': 43.08,'CDFS-229': 43.30, 'CDFS-724': 42.81}
+CDFS_FWHMa = {'CDFS-1': 5449.4022,'CDFS-229': 2254.0105, 'CDFS-724': 3351.852239}
+CDFS_logLHadr = {'CDFS-1': 43.08,'CDFS-229': 43.30, 'CDFS-724': 42.561413}
 
 f_mbh = open("../M_BH_relation/fmos_MBH_table","r")
 with f_mbh as g:
@@ -227,7 +227,8 @@ for tar_in in range(len(tab_list)):
         logLHadr = float(CDFS_logLHadr[t_name])
         cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
 #        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill        
-        MB_info_a.append([FWMH_a, logLHadr, cal_logMa])        
+        MB_info_a.append([FWMH_a, logLHadr, cal_logMa])    
+        print t_name, MB_info_a[-1]
     else:
         MB_info_a.append([-99,-99,-99])
     if ser!=-99 and float(samples[ser][21]) != 0:
@@ -241,3 +242,13 @@ for tar_in in range(len(tab_list)):
         
 for i in range(len(tab_list)):
     print(tab_list[i], MB_info_a[i][0], MB_info_a[i][1], round(MB_info_a[i][2],3), MB_info_b[i][0],MB_info_b[i][1],round(MB_info_b[i][2],3))
+
+#%%
+from load_result import load_host_p, load_MBH
+lumi_s = load_host_p([tab_list[0]], dm = 0) #!!! This dm is important 
+for ID in tab_list:
+    if ID == 'CID255':
+        result = -99.9, -99.9
+    else:
+        result = load_host_p([ID], dm = 0)
+    print ID, round(result[0],2), round(result[1],2)

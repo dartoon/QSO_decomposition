@@ -1,4 +1,4 @@
-#z	Dl(Mpc)	Total_mag	Host_mag	Spheroid	LgLhost_v/Lsun	LgLsph_v/Lsun	Re	LogMbh/Msun deltaM	Number of comp
+#z	Dl(Mpc),	Total_mag,	Host_mag, 	Spheroid	, LgLhost_v/Lsun,	LgLsph_v/Lsun,	Re,	LogMbh/Msun, deltaM, Number of comp
 0.03301	144.9	13.49	14.62	14.62	10.41	10.41	3.26	7.74	0.21	2
 0.0561	250.5	14.9	15.76	15.76	10.45	10.45	2.48	8.46	0.10	2
 0.03271	143.6	13.29	14.13	15.29	10.59	10.13	0.09	8.18	0.06	3

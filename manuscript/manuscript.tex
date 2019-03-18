@@ -38,11 +38,11 @@
 
 \title{The mass relations between supermassive black holes and their host galaxies at $1< z<2$ with \hst-WFC3}
 
-\author{Xuheng Ding\altaffilmark{1, 2}, John Silverman\altaffilmark{3}, Tommaso Treu\altaffilmark{2}, Andreas Schulze\altaffilmark{6}, Malte Schramm\altaffilmark{6}, Simon Birrer\altaffilmark{2},  Knud Jahnke, Federica Duras\altaffilmark{4, 5}, Angela Bongiorno\altaffilmark{5}, et al.
+\author{Xuheng Ding\altaffilmark{1, 2}, John Silverman\altaffilmark{3}, Tommaso Treu\altaffilmark{1}, Andreas Schulze\altaffilmark{6}, Malte Schramm\altaffilmark{6}, Simon Birrer\altaffilmark{1},  Knud Jahnke, Federica Duras\altaffilmark{4, 5}, Angela Bongiorno\altaffilmark{5}, et al.
  }
  \email{dxh@astro.ucla.edu}
-\altaffiltext{1}{School of Physics and Technology, Wuhan University, Wuhan 430072, China}
-\altaffiltext{2}{Department of Physics and Astronomy, University of California, Los Angeles, CA, 90095-1547, USA}
+\altaffiltext{1}{Department of Physics and Astronomy, University of California, Los Angeles, CA, 90095-1547, USA}
+\altaffiltext{2}{School of Physics and Technology, Wuhan University, Wuhan 430072, China}
 \altaffiltext{3}{Kavli Institute for the Physics and Mathematics of the Universe, The University of Tokyo, Kashiwa, Japan 277-8583 (Kavli IPMU, WPI)}
 \altaffiltext{4}{Dipartimento di Matematica e Fisica, UniversitÃ Roma Tre, via della Vasca Navale 84, I-00146, Roma, Italy}
 \altaffiltext{5}{INAF Osservatorio Astronomico di Roma, via Frascati 33, 00040 Monteporzio Catone, Italy}
@@ -71,7 +71,7 @@ In order to make progress it is important to reduced as much as possible the unc
 
 In this study, we aim to make progress by making use of a large sample with high-quality data both for the measurement of both the host properties and the \mbh, extending to the highest redshifts where evolutionary effects should be strongest \citep{DeG++15}. In practice, we aim to determine whether AGNs have begun to couple to their host galaxy at $1.2<z<1.7$, an epoch when supermassive BH close to its peak accretion history \citep{Aird2015}.  In this redshift range, we measure 32 host galaxies properties using \hst\ imaging data, and estimate their \mbh\ based on the robust \halpha\ and \hbeta, using the multi-object spectrograph Subaru/FMOS. Our study overcomes the biases in the following way. First, to minimize selection bias, we select AGNs that fall below the knee of the black hole mass function. Second, we estimate \mbh\ using Balmer lines which avoids the systematics by \Mgii. Third, our X-ray selected sample have lower nuclear-to-host ratios which facilitate the galaxy mass measurements. Moreover, 21/32 systems in our sample have two-band \hst\ data (i.e. WFC3+ACS), whose multi-band information provides reliable K-correction and stellar mass inference. Given the high-quality data at such redshift, we can test whether the growth of BH predates that of the host by a factor of at least $1.7$ $(\sim0.23$ dex). 
 
-The paper is organized as follows. We briefly describe the sample selection, observation and data reduction in Section~\ref{sec:data}. We infer the host galaxy surface photometry and \mbh\ in Section~\ref{sec:analysis}. In Section~\ref{sec:result}, we present our main result by adopting K-correction and SED fitting, to infer the rest-frame R band \lhost\ and \smass in order to compare with the local samples. Discussion and conclusion are presented in Section~\ref{sec:sum} and Section~\ref{sec:dis}. 
+The paper is organized as follows. We briefly describe the sample selection and the BH mass of the sample in Section~\ref{sec:data}. We describe the observation and collect the PSF library in Section~\ref{observation}. In Section~\ref{sec:analysis} we decompose our sample and study the host galaxy surface photometry. In Section~\ref{sec:result}, we use the multi-band host magnitudes to infer their stellar population, which we applied to derive the rest-frame R band \lhost\ and \smass and compared to the local samples. Discussion and conclusion are presented in Section~\ref{sec:dis} and Section~\ref{sec:sum}. 
 
 Throughout this paper, we adopt a standard concordance cosmology with $H_0= 70$ km s$^{-1}$ Mpc$^{-1}$, $\Omega{_m} = 0.30$, and $\Omega{_\Lambda} =
 0.70$. Magnitudes are given in the AB system.
@@ -96,9 +96,14 @@ The \mbh\ of type-1 AGNs can be inferred using the so-called virial method \cite
 
 For our targets, the \halpha\ and \hbeta\ emission-line properties have been investigated by \citet{Schulze2018} using the multi-object spectrograph Subaru/FMOS. We referred to that paper for the details of continuum fitting and emission line modeling. Since the other compared AGNs in the literature used different calibrations of the virial method, we compare the difference among the recipes by \citet{Schulze2018, McG++08, Ding2017b} and adopt a list of consistent ones to cross-calibrate the \mbh\ for all the samples, in order to avoid any systematic bias in Section~\ref{mbh}.
 
-\subsection{Local comparison sample}
-For the calibration with the local relation, we use 19 local AGN measurements \citep{Ben++10, Peterson2004} which define the zero-point. 
-To compare with the samples in the literature, we also adopt the samples from \citet{Ding2017b}, which include the measurements by \citet{Pen++06qsob, Park15} to study the \mbh-\lhost\ of 127 objects by \hst.
+\subsection{Comparison sample}
+\textcolor{blue}{
+We aim to collect the \mbh-\lhost\ and \mbh-\smass\ relations of our samples and comparing to the ones at different redshift. 
+For calibrating with the local relation, we use the local AGN measurements by \citet{Ben++10} and \citet{Bennert++2011} (hereafter, B10 and B11a) to define our zero-point. The sample by B10 consistent 19 \mbh-\lhost\ relations with reliable \mbh\ measured using reverberation-mapped (uncertainty level $\sim0.15$ dex). The work of B11 contain 25 \mbh-\smass\ local active AGN analysis, where the \mbh\ are measured from single-epoch method (\mbh\ uncertainty level $\sim0.4$ dex). To increase the local \smass\ and \mbh\ to higher range, we also include the inactive galaxies (mainly ellipticals or S0) as done by \citet{H+R04}. It is worth note that in the local comparison sample, the bulge mass is equivalent to the total stellar mass for the local comparison sample. In other words, it is the local \mbh-\smass$_{Bulge}$ relation that we compared. }
+
+\textcolor{blue}{
+Including the compared samples at the intermediate redshift range would help to understand the redshift evolution of these correlations. We compared intermediate redshift AGNs for the \mbh-\lhost\ relation include 52 sample by \citet{Park15} at $0.36<z<0.57$ and 27 sample by \citet{Bennert11, SS13} at $0.5<z<1.9$. Moreover, \citet{SS13} also derive the \smass\ which enable us to compare to the \mbh-\smass\ relation at $0.5<z<1.2$. }
+
 
 \subsection{BH masses}
 \label{mbh}
@@ -157,9 +162,10 @@ We assume that the stars in the library are representative of the possible PSFs 
 %\subsubsection{PSF library}    
 %\subsubsection{Surface Photometry modeling method}
 \section{AGN-host Decomposition}
+\label{sec:analysis}
 %Introduce the lenstronomy. Model the PSF in each library.\\
 %Inspired by Simon's work, we rank the performance of the each PSF and weight for the final fitting result. 
-We simultaneously fit the two-dimensional flux distribution of the center nuclear and the underlying host galaxy. Following common practice, we assume the unresolved nuclear as a scaled point source, while the host galaxy as a \sersic\ profile. Note that the actual morphologies of the host galaxies could be more complicated (e.g. bulge+disk). However, the purpose of adopting the \sersic\ model is a simplified a first-order approximation of the surface brightness distribution with a flexible parameterization which provides sufficient freedom to infer the host flux, given the high redshift range of our sample. Furthermore, we fit other galaxies that happen to be close to the AGN as additional \sersic\ model, to account for any potential contamination.
+We simultaneously fit the two-dimensional flux distribution of the center nuclear and the underlying host galaxy. Following common practice, we assume the unresolved nuclear as a scaled point source, while the host galaxy as a \sersic\ profile. Note that the actual morphologies of the host galaxies could be more complicated (e.g. bulge+disk). However, the purpose of adopting the \sersic\ model is a simplified a first-order approximation of the surface brightness distribution with a flexible parameterization which provides sufficient freedom to infer the host flux, given the high redshift range of our sample. Furthermore, we fit other galaxies that happen to be close to the AGN as additional \sersic\ model, to account for any potential contamination. \textcolor{blue}{The systems CID206 and ECDFS-358 have nearby objects which cannot be described by \sersic\ model, we thus mask their objects out in the fitting.}
 
 %Introduce Lenstronomy:
 We adopt the imaging modeling tool \lenstronomy\ \citep{lenstronomy} to perform the decomposition of the host and nuclear light. \lenstronomy\ is a multi-purpose open-source gravitational lens image modeling python package. 
@@ -197,41 +203,53 @@ Note that since each AGN system was observed in different location of the detect
 \sigma =   \sqrt{ \frac{  \sum_{i=1}^{8}   (x_i -  \bar{x} ) ^2 * w_i  }{\Sigma w_i} }.
 \end{eqnarray} 
 
-%ECDFS-358 and CID206
 In Figure~\ref{fig:AGN_decomp}, we demonstrate the optimized results inferred by \lenstronomy, including the AGN images, best-fit models, image subtract point source (i.e. host) and the residuals. As an example, the weights adopted in the analysis of system COSMOS-CID1174 are listed in Table~\ref{tab:weight_CID1174}. In order to quickly overview our inference, we summarize the relations of the properties between effective radius \Reff, 2) \sersic\ index $n$ and 3) host to total flux ratio in Figure~\ref{fig:flux_r_n_corner}.
 
-The inference of the host properties is weighted by eight top-ranked PSFs. To understand how the choice of the number of top-ranked PSF affects our inference, we compare to the one inferred by five and ten top-ranked PSFs. As shown in Figure~\ref{fig:hist_compare}, the results are very consistent, meaning that the host inference is solid when the amount of selected PSF exceeds five. For a smaller number of PSFs one tends to underestimate the uncertainties.
+The inference of the host properties is weighted by eight top-ranked PSFs. For a smaller number of PSFs one tends to underestimate the uncertainties. To understand how the choice of the number of top-ranked PSF affects our inference, we compare to the one inferred by five and ten top-ranked PSFs. As shown in Figure~\ref{fig:hist_compare}, the results are very consistent, meaning that the host inference is solid when the amount of selected PSF exceeds five. 
 
 %The inference of F814w data.
 18/32 systems in the COSMOS field have ACS/F184W imaging data. We infer their host properties using the same approach used for the WFC3-IR data. The field of view by ACS are larger than WFC3, and we collected in total 174 ACS PSFs in the library. In principle, the host inference by IR band is superior to the one by UV band, giving that the effects of dust extinction and contrast between the (blue) AGN and (red) host. Thus, we fix the \Reff\ and \sersic\ $n$ as the value inferred by IR band, assuming that the morphology of the galaxy is consistent between ACS and WFC3.
 
 We list all the inference of the host galaxy properties in the Table~\ref{tab:result_sersic}.
 
-\subsection{Masks objects for the COSMOS-CID206 and ECDFS-358}
-
 \section{Results}
 \label{sec:result}
 
 \subsection{Host galaxy properties}
-%The overall fitting plot: 1. Host-R-n corner for f140w and f814w. 2. The histogram with different selection.
-\textcolor{red}{To be written:}
-\\1. Describe the SED fitting and the ground-based photometry data.
-\\2. The comparison of our host-to-total flux ratios to the SED decomposed ones.
-\\3. The inferred rest-frame R band magnitude and stellar mass.
+We derive the rest-frame R band magnitude and luminosity of our sample based on their filter magnitude obtained last section. The 18/32 systems which has multi-band host magnitude able us to select the best stellar population that could fit to the overall sample. We find that the 1 Gyr stellar population with solar metallicity by Chabrier initial mass function (IMF) \citep{Bruzual2003} could well match the color between the WFC3 and ACS band magnitude of these sample. Adopting this stellar population, we perform the K-correction and derive the rest-frame R band magnitude of our sample. We further derive the rest-frame R band luminosity by $\log L_R/L_{R, \odot} = 0.4 (M_{R, \odot}-M_R)$, where $M_{R, \odot}=4.61$ \citep{Blanton07}. We estimate of the stellar mass content of each host galaxy by adopt the mass-to-light ratio (M/L) based on the stellar population we adopted. \textcolor{red}{Need to add the uncertainty level of their inference}.
 
-Having inferred the value of the rest-frame R-band magnitude, the luminosity is derived by $\log L_R/L_{R, \odot} = 0.4 (M_{R, \odot}-M_R)$, where $M_{R, \odot}=4.61$ \citep{Blanton07}.
-
-\textcolor{blue}{Introduce the passive evolution?}
-\\To directly compare with local samples, we consider the passive evolution scenario for the inferred \lhost\ and transfer to its expected value at today.
-
-We summarized the inferred R-band luminosities in Table~\ref{tab:result_sersic}.
-
+The inferred $L_R$ and $M_*$ are listed in Table~\ref{tab:result_sersic}. In the rest of this section, we compare them to the \mbh.
 
 \subsection{\mbh-\lhost\ relation}
+We show the comparing between the \mbh-\lhost\ relation in Figure~\ref{fig:ML}, panel (a). Following common practice, we fit the local relation as a linear relation,
+\begin{eqnarray}
+\label{eq:MLlocal}
+\log \big( \frac{\mathcal M_{\rm BH}}{10^{7}M_{\odot}})= \alpha + \beta \log(\frac{L_R}{10^{10}L_{\odot}})
+\end {eqnarray}
+which enable a direct comparison to the distant sample. The figure shows that the observed \mbh-\lhost\ relation for our measurements  are nearly identical to the local and intermediate ones, indicating that the black hole mass and the host luminosity located at a similar relation at different galaxy age. However, considering that both the black hole and host galaxy are expected to evolve over cosmic time, it is essential to transfer high-$z$ relations to today so as to compare in an equivalent frame. Especially, in a passive evolution scenario, we expect \lhost\ to fade over time. Thus, we follow \citet{Ding2017b} and parametrize the luminosity evolution with the functional form as
+$d{\rm mag}_{\rm R} \sim d\log(1+z)$, i.e.,
+\begin{eqnarray}
+\label{eq:L_relation}
+\log(L_{R,0})=\log(L_{R}) - 1.48 \log (1+z).
+\end{eqnarray} 
+This formulism is more accurate to fit a broad range redshift comparing to a single slope as $d$mag$/dz$. We refer to the \citet[][section 5.4]{Ding2017b} for more details.
 
-\subsection{\mbh-M$_*$ relation}
+We show the evolution-corrected \mbh-\lhost\ relation in Figure~\ref{fig:ML}, panel (b) and find that at fixed \mbh\ the BH in the more distant universe tends to reside in less luminous hosts. To quantitatively understand this trend, We fit this offset as a function of redshift in the form:
+\begin{eqnarray}
+\label{eq:offset}
+\Delta \log \mathcal M_{\rm BH}= \gamma \log (1 + z),
+\end{eqnarray} 
+where $\Delta \log \mathcal M_{\rm BH} = \log \big( \frac{\mathcal M_{\rm  BH}}{10^{7}M_{\odot}}) -\alpha-\beta\log(\frac{L_{R,0}}{10^{10}L_{\odot}})$. The best-fit and  1-$\sigma$ inference are $\gamma = 0.59 \pm 0.16$.
+
+Given that the current fit does not take into account selection effects yet, we draw the conclusion in the section~\ref{select_eff} 
+
+\subsection{\mbh-\smass\ relation}
+The correlation of the \mbh-\smass\ would be more beneficial to help understand the connection between their coevolution. In Figure~\ref{fig:MM}, we plot the \mbh-\smass\ relation and compare to the local and intermediate sample and visually see that the mass distributions for three samples are very similar. Similar to last section, we fit the offset (i.e., $\Delta\log \mathcal M_{\rm BH}$) as a function of $\gamma \log (1 + z)$ and obtain $\gamma = 0.46 \pm 0.19$ which slightly indicates as positive, see Figure~\ref{fig:MM-vz}, left panel. In the of Figure~\ref{fig:MM-vz}, right panel, we show the ratio of \mbh-\smass of the three sample at different redshift. We highlight that our results are less biased in both the measurement of \mbh\ and \smass. 
+
+Note that the local sample we adopt are bulge dominated galaxies and the adopted \smass\ are equivalent to their bulge masses. That is, we are comparing the \mbh-\smass$_{,total}$ at distant universe to the \mbh-\smass$_{,bulge}$ at the local. Considering that a major part of our measurements have indicated the disk component, i.e. the systems with fitted \sersic\ index close to 1. Thus, the \smass$_{,bluge}$ of our sample and the SS13 sample are supposed to be less. Without taking into account the selection effect, the direct comparison shows that the growth of the black hole predates that of the host bulge.
 
 \subsection{Selection effect}
+\label{select_eff}
 
 \section{discussion}
 \label{sec:dis}
@@ -359,9 +377,9 @@ For this sample, the inflation parameter $\alpha$ calculated by Eq.~\ref{eq:alph
 }
 \end{deluxetable*}
 
-\tabcolsep=0.05cm
+\tabcolsep=0.03cm
 \begin{deluxetable*}
-{@{\extracolsep{4pt}}lccccccccc}   % need for the gap between the clines.
+{@{\extracolsep{4pt}}lcccccccccc}   % need for the gap between the clines.
 \tablecolumns{9}
 \tablewidth{0pt}
 \tablecaption{Inferred host galaxy parameters for the 32 systems.} 
@@ -369,57 +387,60 @@ For this sample, the inflation parameter $\alpha$ calculated by Eq.~\ref{eq:alph
 { 
 \colhead{Target ID}&
   \multicolumn{5}{c}{WFC3}&
-  \multicolumn{3}{c}{ACS} \\
-  \cline{2-6}  \cline{7-9} \\
+  \multicolumn{3}{c}{ACS} &
+   \multicolumn{2}{c}{host properties} \\
+  \cline{2-6}  \cline{7-9} \cline{10-11}  \\
 \colhead{}& 
 \colhead{reduced $\chi ^2$}& \colhead{host-to-total flux ratio}& 
 \colhead{\Reff}& \colhead{\sersic\ $n$}& 
 \colhead{magnitude}&
-\colhead{reduced $\chi ^2$}& \colhead{host-to-total flux ratio}& \colhead{magnitude} & \colhead{$\log L_R$}\\
+\colhead{reduced $\chi ^2$}& \colhead{host-to-total flux ratio}& \colhead{magnitude} &
+\colhead{$\log L_R$} &\colhead{$\log M_*$} \\
 \colhead{}& 
 \colhead{}& \colhead{}& 
 \colhead{($\arcsec$)}& \colhead{}& 
 \colhead{(AB system)}& \colhead{}& 
-\colhead{}& \colhead{(AB system)}&\colhead{($L_{\odot,R}$)} \\
+\colhead{}& \colhead{(AB system)} &\colhead{($L_{\odot,R}$)} & \colhead{(M$_{\odot}$)}\\
 \colhead{(1)}& 
 \colhead{(2)}& \colhead{(3)}& 
 \colhead{(4)}& \colhead{(5)}& 
 \colhead{(6)}& \colhead{(7)}& 
-\colhead{(8)}& \colhead{(9)}&\colhead{(10)}
+\colhead{(8)}& \colhead{(9)}&
+\colhead{(10)}& \colhead{(11)}
 }
 \startdata 
-CID1174 & $2.307$ & $41.5\%\pm11.7\%$ & $0\farcs{}309\pm0\farcs{}065$ & $1.862\pm1.26$ & $21.482\substack{+0.374\\-0.277}$ & $2.496$ & $11.2\%\pm1.1\%$ & $23.214\substack{+0.113\\-0.103}$ \\
-CID1281 & $1.322$ & $49.3\%\pm13.7\%$ & $0\farcs{}239\pm0\farcs{}094$ & $3.146\pm1.483$ & $22.879\substack{+0.362\\-0.271}$ & $1.378$ & $18.5\%\pm7.7\%$ & $24.828\substack{+0.595\\-0.382}$ \\
-CID206 & $2.054$ & $35.3\%\pm24.3\%$ & $0\farcs{}286\pm0\farcs{}146$ & $3.072\pm2.476$ & $21.822\substack{+1.298\\-0.575}$ & $1.903$ & $7.7\%\pm2.4\%$ & $23.671\substack{+0.403\\-0.293}$ \\
-CID216 & $1.514$ & $93.9\%\pm4.7\%$ & $0\farcs{}251\pm0\farcs{}063$ & $6.159\pm1.205$ & $21.51\substack{+0.052\\-0.049}$ & $1.425$ & $35.1\%\pm1.5\%$ & $23.446\substack{+0.053\\-0.051}$ \\
-CID237 & $2.349$ & $29.9\%\pm6.3\%$ & $0\farcs{}872\pm0\farcs{}172$ & $4.736\pm1.701$ & $21.279\substack{+0.26\\-0.209}$ & $2.354$ & $3.2\%\pm2.0\%$ & $23.718\substack{+1.037\\-0.52}$ \\
-CID255 & ... & ... & ... & ... & ... & ... & ... & ...\\
-CID3242 & $2.751$ & $46.1\%\pm12.7\%$ & $0\farcs{}201\pm0\farcs{}159$ & $6.142\pm1.874$ & $21.161\substack{+0.35\\-0.264}$ & $2.596$ & $4.8\%\pm1.3\%$ & $23.595\substack{+0.337\\-0.257}$ \\
-CID3570 & $1.665$ & $76.5\%\pm1.6\%$ & $0\farcs{}698\pm0\farcs{}007$ & $0.728\pm0.054$ & $21.164\substack{+0.021\\-0.021}$ & $1.332$ & $85.6\%\pm1.5\%$ & $22.971\substack{+0.012\\-0.012}$ \\
-CID452 & $1.684$ & $75.4\%\pm3.9\%$ & $0\farcs{}365\pm0\farcs{}015$ & $1.402\pm0.175$ & $21.176\substack{+0.063\\-0.06}$ & $1.452$ & $37.8\%\pm0.7\%$ & $22.732\substack{+0.022\\-0.022}$ \\
-CID454 & $2.203$ & $35.8\%\pm2.5\%$ & $0\farcs{}388\pm0\farcs{}016$ & $0.624\pm0.106$ & $21.196\substack{+0.08\\-0.074}$ & $1.291$ & $9.2\%\pm0.5\%$ & $23.352\substack{+0.058\\-0.055}$ \\
-CID50 & $5.576$ & $16.5\%\pm9.0\%$ & $0\farcs{}163\pm0\farcs{}11$ & $3.217\pm2.223$ & $20.934\substack{+0.863\\-0.475}$ & $4.940$ & $5.0\%\pm3.3\%$ & $22.504\substack{+1.145\\-0.545}$ \\
-CID543 & $1.902$ & $30.6\%\pm9.7\%$ & $0\farcs{}1\pm0\farcs{}0$ & $0.493\pm0.325$ & $21.994\substack{+0.406\\-0.295}$ & $1.435$ & $5.2\%\pm2.0\%$ & $23.765\substack{+0.534\\-0.357}$ \\
-CID597 & $1.565$ & $42.4\%\pm16.6\%$ & $0\farcs{}173\pm0\farcs{}058$ & $1.752\pm0.784$ & $21.868\substack{+0.543\\-0.36}$ & $1.254$ & $11.5\%\pm1.3\%$ & $23.563\substack{+0.126\\-0.113}$ \\
-CID607 & $1.692$ & $43.6\%\pm17.9\%$ & $0\farcs{}206\pm0\farcs{}087$ & $3.418\pm1.097$ & $21.189\substack{+0.575\\-0.374}$ & $2.590$ & $4.7\%\pm1.8\%$ & $23.566\substack{+0.511\\-0.346}$ \\
-CID70 & $2.041$ & $19.7\%\pm4.9\%$ & $0\farcs{}422\pm0\farcs{}095$ & $3.616\pm1.028$ & $21.862\substack{+0.304\\-0.237}$ & $2.361$ & $2.3\%\pm1.1\%$ & $24.625\substack{+0.677\\-0.414}$ \\
-LID1273 & $1.697$ & $53.3\%\pm9.1\%$ & $0\farcs{}302\pm0\farcs{}04$ & $1.22\pm0.49$ & $20.939\substack{+0.211\\-0.176}$ & $2.137$ & $6.4\%\pm0.8\%$ & $23.289\substack{+0.153\\-0.134}$ \\
-LID1538 & $2.362$ & $43.5\%\pm7.8\%$ & $0\farcs{}177\pm0\farcs{}042$ & $2.819\pm0.475$ & $21.251\substack{+0.221\\-0.184}$ & $2.173$ & $7.5\%\pm1.2\%$ & $23.088\substack{+0.189\\-0.161}$ \\
-LID360 & $3.918$ & $18.4\%\pm2.0\%$ & $0\farcs{}626\pm0\farcs{}02$ & $0.752\pm0.355$ & $21.455\substack{+0.136\\-0.121}$ & $4.914$ & $3.7\%\pm0.5\%$ & $23.254\substack{+0.172\\-0.149}$ \\
-XID2138 & $1.597$ & $38.9\%\pm5.5\%$ & $0\farcs{}498\pm0\farcs{}033$ & $1.24\pm0.391$ & $21.869\substack{+0.172\\-0.148}$ & $2.731$ & $5.0\%\pm1.3\%$ & $23.898\substack{+0.313\\-0.243}$ \\
-XID2202 & $3.23$ & $33.3\%\pm8.0\%$ & $0\farcs{}1\pm0\farcs{}001$ & $3.957\pm1.017$ & $21.16\substack{+0.302\\-0.236}$ & $3.852$ & $8.3\%\pm1.9\%$ & $22.592\substack{+0.286\\-0.226}$ \\
-XID2396 & $3.669$ & $23.9\%\pm10.5\%$ & $0\farcs{}584\pm0\farcs{}085$ & $0.772\pm1.36$ & $21.404\substack{+0.652\\-0.404}$ & $5.346$ & $2.3\%\pm0.5\%$ & $23.364\substack{+0.243\\-0.198}$ \\
-CDFS-1 & $1.358$ & $64.5\%\pm19.7\%$ & $0\farcs{}137\pm0\farcs{}069$ & $4.806\pm1.112$ & $22.468\substack{+0.397\\-0.29}$ & ... & ... & ... \\
-CDFS-229 & $4.329$ & $17.6\%\pm2.1\%$ & $0\farcs{}507\pm0\farcs{}026$ & $0.463\pm0.195$ & $21.568\substack{+0.144\\-0.127}$ & ... & ... & ... \\
-CDFS-321 & $3.998$ & $24.5\%\pm11.7\%$ & $0\farcs{}378\pm0\farcs{}122$ & $2.26\pm2.007$ & $20.337\substack{+0.703\\-0.423}$ & ... & ... & ... \\
-CDFS-724 & $1.355$ & $34.7\%\pm14.6\%$ & $0\farcs{}118\pm0\farcs{}03$ & $1.618\pm1.099$ & $23.695\substack{+0.582\\-0.377}$ & ... & ... & ... \\
-ECDFS-358 & $2.012$ & $56.4\%\pm13.5\%$ & $0\farcs{}359\pm0\farcs{}043$ & $1.671\pm0.542$ & $21.34\substack{+0.302\\-0.236}$ & ... & ... & ... \\
-SXDS-X1136 & $1.937$ & $40.5\%\pm7.8\%$ & $0\farcs{}101\pm0\farcs{}003$ & $1.986\pm0.483$ & $21.921\substack{+0.231\\-0.19}$ & ... & ... & ... \\
-SXDS-X50 & $1.423$ & $40.7\%\pm8.6\%$ & $0\farcs{}192\pm0\farcs{}04$ & $1.648\pm0.621$ & $21.988\substack{+0.267\\-0.214}$ & ... & ... & ... \\
-SXDS-X717 & $1.426$ & $61.4\%\pm9.1\%$ & $0\farcs{}264\pm0\farcs{}066$ & $5.58\pm1.421$ & $21.759\substack{+0.176\\-0.151}$ & ... & ... & ... \\
-SXDS-X735 & $2.203$ & $32.4\%\pm8.5\%$ & $0\farcs{}22\pm0\farcs{}057$ & $2.027\pm1.012$ & $20.919\substack{+0.333\\-0.254}$ & ... & ... & ... \\
-SXDS-X763 & $2.376$ & $6.0\%\pm4.0\%$ & $0\farcs{}694\pm0\farcs{}532$ & $2.394\pm0.796$ & $24.134\substack{+1.172\\-0.55}$ & ... & ... & ... \\
-SXDS-X969 & $1.613$ & $29.1\%\pm11.1\%$ & $0\farcs{}11\pm0\farcs{}019$ & $2.053\pm1.071$ & $21.591\substack{+0.515\\-0.348}$ & ... & ... & ... \\
+CID1174 & $2.307$ & $41.5\%\pm11.7\%$ & $0\farcs{}31\pm0\farcs{}07$ & $1.86\pm1.26$ & $21.48\substack{+0.37\\-0.28}$ & $2.496$ & $11.2\%\pm1.1\%$ & $23.21\substack{+0.11\\-0.10}$ & $11.13$ &$10.85$\\
+CID1281 & $1.322$ & $49.3\%\pm13.7\%$ & $0\farcs{}24\pm0\farcs{}09$ & $3.15\pm1.48$ & $22.88\substack{+0.36\\-0.27}$ & $1.378$ & $18.5\%\pm7.7\%$ & $24.83\substack{+0.60\\-0.38}$ & $10.49$ &$10.21$\\
+CID206 & $2.054$ & $35.3\%\pm24.3\%$ & $0\farcs{}29\pm0\farcs{}15$ & $3.07\pm2.48$ & $21.82\substack{+1.30\\-0.58}$ & $1.903$ & $7.7\%\pm2.4\%$ & $23.67\substack{+0.40\\-0.29}$ & $10.95$ &$10.66$\\
+CID216 & $1.514$ & $93.9\%\pm4.7\%$ & $0\farcs{}25\pm0\farcs{}06$ & $6.16\pm1.21$ & $21.51\substack{+0.05\\-0.05}$ & $1.425$ & $35.1\%\pm1.5\%$ & $23.45\substack{+0.05\\-0.05}$ & $11.13$ &$10.85$\\
+CID237 & $2.349$ & $29.9\%\pm6.3\%$ & $0\farcs{}87\pm0\farcs{}17$ & $4.74\pm1.70$ & $21.28\substack{+0.26\\-0.21}$ & $2.354$ & $3.2\%\pm2.0\%$ & $23.72\substack{+1.04\\-0.52}$ & $11.26$ &$10.98$\\
+CID255 & ... & ... & ... & ... & ... & ... & ... & ... & ... &...\\
+CID3242 & $2.751$ & $46.1\%\pm12.7\%$ & $0\farcs{}20\pm0\farcs{}16$ & $6.14\pm1.87$ & $21.16\substack{+0.35\\-0.26}$ & $2.596$ & $4.8\%\pm1.3\%$ & $23.60\substack{+0.34\\-0.26}$ & $11.25$ &$10.97$\\
+CID3570 & $1.665$ & $76.5\%\pm1.6\%$ & $0\farcs{}70\pm0\farcs{}01$ & $0.73\pm0.05$ & $21.16\substack{+0.02\\-0.02}$ & $1.332$ & $85.6\%\pm1.5\%$ & $22.97\substack{+0.01\\-0.01}$ & $11.07$ &$10.79$\\
+CID452 & $1.684$ & $75.4\%\pm3.9\%$ & $0\farcs{}37\pm0\farcs{}02$ & $1.40\pm0.18$ & $21.18\substack{+0.06\\-0.06}$ & $1.452$ & $37.8\%\pm0.7\%$ & $22.73\substack{+0.02\\-0.02}$ & $11.21$ &$10.93$\\
+CID454 & $2.203$ & $35.8\%\pm2.5\%$ & $0\farcs{}39\pm0\farcs{}02$ & $0.62\pm0.11$ & $21.20\substack{+0.08\\-0.07}$ & $1.291$ & $9.2\%\pm0.5\%$ & $23.35\substack{+0.06\\-0.06}$ & $11.19$ &$10.91$\\
+CID50 & $5.576$ & $16.5\%\pm9.0\%$ & $0\farcs{}16\pm0\farcs{}11$ & $3.22\pm2.22$ & $20.93\substack{+0.86\\-0.48}$ & $4.940$ & $5.0\%\pm3.3\%$ & $22.50\substack{+1.15\\-0.55}$ & $11.15$ &$10.87$\\
+CID543 & $1.902$ & $30.6\%\pm9.7\%$ & $0\farcs{}10\pm0\farcs{}00$ & $0.49\pm0.33$ & $21.99\substack{+0.41\\-0.30}$ & $1.435$ & $5.2\%\pm2.0\%$ & $23.77\substack{+0.53\\-0.36}$ & $10.79$ &$10.51$\\
+CID597 & $1.565$ & $42.4\%\pm16.6\%$ & $0\farcs{}17\pm0\farcs{}06$ & $1.75\pm0.78$ & $21.87\substack{+0.54\\-0.36}$ & $1.254$ & $11.5\%\pm1.3\%$ & $23.56\substack{+0.13\\-0.11}$ & $10.81$ &$10.53$\\
+CID607 & $1.692$ & $43.6\%\pm17.9\%$ & $0\farcs{}21\pm0\farcs{}09$ & $3.42\pm1.10$ & $21.19\substack{+0.58\\-0.37}$ & $2.590$ & $4.7\%\pm1.8\%$ & $23.57\substack{+0.51\\-0.35}$ & $11.10$ &$10.82$\\
+CID70 & $2.041$ & $19.7\%\pm4.9\%$ & $0\farcs{}42\pm0\farcs{}10$ & $3.62\pm1.03$ & $21.86\substack{+0.30\\-0.24}$ & $2.361$ & $2.3\%\pm1.1\%$ & $24.63\substack{+0.68\\-0.41}$ & $11.07$ &$10.79$\\
+LID1273 & $1.697$ & $53.3\%\pm9.1\%$ & $0\farcs{}30\pm0\farcs{}04$ & $1.22\pm0.49$ & $20.94\substack{+0.21\\-0.18}$ & $2.137$ & $6.4\%\pm0.8\%$ & $23.29\substack{+0.15\\-0.13}$ & $11.40$ &$11.12$\\
+LID1538 & $2.362$ & $43.5\%\pm7.8\%$ & $0\farcs{}18\pm0\farcs{}04$ & $2.82\pm0.48$ & $21.25\substack{+0.22\\-0.18}$ & $2.173$ & $7.5\%\pm1.2\%$ & $23.09\substack{+0.19\\-0.16}$ & $11.21$ &$10.93$\\
+LID360 & $3.918$ & $18.4\%\pm2.0\%$ & $0\farcs{}63\pm0\farcs{}02$ & $0.75\pm0.36$ & $21.46\substack{+0.14\\-0.12}$ & $4.914$ & $3.7\%\pm0.5\%$ & $23.25\substack{+0.17\\-0.15}$ & $11.17$ &$10.88$\\
+XID2138 & $1.597$ & $38.9\%\pm5.5\%$ & $0\farcs{}50\pm0\farcs{}03$ & $1.24\pm0.39$ & $21.87\substack{+0.17\\-0.15}$ & $2.731$ & $5.0\%\pm1.3\%$ & $23.90\substack{+0.31\\-0.24}$ & $10.98$ &$10.70$\\
+XID2202 & $3.23$ & $33.3\%\pm8.0\%$ & $0\farcs{}10\pm0\farcs{}00$ & $3.96\pm1.02$ & $21.16\substack{+0.30\\-0.24}$ & $3.852$ & $8.3\%\pm1.9\%$ & $22.59\substack{+0.29\\-0.23}$ & $11.24$ &$10.96$\\
+XID2396 & $3.669$ & $23.9\%\pm10.5\%$ & $0\farcs{}58\pm0\farcs{}09$ & $0.77\pm1.36$ & $21.40\substack{+0.65\\-0.40}$ & $5.346$ & $2.3\%\pm0.5\%$ & $23.36\substack{+0.24\\-0.20}$ & $11.20$ &$10.92$\\
+CDFS-1 & $1.358$ & $64.5\%\pm19.7\%$ & $0\farcs{}14\pm0\farcs{}07$ & $4.81\pm1.11$ & $22.47\substack{+0.40\\-0.29}$ & ... & ... & ... & $10.80$ &$10.52$\\
+CDFS-229 & $4.329$ & $17.6\%\pm2.1\%$ & $0\farcs{}51\pm0\farcs{}03$ & $0.46\pm0.20$ & $21.57\substack{+0.14\\-0.13}$ & ... & ... & ... & $10.98$ &$10.70$\\
+CDFS-321 & $3.998$ & $24.5\%\pm11.7\%$ & $0\farcs{}38\pm0\farcs{}12$ & $2.26\pm2.01$ & $20.34\substack{+0.70\\-0.42}$ & ... & ... & ... & $11.61$ &$11.33$\\
+CDFS-724 & $1.355$ & $34.7\%\pm14.6\%$ & $0\farcs{}12\pm0\farcs{}03$ & $1.62\pm1.10$ & $23.70\substack{+0.58\\-0.38}$ & ... & ... & ... & $10.14$ &$9.86$\\
+ECDFS-358 & $2.012$ & $56.4\%\pm13.5\%$ & $0\farcs{}36\pm0\farcs{}04$ & $1.67\pm0.54$ & $21.34\substack{+0.30\\-0.24}$ & ... & ... & ... & $11.25$ &$10.97$\\
+SXDS-X1136 & $1.937$ & $40.5\%\pm7.8\%$ & $0\farcs{}10\pm0\farcs{}00$ & $1.99\pm0.48$ & $21.92\substack{+0.23\\-0.19}$ & ... & ... & ... & $10.84$ &$10.56$\\
+SXDS-X50 & $1.423$ & $40.7\%\pm8.6\%$ & $0\farcs{}19\pm0\farcs{}04$ & $1.65\pm0.62$ & $21.99\substack{+0.27\\-0.21}$ & ... & ... & ... & $10.89$ &$10.61$\\
+SXDS-X717 & $1.426$ & $61.4\%\pm9.1\%$ & $0\farcs{}26\pm0\farcs{}07$ & $5.58\pm1.42$ & $21.76\substack{+0.18\\-0.15}$ & ... & ... & ... & $10.86$ &$10.58$\\
+SXDS-X735 & $2.203$ & $32.4\%\pm8.5\%$ & $0\farcs{}22\pm0\farcs{}06$ & $2.03\pm1.01$ & $20.92\substack{+0.33\\-0.25}$ & ... & ... & ... & $11.28$ &$11.00$\\
+SXDS-X763 & $2.376$ & $6.0\%\pm4.0\%$ & $0\farcs{}69\pm0\farcs{}53$ & $2.39\pm0.80$ & $24.13\substack{+1.17\\-0.55}$ & ... & ... & ... & $10.03$ &$9.75$\\
+SXDS-X969 & $1.613$ & $29.1\%\pm11.1\%$ & $0\farcs{}11\pm0\farcs{}02$ & $2.05\pm1.07$ & $21.59\substack{+0.52\\-0.35}$ & ... & ... & ... & $11.12$ &$10.83$\\
 \enddata
 \label{tab:result_sersic}
 \tablecomments{
@@ -427,66 +448,69 @@ Column~1: Object ID.
 Column~2: Reduced $\chi ^2$ value by the best PSF in the library.
 Column~3-6: WFC3 inference.
 Column~7-9: ACS inference. 
-Column~10: Inferred host Luminosity in the rest-frame R band.
+Column~10: Inferred observed host Luminosity in the rest-frame R band.
+Column~10: Inferred host total stellar mass.
 }
 \end{deluxetable*}
 
 \begin{deluxetable*}
-{@{\extracolsep{4pt}}lcccccc}   % need for the gap between the clines.
-\tablecolumns{7}
+{@{\extracolsep{4pt}}lcccccccc}   % need for the gap between the clines.
+\tablecolumns{9}
 \tablewidth{0pt}
 \tablecaption{Inferred \mbh\ .} 
 \tablehead
 { 
 \colhead{Target ID}&
-  \multicolumn{3}{c}{using emission line \halpha}&
-  \multicolumn{3}{c}{using emission line \hbeta} \\
-  \cline{2-4}  \cline{5-7} \\
+  \multicolumn{4}{c}{using emission line \halpha}&
+  \multicolumn{4}{c}{using emission line \hbeta} \\
+  \cline{2-5}  \cline{6-9} \\
 \colhead{}& 
-\colhead{FWHM}& \colhead{$\log(\lambda \rm L _{H\alpha}$)}& \colhead{\mbh}&
-\colhead{FWHM(5100)}& \colhead{$\log(\lambda \rm L _{\lambda5100})$}& \colhead{\mbh}\\
+\colhead{FWHM}& \colhead{$\log(\lambda \rm L _{H\alpha}$)}& \colhead{\mbh}& Eddington ratio &
+\colhead{FWHM(5100)}& \colhead{$\log(\lambda \rm L _{\lambda5100})$}& \colhead{\mbh}& Eddington ratio \\
 \colhead{}& 
 \colhead{(\kms)}& \colhead{(${\rm erg~s^{-1}}$)}& 
-\colhead{(M$_{\odot}$)}& \colhead{(\kms)}& 
-\colhead{(${\rm erg~s^{-1}}$)}&\colhead{(M$_{\odot}$)}\\
+\colhead{(M$_{\odot}$)}& (log$\lambda$)&
+\colhead{(\kms)}& 
+\colhead{(${\rm erg~s^{-1}}$)}&\colhead{(M$_{\odot}$)} & (log$\lambda$)\\
 \colhead{(1)}& 
 \colhead{(2)}& \colhead{(3)}& 
 \colhead{(4)}& \colhead{(5)}& 
-\colhead{(6)}&\colhead{(7)}
+\colhead{(6)}&\colhead{(7)}&
+\colhead{(8)}& \colhead{(9)}
 }
 \startdata 
-CID1174 & 1906.3037 & 43.43237 & 7.992 & 5898.264 & 44.76243 & 8.833 \\
-CID1281 & 1619.4891 & 43.23945 & 7.749 & ... & ... & ... \\
-CID206 & 3333.5527 & 43.4776 & 8.528 & ... & ... & ... \\
-CID216 & 2229.5232 & 42.84509 & 7.854 & ... & ... & ... \\
-CID237 & 2112.3306 & 43.85546 & 8.289 & ... & ... & ... \\
-CID255 & 1932.0933 & 43.9924 & 8.273 & 3709.241 & 45.37122 & 8.734 \\
-CID3242 & 2543.2202 & 43.83323 & 8.449 & 3774.503 & 45.09891 & 8.613 \\
-CID3570 & 1958.8551 & 43.16374 & 7.888 & ... & ... & ... \\
-CID452 & 3457.8801 & 42.92298 & 8.295 & 3127.3306 & 44.63353 & 8.217 \\
-CID454 & 2824.2693 & 43.34466 & 8.311 & ... & ... & ... \\
-CID50 & 2339.9104 & 43.93786 & 8.423 & 1938.5676 & 45.32766 & 8.149 \\
-CID543 & 2188.8447 & 43.57404 & 8.187 & ... & ... & ... \\
-CID597 & 1656.3296 & 43.32955 & 7.813 & ... & ... & ... \\
-CID607 & 3009.1816 & 43.67079 & 8.526 & 4241.526 & 44.78209 & 8.556 \\
-CID70 & 2480.4058 & 43.50531 & 8.269 & 3981.8574 & 45.1582 & 8.689 \\
-LID1273 & 3223.8484 & 43.61001 & 8.561 & ... & ... & ... \\
-LID1538 & 2941.422 & 43.59594 & 8.469 & ... & ... & ... \\
-LID360 & 2481.7253 & 43.88091 & 8.45 & 2868.8992 & 45.08676 & 8.369 \\
-XID2138 & 3185.8613 & 43.6148 & 8.552 & 2944.7766 & 44.80782 & 8.252 \\
-XID2202 & 2973.2378 & 43.56249 & 8.463 & ... & ... & ... \\
-XID2396 & 2271.2617 & 44.06196 & 8.455 & 2657.8386 & 45.50467 & 8.511 \\
-CDFS-1 & 5449.4022 & 43.08 & 8.789 & ... & ... & ... \\
-CDFS-229 & 2254.0105 & 43.3 & 8.082 & ... & ... & ... \\
-CDFS-321 & 2441.93 & 43.92714 & 8.457 & ... & ... & ... \\
-CDFS-724 & 3342.3888 & 42.81 & 8.21 & ... & ... & ... \\
-ECDFS-358 & 2237.2314 & 43.39674 & 8.122 & ... & ... & ... \\
-SXDS-X1136 & 2759.8953 & 43.43305 & 8.333 & 6761.222 & 44.71429 & 8.927 \\
-SXDS-X50 & 1816.672 & 43.421 & 7.942 & ... & ... & ... \\
-SXDS-X717 & 2930.7417 & 43.04988 & 8.204 & ... & ... & ... \\
-SXDS-X735 & 2702.0962 & 43.69804 & 8.44 & 3519.6052 & 45.07463 & 8.54 \\
-SXDS-X763 & 2961.1743 & 43.57321 & 8.465 & 4508.5146 & 44.51285 & 8.474 \\
-SXDS-X969 & 2296.0566 & 43.50066 & 8.196 & 1695.7146 & 45.05337 & 7.895 \\
+CID1174 & 1906.3037 & 43.43237 & 7.992 & -0.504 & 5898.264 & 44.76243 & 8.833& -1.353 \\
+CID1281 & 1619.4891 & 43.23945 & 7.749 & -0.446 & ... & ... & ...& ... \\
+CID206 & 3333.5527 & 43.4776 & 8.528 & -0.997 & ... & ... & ...& ... \\
+CID216 & 2229.5232 & 42.84509 & 7.854 & -0.929 & ... & ... & ...& ... \\
+CID237 & 2112.3306 & 43.85546 & 8.289 & -0.397 & ... & ... & ...& ... \\
+CID255 & 1932.0933 & 43.9924 & 8.273 & -0.249 & 3709.241 & 45.37122 & 8.734& -0.628 \\
+CID3242 & 2543.2202 & 43.83323 & 8.449 & -0.578 & 3774.503 & 45.09891 & 8.613& -0.779 \\
+CID3570 & 1958.8551 & 43.16374 & 7.888 & -0.658 & ... & ... & ...& ... \\
+CID452 & 3457.8801 & 42.92298 & 8.295 & -1.296 & 3127.3306 & 44.63353 & 8.217& -0.879 \\
+CID454 & 2824.2693 & 43.34466 & 8.311 & -0.908 & ... & ... & ...& ... \\
+CID50 & 2339.9104 & 43.93786 & 8.423 & -0.451 & 1938.5676 & 45.32766 & 8.149& -0.086 \\
+CID543 & 2188.8447 & 43.57404 & 8.187 & -0.564 & ... & ... & ...& ... \\
+CID597 & 1656.3296 & 43.32955 & 7.813 & -0.424 & ... & ... & ...& ... \\
+CID607 & 3009.1816 & 43.67079 & 8.526 & -0.811 & 4241.526 & 44.78209 & 8.556& -1.055 \\
+CID70 & 2480.4058 & 43.50531 & 8.269 & -0.712 & 3981.8574 & 45.1582 & 8.689& -0.796 \\
+LID1273 & 3223.8484 & 43.61001 & 8.561 & -0.903 & ... & ... & ...& ... \\
+LID1538 & 2941.422 & 43.59594 & 8.469 & -0.825 & ... & ... & ...& ... \\
+LID360 & 2481.7253 & 43.88091 & 8.45 & -0.533 & 2868.8992 & 45.08676 & 8.369& -0.547 \\
+XID2138 & 3185.8613 & 43.6148 & 8.552 & -0.890 & 2944.7766 & 44.80782 & 8.252& -0.723 \\
+XID2202 & 2973.2378 & 43.56249 & 8.463 & -0.851 & ... & ... & ...& ... \\
+XID2396 & 2271.2617 & 44.06196 & 8.455 & -0.365 & 2657.8386 & 45.50467 & 8.511& -0.272 \\
+CDFS-1 & 5449.4022 & 43.08 & 8.789 & ... & ... & ... & ...& ... \\
+CDFS-229 & 2254.0105 & 43.3 & 8.082 & ... & ... & ... & ...& ... \\
+CDFS-321 & 2441.93 & 43.92714 & 8.457 & -0.496 & ... & ... & ...& ... \\
+CDFS-724 & 3351.8522 & 42.56 & 8.093 & ... & ... & ... & ...& ... \\
+ECDFS-358 & 2237.2314 & 43.39674 & 8.122 & -0.669 & ... & ... & ...& ... \\
+SXDS-X1136 & 2759.8953 & 43.43305 & 8.333 & -0.845 & 6761.222 & 44.71429 & 8.927& -1.500 \\
+SXDS-X50 & 1816.672 & 43.421 & 7.942 & -0.465 & ... & ... & ...& ... \\
+SXDS-X717 & 2930.7417 & 43.04988 & 8.204 & -1.083 & ... & ... & ...& ... \\
+SXDS-X735 & 2702.0962 & 43.69804 & 8.44 & -0.698 & 3519.6052 & 45.07463 & 8.54& -0.731 \\
+SXDS-X763 & 2961.1743 & 43.57321 & 8.465 & -0.842 & 4508.5146 & 44.51285 & 8.474& -1.271 \\
+SXDS-X969 & 2296.0566 & 43.50066 & 8.196 & -0.643 & 1695.7146 & 45.05337 & 7.895& -0.107 \\
 \enddata
 \label{tab:result_mbh}
 \tablecomments{
@@ -609,6 +633,47 @@ Illustration of the relations between the inferred host properties.}
 \caption{\label{fig:hist_compare} 
 Comparison of the histogram of the inferred host flux ratio, based on the different amount of the top-ranked PSFs.}
 \end{figure*} 
+
+
+\begin{figure*}
+\centering
+\begin{tabular}{c c}
+{\includegraphics[width=0.5\textwidth]{fig/MBH-L_obs.pdf}}&
+{\includegraphics[width=0.5\textwidth]{fig/MBH-L_ev.pdf}}\\
+\end{tabular}
+\caption{\label{fig:ML} 
+Observed \mbh-\lhost\ relation (left), evolution-corrected relation (right).}
+\end{figure*} 
+
+\begin{figure}
+\centering
+{
+\includegraphics[height=0.4\textwidth]{fig/MBH-L-vz.pdf}
+}
+\caption{\label{fig:ML-vz} 
+The offset as a function of redshift.}
+\end{figure} 
+
+
+\begin{figure}
+\centering
+{
+\includegraphics[height=0.4\textwidth]{fig/MBH-Mstar.pdf}
+}
+\caption{\label{fig:MM} 
+Comparison of the histogram of the inferred host flux ratio, based on the different amount of the top-ranked PSFs.}
+\end{figure} 
+
+\begin{figure*}
+\centering
+\begin{tabular}{c c}
+{\includegraphics[width=0.5\textwidth]{fig/MBH-Mstar-vz_style1.pdf}}&
+{\includegraphics[width=0.5\textwidth]{fig/MBH-Mstar-vz_style0.pdf}}\\
+\end{tabular}
+\caption{\label{fig:MM-vz} 
+The inference MM-z relation}
+\end{figure*} 
+
 
 %\appendix
 %\section{If needed}

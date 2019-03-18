@@ -5,9 +5,10 @@ import matplotlib as mat
 #mat.rcParams['font.family'] = 'STIXGeneral'
 #plt.figure(figsize=(14.5,12))
 ############### with evolution-corrected or not? #################
-host = 1
+select = 1
+host = 0
 
-select= input('with evolution-corrected or not??? 0 = no;   1= yes, with dmag using dmag.py:')
+#select= input('with evolution-corrected or not??? 0 = no;   1= yes, with dmag using dmag.py:')
 if select == 0:
    dm=0
 if select == 1:
@@ -16,11 +17,10 @@ if select == 1:
 import sys
 sys.path.insert(0,'../py_tools')
 from dmag import pass_dmag
-########input Park local data ############
+########input Park local data (19 local by Bennert++2010) ############
 f1 ='data/parklocal'
 Pklc = np.loadtxt(f1)
 ploc=np.zeros([len(Pklc),4])
-
 #host= input('with bulge or total relation??? 0 = bulge;   1= total:')
 if host == 0:
    ploc[:,1]= Pklc[:,6]    #LgV_sph
@@ -33,17 +33,36 @@ ploc[:,3]= Pklc[:,9]    #delta mass
 #Pkc=plt.errorbar(ploc[:,1],ploc[:,2],yerr=ploc[:,3],fmt='*',color='green',markersize=18)
 plt.errorbar(ploc[:,1],ploc[:,2],yerr=ploc[:,3],fmt='.',color='gray',markersize=18)
 Pkc=mlines.Line2D([], [], color='gray', ls='', marker='.', markersize=18)
-loc=np.zeros([len(ploc),3])
-loc[:,0]=ploc[:,1]
-loc[:,1]=ploc[:,2]
-loc[:,2]=ploc[:,3]
+#loc19[:,0]=ploc[:,1]
+#loc19[:,1]=ploc[:,2]
+#loc19[:,2]=ploc[:,3]
 #print np.around(loc[:,0],2)
 
+########input 25 local by Bennert++2011 ############
+f2 ='data/Bennert+2011_local.txt'
+local25 = np.loadtxt(f2)
+bloc = np.zeros([len(local25),4])
+
+#host= input('with bulge or total relation??? 0 = bulge;   1= total:')
+bloc[:,1]= local25[:,3]    #LgV_sph
+bloc[:,0]= local25[:,1]    #redshift
+bloc[:,1]=0.4*(4.61+0.46-4.83)+bloc[:,1]-0.4*dm*pass_dmag(bloc[:,0])  #Change to LgR_sph, -0.4 times fainter
+bloc[:,2]= local25[:,-2]-0.03    #LogBHmassc, 0.03 is the updated recipe according to Daeseong's Email.
+bloc[:,3]= local25[:,-1]    #delta BHmass
+#Pkc=plt.errorbar(ploc[:,1],ploc[:,2],yerr=ploc[:,3],fmt='*',color='green',markersize=18)
+plt.errorbar(bloc[:,1],bloc[:,2],yerr=bloc[:,3],fmt='p',color='red',markersize=15)
+Pkc=mlines.Line2D([], [], color='gray', ls='', marker='p', markersize=15)
+loc25=np.zeros([len(bloc),3])
+loc25[:,0]=bloc[:,1]
+loc25[:,1]=bloc[:,2]
+loc25[:,2]=bloc[:,3]
+
+"""
 #############################################################
 ###################fitting with MCMC#########################
-x=loc[:,0]
-y=loc[:,1]
-yerr=(loc[:,2]**2+0.2**2)**0.5  # 0.2 is the uncertainty level for the L_R
+x=ploc[:,1]
+y=ploc[:,2]
+yerr=(ploc[:,3]**2+0.2**2)**0.5  # 0.2 is the uncertainty level for the L_R
 def lnlike(theta, x, y, yerr):
     m, b, sint= theta
     model = m * x + b
@@ -93,8 +112,9 @@ for i in range(100):
     b=samples[:,1][samples[:,0]==find_n(samples[:,0],m)][0]   #may find out many numbers
     rec[i,0],rec[i,1]=m,b
     plt.plot(xl, m*xl+b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
+
 sm,sb=(np.amax(rec[:,0])-np.amin(rec[:,0]))/2,(np.amax(rec[:,1])-np.amin(rec[:,1]))/2
-plt.text(9.4, 6.5, "log$(M_{BH}/10^{7}M_{\odot})$=%s+%slog$(L_{R}/10^{10}L_{\odot})$"%(round(b+m*10-7,2),round(m,2)),color='blue',fontsize=25)
+plt.text(9.4, 6.5, "$log(M_{BH}/10^{7}M_{\odot})$=%s+%s$log(L_{R}/10^{10}L_{\odot})$"%(round(b,2)+round(m,2)*10-7,round(m,2)),color='blue',fontsize=25)
 #plt.text(9.4, 6.5, "$log(M_{BH}/10^{7}M_{\odot})$=%s+%s$log(L_{R}/10^{10}L_{\odot})$"%(0.33,0.95),color='blue',fontsize=25)
 '''
 if host == 0:
@@ -117,3 +137,4 @@ fig = corner.corner(samples, labels=["$m$", "$b$", "$sint$"],
                        quantiles=[0.16, 0.5, 0.84], show_titles=True, title_kwargs={"fontsize": 12})
 '''
 ######################
+"""
