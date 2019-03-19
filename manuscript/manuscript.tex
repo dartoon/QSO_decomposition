@@ -21,7 +21,7 @@
 \def\lcdm{$\Lambda$CDM}
 \def\hst{{\it HST}}
 \def\efr{$R_{\mathrm{eff}}$}
-\def\galfit{\sc Galfit}
+\def\galfit{{\sc Galfit}}
 \def\mbh{$\mathcal M_{\rm BH}$}
 \def\lhost{$L_{\rm host}$}
 \def\jcap{Journal of Cosmology and Astroparticle Physics}
@@ -133,7 +133,7 @@ Having defined the recipes, we estimate the \mbh\ by adopting the emission line 
 The high spatial resolution of the host image is required for the decomposition of the nuclear/host emission and the accurate estimate of the host stellar mass. All the new 32 AGN systems were observed with the HST/WFC3 infrared channel, as the HST program GO-15115, PI: John Silverman. We selected to use the filters F125W $(1.2<z<1.44)$ and F140W $(1.44<z<1.7)$ according to the redshift of the targets. This selection ensures that the broad \halpha\ line ($4000\AA$) is not present in the bandpass so as not to contaminate the host emissions due to the broad wings of the PSF.
 
 %Drizzling, background noise...
-For each of the 32 new AGNs we took six separate exposures with $\sim399s$ (i.e. total exposure time $\sim2394s$). The six exposures for each dither image were combined with the {\sc astrodrizzle} software package, with an output pixel scale of 0\farcs{0642} by setting \texttt{pixfrac} parameter as 0.8 using the \texttt{gaussian} kernel. 
+For each of the 32 new AGNs we took six separate exposures with $\sim399s$ (i.e. total exposure time $\sim2394s$). Table~\ref{tab:objlist} lists the details of the observation. The six exposures for each dither image were combined with the {\sc astrodrizzle} software package, with an output pixel scale of 0\farcs{0642} by setting \texttt{pixfrac} parameter as 0.8 using the \texttt{gaussian} kernel. 
 To accurately estimate the background light which could come from both the sky and the detector, we adopt the {\sc photutils} to measure the photometry.
 
 Multi-band information provides the spectral energy distributions (SED) at a more precise level. 21/32 of our sample have rest-frame UV images by \citet{Scoville2007}. Images were taken through the wide ACS/F814W filter at four dither pointing with $507s$ exposures. The final image is drizzled to 0\farcs{03} pixel scale. Given the multi-band image for these systems, we are able to infer their host color and assess the contribution of both the young and old stellar population to the stellar mass budge \citet{Gallazzi2009} which insures an accurate inference of rest-frame R-band luminosity by K-correction, stellar mass and star formation rate (SFR). 
@@ -165,7 +165,7 @@ We assume that the stars in the library are representative of the possible PSFs 
 \label{sec:analysis}
 %Introduce the lenstronomy. Model the PSF in each library.\\
 %Inspired by Simon's work, we rank the performance of the each PSF and weight for the final fitting result. 
-We simultaneously fit the two-dimensional flux distribution of the center nuclear and the underlying host galaxy. Following common practice, we assume the unresolved nuclear as a scaled point source, while the host galaxy as a \sersic\ profile. Note that the actual morphologies of the host galaxies could be more complicated (e.g. bulge+disk). However, the purpose of adopting the \sersic\ model is a simplified a first-order approximation of the surface brightness distribution with a flexible parameterization which provides sufficient freedom to infer the host flux, given the high redshift range of our sample. Furthermore, we fit other galaxies that happen to be close to the AGN as additional \sersic\ model, to account for any potential contamination. \textcolor{blue}{The systems CID206 and ECDFS-358 have nearby objects which cannot be described by \sersic\ model, we thus mask their objects out in the fitting.}
+We simultaneously fit the two-dimensional flux distribution of the center nuclear and the underlying host galaxy. Following common practice, we assume the unresolved nuclear as a scaled point source, while the host galaxy as a \sersic\ profile. Note that the actual morphologies of the host galaxies could be more complicated (e.g. bulge+disk). However, the purpose of adopting the \sersic\ model is a simplified a first-order approximation of the surface brightness distribution with a flexible parameterization which provides sufficient freedom to infer the host flux, given the high redshift range of our sample. Furthermore, we fit other galaxies that happen to be close to the AGN as additional \sersic\ model, to account for any potential contamination. \textcolor{blue}{The systems CID206 and ECDFS-358 have nearby objects which could not be described by \sersic\ model, we thus mask these objects in the fitting.}
 
 %Introduce Lenstronomy:
 We adopt the imaging modeling tool \lenstronomy\ \citep{lenstronomy} to perform the decomposition of the host and nuclear light. \lenstronomy\ is a multi-purpose open-source gravitational lens image modeling python package. 
@@ -216,44 +216,59 @@ We list all the inference of the host galaxy properties in the Table~\ref{tab:re
 \label{sec:result}
 
 \subsection{Host galaxy properties}
-We derive the rest-frame R band magnitude and luminosity of our sample based on their filter magnitude obtained last section. The 18/32 systems which has multi-band host magnitude able us to select the best stellar population that could fit to the overall sample. We find that the 1 Gyr stellar population with solar metallicity by Chabrier initial mass function (IMF) \citep{Bruzual2003} could well match the color between the WFC3 and ACS band magnitude of these sample. Adopting this stellar population, we perform the K-correction and derive the rest-frame R band magnitude of our sample. We further derive the rest-frame R band luminosity by $\log L_R/L_{R, \odot} = 0.4 (M_{R, \odot}-M_R)$, where $M_{R, \odot}=4.61$ \citep{Blanton07}. We estimate of the stellar mass content of each host galaxy by adopt the mass-to-light ratio (M/L) based on the stellar population we adopted. \textcolor{red}{Need to add the uncertainty level of their inference}.
+We derive the rest-frame R band magnitude and luminosity of our sample based on their filter magnitude obtained last section. 18/32 systems have multi-band host magnitude which ables us to select the best stellar population that could fit to the overall sample. We find that the 1 Gyr stellar population with solar metallicity by Chabrier initial mass function (IMF) \citep{Bruzual2003} could well match the color between the WFC3 and ACS band magnitude of these sample. Adopting this stellar population, we perform the K-correction and derive the rest-frame R band magnitude of our sample. We further derive the rest-frame R band luminosity by $\log L_R/L_{R, \odot} = 0.4 (M_{R, \odot}-M_R)$, where $M_{R, \odot}=4.61$ \citep{Blanton07}. We estimate of the stellar mass content of each host galaxy by adopt the mass-to-light ratio (M/L) based on the stellar population we adopted.
+
+%\textcolor{red}{Need to add the uncertainty level of their inference}.
 
 The inferred $L_R$ and $M_*$ are listed in Table~\ref{tab:result_sersic}. In the rest of this section, we compare them to the \mbh.
 
 \subsection{\mbh-\lhost\ relation}
-We show the comparing between the \mbh-\lhost\ relation in Figure~\ref{fig:ML}, panel (a). Following common practice, we fit the local relation as a linear relation,
+We show our measurements of the \mbh-\lhost\ relation together with the comparison sample in Figure~\ref{fig:ML}, panel (a). Following common practice, we fit the local relation as a linear relation,
 \begin{eqnarray}
 \label{eq:MLlocal}
-\log \big( \frac{\mathcal M_{\rm BH}}{10^{7}M_{\odot}})= \alpha + \beta \log(\frac{L_R}{10^{10}L_{\odot}})
+\log \big( \frac{\mathcal M_{\rm BH}}{10^{7}M_{\odot}})= \alpha + \beta \log(\frac{L_R}{10^{10}L_{\odot}}),
 \end {eqnarray}
-which enable a direct comparison to the distant sample. The figure shows that the observed \mbh-\lhost\ relation for our measurements  are nearly identical to the local and intermediate ones, indicating that the black hole mass and the host luminosity located at a similar relation at different galaxy age. However, considering that both the black hole and host galaxy are expected to evolve over cosmic time, it is essential to transfer high-$z$ relations to today so as to compare in an equivalent frame. Especially, in a passive evolution scenario, we expect \lhost\ to fade over time. Thus, we follow \citet{Ding2017b} and parametrize the luminosity evolution with the functional form as
+which enables a direct comparison to the distant sample. The figure shows that the observed \mbh-\lhost\ relation for our measurements  are nearly identical to the local and intermediate ones, indicating that the black hole mass and the host luminosity located at a similar relation at different galaxy age. However, considering that both the black hole and host galaxy are expected to evolve over cosmic time, it is essential to transfer high-$z$ measurements to their values at today so as to compare them in an equivalent frame. Especially, in a passive evolution scenario, we expect \lhost\ to fade over time. 
+
+We follow \citet{Ding2017b} and parametrize the luminosity evolution with the functional form as
 $d{\rm mag}_{\rm R} \sim d\log(1+z)$, i.e.,
 \begin{eqnarray}
 \label{eq:L_relation}
 \log(L_{R,0})=\log(L_{R}) - 1.48 \log (1+z).
 \end{eqnarray} 
-This formulism is more accurate to fit a broad range redshift comparing to a single slope as $d$mag$/dz$. We refer to the \citet[][section 5.4]{Ding2017b} for more details.
+This formulism is more accurate to fit a broad range redshift comparing to a single slope as $d$mag$/dz$. We refer to the \citet[][section 5.4]{Ding2017b} for more details. Transfering the \lhost\ to today, we show the evolution-corrected \mbh-\lhost\ relation in Figure~\ref{fig:ML}, panel (b) and find that, at fixed \mbh, the BH in the more distant universe tends to reside in less luminous hosts.
 
-We show the evolution-corrected \mbh-\lhost\ relation in Figure~\ref{fig:ML}, panel (b) and find that at fixed \mbh\ the BH in the more distant universe tends to reside in less luminous hosts. To quantitatively understand this trend, We fit this offset as a function of redshift in the form:
+To quantitatively understand this trend, we fit the offset as a function of redshift in form as:
 \begin{eqnarray}
 \label{eq:offset}
 \Delta \log \mathcal M_{\rm BH}= \gamma \log (1 + z),
 \end{eqnarray} 
-where $\Delta \log \mathcal M_{\rm BH} = \log \big( \frac{\mathcal M_{\rm  BH}}{10^{7}M_{\odot}}) -\alpha-\beta\log(\frac{L_{R,0}}{10^{10}L_{\odot}})$. The best-fit and  1-$\sigma$ inference are $\gamma = 0.59 \pm 0.16$.
+where $\Delta \log \mathcal M_{\rm BH} = \log \big( \frac{\mathcal M_{\rm  BH}}{10^{7}M_{\odot}}) -\alpha-\beta\log(\frac{L_{R,0}}{10^{10}L_{\odot}})$. The best-fit and  1-$\sigma$ inference are $\gamma = 0.69 \pm 0.15$.
 
-Given that the current fit does not take into account selection effects yet, we draw the conclusion in the section~\ref{select_eff} 
+Given that the current result does not take into account selection effects yet, we will draw the conclusion in the section~\ref{select_eff} 
 
 \subsection{\mbh-\smass\ relation}
-The correlation of the \mbh-\smass\ would be more beneficial to help understand the connection between their coevolution. In Figure~\ref{fig:MM}, we plot the \mbh-\smass\ relation and compare to the local and intermediate sample and visually see that the mass distributions for three samples are very similar. Similar to last section, we fit the offset (i.e., $\Delta\log \mathcal M_{\rm BH}$) as a function of $\gamma \log (1 + z)$ and obtain $\gamma = 0.46 \pm 0.19$ which slightly indicates as positive, see Figure~\ref{fig:MM-vz}, left panel. In the of Figure~\ref{fig:MM-vz}, right panel, we show the ratio of \mbh-\smass of the three sample at different redshift. We highlight that our results are less biased in both the measurement of \mbh\ and \smass. 
+Analyzing the correlation of the \mbh-\smass\ would be more efficient to help directly understand the connection between their coevolution. In Figure~\ref{fig:MM}, we plot the \mbh-\smass\ relation and compare to the local and intermediate sample. We visually see that the mass distributions for three samples are very similar. Similarly, we consider the local as linear relation to fit offset (i.e., $\Delta\log \mathcal M_{\rm BH}$) as a function of $\gamma \log (1 + z)$. We obtain the $\gamma  = 0.49 \pm 0.19$ which slightly indicates as the positive, see Figure~\ref{fig:MM-vz}, panel (a). In the of Figure~\ref{fig:MM-vz}, panel (b), we also show the ratio of \mbh-\smass of the three sample at different redshift. We highlight that our results are less biased in both the measurement of \mbh\ and \smass. 
 
-Note that the local sample we adopt are bulge dominated galaxies and the adopted \smass\ are equivalent to their bulge masses. That is, we are comparing the \mbh-\smass$_{,total}$ at distant universe to the \mbh-\smass$_{,bulge}$ at the local. Considering that a major part of our measurements have indicated the disk component, i.e. the systems with fitted \sersic\ index close to 1. Thus, the \smass$_{,bluge}$ of our sample and the SS13 sample are supposed to be less. Without taking into account the selection effect, the direct comparison shows that the growth of the black hole predates that of the host bulge.
+We highlight that the local sample employed are bulge dominated galaxies and the adopted \smass\ are equivalent to their bulge masses. That is, we are comparing the \mbh-\smass$_{,total}$ at distant universe to the \mbh-\smass$_{,bulge}$ at the local. Considering that a major part of the distant systems have indicated the disk component (i.e., the systems with fitted \sersic\ index close to 1), the \smass$_{,bluge}$ of them are supposed to be even less.
+
+Without taking into account the selection effect, the direct comparison shows that the growth of the black hole predates that of the host bulge.
 
 \subsection{Selection effect}
 \label{select_eff}
+\textcolor{red}{To be written after Daeseong's analysis.}.
 
 \section{discussion}
 \label{sec:dis}
 \subsection{Systematic error}
+In our analysis, we adopt one stellar population to the overall sample. We note that adopting the private stellar populations for these sample which have both multi-band host magnitude could be more robust in principle. However, considering that the host magnitude in ACS band are faint (host-total flux ratio $< 30\%$), the fidelity of the SED fitting is actually lost. Perhaps the best way to derive the stellar population is to combining our measurements to the ground-based photometry. \textcolor{red}{Describe the ground-based data}. In this paper, we focus on the decomposing of the AGN and carry out a rapid analysis of the \mbh-host raltions. The measurements incorporating the ground-based photometry and the comparison with the simulations are presented in our companion paper.
+
+\subsection{Comparison with the inactive galaxies}
+To understand how the AGNs activity affect their galaxies's morphology, we compared the 32 host measurements to the inactive galaxies in CANDLES imaging survey. We select 4401 inactive galaxies in a comparable redshift range ($1.2<z<1.7$) from the CANDLES-COSMOS catalog. Their \sersic\ properties are inferred by \citet{VDwel++2012} by \galfit, and their stellar mass are derived by 3-D-HST spectroscopic survey \citep{Momcheva2016, Brammer2012}.
+
+We compare the \smass-\Reff\ relations in Figure~\ref{fig:Mstar-rn}. The inference shows that our AGN host are located at a higher end of the stellar mass. 
+
+
 \subsection{JWST}
 
 \section{Summary}
@@ -267,60 +282,62 @@ We thank the people who discuss with the paper.
 \bibliographystyle{apj.bst}
 \bibliography{references}
 
-\begin{deluxetable}{llcccc}
-\tablecolumns{6}
+\begin{deluxetable}{llccccc}
+\tablecolumns{7}
 \tablewidth{0pt}
-\tablecaption{Sample properties.} 
+\tablecaption{Details of Observation} 
 \tablehead{ 
 \colhead{Object ID} &
 \colhead{$z$} & 
 \colhead{WFC3/Filter} &
 \colhead{$RA$}&
 \colhead{$DEC$}&
-\colhead{Observing date}
+\colhead{Observing date}&
+\colhead{Expousre time (s)}
 \\ 
 \colhead{(1)} &
 \colhead{(2)} &
 \colhead{(3)} &
 \colhead{(4)} &
 \colhead{(5)} &
-\colhead{(6)}
+\colhead{(6)} &
+\colhead{(7)}
 } 
 \startdata
 %\multicolumn{5}{c}{Sample presented in \citet{Treu+07}}\\
 %\\
-COSMOS-CID1174 & 1.552 & F140W & 150.2789 & 1.9595 & 2017-10-26 \\
-COSMOS-CID1281 & 1.445 & F140W & 150.4160 & 2.5258 & 2018-11-26 \\
-COSMOS-CID206 & 1.483 & F140W & 149.8371 & 2.0088 & 2017-10-23 \\
-COSMOS-CID216 & 1.567 & F140W & 149.7918 & 1.8729 & 2017-10-23 \\
-COSMOS-CID237 & 1.618 & F140W & 149.9916 & 1.7243 & 2018-06-03 \\
-COSMOS-CID255 & 1.664 & F140W & 150.1017 & 1.8483 & 2019-03-16 \\
-COSMOS-CID3242 & 1.532 & F140W & 149.7113 & 2.1452 & 2017-10-26 \\
-COSMOS-CID3570 & 1.244 & F125W & 149.6411 & 2.1076 & 2017-10-27 \\
-COSMOS-CID452 & 1.407 & F125W & 150.0045 & 2.2371 & 2017-10-25 \\
-COSMOS-CID454 & 1.478 & F140W & 149.8681 & 2.3307 & 2018-02-26 \\
-COSMOS-CID50 & 1.239 & F125W & 150.2080 & 2.0833 & 2017-10-23 \\
-COSMOS-CID543 & 1.301 & F125W & 150.4519 & 2.1448 & 2018-04-30 \\
-COSMOS-CID597 & 1.272 & F125W & 150.5262 & 2.2449 & 2018-11-25 \\
-COSMOS-CID607 & 1.294 & F125W & 150.6097 & 2.3231 & 2017-10-25 \\
-COSMOS-CID70 & 1.667 & F140W & 150.4051 & 2.2701 & 2017-10-27 \\
-COSMOS-LID1273 & 1.617 & F140W & 150.0565 & 1.6275 & 2017-10-31 \\
-COSMOS-LID1538 & 1.527 & F140W & 150.6215 & 2.1588 & 2018-05-01 \\
-COSMOS-LID360 & 1.579 & F140W & 150.1251 & 2.8617 & 2017-10-30 \\
-COSMOS-XID2138 & 1.551 & F140W & 149.7036 & 2.5781 & 2017-11-01 \\
-COSMOS-XID2202 & 1.516 & F140W & 150.6530 & 1.9969 & 2017-11-05 \\
-COSMOS-XID2396 & 1.600 & F140W & 149.4779 & 2.6425 & 2017-11-12\\
-CDFS-1 & 1.630 & F140W & 52.8990 & -27.8600 & 2018-04-03 \\ 
-CDFS-229 & 1.326 & F125W & 53.0680 & -27.6580 & 2018-04-04 \\ 
-CDFS-321 & 1.570 & F140W & 53.0486 & -27.6239 & 2018-08-18\\ 
-CDFS-724 & 1.337 & F125W & 53.2870 & -27.6940 & 2018-04-05 \\ 
-ECDFS-358 & 1.626 & F140W & 53.0850 & -28.0370 & 2018-02-09\\ 
-SXDS-X1136 & 1.325 & F125W & 34.8925 & -5.1498 & 2018-01-29\\ 
-SXDS-X50 & 1.411 & F125W & 34.0267 & -5.0602 & 2018-03-01\\ 
-SXDS-X717 & 1.276 & F125W & 34.5400 & -5.0334 & 2018-07-02 \\ 
-SXDS-X735 & 1.447 & F140W & 34.5581 & -4.8781 & 2017-11-14 \\ 
-SXDS-X763 & 1.412 & F125W & 34.5849 & -4.7864 & 2018-07-03 \\ 
-SXDS-X969 & 1.585 & F140W & 34.7594 & -5.4291 & 2018-07-02 \\ 
+COSMOS-CID1174 & 1.552 & F140W & 150.2789 & 1.9595 & 2017-10-26 & 2395.4\\
+COSMOS-CID1281 & 1.445 & F140W & 150.4160 & 2.5258 & 2018-11-26 & 2395.4\\
+COSMOS-CID206 & 1.483 & F140W & 149.8371 & 2.0088 & 2017-10-23 & 2395.4\\
+COSMOS-CID216 & 1.567 & F140W & 149.7918 & 1.8729 & 2017-10-23 & 2395.4\\
+COSMOS-CID237 & 1.618 & F140W & 149.9916 & 1.7243 & 2018-06-03 & 2395.4\\
+COSMOS-CID255$^a$ & 1.664 & F140W & 150.1017 & 1.8483 & 2019-03-16 & 2395.4\\
+COSMOS-CID3242 & 1.532 & F140W & 149.7113 & 2.1452 & 2017-10-26 & 2395.4\\
+COSMOS-CID3570 & 1.244 & F125W & 149.6411 & 2.1076 & 2017-10-27 & 2395.4\\
+COSMOS-CID452 & 1.407 & F125W & 150.0045 & 2.2371 & 2017-10-25 & 2395.4\\
+COSMOS-CID454 & 1.478 & F140W & 149.8681 & 2.3307 & 2018-02-26 & 2395.4\\
+COSMOS-CID50 & 1.239 & F125W & 150.2080 & 2.0833 & 2017-10-23 & 2395.4\\
+COSMOS-CID543 & 1.301 & F125W & 150.4519 & 2.1448 & 2018-04-30 & 2395.4\\
+COSMOS-CID597 & 1.272 & F125W & 150.5262 & 2.2449 & 2018-11-25 & 2395.4\\
+COSMOS-CID607 & 1.294 & F125W & 150.6097 & 2.3231 & 2017-10-25 & 2395.4\\
+COSMOS-CID70 & 1.667 & F140W & 150.4051 & 2.2701 & 2017-10-27 & 2395.4\\
+COSMOS-LID1273 & 1.617 & F140W & 150.0565 & 1.6275 & 2017-10-31 & 2395.4\\
+COSMOS-LID1538 & 1.527 & F140W & 150.6215 & 2.1588 & 2018-05-01 & 2395.4\\
+COSMOS-LID360 & 1.579 & F140W & 150.1251 & 2.8617 & 2017-10-30 & 2395.4\\
+COSMOS-XID2138 & 1.551 & F140W & 149.7036 & 2.5781 & 2017-11-01 & 2395.4\\
+COSMOS-XID2202 & 1.516 & F140W & 150.6530 & 1.9969 & 2017-11-05 & 2395.4\\
+COSMOS-XID2396 & 1.600 & F140W & 149.4779 & 2.6425 & 2017-11-12& 2395.4\\
+CDFS-1 & 1.630 & F140W & 52.8990 & -27.8600 & 2018-04-03 & 2395.4\\
+CDFS-229 & 1.326 & F125W & 53.0680 & -27.6580 & 2018-04-04 & 2395.4\\ 
+CDFS-321 & 1.570 & F140W & 53.0486 & -27.6239 & 2018-08-18& 2395.4\\ 
+CDFS-724 & 1.337 & F125W & 53.2870 & -27.6940 & 2018-04-05 & 2395.4\\ 
+ECDFS-358 & 1.626 & F140W & 53.0850 & -28.0370 & 2018-02-09& 2395.4\\ 
+SXDS-X1136 & 1.325 & F125W & 34.8925 & -5.1498 & 2018-01-29& 2395.4\\ 
+SXDS-X50 & 1.411 & F125W & 34.0267 & -5.0602 & 2018-03-01& 2395.4\\ 
+SXDS-X717 & 1.276 & F125W & 34.5400 & -5.0334 & 2018-07-02 & 2395.4\\ 
+SXDS-X735 & 1.447 & F140W & 34.5581 & -4.8781 & 2017-11-14 & 2395.4\\ 
+SXDS-X763 & 1.412 & F125W & 34.5849 & -4.7864 & 2018-07-03 & 2395.4\\ 
+SXDS-X969 & 1.585 & F140W & 34.7594 & -5.4291 & 2018-07-02 & 2395.4\\ 
 \enddata
 \label{tab:objlist}
 \tablecomments{
@@ -329,13 +346,15 @@ Column 2: Redshifts.
 Column 3: WFC3 filter. Note that the targets from the COSMOS field also have ACS/F814W imaging.
 Column 4 and 5: J2000 $RA$ and $DEC$ coordinates.
 Column 6: The observing start date.
+\\
+$^a$For CID255, 3/6 of the dither WFC3 images are corrupted. We analyze this sample by a same approach, taking the 3 avalible frames.
 }
 \end{deluxetable}
 
 \begin{deluxetable*}{ccccccc}
 \tablecolumns{7}
 \tablewidth{0pt}
-\tablecaption{Details of CID1174's inference. } 
+\tablecaption{The host inference of CID1174} 
 \tablehead{ 
 \colhead{PSF rank} &
 \colhead{total $\chi ^2$} & 
@@ -382,12 +401,12 @@ For this sample, the inflation parameter $\alpha$ calculated by Eq.~\ref{eq:alph
 {@{\extracolsep{4pt}}lcccccccccc}   % need for the gap between the clines.
 \tablecolumns{9}
 \tablewidth{0pt}
-\tablecaption{Inferred host galaxy parameters for the 32 systems.} 
+\tablecaption{Inferred host galaxy properties for the 32 systems.} 
 \tablehead
 { 
 \colhead{Target ID}&
   \multicolumn{5}{c}{WFC3}&
-  \multicolumn{3}{c}{ACS} &
+  \multicolumn{3}{c}{ACS/F814W} &
    \multicolumn{2}{c}{host properties} \\
   \cline{2-6}  \cline{7-9} \cline{10-11}  \\
 \colhead{}& 
@@ -414,7 +433,7 @@ CID1281 & $1.322$ & $49.3\%\pm13.7\%$ & $0\farcs{}24\pm0\farcs{}09$ & $3.15\pm1.
 CID206 & $2.054$ & $35.3\%\pm24.3\%$ & $0\farcs{}29\pm0\farcs{}15$ & $3.07\pm2.48$ & $21.82\substack{+1.30\\-0.58}$ & $1.903$ & $7.7\%\pm2.4\%$ & $23.67\substack{+0.40\\-0.29}$ & $10.95$ &$10.66$\\
 CID216 & $1.514$ & $93.9\%\pm4.7\%$ & $0\farcs{}25\pm0\farcs{}06$ & $6.16\pm1.21$ & $21.51\substack{+0.05\\-0.05}$ & $1.425$ & $35.1\%\pm1.5\%$ & $23.45\substack{+0.05\\-0.05}$ & $11.13$ &$10.85$\\
 CID237 & $2.349$ & $29.9\%\pm6.3\%$ & $0\farcs{}87\pm0\farcs{}17$ & $4.74\pm1.70$ & $21.28\substack{+0.26\\-0.21}$ & $2.354$ & $3.2\%\pm2.0\%$ & $23.72\substack{+1.04\\-0.52}$ & $11.26$ &$10.98$\\
-CID255 & ... & ... & ... & ... & ... & ... & ... & ... & ... &...\\
+CID255 & $1.625$ & $18.9\%\pm5.4\%$ & $0\farcs{}19\pm0\farcs{}06'$ & $4.21\pm1.49$ & $21.61\substack{+0.37\\-0.28}$ & 2.858 & $4.2\%\pm1.8\%$ & $22.89\substack{+0.60\\-0.39} $& $11.17$ & $10.89$\\
 CID3242 & $2.751$ & $46.1\%\pm12.7\%$ & $0\farcs{}20\pm0\farcs{}16$ & $6.14\pm1.87$ & $21.16\substack{+0.35\\-0.26}$ & $2.596$ & $4.8\%\pm1.3\%$ & $23.60\substack{+0.34\\-0.26}$ & $11.25$ &$10.97$\\
 CID3570 & $1.665$ & $76.5\%\pm1.6\%$ & $0\farcs{}70\pm0\farcs{}01$ & $0.73\pm0.05$ & $21.16\substack{+0.02\\-0.02}$ & $1.332$ & $85.6\%\pm1.5\%$ & $22.97\substack{+0.01\\-0.01}$ & $11.07$ &$10.79$\\
 CID452 & $1.684$ & $75.4\%\pm3.9\%$ & $0\farcs{}37\pm0\farcs{}02$ & $1.40\pm0.18$ & $21.18\substack{+0.06\\-0.06}$ & $1.452$ & $37.8\%\pm0.7\%$ & $22.73\substack{+0.02\\-0.02}$ & $11.21$ &$10.93$\\
@@ -445,11 +464,11 @@ SXDS-X969 & $1.613$ & $29.1\%\pm11.1\%$ & $0\farcs{}11\pm0\farcs{}02$ & $2.05\pm
 \label{tab:result_sersic}
 \tablecomments{
 Column~1: Object ID.
+Column~2-6: WFC3 inference. 
 Column~2: Reduced $\chi ^2$ value by the best PSF in the library.
-Column~3-6: WFC3 inference.
 Column~7-9: ACS inference. 
-Column~10: Inferred observed host Luminosity in the rest-frame R band.
-Column~10: Inferred host total stellar mass.
+Column~10: Observed host luminosity in the rest-frame R band.
+Column~11: Host total stellar mass.
 }
 \end{deluxetable*}
 
@@ -500,10 +519,10 @@ LID360 & 2481.7253 & 43.88091 & 8.45 & -0.533 & 2868.8992 & 45.08676 & 8.369& -0
 XID2138 & 3185.8613 & 43.6148 & 8.552 & -0.890 & 2944.7766 & 44.80782 & 8.252& -0.723 \\
 XID2202 & 2973.2378 & 43.56249 & 8.463 & -0.851 & ... & ... & ...& ... \\
 XID2396 & 2271.2617 & 44.06196 & 8.455 & -0.365 & 2657.8386 & 45.50467 & 8.511& -0.272 \\
-CDFS-1 & 5449.4022 & 43.08 & 8.789 & ... & ... & ... & ...& ... \\
-CDFS-229 & 2254.0105 & 43.3 & 8.082 & ... & ... & ... & ...& ... \\
+CDFS-1 & 5449.4022 & 43.08 & 8.789 & -0.978 & ... & ... & ...& ... \\
+CDFS-229 & 2254.0105 & 43.30 & 8.082 & -0.481 & ... & ... & ...& ... \\
 CDFS-321 & 2441.93 & 43.92714 & 8.457 & -0.496 & ... & ... & ...& ... \\
-CDFS-724 & 3351.8522 & 42.56 & 8.093 & ... & ... & ... & ...& ... \\
+CDFS-724 & 3351.8522 & 42.56 & 8.093 & -1.222 & ... & ... & ...& ... \\
 ECDFS-358 & 2237.2314 & 43.39674 & 8.122 & -0.669 & ... & ... & ...& ... \\
 SXDS-X1136 & 2759.8953 & 43.43305 & 8.333 & -0.845 & 6761.222 & 44.71429 & 8.927& -1.500 \\
 SXDS-X50 & 1816.672 & 43.421 & 7.942 & -0.465 & ... & ... & ...& ... \\
@@ -540,6 +559,7 @@ In each row, observed data (first column), best-fit models (second column), data
 \centering
 %\hspace{-5.5em}
 {
+\includegraphics[height=0.25\textwidth]{fig/best_fit_CID255_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID3242_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID3570_SB_profile.pdf}
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID452_SB_profile.pdf}
@@ -622,7 +642,7 @@ In each row, observed data (first column), best-fit models (second column), data
 \includegraphics[height=0.75\textwidth]{fig/flux_r_n_corner.pdf}
 }
 \caption{\label{fig:flux_r_n_corner}
-Illustration of the relations between the inferred host properties.}
+Illustration of the relations between the inferred host \sersic\ parameters.}
 \end{figure*} 
 
 \begin{figure*}
@@ -671,6 +691,16 @@ Comparison of the histogram of the inferred host flux ratio, based on the differ
 {\includegraphics[width=0.5\textwidth]{fig/MBH-Mstar-vz_style0.pdf}}\\
 \end{tabular}
 \caption{\label{fig:MM-vz} 
+The inference MM-z relation}
+\end{figure*} 
+
+\begin{figure*}
+\centering
+\begin{tabular}{c c}
+{\includegraphics[width=0.5\textwidth]{fig/Mstar-Reff.pdf}}&
+{\includegraphics[width=0.5\textwidth]{fig/Mstar-Sn.pdf}}\\
+\end{tabular}
+\caption{\label{fig:Mstar-rn} 
 The inference MM-z relation}
 \end{figure*} 
 
