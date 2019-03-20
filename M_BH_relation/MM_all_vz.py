@@ -47,12 +47,12 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
 MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','LID1820','LID1622',\
-'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
+'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
 zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
@@ -76,83 +76,83 @@ if style ==1:
 #            s=880,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
 
 
-#####fit the evolution##########
-################################
-#z_loc,y_loc,err_loc=0,0,0
-z_ss, y_ss = ss[:,0], ss[:,2]-(m_mid*ss[:,1]+b_mid)
-z_cosmos, y_cosmos = zs[MBs!=-99], MBs[MBs!=-99]-(m_mid*Mstar[MBs!=-99]+b_mid)
-                              
-z_1131=0.65
-
-z=np.concatenate((z_ss, z_cosmos),axis=0)
-y=np.concatenate((y_ss, y_cosmos),axis=0)
-
-#z=z_cosmos #np.concatenate((z_pk,z_Mg,z_H,z_C,np.array([z_0435,z_1131]), z_cosmos),axis=0)
-#y=y_cosmos #np.concatenate((y_pk,y_Mg,y_H,y_C,np.array([y_0435,y_1131]), y_cosmos),axis=0)
-
-#### fit with emcee ###############
-x=np.log10(1+z)
-y=y
-yerr=y*0+(0.4**2+0.2**2)**0.5   # the error for the fitting
-def lnlike(theta, x, y, yerr):
-    b, sint= theta
-    model = b*x
-    sigma2 = (yerr**2 + sint**2)
-    if sint>=0 :
-      return -0.5*(np.sum((y-model)**2/sigma2)+np.sum(np.log(2*np.pi*sigma2)))
-    else:
-      return -np.inf
-
-import scipy.optimize as op
-nll = lambda *args: -lnlike(*args)
-result = op.minimize(nll, [1.8, 0.3], args=(x, y, yerr))
-b_ml,sint_ml= result["x"]
-#print b_ml, sint_ml, "ka=",lnlike(theta=[b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
-
-xp = np.array([5, 13])
-#plt.plot(xp, m_ml*xp+b_ml, 'r-')
-def lnprior(theta):
-    b, sint	 = theta
-    if -10 < b < 10.0 and 0 < sint < 10:
-        return 0.0
-    return -np.inf
-def lnprob(theta, x, y, yerr):
-    lp = lnprior(theta)
-    if not np.isfinite(lp):
+if style ==1:
+    #####fit the evolution##########
+    ################################
+    #z_loc,y_loc,err_loc=0,0,0
+    z_ss, y_ss = ss[:,0], ss[:,2]-(m_mid*ss[:,1]+b_mid)
+    z_cosmos, y_cosmos = zs[MBs!=-99], MBs[MBs!=-99]-(m_mid*Mstar[MBs!=-99]+b_mid)
+                                  
+    z_1131=0.65
+    
+    z=np.concatenate((z_ss, z_cosmos),axis=0)
+    y=np.concatenate((y_ss, y_cosmos),axis=0)
+    
+    #z=z_cosmos #np.concatenate((z_pk,z_Mg,z_H,z_C,np.array([z_0435,z_1131]), z_cosmos),axis=0)
+    #y=y_cosmos #np.concatenate((y_pk,y_Mg,y_H,y_C,np.array([y_0435,y_1131]), y_cosmos),axis=0)
+    
+    #### fit with emcee ###############
+    x=np.log10(1+z)
+    y=y
+    yerr=y*0+(0.4**2+0.2**2)**0.5   # the error for the fitting
+    def lnlike(theta, x, y, yerr):
+        b, sint= theta
+        model = b*x
+        sigma2 = (yerr**2 + sint**2)
+        if sint>=0 :
+          return -0.5*(np.sum((y-model)**2/sigma2)+np.sum(np.log(2*np.pi*sigma2)))
+        else:
+          return -np.inf
+    
+    import scipy.optimize as op
+    nll = lambda *args: -lnlike(*args)
+    result = op.minimize(nll, [1.8, 0.3], args=(x, y, yerr))
+    b_ml,sint_ml= result["x"]
+    #print b_ml, sint_ml, "ka=",lnlike(theta=[b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
+    
+    xp = np.array([5, 13])
+    #plt.plot(xp, m_ml*xp+b_ml, 'r-')
+    def lnprior(theta):
+        b, sint	 = theta
+        if -10 < b < 10.0 and 0 < sint < 10:
+            return 0.0
         return -np.inf
-    return lp + lnlike(theta, x, y, yerr)
-ndim, nwalkers = 2, 100
-pos = [result["x"] + 1e-4*np.random.randn(ndim) for i in range(nwalkers)]
-import emcee
-sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(x, y, yerr))
-sampler.run_mcmc(pos, 500)
-samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
+    def lnprob(theta, x, y, yerr):
+        lp = lnprior(theta)
+        if not np.isfinite(lp):
+            return -np.inf
+        return lp + lnlike(theta, x, y, yerr)
+    ndim, nwalkers = 2, 100
+    pos = [result["x"] + 1e-4*np.random.randn(ndim) for i in range(nwalkers)]
+    import emcee
+    sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(x, y, yerr))
+    sampler.run_mcmc(pos, 500)
+    samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
+    
+    b_mid, sint_mid =np.percentile(samples, 50,axis=0)
+    #print "lnlike=",lnlike(theta=[b_mid, sint_mid],x=x, y=y, yerr=yerr)
+    xl = np.linspace(0, 5, 100)
+    plt.plot(xl, xl*0+xl*b_mid, color="red", linewidth=4.0,zorder=0)
+    
+    def find_n(array,value):           #get the corresponding b for a given m 
+        idx= (np.abs(array-value)).argmin()
+        return array[idx]
+    b=np.percentile(samples,50,axis=0)[0]
+    #print samples[:,1][samples[:,0]==find_n(samples[:,0],m)]
+    for i in range(100):
+        posi=np.random.uniform(16,84)
+        b=np.percentile(samples,posi,axis=0)[0]    
+        #print b
+        plt.plot(xl, xl*0+xl*b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
+    value=round(b_mid,2)
+    #####################
+    value,sig=round(b_mid,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
+    print value,sig
+    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
+    #plt.text(0.15, -1.75, "$M_{BH} $VS$ L_{host}\propto (1+z)^{%s\pm%s}$"%(value,sig),color='blue',fontsize=25)
 
-b_mid, sint_mid =np.percentile(samples, 50,axis=0)
-#print "lnlike=",lnlike(theta=[b_mid, sint_mid],x=x, y=y, yerr=yerr)
-xl = np.linspace(0, 5, 100)
-plt.plot(xl, xl*0+xl*b_mid, color="red", linewidth=4.0,zorder=0)
 
-def find_n(array,value):           #get the corresponding b for a given m 
-    idx= (np.abs(array-value)).argmin()
-    return array[idx]
-b=np.percentile(samples,50,axis=0)[0]
-#print samples[:,1][samples[:,0]==find_n(samples[:,0],m)]
-for i in range(100):
-    posi=np.random.uniform(16,84)
-    b=np.percentile(samples,posi,axis=0)[0]    
-    #print b
-    plt.plot(xl, xl*0+xl*b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
-value=round(b_mid,2)
-#####################
-value,sig=round(b_mid,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
-print value,sig
-plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
-#plt.text(0.15, -1.75, "$M_{BH} $VS$ L_{host}\propto (1+z)^{%s\pm%s}$"%(value,sig),color='blue',fontsize=25)
-
-#
 plt.xlabel("log$(1+z)$",fontsize=35)
-
 new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=20,markeredgecolor='k')
 
 plt.xticks(np.arange(-0.1,1,0.1))
@@ -184,6 +184,6 @@ plt.legend([Bkc, Hkc, SS13, new_sample],[
 "Local by H&R",
 "Intermediate redshift AGNs",
 "This work"
-],scatterpoints=1,numpoints=1,loc=2,prop={'size':23},ncol=2,handletextpad=0)
+],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
 plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
 plt.show()

@@ -45,8 +45,8 @@ def load_result(ID, count_rank=8, sort_PSF_by='fit_result_each', cam = 'WFC3'):
         elif cam == 'ACS':
             filt = 'F814w'
             folder = "fit_result_each_fix"
-            f = open("../analysis_ACS/{0}/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
-            f_ps = open("../analysis_ACS/{0}/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
+            f = open("../analysis_ACS/{0}/first_analysis/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
+            f_ps = open("../analysis_ACS/{0}/first_analysis/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
         string = f.read()
         string_ps = f_ps.read()
 #        PSF_id = re.findall(r"by PSF(.*?):",string)
@@ -139,7 +139,7 @@ from dmag import k_corr_R
 #]
 ID = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
 'LID1273','XID2202','CID206','CID543','LID1538','XID2396','CID452',\
-'LID360','CID237','CID454','CID607','CID3570', 'CID597', 'CID1281']
+'LID360','CID237','CID454','CID607','CID3570', 'CID597', 'CID1281','CID255']
 mags_obs_IR, mag_IR_err = load_result(ID, count_rank=8, cam = 'WFC3')
 mags_obs_UV, mag_UV_err = load_result(ID, count_rank=8, cam = 'ACS')
 zs = np.array([redshift_info[ID[i]] for i in range(len(ID))])

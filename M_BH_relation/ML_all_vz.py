@@ -116,12 +116,12 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
 MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','LID1820','LID1622',\
-'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
+'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
 zs = np.asarray(load_zs(ID))
 mags = np.array(load_mag(ID)[0])
 
@@ -241,6 +241,6 @@ plt.legend([Pkc, park, new_sample],[
 "Local AGNs by Bennert+10",
 "Intermediate redshift AGNs",
 "This work"
-],scatterpoints=1,numpoints=1,loc=2,prop={'size':23},ncol=2,handletextpad=0)
+],scatterpoints=1,numpoints=1,loc=2,prop={'size':30},ncol=2,handletextpad=0)
 plt.savefig("MBH-L-vz.pdf")
 plt.show()

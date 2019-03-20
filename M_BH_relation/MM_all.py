@@ -57,12 +57,12 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
 MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','LID1820','LID1622',\
-'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
+'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
 zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
@@ -77,6 +77,7 @@ cl.set_label('Source redshift',rotation=270,size=20)
 cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
 cl.ax.tick_params(labelsize=30)   #the labe size
 
+plt.title("$M_{BH}-M_*$ relation",fontsize=35)
 plt.xlabel("log$(M_*/M_{\odot})$",fontsize=35)
 plt.ylabel("log$(M_{BH}/M_{\odot})$",fontsize=35)
 #plt.xticks(np.arange(5,16.5,0.5))

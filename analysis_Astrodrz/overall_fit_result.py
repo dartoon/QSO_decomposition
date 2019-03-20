@@ -18,7 +18,7 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281','CID255'\
 ]
 #ID = ['CID1281']  # note the others and active the line 63,
 
@@ -28,7 +28,7 @@ chisq_list, inf_list, best_PSF_id = [],[], []
 flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PSFs_lib_dict','rb'))
 for j in range(len(ID)):
     filt = filt_info[ID[j]]
-    f = open("{0}/deep_analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
+    f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
     string = f.read()
     PSF_id = re.findall(r"by PSF(.*?):",string)
     S_n_list = re.findall(r"n_sersic':(.*?),",string)
@@ -239,7 +239,7 @@ for j in range(num_boxs):
             pos = [pos_o.x0+0.09, pos_o.y0, pos_o.width, pos_o.height]
             cax.set_position(pos)
         n += 1
-plt.savefig('flux_r_n_corner_updated_deepseed.pdf')
+plt.savefig('flux_r_n_corner.pdf')
 plt.show()
 
 #for i in range(len(ID)):
