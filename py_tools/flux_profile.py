@@ -739,7 +739,7 @@ def fit_bkg_as_gaussian(data, thre=0.03):
     bin_centers = bin_borders[:-1] + bin_widths / 2
     plt.bar(bin_centers, bin_heights, width=bin_widths, label='histogram')
     from scipy.optimize import curve_fit
-    popt, _ = curve_fit(gaussian, bin_centers, bin_heights, p0=[1., 0., 1.])
+    popt, _ = curve_fit(gaussian, bin_centers, bin_heights, p0=[0., bin_heights.max(), 0.01])
     x_interval_for_fit = np.linspace(bin_borders[0], bin_borders[-1], 10000)
     gauss_grid = gaussian(x_interval_for_fit, *popt)
     plt.plot(x_interval_for_fit, gauss_grid, label='fit',c='red')
