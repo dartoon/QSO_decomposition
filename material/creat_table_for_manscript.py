@@ -121,12 +121,12 @@ WFC3_list = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', '
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281','CID255'\
 ]
     
 ACS_IDs = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
 'LID1273','XID2202','CID206','CID3570','CID543','LID1538','XID2396','CID452',\
-'LID360','CID237','CID454','CID607', 'CID597', 'CID1281']     
+'LID360','CID237','CID454','CID607', 'CID597', 'CID1281','CID255']     
 
 tab_list = ['CID1174', 'CID1281', 'CID206', 'CID216', 'CID237', 'CID255', 'CID3242', 'CID3570',
             'CID452', 'CID454', 'CID50', 'CID543', 'CID597', 'CID607', 'CID70', 'LID1273',
@@ -152,36 +152,34 @@ for i in range(len(tab_list)):
         ACS_list.append("xxx")
         UV_result.append('xxx')
 
-#for i in range(len(tab_list)):
-#    if IR_result[i]=='xxx':
-#        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
-#    if UV_result[i]=='xxx':
-#        UV_result[i] = [np.asarray(UV_result[0][j])*0-99 for j in range(len(UV_result[0]))]
-#    print(tab_list[i], round(IR_result[i][-3],3),
-#    "{0}%pm{1}%".format(round(IR_result[i][0][0],1), round(IR_result[i][0][1],1)),  #host flux ratio
-#    "{0}pm{1}".format(round(IR_result[i][1][0],3), round(IR_result[i][1][1],3)),  #host Re
-#    "{0}pm{1}".format(round(IR_result[i][2][0],3), round(IR_result[i][2][1],3)),  #host n
-#    "{0}+{1}-{2}".format(round(IR_result[i][5],3), round(IR_result[i][6][0],3),round(IR_result[i][6][1],3)),  #host mag, l, h
-#    UV_result[i][-1],
-#    "{0}%pm{1}%".format(round(UV_result[i][0][0],1), round(UV_result[i][0][1],1)),  #host flux ratio
-#    "{0}+{1}-{2}".format(round(UV_result[i][5],3), round(UV_result[i][6][0],3),round(UV_result[i][6][1],3))) #host mag, l, h
-'''
 for i in range(len(tab_list)):
     if IR_result[i]=='xxx':
         IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+    if UV_result[i]=='xxx':
+        UV_result[i] = [np.asarray(UV_result[0][j])*0-99 for j in range(len(UV_result[0]))]
     print(tab_list[i], round(IR_result[i][-3],3),
     "{0}%pm{1}%".format(round(IR_result[i][0][0],1), round(IR_result[i][0][1],1)),  #host flux ratio
     "{0}pm{1}".format(round(IR_result[i][1][0],3), round(IR_result[i][1][1],3)),  #host Re
     "{0}pm{1}".format(round(IR_result[i][2][0],3), round(IR_result[i][2][1],3)),  #host n
     "{0}+{1}-{2}".format(round(IR_result[i][5],3), round(IR_result[i][6][0],3),round(IR_result[i][6][1],3)),  #host mag, l, h
-    "{0}+{1}-{2}".format(round(IR_result[i][-2],3), round(IR_result[i][-1][0],3),round(IR_result[i][-1][1],3)))  #agn mag, l, h
+    UV_result[i][-1],
+    "{0}%pm{1}%".format(round(UV_result[i][0][0],1), round(UV_result[i][0][1],1)),  #host flux ratio
+    "{0}+{1}-{2}".format(round(UV_result[i][5],3), round(UV_result[i][6][0],3),round(UV_result[i][6][1],3))) #host mag, l, h
+#for i in range(len(tab_list)):
+#    if IR_result[i]=='xxx':
+#        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+#    print(tab_list[i], round(IR_result[i][-3],3),
+#    "{0}%pm{1}%".format(round(IR_result[i][0][0],1), round(IR_result[i][0][1],1)),  #host flux ratio
+#    "{0}pm{1}".format(round(IR_result[i][1][0],3), round(IR_result[i][1][1],3)),  #host Re
+#    "{0}pm{1}".format(round(IR_result[i][2][0],3), round(IR_result[i][2][1],3)),  #host n
+#    "{0}+{1}-{2}".format(round(IR_result[i][5],3), round(IR_result[i][6][0],3),round(IR_result[i][6][1],3)),  #host mag, l, h
+#    "{0}+{1}-{2}".format(round(IR_result[i][-2],3), round(IR_result[i][-1][0],3),round(IR_result[i][-1][1],3)))  #agn mag, l, h
 
 #for i in range(len(tab_list)):
 #    if IR_result[i]=='xxx':
 #        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
         
     
-'''           
 #XID2202 to LID1622
 #XID2138 to LID1820
 #XID2396 to LID1878
@@ -245,10 +243,30 @@ for i in range(len(tab_list)):
 
 #%%
 from load_result import load_host_p, load_MBH
-lumi_s = load_host_p([tab_list[0]], dm = 0) #!!! This dm is important 
-for ID in tab_list:
-    if ID == 'CID255':
-        result = -99.9, -99.9
-    else:
-        result = load_host_p([ID], dm = 0)
-    print ID, round(result[0],2), round(result[1],2)
+#lumi_s = load_host_p([tab_list[0]], dm = 0) #!!! This dm is important 
+#for ID in tab_list:
+##    if ID == 'CID255':
+##        result = -99.9, -99.9
+##    else:
+#    result = load_host_p([ID], dm = 0)
+#    print ID, round(result[0],2), round(result[1],2)
+def roots(a,b):
+    return np.sqrt(a**2+b**2)
+
+print "uncertainty for the LR:"
+for i in range(len(tab_list)):
+    if IR_result[i]=='xxx':
+        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+    if UV_result[i]=='xxx':
+        UV_result[i] = [np.asarray(UV_result[0][j])*0-99 for j in range(len(UV_result[0]))]
+    print(tab_list[i], 
+    "+{0}-{1}".format(round(roots(IR_result[i][6][0],0.05)/4,2), round(roots(IR_result[i][6][1],0.05)/4,2)))
+
+print "uncertainty for the M*:"
+for i in range(len(tab_list)):
+    if IR_result[i]=='xxx':
+        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+    if UV_result[i]=='xxx':
+        UV_result[i] = [np.asarray(UV_result[0][j])*0-99 for j in range(len(UV_result[0]))]
+    print(tab_list[i],
+    "+{0}-{1}".format(round(roots(IR_result[i][6][0]/4,0.1),2), round(roots(IR_result[i][6][1]/4,0.1),2)))
