@@ -17,7 +17,7 @@ from filter_info import redshift_info
 
 ID = ['CID1174','CID216', 'CID50','CID70','XID2138','CID3242',\
 'LID1273','XID2202','CID206','CID543','LID1538','XID2396','CID452',\
-'LID360','CID237','CID454','CID607','CID3570', 'CID1281', 'CID597']
+'LID360','CID237','CID454','CID607','CID3570', 'CID1281', 'CID597', 'CID255']
 
 #CID1281, CID255, CID526, CID597 is not in our targets
 
@@ -28,7 +28,7 @@ flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PS
 folder = "fit_result_each_fix" #"fit_result_each_fix" or "fit_result_each"
 
 for j in range(len(ID)):
-    f = open("{0}/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
+    f = open("{0}/analysis/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
     string = f.read()
     PSF_id = re.findall(r"by PSF(.*?):",string)
     S_n_list = re.findall(r"n_sersic':(.*?),",string)
