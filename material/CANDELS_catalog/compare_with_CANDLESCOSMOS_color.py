@@ -67,9 +67,9 @@ for i in range(len(lists)):
     result3 = stellar[lists[i][1]][1]     #Stellar_mass
     result4 = galfit[lists[i][0]][3]      #flag
     result5 = stellar[lists[i][1]][2]     #Star formation rate
-    result6 = stellar_flux_ap[lists[i][1]][0]
-    result7 = stellar_flux_ap[lists[i][1]][1]
-    result8 = stellar_flux_ap[lists[i][1]][2]
+    result6 = stellar_flux_ap[lists[i][1]][0] #F140w
+    result7 = stellar_flux_ap[lists[i][1]][1] #F125w.
+    result8 = stellar_flux_ap[lists[i][1]][2] #F814w
     results.append([result0, result1, result2, result3, result4, result5, result6, result7, result8])  #Redshift, Reff(arcsec), Sersic_n, Stellar_mass, flag, SFR
 results = np.asarray(results)
 
@@ -91,8 +91,8 @@ da_result = 1/(1+results[:,0])*c*vec_EE(results[:,0])/h0  #in Mpc
 
 #%% Plot and input my sample
 
-relation = 1  # 0 M*- Reff ; 1 M*-Sersic_n
-z_range = [1,2]
+relation = 2  # 0 M*- Reff ; 1 M*-color; 2 M*-n
+z_range = [1.2,1.7]
 
 z_cut = ((results[:,0]>z_range[0]) * (results[:,0]<z_range[1]))
 
@@ -109,11 +109,14 @@ plt.figure(figsize=(15, 11))
 if relation == 0:
     Reff_kpc = da_result * 10 **3 * (results[:,1]/3600./180.*np.pi)
     plt.scatter(results[:,3][z_cut* red_galaxy],np.log10(Reff_kpc[z_cut * red_galaxy]),
-                c=(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),s=280,marker=".",zorder=100, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
+                c=(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
 
 elif relation == 1:
     plt.scatter(results[:,3][z_cut* red_galaxy],(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),
-                c=(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),s=280,marker=".",zorder=100, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
+                c=(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
+elif relation == 2:
+    plt.scatter(results[:,3][z_cut* red_galaxy],results[:,2][z_cut* red_galaxy],
+                c=(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
 
 import sys
 sys.path.insert(0,'../../py_tools')
@@ -156,33 +159,45 @@ for i in range(len(ID)):
         host_flux_ACS.append(-99)
 host_flux_ACS = np.asarray(host_flux_ACS)
 
-if relation == 0:
-    plt.scatter(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],s=180, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
-                marker="s",zorder=100, vmin=0, vmax=7, edgecolors='white')
-elif relation ==1:
-    plt.scatter(Mstar[host_flux_ACS>0],(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],s=180, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
-                marker="s",zorder=100, vmin=0, vmax=7, edgecolors='white')
 cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
-#plt.clim(0,7)
+cl.set_label('filter flux ratio, WFC3 / ACS',rotation=270,size=30)
+cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
+cl.ax.tick_params(labelsize=30)
+
+if relation == 0:
+    plt.scatter(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
+                marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
+    plt.scatter(Mstar[host_flux_ACS<0],np.log10(ID_Reff_kpc)[host_flux_ACS<0],s=180, c ='black',
+                marker="s",zorder=99, vmin=0, vmax=7, edgecolors='white')
+elif relation ==1:
+    plt.scatter(Mstar[host_flux_ACS>0],(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
+                marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
+elif relation ==2:
+    plt.scatter(Mstar[host_flux_ACS>0],indexs[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
+                marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
+    plt.scatter(Mstar[host_flux_ACS<0],indexs[host_flux_ACS<0],s=180, c ='black',
+                marker="s",zorder=99, vmin=0, vmax=7, edgecolors='white') 
 
 plt.xlim([8, 12.5])
 plt.xlabel("log$(M_*)/M_{\odot}$",fontsize=35)
 plt.tick_params(labelsize=25)
 if relation ==0:
     plt.ylabel("log$(Reff)$ (kpc)",fontsize=35)
-    plt.title('$M_* - Reff$ relation, CANDLES sample redshift range {0}'.format(z_range), fontsize = 25)
-    plt.ylim([-1.5, 2.6])
-    cl.set_label('Flux, filter WFC3 / ACS',rotation=270,size=20)
+    plt.title('$M_* - Reff$ relation, sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.ylim([-1.1, 2.6])
     plt.savefig('Mstar-Reff_z{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
 elif relation ==1:
-    plt.ylabel("Flux, filter WFC3 / ACS",fontsize=35)
-    plt.title('$M_* -$ color relation, CANDLES sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.ylabel("filter flux ratio, WFC3 / ACS",fontsize=35)
+    plt.title('$M_* -$ color relation, sample redshift range {0}'.format(z_range), fontsize = 25)
     plt.ylim([0, 20])
-    cl.set_label('Flux, filter WFC3 / ACS',rotation=270,size=20)
-    plt.savefig('Mstar-color{0}-{1}_Reff.pdf'.format(z_range[0],z_range[1]))
-    
-cl.ax.tick_params(labelsize=15)   #the labe size
-    
+#    plt.savefig('Mstar-color{0}-{1}_Reff.pdf'.format(z_range[0],z_range[1]))
+elif relation ==2:
+    plt.ylabel("Sersic n",fontsize=35)
+    plt.title('$M_* - $Sersic index relation, sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.ylim([0, 8])
+    plt.savefig('Mstar-Sersic_n{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
+
+#cl.ax.tick_params(labelsize=15)   #the labe size
     
 plt.xlim([8, 12.5])
 plt.show()
