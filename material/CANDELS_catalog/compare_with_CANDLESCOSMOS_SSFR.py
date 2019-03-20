@@ -95,31 +95,40 @@ z_range = [1.2,1.7]
 
 z_cut = ((results[:,0]>z_range[0]) * (results[:,0]<z_range[1]))
 
-#ssfr_break =-100
-#blue_galaxy = ([results[:,5]>ssfr_break])[0]
-#red_galaxy = ([results[:,5]<ssfr_break])[0]
+ssfr_break =-10.5
+blue_galaxy = ([results[:,5]>ssfr_break])[0]
+red_galaxy = ([results[:,5]<ssfr_break])[0]
 #z_cut = ([results[:,0]>0]) 
 
-cmap_r = matplotlib.cm.get_cmap('jet_r')
-
 Reff_kpc = da_result * 10 **3 * (results[:,1]/3600./180.*np.pi)
-plt.figure(figsize=(18, 11))
-#plt.scatter(results[:,2][z_cut and red_galaxy],np.log10(results[:,1][z_cut and red_galaxy]),c=results[:,0][z_cut and red_galaxy],s=280,marker=".",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
-#plt.scatter(results[:,2][z_cut and blue_galaxy],np.log10(results[:,1][z_cut and blue_galaxy]),c=results[:,0][z_cut and blue_galaxy],s=80,marker="s",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
+plt.figure(figsize=(15, 11))
 if relation == 0:
-    plt.scatter(results[:,3][z_cut],np.log10(Reff_kpc[z_cut]),
-                c=results[:,5][z_cut] ,s=280,marker=".",zorder=100, vmin=-16, vmax=-4, alpha=0.6, edgecolors='white', cmap=cmap_r)
+    plt.scatter(results[:,3][z_cut*red_galaxy],np.log10(Reff_kpc[z_cut*red_galaxy]),
+                c='darkred',s=280,marker=".",zorder=100, vmin=1.2, vmax=1.8, edgecolors='white',alpha=0.7)
+    plt.scatter(results[:,3][z_cut*blue_galaxy],np.log10(Reff_kpc[z_cut*blue_galaxy]),
+                c='navy',s=280,marker=".",zorder=99, vmin=1.2, vmax=1.8, edgecolors='white',alpha=0.7)
+if relation ==1:
+    plt.scatter(results[:,3][z_cut*red_galaxy],results[:,2][z_cut*red_galaxy],
+                c='darkred',s=280,marker=".",zorder=100, vmin=1.2, vmax=1.8, edgecolors='white',alpha=0.7)
+    plt.scatter(results[:,3][z_cut*blue_galaxy],results[:,2][z_cut*blue_galaxy],
+                c='navy',s=280,marker=".",zorder=99, vmin=1.2, vmax=1.8, edgecolors='white',alpha=0.7)
 
-elif relation == 1:
-    plt.scatter(results[:,3][z_cut ],results[:,2][z_cut ],
-                c=results[:,5][z_cut],s=280,marker=".",zorder=100, vmin=-16, vmax=-4, alpha=0.6, edgecolors='white', cmap=cmap_r)
-    
+cmap_r = matplotlib.cm.get_cmap('jet_r')
+#    
+#if relation == 0:
+#    plt.scatter(results[:,3][z_cut],np.log10(Reff_kpc[z_cut]),
+#                c=results[:,5][z_cut] ,s=280,marker=".",zorder=100, vmin=-16, vmax=-4, alpha=0.6, edgecolors='white', cmap=cmap_r)
+#
+#elif relation == 1:
+#    plt.scatter(results[:,3][z_cut ],results[:,2][z_cut ],
+#                c=results[:,5][z_cut],s=280,marker=".",zorder=100, vmin=-16, vmax=-4, alpha=0.6, edgecolors='white', cmap=cmap_r)
+#    
 
-#plt.clim(0,6)
-cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
-
-#plt.ylim([0, 5])
-cl.set_label('SSFR',rotation=270,size=20)
+##plt.clim(0,6)
+#cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
+#
+##plt.ylim([0, 5])
+#cl.set_label('SSFR',rotation=270,size=20)
 
 import sys
 sys.path.insert(0,'../../py_tools')
@@ -159,18 +168,19 @@ elif relation ==1:
 cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
 plt.clim(1.2,1.8)
 plt.xlim([8, 12.5])
-cl.set_label('Source redshift',rotation=270,size=20)
-cl.ax.tick_params(labelsize=15)   #the labe size
+cl.set_label('Source redshift',rotation=270,size=30)
+cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
+cl.ax.tick_params(labelsize=30)   
 plt.xlabel("log$(M_*)/M_{\odot}$",fontsize=35)
 plt.tick_params(labelsize=25)
 if relation ==0:
     plt.ylabel("log$(Reff)$ (kpc)",fontsize=35)
-    plt.title('$M_* - Reff$ relation, CANDLES sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.title('$M_* - Reff$ relation, sample redshift range {0}'.format(z_range), fontsize = 25)
     plt.ylim([-1.5, 2.6])
     plt.savefig('Mstar-Reff_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))
 elif relation ==1:
     plt.ylabel("Sersic n",fontsize=35)
-    plt.title('$M_* -$ Sersic_n relation, CANDLES sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.title('$M_* -$ Sersic_n relation, sample redshift range {0}'.format(z_range), fontsize = 25)
     plt.ylim([0, 8.2])
     plt.savefig('Mstar-Sn_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))  
 plt.show()
@@ -186,44 +196,75 @@ candles_cut = ((Candles_stellar>QSO_stellar.min()) * (Candles_stellar<QSO_stella
 Candles_stellar, Candles_reff, Candles_n  = Candles_stellar[candles_cut], Candles_reff[candles_cut], Candles_n[candles_cut]
 
 plt.figure(figsize=(10,6))
-common_params = dict(#bins=20, 
-                     normed=True,
-                     label=('QSO sample Reff','CANDLES-COSMOS sample Reff'))
-plt.hist([QSO_reff, Candles_reff], **common_params)
+#common_params = dict(#bins=20, 
+#                     normed=True,
+#                     label=('QSO sample Reff','CANDLES-COSMOS sample Reff'))
+#plt.hist([QSO_reff, Candles_reff], **common_params)
+high0, x0, _ =plt.hist(QSO_reff, normed=True, histtype=u'step', label=('QSO sample'), linewidth = 2, color='orange')
+high1, x1, _ =plt.hist(Candles_reff, normed=True, histtype=u'step', label=('CANDLES sample'), linewidth = 2, color='green')
+x0_m = np.median(QSO_reff)
+high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]]
+x1_m = np.median(Candles_reff)
+high_m1 = high1[np.where(abs(x1_m-x1) == abs(x1_m-x1).min())[0][0]]
+plt.plot(np.linspace(0,high_m0)*0+np.median(QSO_reff) , np.linspace(0,high_m0), linewidth = 4,color='orange')
+plt.plot(np.linspace(0,high_m1)*0+np.median(Candles_reff) , np.linspace(0,high_m1), linewidth = 4, color='green')
+plt.text(np.median(QSO_reff)-0.2, high_m0*1.05, '{0}'.format(round(np.median(QSO_reff),3)), color='orange',fontsize=25)
+plt.text(np.median(Candles_reff)-0.2, high_m1*1.05, '{0}'.format(round(np.median(Candles_reff),3)), color='green',fontsize=25)
+plt.xlabel("Reff in kpc",fontsize=15)
+plt.ylabel("Normed histogram",fontsize=15)
+plt.tick_params(labelsize=15)
 plt.legend()
+plt.savefig('Hist_Reff.pdf'.format(z_range[0],z_range[1]))  
 plt.show()
 #Plot step
-fig = plt.figure(figsize=(8,6))
-ax = fig.add_subplot(1,1,1)
-value0 = np.sort(QSO_reff)
-ax.step(value0,[i/float(len(value0)-1) for i in range(len(value0))], label = 'QSO sample Reff')
-value1 = np.sort(Candles_reff)
-ax.step(value1,[i/float(len(value1)-1) for i in range(len(value1))], label = 'CANDLES-COSMOS sample Reff')
-ax.legend(prop={'size': 16})
-plt.tick_params(labelsize=15)
-plt.show() 
-pvalue = stats.ks_2samp(QSO_reff, Candles_reff).pvalue
-print "p-value between QSO_reff and Candles_reff:", round(pvalue,3)
-
-
+#fig = plt.figure(figsize=(8,6))
+#ax = fig.add_subplot(1,1,1)
+#value0 = np.sort(QSO_reff)
+#ax.step(value0,[i/float(len(value0)-1) for i in range(len(value0))], label = 'QSO sample Reff')
+#value1 = np.sort(Candles_reff)
+#ax.step(value1,[i/float(len(value1)-1) for i in range(len(value1))], label = 'CANDLES-COSMOS sample Reff')
+#ax.legend(prop={'size': 16})
+#plt.tick_params(labelsize=15)
+#plt.show() 
+#pvalue = stats.ks_2samp(QSO_reff, Candles_reff).pvalue
+#print "p-value between QSO_reff and Candles_reff:", round(pvalue,3)
+#
+#
 plt.figure(figsize=(10,6))
-common_params = dict(#bins=20, 
-                     normed=True,
-                     label=('QSO sample Sersic_n','CANDLES-COSMOS sample Sersic_n'))
-plt.hist([QSO_n, Candles_n], **common_params)
-plt.legend()
-plt.show()
-#Plot step
-fig = plt.figure(figsize=(8,6))
-ax = fig.add_subplot(1,1,1)
-value0 = np.sort(QSO_n)
-ax.step(value0,[i/float(len(value0)-1) for i in range(len(value0))], label = 'QSO sample Sersic_n')
-value1 = np.sort(Candles_n)
-ax.step(value1,[i/float(len(value1)-1) for i in range(len(value1))], label = 'CANDLES-COSMOS sample Sersic_n')
-ax.legend(prop={'size': 16})
+#common_params = dict(#bins=20, 
+#                     normed=True,
+#                     label=('QSO sample Sersic_n','CANDLES-COSMOS sample Sersic_n'))
+#plt.hist([QSO_n, Candles_n], **common_params)
+#plt.legend()
+#plt.show()
+high0, x0, _ =plt.hist(QSO_n, normed=True, histtype=u'step', label=('QSO sample'), linewidth = 2, color='orange')
+high1, x1, _ =plt.hist(Candles_n, normed=True, histtype=u'step', label=('CANDLES sample'), linewidth = 2, color='green')
+x0_m = np.median(QSO_n)
+high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]-1]
+x1_m = np.median(Candles_n)
+high_m1 = high1[np.where(abs(x1_m-x1) == abs(x1_m-x1).min())[0][0]-1]
+plt.plot(np.linspace(0,high_m0)*0+np.median(QSO_n) , np.linspace(0,high_m0), linewidth = 4,color='orange')
+plt.plot(np.linspace(0,high_m1)*0+np.median(Candles_n) , np.linspace(0,high_m1), linewidth = 4, color='green')
+plt.text(np.median(QSO_n)-0.2, high_m0*1.05, '{0}'.format(round(np.median(QSO_n),3)), color='orange',fontsize=25)
+plt.text(np.median(Candles_n)-0.2, high_m1*1.05, '{0}'.format(round(np.median(Candles_n),3)), color='green',fontsize=25)
+plt.xlabel("QSO sample Sersic_n",fontsize=15)
+plt.ylabel("Normed histogram",fontsize=15)
 plt.tick_params(labelsize=15)
-plt.show() 
-pvalue = stats.ks_2samp(QSO_n, Candles_n).pvalue
-print "p-value between QSO_n, Candles_n:", round(pvalue,3)
+plt.legend()
+plt.savefig('Hist_Sn.pdf'.format(z_range[0],z_range[1]))  
+plt.show()
+
+##Plot step
+#fig = plt.figure(figsize=(8,6))
+#ax = fig.add_subplot(1,1,1)
+#value0 = np.sort(QSO_n)
+#ax.step(value0,[i/float(len(value0)-1) for i in range(len(value0))], label = 'QSO sample Sersic_n')
+#value1 = np.sort(Candles_n)
+#ax.step(value1,[i/float(len(value1)-1) for i in range(len(value1))], label = 'CANDLES-COSMOS sample Sersic_n')
+#ax.legend(prop={'size': 16})
+#plt.tick_params(labelsize=15)
+#plt.show() 
+#pvalue = stats.ks_2samp(QSO_n, Candles_n).pvalue
+#print "p-value between QSO_n, Candles_n:", round(pvalue,3)
 
 
