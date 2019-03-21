@@ -261,14 +261,16 @@ Without taking into account the selection effect, the direct comparison shows th
 \section{discussion}
 \label{sec:dis}
 \subsection{Systematic error}
+
+
 In our analysis, we adopt one stellar population to the overall sample. We note that adopting the private stellar populations for these samples which have both multi-band host magnitude could be more robust in principle. However, considering that the host magnitude in ACS band is faint (host-total flux ratio $< 30\%$), the fidelity of the SED fitting is actually lost. Perhaps the best way to derive the stellar population is to combining our measurements to the ground-based photometry. \textcolor{red}{Describe the ground-based data}. In this paper, we focus on the decomposing of the AGN and carry out a rapid analysis of the \mbh-host relations. The measurements incorporating the ground-based photometry and the comparison with the simulations are presented in our companion paper.
 
 \subsection{Comparison to the inactive galaxies}
-To understand whether AGNs activity affects their galaxies' morphology, we compared the 32 host measurements to the inactive galaxies in CANDLES imaging survey. We select 4401 inactive galaxies in a comparable redshift range ($1.2<z<1.7$) from the CANDLES-COSMOS catalog. Their \sersic\ properties are inferred by \citet{VDwel++2012} by \galfit, and their stellar masses are derived by 3-D-HST spectroscopic survey \citep{Momcheva2016, Brammer2012}.
+We compared the morphology of AGNs host galaxies to the inactive galaxies in CANDLES imaging survey. We select 4401 inactive galaxies in a comparable redshift range ($1.2<z<1.7$) whose \sersic\ properties are inferred by \citet{VDwel++2012} by \galfit, and their stellar masses are derived by 3-D-HST spectroscopic survey \citep{Momcheva2016, Brammer2012}.
 
-\textcolor{blue}{ Description and comments to be written}:
-We show the \smass-\Reff\ relations and \smass-\sersic\ n in Figure~\ref{fig:Mstar-rn}. 
-The comparison the histogram of \Reff\ and \sersic\ n are shown in Figure~\ref{fig:hist_rn}. 
+In Figure~\ref{fig:Mstar-rn}, we plot the \smass\ versus the \Reff\ and \sersic\ index. The color coding is based on the filter flux ratio between WFC3 and ACS. The distribution of \smass-\Reff\ relation show that our AGN hosts concentrate at the high end of the stellar mass, close to the red sequence. 
+
+We also compare the histogram of the inferred \Reff\ and \sersic\ n to the inactive galaxies in Figure~\ref{fig:hist_rn}, where there is no significant difference between their distribution and median value. We perform the Kolmogorov?Smirnov test to interpret the p-value as 0.42 and 0.04 for \Reff\ and $n$, respectively.
 
 %high
 %The distribution shows that our AGN host are located at a higher end of the stellar mass at region where 
@@ -281,7 +283,14 @@ The comparison the histogram of \Reff\ and \sersic\ n are shown in Figure~\ref{f
 
 
 \section*{Acknowledgments}
-We thank the people who discuss with the paper.
+Based in part on observations made with the NASA/ESA Hubble Space Telescope, obtained at the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS 5-26555. These observations are associated with programs
+\#15115.
+
+The authors fully appreciate the discussions with Vardha N. Bennert, Takahiro Morishita.
+
+SB, TT and AJS acknowledge support by the Packard Foundation through a Packard Research fellowship to TT.
+
+This work has made use of lenstronomy \citep{lenstronomy}, Astropy \citep{Astropy}, photutils, TOPCAT \citep{TOPCAT}, Matplotlib \citep{Matplotlib} and standard Python libraries.
 
 \bibliographystyle{apj.bst}
 \bibliography{references}
@@ -379,16 +388,16 @@ $^a$For CID255, 3/6 of the dither WFC3 images are corrupted. We analyze this sam
 \startdata
 %\multicolumn{5}{c}{Sample presented in \citet{Treu+07}}\\
 %\\
-1 & $8584.429$ & $1.000$ & $82.209$ & $35.4\%$ & $0\farcs{}345$ & $1.11$ \\
-2 & $8646.711$ & $0.920$ & $99.102$ & $41.9\%$ & $0\farcs{}298$ & $1.93$ \\
-3 & $8816.947$ & $0.734$ & $76.74$ & $33.0\%$ & $0\farcs{}365$ & $1.10$ \\
-4 & $9304.841$ & $0.383$ & $128.618$ & $54.7\%$ & $0\farcs{}231$ & $2.78$ \\
-5 & $9652.575$ & $0.241$ & $187.498$ & $79.0\%$ & $0\farcs{}116$ & $6.18$ \\
-6 & $9917.101$ & $0.170$ & $100.166$ & $42.3\%$ & $0\farcs{}287$ & $2.07$ \\
-7 & $10018.324$ & $0.148$ & $75.061$ & $32.3\%$ & $0\farcs{}365$ & $1.23$ \\
-8 & $10087.456$ & $0.135$ & $79.835$ & $34.3\%$ & $0\farcs{}358$ & $1.20$ \\
+1 & $8584.429$ & $1.000$ & $82.2$ & $35\%$ & $0\farcs{}345$ & $1.1$ \\
+2 & $8646.711$ & $0.920$ & $99.1$ & $42\%$ & $0\farcs{}298$ & $1.9$ \\
+3 & $8816.947$ & $0.734$ & $76.7$ & $33\%$ & $0\farcs{}365$ & $1.1$ \\
+4 & $9304.841$ & $0.383$ & $128.6$ & $55\%$ & $0\farcs{}231$ & $2.8$ \\
+5 & $9652.575$ & $0.241$ & $187.5$ & $79\%$ & $0\farcs{}116$ & $6.2$ \\
+6 & $9917.101$ & $0.170$ & $100.2$ & $42\%$ & $0\farcs{}287$ & $2.1$ \\
+7 & $10018.324$ & $0.148$ & $75.1$ & $32\%$ & $0\farcs{}365$ & $1.2$ \\
+8 & $10087.456$ & $0.135$ & $79.8$ & $34\%$ & $0\farcs{}358$ & $1.2$ \\
 \hline\\
-Weighted value & & & $97.322\pm28.336$ & $41.5\%\pm11.7\%$& $0\farcs{}309\pm0\farcs{}065$  & $1.86\pm1.26$  \\
+Weighted value & & & $97.322\pm28.336$ & $42\%\pm12\%$& $0\farcs{}309\pm0\farcs{}065$  & $1.9\pm1.3$  \\
 \enddata
 \label{tab:weight_CID1174}
 \tablecomments{
@@ -431,39 +440,41 @@ For this sample, the inflation parameter $\alpha$ calculated by Eq.~\ref{eq:alph
 \colhead{(8)}& \colhead{(9)}&
 \colhead{(10)}& \colhead{(11)}
 }
+\setlength{\tabcolsep}{20pt}
+\renewcommand{\arraystretch}{1.5}
 \startdata 
-CID1174 & $2.307$ & $42\%\pm12\%$ & $0\farcs{}31\pm0\farcs{}07$ & $1.9\pm1.3$ & $21.48\substack{+0.37\\-0.28}$ & $2.496$ & $11\%\pm1\%$ & $23.21\substack{+0.11\\-0.10}$ & $11.13\substack{+0.09\\-0.07}$ &$10.85\substack{+0.14\\-0.12}$\\
-CID1281 & $1.322$ & $49\%\pm14\%$ & $0\farcs{}24\pm0\farcs{}09$ & $3.2\pm1.5$ & $22.88\substack{+0.36\\-0.27}$ & $1.378$ & $19\%\pm8\%$ & $24.83\substack{+0.60\\-0.38}$ & $10.49\substack{+0.09\\-0.07}$ &$10.21\substack{+0.13\\-0.12}$\\
-CID206 & $2.054$ & $35\%\pm24\%$ & $0\farcs{}29\pm0\farcs{}15$ & $3.1\pm2.5$ & $21.82\substack{+1.30\\-0.58}$ & $1.903$ & $8\%\pm2\%$ & $23.67\substack{+0.40\\-0.29}$ & $10.95\substack{+0.32\\-0.14}$ &$10.66\substack{+0.34\\-0.18}$\\
-CID216 & $1.514$ & $94\%\pm5\%$ & $0\farcs{}25\pm0\farcs{}06$ & $6.2\pm1.2$ & $21.51\substack{+0.05\\-0.05}$ & $1.425$ & $35\%\pm2\%$ & $23.45\substack{+0.05\\-0.05}$ & $11.13\substack{+0.02\\-0.02}$ &$10.85\substack{+0.1\\-0.1}$\\
-CID237 & $2.349$ & $30\%\pm6\%$ & $0\farcs{}87\pm0\farcs{}17$ & $4.7\pm1.7$ & $21.28\substack{+0.26\\-0.21}$ & $2.354$ & $3\%\pm2\%$ & $23.72\substack{+1.04\\-0.52}$ & $11.26\substack{+0.07\\-0.05}$ &$10.98\substack{+0.12\\-0.11}$\\
-CID255 & $1.625$ & $19\%\pm5\%$ & $0\farcs{}19\pm0\farcs{}06$ & $4.2\pm1.5$ & $21.61\substack{+0.37\\-0.28}$ & 2.858 & $4\%\pm2\%$ & $22.89\substack{+0.60\\-0.39} $& $11.17\substack{+0.09\\-0.07}$ &$10.89\substack{+0.14\\-0.12}$\\
-CID3242 & $2.751$ & $46\%\pm13\%$ & $0\farcs{}20\pm0\farcs{}16$ & $6.1\pm1.9$ & $21.16\substack{+0.35\\-0.26}$ & $2.596$ & $5\%\pm1\%$ & $23.60\substack{+0.34\\-0.26}$ & $11.25\substack{+0.09\\-0.07}$ &$10.97\substack{+0.13\\-0.12}$\\
-CID3570 & $1.665$ & $77\%\pm2\%$ & $0\farcs{}70\pm0\farcs{}01$ & $0.7\pm0.1$ & $21.16\substack{+0.02\\-0.02}$ & $1.332$ & $86\%\pm2\%$ & $22.97\substack{+0.01\\-0.01}$ & $11.07\substack{+0.01\\-0.01}$ &$10.79\substack{+0.1\\-0.1}$\\
-CID452 & $1.684$ & $75\%\pm4\%$ & $0\farcs{}37\pm0\farcs{}02$ & $1.4\pm0.2$ & $21.18\substack{+0.06\\-0.06}$ & $1.452$ & $38\%\pm1\%$ & $22.73\substack{+0.02\\-0.02}$ & $11.21\substack{+0.02\\-0.02}$ &$10.93\substack{+0.1\\-0.1}$\\
-CID454 & $2.203$ & $36\%\pm3\%$ & $0\farcs{}39\pm0\farcs{}02$ & $0.6\pm0.1$ & $21.20\substack{+0.08\\-0.07}$ & $1.291$ & $9\%\pm1\%$ & $23.35\substack{+0.06\\-0.06}$ & $11.19\substack{+0.02\\-0.02}$ &$10.91\substack{+0.1\\-0.1}$\\
-CID50 & $5.576$ & $17\%\pm9\%$ & $0\farcs{}16\pm0\farcs{}11$ & $3.2\pm2.2$ & $20.93\substack{+0.86\\-0.48}$ & $4.940$ & $5\%\pm3\%$ & $22.50\substack{+1.15\\-0.55}$ & $11.15\substack{+0.22\\-0.12}$ &$10.87\substack{+0.24\\-0.16}$\\
-CID543 & $1.902$ & $31\%\pm10\%$ & $0\farcs{}10\pm0\farcs{}00$ & $0.5\pm0.3$ & $21.99\substack{+0.41\\-0.30}$ & $1.435$ & $5\%\pm2\%$ & $23.77\substack{+0.53\\-0.36}$ & $10.79\substack{+0.1\\-0.07}$ &$10.51\substack{+0.14\\-0.12}$\\
-CID597 & $1.565$ & $42\%\pm17\%$ & $0\farcs{}17\pm0\farcs{}06$ & $1.8\pm0.8$ & $21.87\substack{+0.54\\-0.36}$ & $1.254$ & $12\%\pm1\%$ & $23.56\substack{+0.13\\-0.11}$ & $10.81\substack{+0.14\\-0.09}$ &$10.53\substack{+0.17\\-0.13}$\\
-CID607 & $1.692$ & $44\%\pm18\%$ & $0\farcs{}21\pm0\farcs{}09$ & $3.4\pm1.1$ & $21.19\substack{+0.58\\-0.37}$ & $2.590$ & $5\%\pm2\%$ & $23.57\substack{+0.51\\-0.35}$ & $11.10\substack{+0.14\\-0.09}$ &$10.82\substack{+0.18\\-0.14}$\\
-CID70 & $2.041$ & $20\%\pm5\%$ & $0\farcs{}42\pm0\farcs{}10$ & $3.6\pm1.0$ & $21.86\substack{+0.30\\-0.24}$ & $2.361$ & $2\%\pm1\%$ & $24.63\substack{+0.68\\-0.41}$ & $11.07\substack{+0.08\\-0.06}$ &$10.79\substack{+0.13\\-0.12}$\\
-LID1273 & $1.697$ & $53\%\pm9\%$ & $0\farcs{}30\pm0\farcs{}04$ & $1.2\pm0.5$ & $20.94\substack{+0.21\\-0.18}$ & $2.137$ & $6\%\pm1\%$ & $23.29\substack{+0.15\\-0.13}$ & $11.40\substack{+0.05\\-0.05}$ &$11.12\substack{+0.11\\-0.11}$\\
-LID1538 & $2.362$ & $44\%\pm8\%$ & $0\farcs{}18\pm0\farcs{}04$ & $2.8\pm0.5$ & $21.25\substack{+0.22\\-0.18}$ & $2.173$ & $8\%\pm1\%$ & $23.09\substack{+0.19\\-0.16}$ & $11.21\substack{+0.06\\-0.05}$ &$10.93\substack{+0.11\\-0.11}$\\
-LID360 & $3.918$ & $18\%\pm2\%$ & $0\farcs{}63\pm0\farcs{}02$ & $0.8\pm0.4$ & $21.46\substack{+0.14\\-0.12}$ & $4.914$ & $4\%\pm1\%$ & $23.25\substack{+0.17\\-0.15}$ & $11.17\substack{+0.04\\-0.03}$ &$10.88\substack{+0.11\\-0.1}$\\
-XID2138 & $1.597$ & $39\%\pm6\%$ & $0\farcs{}50\pm0\farcs{}03$ & $1.2\pm0.4$ & $21.87\substack{+0.17\\-0.15}$ & $2.731$ & $5\%\pm1\%$ & $23.90\substack{+0.31\\-0.24}$ & $10.98\substack{+0.04\\-0.04}$ &$10.70\substack{+0.11\\-0.11}$\\
-XID2202 & $3.23$ & $33\%\pm8\%$ & $0\farcs{}10\pm0\farcs{}00$ & $4.0\pm1.0$ & $21.16\substack{+0.30\\-0.24}$ & $3.852$ & $8\%\pm2\%$ & $22.59\substack{+0.29\\-0.23}$ & $11.24\substack{+0.08\\-0.06}$ &$10.96\substack{+0.13\\-0.12}$\\
-XID2396 & $3.669$ & $24\%\pm11\%$ & $0\farcs{}58\pm0\farcs{}09$ & $0.8\pm1.4$ & $21.40\substack{+0.65\\-0.40}$ & $5.346$ & $2\%\pm1\%$ & $23.36\substack{+0.24\\-0.20}$ & $11.20\substack{+0.16\\-0.1}$ &$10.92\substack{+0.19\\-0.14}$\\
-CDFS-1 & $1.358$ & $65\%\pm20\%$ & $0\farcs{}14\pm0\farcs{}07$ & $4.8\pm1.1$ & $22.47\substack{+0.40\\-0.29}$ & ... & ... & ... & $10.80\substack{+0.1\\-0.07}$ &$10.52\substack{+0.14\\-0.12}$\\
-CDFS-229 & $4.329$ & $18\%\pm2\%$ & $0\farcs{}51\pm0\farcs{}03$ & $0.5\pm0.2$ & $21.57\substack{+0.14\\-0.13}$ & ... & ... & ... & $10.98\substack{+0.04\\-0.03}$ &$10.70\substack{+0.11\\-0.1}$\\
-CDFS-321 & $3.998$ & $25\%\pm12\%$ & $0\farcs{}38\pm0\farcs{}12$ & $2.3\pm2.0$ & $20.34\substack{+0.70\\-0.42}$ & ... & ... & ... & $11.61\substack{+0.18\\-0.11}$ &$11.33\substack{+0.2\\-0.15}$\\
-CDFS-724 & $1.355$ & $35\%\pm15\%$ & $0\farcs{}12\pm0\farcs{}03$ & $1.6\pm1.1$ & $23.70\substack{+0.58\\-0.38}$ & ... & ... & ... & $10.14\substack{+0.15\\-0.1}$ &$9.86\substack{+0.18\\-0.14}$\\
-ECDFS-358 & $2.012$ & $56\%\pm14\%$ & $0\farcs{}36\pm0\farcs{}04$ & $1.7\pm0.5$ & $21.34\substack{+0.30\\-0.24}$ & ... & ... & ... & $11.25\substack{+0.08\\-0.06}$ &$10.97\substack{+0.13\\-0.12}$\\
-SXDS-X1136 & $1.937$ & $41\%\pm8\%$ & $0\farcs{}10\pm0\farcs{}00$ & $2.0\pm0.5$ & $21.92\substack{+0.23\\-0.19}$ & ... & ... & ... & $10.84\substack{+0.06\\-0.05}$ &$10.56\substack{+0.12\\-0.11}$\\
-SXDS-X50 & $1.423$ & $41\%\pm9\%$ & $0\farcs{}19\pm0\farcs{}04$ & $1.7\pm0.6$ & $21.99\substack{+0.27\\-0.21}$ & ... & ... & ... & $10.89\substack{+0.07\\-0.05}$ &$10.61\substack{+0.12\\-0.11}$\\
-SXDS-X717 & $1.426$ & $61\%\pm9\%$ & $0\farcs{}26\pm0\farcs{}07$ & $5.6\pm1.4$ & $21.76\substack{+0.18\\-0.15}$ & ... & ... & ... & $10.86\substack{+0.05\\-0.04}$ &$10.58\substack{+0.11\\-0.11}$\\
-SXDS-X735 & $2.203$ & $32\%\pm9\%$ & $0\farcs{}22\pm0\farcs{}06$ & $2.0\pm1.0$ & $20.92\substack{+0.33\\-0.25}$ & ... & ... & ... & $11.28\substack{+0.08\\-0.06}$ &$11.00\substack{+0.13\\-0.12}$\\
-SXDS-X763 & $2.376$ & $6\%\pm4\%$ & $0\farcs{}69\pm0\farcs{}53$ & $2.4\pm0.8$ & $24.13\substack{+1.17\\-0.55}$ & ... & ... & ... & $10.03\substack{+0.29\\-0.14}$ &$9.75\substack{+0.31\\-0.17}$\\
-SXDS-X969 & $1.613$ & $29\%\pm11\%$ & $0\farcs{}11\pm0\farcs{}02$ & $2.1\pm1.1$ & $21.59\substack{+0.52\\-0.35}$ & ... & ... & ... & $11.12\substack{+0.13\\-0.09}$ &$10.83\substack{+0.16\\-0.13}$\\
+CID1174 & $2.307$ & $42\%\pm12\%$ & $0\farcs{}31\pm0\farcs{}07$ & $1.9\pm1.3$ & $21.48\substack{+0.37\\-0.28}$ & $2.496$ & $11\%\pm1\%$ & $23.21\substack{+0.11\\-0.10}$ & $11.13\substack{+0.15\\-0.11}$ &$10.85\substack{+0.18\\-0.15}$\\[3pt]
+CID1281 & $1.322$ & $49\%\pm14\%$ & $0\farcs{}24\pm0\farcs{}09$ & $3.2\pm1.5$ & $22.88\substack{+0.36\\-0.27}$ & $1.378$ & $19\%\pm8\%$ & $24.83\substack{+0.60\\-0.38}$ & $10.49\substack{+0.15\\-0.11}$ &$10.21\substack{+0.18\\-0.15}$\\[3pt]
+CID206 & $2.054$ & $35\%\pm24\%$ & $0\farcs{}29\pm0\farcs{}15$ & $3.1\pm2.5$ & $21.82\substack{+1.30\\-0.58}$ & $1.903$ & $8\%\pm2\%$ & $23.67\substack{+0.40\\-0.29}$ & $10.95\substack{+0.52\\-0.23}$ &$10.66\substack{+0.53\\-0.25}$\\[3pt]
+CID216 & $1.514$ & $94\%\pm5\%$ & $0\farcs{}25\pm0\farcs{}06$ & $6.2\pm1.2$ & $21.51\substack{+0.05\\-0.05}$ & $1.425$ & $35\%\pm2\%$ & $23.45\substack{+0.05\\-0.05}$ & $11.13\substack{+0.03\\-0.03}$ &$10.85\substack{+0.10\\-0.10}$\\[3pt]
+CID237 & $2.349$ & $30\%\pm6\%$ & $0\farcs{}87\pm0\farcs{}17$ & $4.7\pm1.7$ & $21.28\substack{+0.26\\-0.21}$ & $2.354$ & $3\%\pm2\%$ & $23.72\substack{+1.04\\-0.52}$ & $11.26\substack{+0.11\\-0.09}$ &$10.98\substack{+0.14\\-0.13}$\\[3pt]
+CID255 & $1.625$ & $19\%\pm5\%$ & $0\farcs{}19\pm0\farcs{}06$ & $4.2\pm1.5$ & $21.61\substack{+0.37\\-0.28}$ & 2.858 & $4\%\pm2\%$ & $22.89\substack{+0.60\\-0.39} $& $11.17\substack{+0.15\\-0.11}$ &$10.89\substack{+0.18\\-0.15}$\\[3pt]
+CID3242 & $2.751$ & $46\%\pm13\%$ & $0\farcs{}20\pm0\farcs{}16$ & $6.1\pm1.9$ & $21.16\substack{+0.35\\-0.26}$ & $2.596$ & $5\%\pm1\%$ & $23.60\substack{+0.34\\-0.26}$ & $11.25\substack{+0.14\\-0.11}$ &$10.97\substack{+0.17\\-0.15}$\\[3pt]
+CID3570 & $1.665$ & $77\%\pm2\%$ & $0\farcs{}70\pm0\farcs{}01$ & $0.7\pm0.1$ & $21.16\substack{+0.02\\-0.02}$ & $1.332$ & $86\%\pm2\%$ & $22.97\substack{+0.01\\-0.01}$ & $11.07\substack{+0.02\\-0.02}$ &$10.79\substack{+0.10\\-0.10}$\\[3pt]
+CID452 & $1.684$ & $75\%\pm4\%$ & $0\farcs{}37\pm0\farcs{}02$ & $1.4\pm0.2$ & $21.18\substack{+0.06\\-0.06}$ & $1.452$ & $38\%\pm1\%$ & $22.73\substack{+0.02\\-0.02}$ & $11.21\substack{+0.03\\-0.03}$ &$10.93\substack{+0.10\\-0.10}$\\[3pt]
+CID454 & $2.203$ & $36\%\pm3\%$ & $0\farcs{}39\pm0\farcs{}02$ & $0.6\pm0.1$ & $21.20\substack{+0.08\\-0.07}$ & $1.291$ & $9\%\pm1\%$ & $23.35\substack{+0.06\\-0.06}$ & $11.19\substack{+0.04\\-0.04}$ &$10.91\substack{+0.10\\-0.10}$\\[3pt]
+CID50 & $5.576$ & $17\%\pm9\%$ & $0\farcs{}16\pm0\farcs{}11$ & $3.2\pm2.2$ & $20.93\substack{+0.86\\-0.48}$ & $4.940$ & $5\%\pm3\%$ & $22.50\substack{+1.15\\-0.55}$ & $11.15\substack{+0.35\\-0.19}$ &$10.87\substack{+0.36\\-0.21}$\\[3pt]
+CID543 & $1.902$ & $31\%\pm10\%$ & $0\farcs{}10\pm0\farcs{}00$ & $0.5\pm0.3$ & $21.99\substack{+0.41\\-0.30}$ & $1.435$ & $5\%\pm2\%$ & $23.77\substack{+0.53\\-0.36}$ & $10.79\substack{+0.16\\-0.12}$ &$10.51\substack{+0.19\\-0.15}$\\[3pt]
+CID597 & $1.565$ & $42\%\pm17\%$ & $0\farcs{}17\pm0\farcs{}06$ & $1.8\pm0.8$ & $21.87\substack{+0.54\\-0.36}$ & $1.254$ & $12\%\pm1\%$ & $23.56\substack{+0.13\\-0.11}$ & $10.81\substack{+0.22\\-0.15}$ &$10.53\substack{+0.24\\-0.18}$\\[3pt]
+CID607 & $1.692$ & $44\%\pm18\%$ & $0\farcs{}21\pm0\farcs{}09$ & $3.4\pm1.1$ & $21.19\substack{+0.58\\-0.37}$ & $2.590$ & $5\%\pm2\%$ & $23.57\substack{+0.51\\-0.35}$ & $11.10\substack{+0.23\\-0.15}$ &$10.82\substack{+0.25\\-0.18}$\\[3pt]
+CID70 & $2.041$ & $20\%\pm5\%$ & $0\farcs{}42\pm0\farcs{}10$ & $3.6\pm1.0$ & $21.86\substack{+0.30\\-0.24}$ & $2.361$ & $2\%\pm1\%$ & $24.63\substack{+0.68\\-0.41}$ & $11.07\substack{+0.12\\-0.10}$ &$10.79\substack{+0.16\\-0.14}$\\[3pt]
+LID1273 & $1.697$ & $53\%\pm9\%$ & $0\farcs{}30\pm0\farcs{}04$ & $1.2\pm0.5$ & $20.94\substack{+0.21\\-0.18}$ & $2.137$ & $6\%\pm1\%$ & $23.29\substack{+0.15\\-0.13}$ & $11.40\substack{+0.09\\-0.07}$ &$11.12\substack{+0.13\\-0.12}$\\[3pt]
+LID1538 & $2.362$ & $44\%\pm8\%$ & $0\farcs{}18\pm0\farcs{}04$ & $2.8\pm0.5$ & $21.25\substack{+0.22\\-0.18}$ & $2.173$ & $8\%\pm1\%$ & $23.09\substack{+0.19\\-0.16}$ & $11.21\substack{+0.09\\-0.08}$ &$10.93\substack{+0.13\\-0.12}$\\[3pt]
+LID360 & $3.918$ & $18\%\pm2\%$ & $0\farcs{}63\pm0\farcs{}02$ & $0.8\pm0.4$ & $21.46\substack{+0.14\\-0.12}$ & $4.914$ & $4\%\pm1\%$ & $23.25\substack{+0.17\\-0.15}$ & $11.17\substack{+0.06\\-0.05}$ &$10.88\substack{+0.11\\-0.11}$\\[3pt]
+XID2138 & $1.597$ & $39\%\pm6\%$ & $0\farcs{}50\pm0\farcs{}03$ & $1.2\pm0.4$ & $21.87\substack{+0.17\\-0.15}$ & $2.731$ & $5\%\pm1\%$ & $23.90\substack{+0.31\\-0.24}$ & $10.98\substack{+0.07\\-0.06}$ &$10.70\substack{+0.12\\-0.12}$\\[3pt]
+XID2202 & $3.23$ & $33\%\pm8\%$ & $0\farcs{}10\pm0\farcs{}00$ & $4.0\pm1.0$ & $21.16\substack{+0.30\\-0.24}$ & $3.852$ & $8\%\pm2\%$ & $22.59\substack{+0.29\\-0.23}$ & $11.24\substack{+0.12\\-0.10}$ &$10.96\substack{+0.16\\-0.14}$\\[3pt]
+XID2396 & $3.669$ & $24\%\pm11\%$ & $0\farcs{}58\pm0\farcs{}09$ & $0.8\pm1.4$ & $21.40\substack{+0.65\\-0.40}$ & $5.346$ & $2\%\pm1\%$ & $23.36\substack{+0.24\\-0.20}$ & $11.20\substack{+0.26\\-0.16}$ &$10.92\substack{+0.28\\-0.19}$\\[3pt]
+CDFS-1 & $1.358$ & $65\%\pm20\%$ & $0\farcs{}14\pm0\farcs{}07$ & $4.8\pm1.1$ & $22.47\substack{+0.40\\-0.29}$ & ... & ... & ... & $10.80\substack{+0.16\\-0.12}$ &$10.52\substack{+0.19\\-0.15}$\\[3pt]
+CDFS-229 & $4.329$ & $18\%\pm2\%$ & $0\farcs{}51\pm0\farcs{}03$ & $0.5\pm0.2$ & $21.57\substack{+0.14\\-0.13}$ & ... & ... & ... & $10.98\substack{+0.06\\-0.05}$ &$10.70\substack{+0.12\\-0.11}$\\[3pt]
+CDFS-321 & $3.998$ & $25\%\pm12\%$ & $0\farcs{}38\pm0\farcs{}12$ & $2.3\pm2.0$ & $20.34\substack{+0.70\\-0.42}$ & ... & ... & ... & $11.61\substack{+0.28\\-0.17}$ &$11.33\substack{+0.30\\-0.20}$\\[3pt]
+CDFS-724 & $1.355$ & $35\%\pm15\%$ & $0\farcs{}12\pm0\farcs{}03$ & $1.6\pm1.1$ & $23.70\substack{+0.58\\-0.38}$ & ... & ... & ... & $10.14\substack{+0.23\\-0.15}$ &$9.86\substack{+0.25\\-0.18}$\\[3pt]
+ECDFS-358 & $2.012$ & $56\%\pm14\%$ & $0\farcs{}36\pm0\farcs{}04$ & $1.7\pm0.5$ & $21.34\substack{+0.30\\-0.24}$ & ... & ... & ... & $11.25\substack{+0.12\\-0.10}$ &$10.97\substack{+0.16\\-0.14}$\\[3pt]
+SXDS-X1136 & $1.937$ & $41\%\pm8\%$ & $0\farcs{}10\pm0\farcs{}00$ & $2.0\pm0.5$ & $21.92\substack{+0.23\\-0.19}$ & ... & ... & ... & $10.84\substack{+0.09\\-0.08}$ &$10.56\substack{+0.14\\-0.13}$\\[3pt]
+SXDS-X50 & $1.423$ & $41\%\pm9\%$ & $0\farcs{}19\pm0\farcs{}04$ & $1.7\pm0.6$ & $21.99\substack{+0.27\\-0.21}$ & ... & ... & ... & $10.89\substack{+0.11\\-0.09}$ &$10.61\substack{+0.15\\-0.13}$\\[3pt]
+SXDS-X717 & $1.426$ & $61\%\pm9\%$ & $0\farcs{}26\pm0\farcs{}07$ & $5.6\pm1.4$ & $21.76\substack{+0.18\\-0.15}$ & ... & ... & ... & $10.86\substack{+0.07\\-0.06}$ &$10.58\substack{+0.12\\-0.12}$\\[3pt]
+SXDS-X735 & $2.203$ & $32\%\pm9\%$ & $0\farcs{}22\pm0\farcs{}06$ & $2.0\pm1.0$ & $20.92\substack{+0.33\\-0.25}$ & ... & ... & ... & $11.28\substack{+0.13\\-0.10}$ &$11.00\substack{+0.17\\-0.14}$\\[3pt]
+SXDS-X763 & $2.376$ & $6\%\pm4\%$ & $0\farcs{}69\pm0\farcs{}53$ & $2.4\pm0.8$ & $24.13\substack{+1.17\\-0.55}$ & ... & ... & ... & $10.03\substack{+0.47\\-0.22}$ &$9.75\substack{+0.48\\-0.24}$\\[3pt]
+SXDS-X969 & $1.613$ & $29\%\pm11\%$ & $0\farcs{}11\pm0\farcs{}02$ & $2.1\pm1.1$ & $21.59\substack{+0.52\\-0.35}$ & ... & ... & ... & $11.12\substack{+0.21\\-0.14}$ &$10.83\substack{+0.23\\-0.17}$\\[3pt]
 \enddata
 \label{tab:result_sersic}
 \tablecomments{
@@ -655,7 +666,7 @@ Illustration of the relations between the inferred host \sersic\ parameters.}
 \includegraphics[height=0.35\textwidth]{fig/hist_compare.pdf}
 }
 \caption{\label{fig:hist_compare} 
-Comparison of the histogram of the inferred host flux ratio, based on the different amount of the top-ranked PSFs.}
+Comparison of the histogram of the inferred host flux ratio, based on the different volum of the top-ranked PSFs.}
 \end{figure*} 
 
 
@@ -666,7 +677,8 @@ Comparison of the histogram of the inferred host flux ratio, based on the differ
 {\includegraphics[width=0.5\textwidth]{fig/MBH-L_ev.pdf}}\\
 \end{tabular}
 \caption{\label{fig:ML} 
-Observed \mbh-\lhost\ relation (left), evolution-corrected relation (right).}
+Illustration of observed (left) and evolution-corrected (right) correlations between \mbh-\lhost, with local linear relation indicated.  The redshift are color-coded, for distant and intermediate AGNs.
+}
 \end{figure*} 
 
 \begin{figure}
@@ -675,7 +687,7 @@ Observed \mbh-\lhost\ relation (left), evolution-corrected relation (right).}
 \includegraphics[height=0.4\textwidth]{fig/MBH-L-vz.pdf}
 }
 \caption{\label{fig:ML-vz} 
-The offset as a function of redshift.}
+Illustration of the offset in log\mbh\ (VS. $L_R$) as a function of redshift. The orange band is the intrinsic scatter of local linear relation.}
 \end{figure} 
 
 
@@ -685,7 +697,7 @@ The offset as a function of redshift.}
 \includegraphics[height=0.4\textwidth]{fig/MBH-Mstar.pdf}
 }
 \caption{\label{fig:MM} 
-Comparison of the histogram of the inferred host flux ratio, based on the different amount of the top-ranked PSFs.}
+Similar to the Figure~\ref{fig:ML}, but the comparison of the \mbh-\smass\ relations.}
 \end{figure} 
 
 \begin{figure*}
@@ -695,7 +707,7 @@ Comparison of the histogram of the inferred host flux ratio, based on the differ
 {\includegraphics[width=0.5\textwidth]{fig/MBH-Mstar-vz_style0.pdf}}\\
 \end{tabular}
 \caption{\label{fig:MM-vz} 
-The inference MM-z relation}
+Left: illustration of the offset in log\mbh\ (VS. \smass) as a function of redshift. Right: redshift evolution of the \mbh/\smass.  }
 \end{figure*} 
 
 \begin{figure*}
@@ -706,7 +718,7 @@ The inference MM-z relation}
 {\includegraphics[ height=0.45\textwidth]{fig/Mstar-Sn.pdf}}\\
 \end{tabular}
 \caption{\label{fig:Mstar-rn} 
-The comparison of the stellar mass - host \sersic\ parameters between our 32 AGNs to the 4400 CANDLES sample.
+The comparison of the galaxy properties between our 32 AGNs' hosts to the 4401 CANDLES inactive sample (circles). The color coding is based on the filter flux ratio between WFC3 and ACS. For CANDLES sample, the WFC3/F125W flux is taken. The black squares are the AGN samples with only WFC3 band observation.
 }
 \end{figure*} 
 
@@ -715,7 +727,7 @@ The comparison of the stellar mass - host \sersic\ parameters between our 32 AGN
 {\includegraphics[ height=0.35\textwidth]{fig/Hist_Reff.pdf}}\\
 {\includegraphics[ height=0.35\textwidth]{fig/Hist_Sn.pdf}}
 \caption{\label{fig:hist_rn} 
-The comparison of the histogram of the \sersic\ parameters distribution}
+The comparison of the histogram of the \Reff\ and \sersic\ n, with median value indicated.}
 \end{figure*} 
 
 
