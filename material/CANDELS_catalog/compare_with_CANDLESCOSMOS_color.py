@@ -136,19 +136,20 @@ dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
 da=1/(1+zs)*c*vec_EE(zs)/h0   #in Mpc
 ID_Reff_kpc = da * 10 **3 * (Reffs/3600./180.*np.pi)
 
+from load_result import load_host_p
 
-from dmag import k_corr_R
-from filter_info import filt_info
-dm_k_R = []
-for i in range(len(zs)):
-    dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '1Gyrs'))
-dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
-
-host_Mags = mags -5*(np.log10(dl)-1) + dm_k_R # This is in AB system
-host_Mags = host_Mags - 0.21  # Transfer to Vega system
-host_LR = 10 ** (0.4*(4.61-host_Mags))
-Mstar = np.log10(host_LR * 0.54 * 0.684 * 1.4191)  
-
+#from dmag import k_corr_R
+#from filter_info import filt_info
+#dm_k_R = []
+#for i in range(len(zs)):
+#    dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '1Gyrs'))
+#dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
+#
+#host_Mags = mags -5*(np.log10(dl)-1) + dm_k_R # This is in AB system
+#host_Mags = host_Mags - 0.21  # Transfer to Vega system
+#host_LR = 10 ** (0.4*(4.43-host_Mags))
+#Mstar = np.log10(host_LR * 0.54 * 0.684 * 1.4191)  
+Mstar = load_host_p(ID, folder = '../../')[1]
 host_flux_WFC3 = np.array(load_flux(ID, folder = '../../', flt = 'WFC3'))[:,0]
 host_flux_ACS = []
 for i in range(len(ID)):
