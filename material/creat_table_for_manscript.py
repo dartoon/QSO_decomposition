@@ -252,21 +252,29 @@ from load_result import load_host_p, load_MBH
 #    print ID, round(result[0],2), round(result[1],2)
 def roots(a,b):
     return np.sqrt(a**2+b**2)
-
-print "uncertainty for the LR:"
+lumi_s = load_host_p(tab_list, dm = 0, temp='5Gyrs')[0] #!!! This dm is important 
+print "LR:"
 for i in range(len(tab_list)):
-    if IR_result[i]=='xxx':
-        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
-    if UV_result[i]=='xxx':
-        UV_result[i] = [np.asarray(UV_result[0][j])*0-99 for j in range(len(UV_result[0]))]
     print(tab_list[i], 
-    "+{0}-{1}".format(round(roots(IR_result[i][6][0],0.05)/4,2), round(roots(IR_result[i][6][1],0.05)/4,2)))
+    "{0}".format(round(lumi_s[i],2)),  "+{0}-{1}".format(round(roots(IR_result[i][6][0],0.05)/2.5,2), round(roots(IR_result[i][6][1],0.05)/2.5,2)))
 
-print "uncertainty for the M*:"
-for i in range(len(tab_list)):
-    if IR_result[i]=='xxx':
-        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
-    if UV_result[i]=='xxx':
-        UV_result[i] = [np.asarray(UV_result[0][j])*0-99 for j in range(len(UV_result[0]))]
-    print(tab_list[i],
-    "+{0}-{1}".format(round(roots(IR_result[i][6][0]/4,0.1),2), round(roots(IR_result[i][6][1]/4,0.1),2)))
+#Mstar = load_host_p(tab_list)[1]
+#print "Mstar:"
+#for i in range(len(tab_list)):
+#    print(tab_list[i], 
+#    "{0}".format(round(Mstar[i],2)),  "+{0}-{1}".format(round(roots(IR_result[i][6][0]/2.5,0.1),2), round(roots(IR_result[i][6][1]/2.5,0.1),2)))
+
+##%%
+#print "uncertainty for the LR:"
+#for i in range(len(tab_list)):
+#    if IR_result[i]=='xxx':
+#        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+#    print(tab_list[i], 
+#    "+{0}-{1}".format(round(roots(IR_result[i][6][0],0.05)/2.5,2), round(roots(IR_result[i][6][1],0.05)/2.5,2)))
+#
+#print "uncertainty for the M*:"
+#for i in range(len(tab_list)):
+#    if IR_result[i]=='xxx':
+#        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+#    print(tab_list[i],
+#    "+{0}-{1}".format(round(roots(IR_result[i][6][0]/2.5,0.1),2), round(roots(IR_result[i][6][1]/2.5,0.1),2)))
