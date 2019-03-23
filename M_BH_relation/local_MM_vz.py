@@ -30,6 +30,34 @@ hloc[:,1]= np.log10(Haring04[:,0] * 10 ** Haring04[:,1])    #LgMstar
 hloc[:,2]= 0.18  # Mention in the Haring04 paper, note in fig 2
 hloc[:,3]= np.log10(Haring04[:,2] * 10 ** Haring04[:,5])    #LgMBH
 hloc[:,4]= (abs(np.log10(Haring04[:,2] + Haring04[:,3]) - np.log10(Haring04[:,2])) + abs(np.log10(Haring04[:,2] - Haring04[:,4]) - np.log10(Haring04[:,4])))/2
+
+from scipy import integrate
+from scipy.optimize import fsolve
+def Ez(z,om):
+    '''
+    Actually, this is the reverse of the E(z)
+    '''
+    w = -1
+    return   1/np.sqrt(om*(1+z)**3+(1-om)*(1+z)**(3*(1+w)))   
+def r(z,om):
+    return integrate.quad(Ez, 0, z, args=(om))[0]
+vec_r=np.vectorize(r)
+def dl(z,om=0.3,h0=70):
+    """
+    Calculate the luminosity distance.
+    """
+    c=299790.
+    dl_distance = (1+z) * c/h0 * vec_r(z,om=om)
+    return dl_distance
+#print dl(np.array([1,2]))
+def solve_z(lum_dis, om=0.3, h0=70):
+    func = lambda z : (lum_dis-dl(z,om=om, h0=h0))
+    zs = fsolve(func,2)
+    return zs[0]
+Mpc = np.array([16.1, 15.0, 10.6, 18.4, 31.6, 106.0, 58.7, 15.5, 24.1, 29.2, 0.76, 0.81, 11.4, 22.9, 9.7, 20.9, 11.2, 11.6, 23.0, 26.2, 15.3, 15.7, 15.0, 9.8, 16.8, 11.7, 25.9, 23.0, 13.2, 0.1])
+solve_z = np.vectorize(solve_z)  #Calculate the redshift using the distance
+zs =  solve_z(Mpc)
+hloc[:,-1] = zs
 # +  np.log10(Haring04[:,4] * 10 ** Haring04[:,5]))/2 #Sigma LgMBH
 #plt.errorbar(hloc[:,1],hloc[:,3], xerr=hloc[:,2] ,yerr=hloc[:,4],fmt='.',color='black',markersize=15)
 #plt.plot(hloc[:,1],hloc[:,3], '.',color='black',markersize=15)
@@ -82,14 +110,14 @@ m_mid, b_mid, sint_mid =np.percentile(samples, 50,axis=0)
 ######################
 style = input("0 as SS13, 1 as delta(logMBH):\n")
 if style == 0:
-    plt.plot(np.log10(np.random.uniform(0,0.001,len(hloc))+1),
+    plt.plot(np.log10(hloc[:,0]+1),
              10**(hloc[:,3]-hloc[:,1]), '.',color='black',markersize=10)
     
     plt.plot(np.log10(bloc[:,0]+1),
                  10**(bloc[:,3]-bloc[:,1]),'.',color='gray',markersize=10)
 elif style ==1:
     xl = np.linspace(-0.9, 13, 100)
-    plt.errorbar(np.log10(np.random.uniform(0,0.001,len(hloc))+1),
+    plt.errorbar(np.log10(hloc[:,0]+1),
                  hloc[:,3]-(m_mid*hloc[:,1]+b_mid),yerr=(hloc[:,2]**2 + hloc[:,4]**2)**0.5 ,fmt='.',color='black',markersize=10)
     plt.errorbar(np.log10(bloc[:,0]+1),
                  bloc[:,3]-(m_mid*bloc[:,1]+b_mid),yerr=(bloc[:,2]**2 + bloc[:,4]**2)**0.5 ,fmt='.',color='gray',markersize=10)
