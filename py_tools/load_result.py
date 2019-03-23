@@ -226,20 +226,21 @@ def EE(z):
       return quad(EZ, 0, z , args=(om))[0]
 vec_EE=np.vectorize(EE)
 
-def load_host_p(ID, temp='1Gyr', dm = 0):
+def load_host_p(ID, folder='../', temp='1Gyrs', dm = 0):
     zs = np.asarray(load_zs(ID))
-    mags = np.array(load_mag(ID, folder = '../')[0])
+    mags = np.array(load_mag(ID, folder = folder)[0])
     from dmag import k_corr_R
     from filter_info import filt_info
     dm_k_R = []
     for i in range(len(zs)):
-        dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '1Gyrs'))
+        dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = temp))
     dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
     dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
     host_Mags = mags -5*(np.log10(dl)-1) + dm_k_R + dm*pass_dmag(zs) # This is in AB system
-    host_Mags = host_Mags - 0.21  # Transfer to Vega system
-    host_LR = 10 ** (0.4*(4.61-host_Mags))
-    Mstar = np.log10(host_LR * 0.54 * 0.684 * 1.4191)  
+    host_LR = 10 ** (0.4*(4.61-host_Mags)) #LR in AB
+    host_Mags_Vega = host_Mags - 0.21  # Transfer to Vega system
+    host_LR_Vega = 10 ** (0.4*(4.43-host_Mags_Vega)) #LR in Vega
+    Mstar = np.log10(host_LR_Vega * 0.54 * 0.684 * 1.4191)  
     return np.log10(host_LR), Mstar
 
 def load_MBH(ID, MB_ID, if_reportHb=0):
