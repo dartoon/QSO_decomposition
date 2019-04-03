@@ -252,7 +252,7 @@ from load_result import load_host_p, load_MBH
 #    print ID, round(result[0],2), round(result[1],2)
 def roots(a,b):
     return np.sqrt(a**2+b**2)
-lumi_s = load_host_p(tab_list, dm = 0, temp='5Gyrs')[0] #!!! This dm is important 
+lumi_s = load_host_p(tab_list, dm = 0, temp='1Gyrs')[0] #!!! This dm is important 
 print "LR:"
 for i in range(len(tab_list)):
     print(tab_list[i], 
@@ -278,3 +278,34 @@ for i in range(len(tab_list)):
 #        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
 #    print(tab_list[i],
 #    "+{0}-{1}".format(round(roots(IR_result[i][6][0]/2.5,0.1),2), round(roots(IR_result[i][6][1]/2.5,0.1),2)))
+    
+#%% To creat the tab for Aklant
+LR, Mstar, M_R =  load_host_p(tab_list)
+MBH = load_MBH(tab_list,tab_sub_list)
+samples_Lbol = np.loadtxt("../M_BH_relation/fmos_BH_Lbol")
+MB_Lbol_info = []
+CDFS_Lbol = {'CDFS-1': 45.89,'CDFS-229': 45.68, 'CDFS-724': 44.95}
+for tar_in in range(len(tab_list)):       
+    t_name = tab_list[tar_in]
+    ser = ID_ser_dic[t_name]
+    if ser!=-99 and float(samples_Lbol[ser, 1]) != 0:
+        logLbol = float(samples_Lbol[ser, 1])
+        MB_Lbol_info.append(logLbol)
+    elif ser==-99 and t_name in CDFS_Lbol.keys():
+        logLbol = float(CDFS_Lbol[t_name])
+        MB_Lbol_info.append(logLbol)    
+        print t_name, MB_Lbol_info[-1]
+    if ser!=-99 and float(samples_Lbol[ser, 3]) != 0:
+        logLbol = float(samples_Lbol[ser, 3])
+        print "use Hb for", tab_list[tar_in], logLbol, MB_Lbol_info[-1]
+        MB_Lbol_info[-1] = (logLbol + MB_Lbol_info[-1])/2
+        
+print "Table for Aklant=========="
+for i in range(len(tab_list)):
+    print tab_list[i], round(MB_Lbol_info[i],2),round(MBH[i],2), round(Mstar[i],2), round(M_R[i],3)
+  
+print  "Calculate the Eddington ratio:"
+logLedd = 38 + np.log10(1.2) + MBH
+logEdd = MB_Lbol_info - logLedd
+for i in range(len(tab_list)):
+    print tab_list[i], logEdd[i]
