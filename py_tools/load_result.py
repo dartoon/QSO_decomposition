@@ -227,6 +227,10 @@ def EE(z):
 vec_EE=np.vectorize(EE)
 
 def load_host_p(ID, folder='../', temp='1Gyrs', dm = 0):
+    '''
+    Return the host properties including
+    1. host LR, 2. M_star, 3. Host Rest frame R absolute mags
+    '''
     zs = np.asarray(load_zs(ID))
     mags = np.array(load_mag(ID, folder = folder)[0])
     from dmag import k_corr_R
@@ -241,15 +245,15 @@ def load_host_p(ID, folder='../', temp='1Gyrs', dm = 0):
     host_Mags_Vega = host_Mags - 0.21  # Transfer to Vega system
     host_LR_Vega = 10 ** (0.4*(4.43-host_Mags_Vega)) #LR in Vega
     Mstar = np.log10(host_LR_Vega * 0.54 * 0.684 * 1.4191)  
-    return np.log10(host_LR), Mstar
+    return np.log10(host_LR), Mstar, host_Mags
 
-def load_MBH(ID, MB_ID, if_reportHb=0):
+def load_MBH(ID, MB_ID, if_reportHb=0,folder = '..'):
     #ID change:
     #XID2202 to LID1622
     #XID2138 to LID1820
     #XID2396 to LID1878
     #CDFS321 to ECDFS321
-    f = open("../M_BH_relation/fmos_MBH_table","r")
+    f = open(folder+"/M_BH_relation/fmos_MBH_table","r")
     with f as g:
         lines = g.readlines()
 #    porp_list = lines[0].replace('#','').split(' ')
