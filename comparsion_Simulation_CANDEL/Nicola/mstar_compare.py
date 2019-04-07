@@ -151,8 +151,8 @@ vmax = norm_number_dens.max()
 vmin = norm_number_dens[norm_number_dens!=norm_number_dens.min()].min()
 my_cmap = copy.copy(matplotlib.cm.get_cmap('YlOrBr')) # copy the default cmap
 my_cmap.set_under('white')
-#plt.scatter(prop_host, prop_mbh, c=norm_number_dens, s = 390, vmin = vmin, vmax = vmax,
-#            marker='s', alpha=0.9, edgecolors='none', cmap = my_cmap)  # plot the Nicola
+plt.scatter(prop_host, prop_mbh, c=norm_number_dens, s = 390, vmin = vmin, vmax = vmax,
+            marker='s', alpha=0.9, edgecolors='none', cmap = my_cmap)  # plot the Nicola
 #cl=plt.colorbar()
 #cl.set_label('Value in Col. 4', size=20)
 #plt.scatter(Mstar[bools_d], MBs[bools_d],c=goods[bools_d],s=280,marker="s",zorder=100, vmin=0.8, vmax=3, edgecolors='k')
