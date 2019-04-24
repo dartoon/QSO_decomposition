@@ -83,6 +83,8 @@ result = op.minimize(nll, [1.036, -1.947, 0.3], args=(x, y, yerr))
 m_ml, b_ml,sint_ml= result["x"]
 #print m_ml, b_ml, sint_ml, "ka=",lnlike(theta=[m_ml, b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
 
+#m_ml, b_ml = 1.12, -4.12  # Park's first use
+
 xp = np.array([5, 13])
 #plt.plot(xp, m_ml*xp+b_ml, 'r-')
 def lnprior(theta):

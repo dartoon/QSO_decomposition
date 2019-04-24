@@ -37,6 +37,12 @@ ss = np.loadtxt(f0)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
 #if inp_SS13 ==1:
 #    plt.scatter(ss[:,1],ss[:,2],c=ss[:,0],marker="^",s=180,zorder=100,vmin=0.5, vmax=2, edgecolors='white')
 
+f1 ='data/B11_MM.txt'
+b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
+#if inp_b11 ==1:
+#    plt.scatter(b11[:,1],b11[:,2],c=b11[:,0],marker="^",s=180,zorder=100,vmin=0.3, vmax=2, edgecolors='white')
+
+
 #%%
 #==============================================================================
 # My new inference
@@ -59,37 +65,41 @@ Mstar = load_host_p(ID)[1]
 MBs = load_MBH(ID,MB_ID)
 #plt.scatter(Mstar,MBs,c=zs,s=880,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
 
-#plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_mid*lumi_s[MBs!=-99]+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
+#plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
 if style ==0:
     plt.scatter(np.log10(1+ss[:,0]), 10** (ss[:,2]-ss[:,1]), c='darkseagreen',
                 s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
+    
+    plt.scatter(np.log10(1+b11[:,0]), 10** (b11[:,2]-b11[:,1]), c='darkseagreen',
+                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='black')    
+    
     plt.scatter(np.log10(1+zs[MBs!=-99]), 10**( MBs[MBs!=-99]- Mstar[MBs!=-99]),c='tomato',
                 s=880,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
 if style ==1:
-    plt.scatter(np.log10(1+ss[:,0]),ss[:,2]-(m_mid*ss[:,1]+b_mid), c='darkseagreen',
+    plt.scatter(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml), c='darkseagreen',
                 s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
-    plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_mid*Mstar[MBs!=-99]+b_mid),c='tomato',
-                s=880,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
     
-
-#plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_mid*lumi_s[MBs!=-99]+b_mid),c='tomato',
-#            s=880,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
-
-
-if style ==1:
+    plt.scatter(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml), c='darkseagreen',
+                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='black')    
+    
+    plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),c='tomato',
+                s=880,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+##plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml),c='tomato',
+##            s=880,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+#
+#
+#if style ==1:
     #####fit the evolution##########
     ################################
-    #z_loc,y_loc,err_loc=0,0,0
-    z_ss, y_ss = ss[:,0], ss[:,2]-(m_mid*ss[:,1]+b_mid)
-    z_cosmos, y_cosmos = zs[MBs!=-99], MBs[MBs!=-99]-(m_mid*Mstar[MBs!=-99]+b_mid)
+    z_ss, y_ss = ss[:,0], ss[:,2]-(m_ml*ss[:,1]+b_ml)
+    
+    z_b11, y_b11 = b11[:,0], b11[:,2]-(m_ml*b11[:,1]+b_ml)
+    
+    z_cosmos, y_cosmos = zs[MBs!=-99], MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml)
                                   
-    z_1131=0.65
     
-    z=np.concatenate((z_ss, z_cosmos),axis=0)
-    y=np.concatenate((y_ss, y_cosmos),axis=0)
-    
-    #z=z_cosmos #np.concatenate((z_pk,z_Mg,z_H,z_C,np.array([z_0435,z_1131]), z_cosmos),axis=0)
-    #y=y_cosmos #np.concatenate((y_pk,y_Mg,y_H,y_C,np.array([y_0435,y_1131]), y_cosmos),axis=0)
+    z=np.concatenate((z_ss, z_b11, z_cosmos),axis=0)
+    y=np.concatenate((y_ss, y_b11, y_cosmos),axis=0)
     
     #### fit with emcee ###############
     x=np.log10(1+z)
@@ -129,10 +139,10 @@ if style ==1:
     sampler.run_mcmc(pos, 500)
     samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
     
-    b_mid, sint_mid =np.percentile(samples, 50,axis=0)
-    #print "lnlike=",lnlike(theta=[b_mid, sint_mid],x=x, y=y, yerr=yerr)
+    b_ml, sint_mid =np.percentile(samples, 50,axis=0)
+    #print "lnlike=",lnlike(theta=[b_ml, sint_mid],x=x, y=y, yerr=yerr)
     xl = np.linspace(0, 5, 100)
-    plt.plot(xl, xl*0+xl*b_mid, color="red", linewidth=4.0,zorder=0)
+    plt.plot(xl, xl*0+xl*b_ml, color="red", linewidth=4.0,zorder=0)
     
     def find_n(array,value):           #get the corresponding b for a given m 
         idx= (np.abs(array-value)).argmin()
@@ -144,9 +154,9 @@ if style ==1:
         b=np.percentile(samples,posi,axis=0)[0]    
         #print b
         plt.plot(xl, xl*0+xl*b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
-    value=round(b_mid,2)
+    value=round(b_ml,2)
     #####################
-    value,sig=round(b_mid,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
+    value,sig=round(b_ml,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
     print value,sig
     plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
     #plt.text(0.15, -1.75, "$M_{BH} $VS$ L_{host}\propto (1+z)^{%s\pm%s}$"%(value,sig),color='blue',fontsize=25)

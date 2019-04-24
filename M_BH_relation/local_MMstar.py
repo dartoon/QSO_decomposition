@@ -55,6 +55,8 @@ result = op.minimize(nll, [0.93027905, -1.95536508, 0.35], args=(x, y, yerr))
 m_ml, b_ml,sint_ml= result["x"]
 #print m_ml, b_ml, sint_ml, "ka=",lnlike(theta=[m_ml, b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
 
+#m_ml, b_ml = 1.12, -4.12  # Park's first use
+
 xp = np.array([5, 13])
 #plt.plot(xp, m_ml*xp+b_ml, 'r-')
 def lnprior(theta):
@@ -75,7 +77,7 @@ sampler.run_mcmc(pos, 1000)
 samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
 xl = np.linspace(5, 13, 100)
 m, b, sint =np.percentile(samples, 50,axis=0)
-plt.plot(xl, m*xl+b, color="k", linewidth=4.0,zorder=-0.5)
+plt.plot(xl, m_ml*xl+b_ml, color="k", linewidth=4.0,zorder=-0.5)
 
 def find_n(array,value):           #get the corresponding b for a given m 
     idx= (np.abs(array-value)).argmin()
@@ -88,4 +90,8 @@ for i in range(100):
     b=samples[:,1][samples[:,0]==find_n(samples[:,0],m)][0]   #may find out many numbers
     plt.plot(xl, m*xl+b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
 
-plt.text(9.3, 6.24, "log$(M_{BH}/10^{7}M_{\odot})$=%s+%slog$(M_*/10^{10}M_{\odot})$"%(round(b+m*10-7,2),round(m,2)),color='blue',fontsize=25)
+plt.text(9.3, 6.24, "log$(M_{BH}/10^{7}M_{\odot})$=%s+%slog$(M_*/10^{10}M_{\odot})$"%(round(b_ml+m_ml*10-7,2),round(m_ml,2)),color='blue',fontsize=25)
+
+#import corner
+#fig = corner.corner(samples, labels=["$m$", "$b$", "$sint$"],
+#                       quantiles=[0.16, 0.5, 0.84], show_titles=True, title_kwargs={"fontsize": 12})

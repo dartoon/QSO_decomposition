@@ -25,7 +25,7 @@ sys.path.insert(0,'../py_tools')
 #==============================================================================
 from local_MMstar import *
 #==============================================================================
-#input SS13's data 
+#input SS13 and B11 data 
 #==============================================================================
 ################ bulge or total relaiton? #################
 ####### input SS13 data ####
@@ -35,6 +35,13 @@ f0 ='data/SS13_MM.txt'
 ss = np.loadtxt(f0)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
 if inp_SS13 ==1:
     plt.scatter(ss[:,1],ss[:,2],c=ss[:,0],marker="^",s=180,zorder=100,vmin=0.3, vmax=2, edgecolors='white')
+  
+inp_b11= 1
+f1 ='data/B11_MM.txt'
+b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
+if inp_b11 ==1:
+    plt.scatter(b11[:,1],b11[:,2],c=b11[:,0],marker="^",s=180,zorder=100,vmin=0.3, vmax=2, edgecolors='white')
+
 
 #%%
 #==============================================================================

@@ -53,6 +53,8 @@ result = op.minimize(nll, [1.036, -1.947, 0.3], args=(x, y, yerr))
 m_ml, b_ml,sint_ml= result["x"]
 #print m_ml, b_ml, sint_ml, "ka=",lnlike(theta=[m_ml, b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
 
+#m_ml, b_ml = 1.11, -3.7  # Park's first use
+
 xp = np.array([5, 13])
 #plt.plot(xp, m_ml*xp+b_ml, 'r-')
 def lnprior(theta):
@@ -81,11 +83,11 @@ xl = np.linspace(-0.9, 13, 100)
 ######################
 #Klc=plt.errorbar(loc1[:,0]*0,loc1[:,1]-(m_mid*loc1[:,0]+b_mid),yerr=0.001,fmt='.',color='gray',markersize=10)
 #Plc=plt.errorbar(loc2[:,0]*0+0.01,loc2[:,1]-(m_mid*loc2[:,0]+b_mid),yerr=0.001,fmt='.',color='black',markersize=10)
-Pkc=plt.errorbar(np.log10(ploc[:,0]+1),loc[:,1]-(m_mid*loc[:,0]+b_mid),yerr=ploc[:,3],fmt='.',color='gray',markersize=10)
+Pkc=plt.errorbar(np.log10(ploc[:,0]+1),loc[:,1]-(m_ml*loc[:,0]+b_ml),yerr=ploc[:,3],fmt='.',color='gray',markersize=10)
 
 ty=xl*0
-ty1=xl*0+np.std(loc[:,1]-(m_mid*loc[:,0]+b_mid))
-ty2=xl*0-np.std(loc[:,1]-(m_mid*loc[:,0]+b_mid))
+ty1=xl*0+np.std(loc[:,1]-(m_ml*loc[:,0]+b_ml))
+ty2=xl*0-np.std(loc[:,1]-(m_ml*loc[:,0]+b_ml))
 plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
 
 ######################

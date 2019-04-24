@@ -44,8 +44,8 @@ pk[:,2]=4.83-pk[:,2]/0.4  # tansfer from L to Magnitude
 pk[:,2]=pk[:,2]-0.46  # transfer from V to R; 0.46 is the mean value of the data from Taka
 pk[:,2]=pk[:,2]+dm*pass_dmag(pk[:,0])  #evolution of stellar population makes the mag fainter.
 pk[:,2]=0.4*(4.61-pk[:,2])
-park=plt.errorbar(np.log10(1+pk[:,0]),pk[:,1]-(m_mid*pk[:,2]+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='.',color='darkseagreen')#,markersize=1)
-SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_mid*pk[63:,2]+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='.',color='darkseagreen')#,markersize=1)  #used to be tomato
+park=plt.errorbar(np.log10(1+pk[:,0]),pk[:,1]-(m_ml*pk[:,2]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='.',color='darkseagreen')#,markersize=1)
+SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_ml*pk[63:,2]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='.',color='darkseagreen')#,markersize=1)  #used to be tomato
 
 ##==============================================================================
 ## input Peng's data
@@ -64,12 +64,12 @@ SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_mid*pk[63:,2]+b_mid),yerr=(
 #C[:,3],Mg[:,3],H[:,3]=0.4*(4.61-C[:,3]),0.4*(4.61-Mg[:,3]),0.4*(4.61-H[:,3])  #transfer from Mag to Luminosity
 #
 #if inp_peng == 1:
-#    plt.errorbar(np.log10(1+Mg[:,1])[:14],(Mg_cali-(m_mid*Mg[:,3]+b_mid))[:14],yerr=(0.4**2+0.2**2)**0.5,fmt='o',color='goldenrod',markersize=9,zorder=250, mec='k')
-#    plt.errorbar(np.log10(1+H[:,1]),Hb_cali-(m_mid*H[:,3]+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='>',color='goldenrod',markersize=9,zorder=200, mec='k')
-#    plt.errorbar(np.log10(1+C[:,1])[:18],(C_cali-(m_mid*C[:,3]+b_mid))[:18],yerr=(0.4**2+0.2**2)**0.5,fmt='s',color='goldenrod',markersize=9,zorder=250, mec='k')
+#    plt.errorbar(np.log10(1+Mg[:,1])[:14],(Mg_cali-(m_ml*Mg[:,3]+b_ml))[:14],yerr=(0.4**2+0.2**2)**0.5,fmt='o',color='goldenrod',markersize=9,zorder=250, mec='k')
+#    plt.errorbar(np.log10(1+H[:,1]),Hb_cali-(m_ml*H[:,3]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='>',color='goldenrod',markersize=9,zorder=200, mec='k')
+#    plt.errorbar(np.log10(1+C[:,1])[:18],(C_cali-(m_ml*C[:,3]+b_ml))[:18],yerr=(0.4**2+0.2**2)**0.5,fmt='s',color='goldenrod',markersize=9,zorder=250, mec='k')
 #    
-#    plt.errorbar(np.log10(1+Mg[:,1])[14:],(Mg_cali-(m_mid*Mg[:,3]+b_mid))[14:],yerr=(0.4**2+0.2**2)**0.5,fmt='o',color='dodgerblue',markersize=9,zorder=250, mec='k')
-#    plt.errorbar(np.log10(1+C[:,1])[18:],(C_cali-(m_mid*C[:,3]+b_mid))[18:],yerr=(0.4**2+0.2**2)**0.5,fmt='s',color='dodgerblue',markersize=9,zorder=250, mec='k')
+#    plt.errorbar(np.log10(1+Mg[:,1])[14:],(Mg_cali-(m_ml*Mg[:,3]+b_ml))[14:],yerr=(0.4**2+0.2**2)**0.5,fmt='o',color='dodgerblue',markersize=9,zorder=250, mec='k')
+#    plt.errorbar(np.log10(1+C[:,1])[18:],(C_cali-(m_ml*C[:,3]+b_ml))[18:],yerr=(0.4**2+0.2**2)**0.5,fmt='s',color='dodgerblue',markersize=9,zorder=250, mec='k')
 #
 ##==============================================================================
 ## Two sample in H0licow VII: i.e. HE0435 and RXJ1131
@@ -82,7 +82,7 @@ SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_mid*pk[63:,2]+b_mid),yerr=(
 #Mag_0435=Mag_0435+0.21     #change Mg from Vega to AB in R band
 #L_0435=0.4*(4.61-Mag_0435)
 ##print "L0435=",Mag_0435
-#plt.errorbar(np.log10(1+z_0435),M_0435-(m_mid*L_0435+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='m*',markersize=28,zorder=250, mec='k')
+#plt.errorbar(np.log10(1+z_0435),M_0435-(m_ml*L_0435+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='m*',markersize=28,zorder=250, mec='k')
 #HE0435= mlines.Line2D([], [], color='m', ls='', marker='*', markersize=28, markeredgecolor='k')
 #
 ############RXJ1131 information using Mg#############
@@ -103,7 +103,7 @@ SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_mid*pk[63:,2]+b_mid),yerr=(
 #if host==1:
 #    Mag_1131=Mag_1131_tot
 #L_1131 = 0.4*(4.61-Mag_1131)
-#plt.errorbar(np.log10(1+z_1131),M_1131-(m_mid*L_1131+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='*',color='lightpink',markersize=28,zorder=250, mec='k')
+#plt.errorbar(np.log10(1+z_1131),M_1131-(m_ml*L_1131+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='*',color='lightpink',markersize=28,zorder=250, mec='k')
 #RXJ1131= mlines.Line2D([], [], color='lightpink', ls='', marker='*', markersize=28, markeredgecolor='k')
 
 #==============================================================================
@@ -130,14 +130,14 @@ host_n = np.array(load_n(ID, folder = '../'))[:,0]
 lumi_s = load_host_p(ID, dm = dm)[0]  #!!! This dm is important 
 MBs = load_MBH(ID,MB_ID)
 
-#plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_mid*lumi_s[MBs!=-99]+b_mid),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
-plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_mid*lumi_s[MBs!=-99]+b_mid),c='tomato',
+#plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
+plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml),c='tomato',
             s=880,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
 
 #####fit the evolution##########
 ################################
-z_pk,y_pk=pk[:,0],pk[:,1]-(m_mid*pk[:,2]+b_mid)
-z_cosmos, y_cosmos = zs[MBs!=-99], MBs[MBs!=-99]-(m_mid*lumi_s[MBs!=-99]+b_mid)
+z_pk,y_pk=pk[:,0],pk[:,1]-(m_ml*pk[:,2]+b_ml)
+z_cosmos, y_cosmos = zs[MBs!=-99], MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml)
 
 z=np.concatenate((z_pk, z_cosmos),axis=0)
 y=np.concatenate((y_pk, y_cosmos),axis=0)
@@ -180,10 +180,10 @@ sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(x, y, yerr))
 sampler.run_mcmc(pos, 500)
 samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
 
-b_mid, sint_mid =np.percentile(samples, 50,axis=0)
-#print "lnlike=",lnlike(theta=[b_mid, sint_mid],x=x, y=y, yerr=yerr)
+b_ml, sint_mid =np.percentile(samples, 50,axis=0)
+#print "lnlike=",lnlike(theta=[b_ml, sint_mid],x=x, y=y, yerr=yerr)
 xl = np.linspace(0, 5, 100)
-plt.plot(xl, xl*0+xl*b_mid, color="red", linewidth=4.0,zorder=0)
+plt.plot(xl, xl*0+xl*b_ml, color="red", linewidth=4.0,zorder=0)
 
 def find_n(array,value):           #get the corresponding b for a given m 
     idx= (np.abs(array-value)).argmin()
@@ -195,10 +195,10 @@ for i in range(100):
     b=np.percentile(samples,posi,axis=0)[0]    
     #print b
     plt.plot(xl, xl*0+xl*b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
-value=round(b_mid,2)
+value=round(b_ml,2)
 
 #####################
-value,sig=round(b_mid,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
+value,sig=round(b_ml,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
 #print value,sig
 plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 #plt.text(0.15, -1.75, "$M_{BH} $VS$ L_{host}\propto (1+z)^{%s\pm%s}$"%(value,sig),color='blue',fontsize=25)
