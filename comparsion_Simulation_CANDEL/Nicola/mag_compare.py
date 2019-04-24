@@ -46,6 +46,8 @@ h0=70.             #km/s/Mpc
 om=0.3
 c=299790.        #speed of light [km/s]
 dm = 0 #Not considering the passive evolution
+
+
 from load_result import load_zs, load_mag, load_n
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
@@ -125,7 +127,7 @@ bools_d = ([MBs!=-99] and [host_n<3])
 
 from dmag import pass_dmag
 #%% Plot the data
-plt.figure(figsize=(10, 11))
+plt.figure(figsize=(13, 11))
 vmax = norm_number_dens.max()
 vmin = norm_number_dens[norm_number_dens!=norm_number_dens.min()].min()
 my_cmap = copy.copy(matplotlib.cm.get_cmap('YlOrBr')) # copy the default cmap
@@ -134,17 +136,16 @@ plt.scatter(prop_host, prop_mbh, c=norm_number_dens, s = 390, vmin = vmin, vmax 
             marker='s', alpha=0.9, edgecolors='none', cmap = my_cmap)
 cl=plt.colorbar()
 cl.set_label('Value in Col. 4', size=20)
-plt.scatter(host_mags[bools_d], MBs[bools_d],c=zs[bools_d],s=280,marker="s",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
-plt.scatter(host_mags[bools_b], MBs[bools_b],c=zs[bools_b],s=280,marker="o",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
-
+plt.scatter(host_mags[bools_d], MBs[bools_d],c=zs[bools_d],s=280,marker="s",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+plt.scatter(host_mags[bools_b], MBs[bools_b],c=zs[bools_b],s=280,marker="o",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
 #x_aklant = np.linspace(-19.7, -22.6)
 #y_aklant = np.linspace(7,9.2)
 #plt.plot(x_aklant-1.5,y_aklant-0.15, x_aklant, y_aklant-0.15, x_aklant+1.5,y_aklant-0.15,color = 'gray')
+#from local_ML import *
 
-
-x_local = np.linspace(-16, -26)
-y_local = -1.448-0.432*x_local
-plt.plot(x_local,y_local-0.4, x_local, y_local, x_local,y_local+0.4,color = 'black')
+#x_local = np.linspace(-16, -26)
+#y_local = -1.448-0.432*x_local
+#plt.plot(x_local,y_local-0.4, x_local, y_local, x_local,y_local+0.4,color = 'black')
 
 #cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
 #plt.clim(1.2,1.8)
@@ -161,6 +162,7 @@ plt.ylim([prop_mbh.min(), prop_mbh.max()])
 if 'rmag' in filename:
     plt.gca().invert_xaxis()
 plt.tick_params(labelsize=25)
+plt.savefig('SAM_ML.pdf')
 plt.show()
 
 for i in range(len(ID)):

@@ -24,6 +24,7 @@ prop_mbh = data[:,1]
 number_dens = data[:,2]
 norm_number_dens = data[:,3]
 
+'''
 #%% Load the BH mass and the stellar mass
 import sys
 sys.path.insert(0,'../../py_tools')
@@ -90,7 +91,7 @@ for tar_in in range(len(ID)):
 MBs = np.asarray(MBs)
 host_n = np.array(load_n(ID, folder = '../../'))[:,0]
 
-#%% Load my sample and transfer to Stellar mass
+# Load my sample and transfer to Stellar mass
 from dmag import pass_dmag
 from scipy.integrate import quad
 def EZ(z,om):
@@ -144,36 +145,58 @@ Mstar = np.log10(host_LR * 0.54 * 0.684 * 1.4191)
 #bools = ([MBs!=-99])
 bools_b = ([MBs!=-99] and [host_n>3])[0]
 bools_d = ([MBs!=-99] and [host_n<3])[0]
-
+'''
 #%% Plot the data
-plt.figure(figsize=(10, 11))
-vmax = norm_number_dens.max()
-vmin = norm_number_dens[norm_number_dens!=norm_number_dens.min()].min()
-my_cmap = copy.copy(matplotlib.cm.get_cmap('YlOrBr')) # copy the default cmap
-my_cmap.set_under('white')
-plt.scatter(prop_host, prop_mbh, c=norm_number_dens, s = 390, vmin = vmin, vmax = vmax,
-            marker='s', alpha=0.9, edgecolors='none', cmap = my_cmap)  # plot the Nicola
-#cl=plt.colorbar()
-#cl.set_label('Value in Col. 4', size=20)
+plt.figure(figsize=(13, 11))
+vmax = 1.1 #1.1 #10**norm_number_dens.max()
+vmin = -0.1 #10**norm_number_dens[norm_number_dens!=norm_number_dens.min()].min()
+#my_cmap = copy.copy(matplotlib.cm.get_cmap('YlOrBr')) # copy the default cmap
+my_cmap = copy.copy(matplotlib.cm.get_cmap('Oranges',6)) # copy the default cmap
+#my_cmap.set_under('white')
+
+for i in range(len(norm_number_dens)):
+    if norm_number_dens[i]!=norm_number_dens.min() : 
+        plt.scatter(prop_host[i], prop_mbh[i], c=10**norm_number_dens[i], s = 140, vmin = vmin, vmax = vmax,
+                   marker='s', alpha=0.9, edgecolors='none', cmap = my_cmap)  # plot the Nicola
+cl=plt.colorbar()
+cl.set_label('Value in Col. 4', size=20)
 #plt.scatter(Mstar[bools_d], MBs[bools_d],c=goods[bools_d],s=280,marker="s",zorder=100, vmin=0.8, vmax=3, edgecolors='k')
 #plt.scatter(Mstar[bools_b], MBs[bools_b],c=goods[bools_b],s=280,marker="o",zorder=100, vmin=0.8, vmax=3, edgecolors='k')
 #cl=plt.colorbar()
 #cl.set_label('1 means good, 2 means bad', size=20)
 #plt.clim(0.8,3)
 
-plt.scatter(Mstar[bools_d], MBs[bools_d],c=zs[bools_d],s=280,marker="s",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
-plt.scatter(Mstar[bools_b], MBs[bools_b],c=zs[bools_b],s=280,marker="o",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
-cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
-plt.clim(1.2,1.8)
-cl.set_label('Source redshift',rotation=270,size=20)
+#xi = prop_host[:50]
+#yi = prop_mbh[::50]
+#prop_host_cl = prop_host[norm_number_dens!=norm_number_dens.min()]
+#prop_mbh_cl = prop_mbh[norm_number_dens!=norm_number_dens.min()]
+#norm_number_dens_cl = norm_number_dens[norm_number_dens!=norm_number_dens.min()]
+#plt.scatter(prop_host_cl, prop_mbh_cl, c=10**norm_number_dens_cl, s = 140, vmin = vmin, vmax = vmax,
+#           marker='s', alpha=0.9, edgecolors='none', cmap = my_cmap)  # plot the Nicola
+#import matplotlib.tri as tri
+#triang = tri.Triangulation(prop_host_cl, prop_mbh_cl)
+#interpolator = tri.LinearTriInterpolator(triang,10**norm_number_dens_cl)
+#Xi, Yi = np.meshgrid(xi, yi)
+#zi = interpolator(Xi, Yi)
+#plt.contour(xi, yi, zi, 5,linewidths=0.5, colors='k')
+#plt.contourf(xi, yi, zi, 5, cmap=my_cmap)
+
+'''
+plt.scatter(Mstar[bools_d], MBs[bools_d],c=zs[bools_d],s=280,marker="s",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+plt.scatter(Mstar[bools_b], MBs[bools_b],c=zs[bools_b],s=280,marker="o",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+'''
+#cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
+#plt.clim(vmin=0.3, vmax=2)
+#cl.set_label('Source redshift',rotation=270,size=20)
 
 #x_aklant = np.linspace(10.5,11.8)
 #y_aklant = np.linspace(7,9.2)
 #plt.plot(x_aklant-0.25-0.15,y_aklant-0.15, x_aklant-0.15, y_aklant-0.15, x_aklant+0.25-0.15,y_aklant-0.15,color = 'gray')
 
-x_local = np.linspace(9,12.5)
-y_local = np.linspace(6, 9.9)
-plt.plot(x_local,y_local-0.4, x_local, y_local, x_local,y_local+0.4,color = 'black')
+
+#x_local = np.linspace(9,12.5)
+#y_local = np.linspace(6, 9.9)
+#plt.plot(x_local,y_local-0.4, x_local, y_local, x_local,y_local+0.4,color = 'black')
 
 
 plt.xlabel("$log(M_*/M_{\odot})$",fontsize=35)
@@ -181,13 +204,15 @@ plt.ylabel("$log(M_{BH}/M_{\odot})$",fontsize=35)
 plt.minorticks_on()
 #plt.xlim([prop_host.min(), prop_host.max()])
 #plt.ylim([prop_mbh.min(), prop_mbh.max()])
-plt.xlim([9, 12])
-plt.ylim([6, 10])
+#plt.xlim([9, 12])
+#plt.ylim([5, 10])
+#from local_MMstar import *
 
 if 'rmag' in filename:
     plt.gca().invert_xaxis()
 plt.tick_params(labelsize=25)
+plt.savefig('SAM_MMstar.pdf')
 plt.show()
 
-for i in range(len(ID)):
-    print ID[i], round(MBs[i],3), round(Mstar[i],3)
+#for i in range(len(ID)):
+#    print ID[i], round(MBs[i],3), round(Mstar[i],3)
