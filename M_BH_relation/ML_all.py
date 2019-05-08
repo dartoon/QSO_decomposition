@@ -42,6 +42,8 @@ pk[:,2]=pk[:,2]-0.46  # transfer from V to R; 0.46 is the mean value of the data
 pk[:,2]=pk[:,2]+dm*pass_dmag(pk[:,0])  #evolution of stellar population makes the mag fainter.
 pk[:,2]=0.4*(4.61-pk[:,2])
 plt.scatter(pk[:,2],pk[:,1],c=pk[:,0],marker="^",s=80,zorder=100,vmin=0.3, vmax=5, edgecolors='k', alpha = 0.7)
+plt.text(9.05,9.1, "intermediate\n  sample\nuncertainties",  fontsize=20)
+plt.errorbar(9.25,9.05, xerr=0.2, yerr=0.4, color='blue',ecolor='black', fmt='^',zorder=-500,markersize=10)
 
 ##==============================================================================
 ## input Peng's data
@@ -105,7 +107,7 @@ plt.scatter(pk[:,2],pk[:,1],c=pk[:,0],marker="^",s=80,zorder=100,vmin=0.3, vmax=
 #==============================================================================
 # My new inference
 #==============================================================================
-from load_result import load_host_p, load_MBH
+from load_result import load_host_p, load_MBH, load_err
 from load_result import load_zs, load_n
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
@@ -122,7 +124,10 @@ zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 lumi_s = load_host_p(ID, dm = dm)[0] #!!! This dm is important 
 MBs = load_MBH(ID,MB_ID)
-plt.scatter(lumi_s,MBs,c=zs,s=880,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+plt.scatter(lumi_s,MBs,c=zs,s=580,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+LR_err = load_err(prop = 'LR', ID=ID)
+#for i in range(len(lumi_s)):
+plt.errorbar(lumi_s,MBs, xerr=[np.abs(LR_err)[:,0], np.abs(LR_err)[:,1]], yerr=0.4, color='blue',ecolor='orange', fmt='.',zorder=-500,markersize=1)
 #==============================================================================
 # The colorbar label setting up
 #==============================================================================

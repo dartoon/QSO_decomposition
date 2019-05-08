@@ -42,13 +42,15 @@ b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
 if inp_b11 ==1:
     plt.scatter(b11[:,1],b11[:,2],c=b11[:,0],marker="^",s=180,zorder=100,vmin=0.3, vmax=2, edgecolors='white')
 
-
+tx, ty = 11.8, 7.3
+plt.text(tx, ty, "intermediate\n  sample\nuncertainties",  fontsize=20)
+plt.errorbar(tx+0.4,ty-0.25, xerr=0.2, yerr=0.4, color='blue',ecolor='black', fmt='^',zorder=-500,markersize=10)
 #%%
 #==============================================================================
 # My new inference
 #==============================================================================
 from scipy.integrate import quad
-from load_result import load_host_p, load_MBH
+from load_result import load_host_p, load_MBH, load_err
 def EZ(z,om):
       return 1/np.sqrt(om*(1+z)**3+(1-om))
 def EE(z):
@@ -74,7 +76,10 @@ zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
 MBs = load_MBH(ID,MB_ID)
-plt.scatter(Mstar,MBs,c=zs,s=880,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+plt.scatter(Mstar,MBs,c=zs,s=580,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+Mstar_err = load_err(prop = 'Mstar', ID=ID)
+#for i in range(len(lumi_s)):
+plt.errorbar(Mstar,MBs, xerr=[np.abs(Mstar_err)[:,0], np.abs(Mstar_err)[:,1]], yerr=0.4, color='blue',ecolor='orange', fmt='.',zorder=-500,markersize=1)
 
 #==============================================================================
 # The colorbar label setting up
@@ -103,8 +108,8 @@ SS13 = mlines.Line2D([], [], color='blue', ls='', marker='^', markersize=13)
 plt.legend([Bkc,Hkc,SS13,new_sample],[
 'Local by Bennert+11',\
 "Local by H&R",
-"intermediate redshift AGNs by SS13",
+"intermediate redshift AGNs",
 "This work"\
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':20},ncol=2)
-plt.savefig("MBH-Mstar.pdf")
+#plt.savefig("MBH-Mstar.pdf")
 plt.show()

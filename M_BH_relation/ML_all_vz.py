@@ -44,8 +44,8 @@ pk[:,2]=4.83-pk[:,2]/0.4  # tansfer from L to Magnitude
 pk[:,2]=pk[:,2]-0.46  # transfer from V to R; 0.46 is the mean value of the data from Taka
 pk[:,2]=pk[:,2]+dm*pass_dmag(pk[:,0])  #evolution of stellar population makes the mag fainter.
 pk[:,2]=0.4*(4.61-pk[:,2])
-park=plt.errorbar(np.log10(1+pk[:,0]),pk[:,1]-(m_ml*pk[:,2]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='.',color='darkseagreen')#,markersize=1)
-SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_ml*pk[63:,2]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='.',color='darkseagreen')#,markersize=1)  #used to be tomato
+park=plt.errorbar(np.log10(1+pk[:,0]),pk[:,1]-(m_ml*pk[:,2]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)
+SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_ml*pk[63:,2]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  #used to be tomato
 
 ##==============================================================================
 ## input Peng's data
@@ -109,7 +109,7 @@ SS13=plt.errorbar(np.log10(1+pk[63:,0]),pk[63:,1]-(m_ml*pk[63:,2]+b_ml),yerr=(0.
 #==============================================================================
 # My new inference
 #==============================================================================
-from load_result import load_host_p, load_MBH, load_mag
+from load_result import load_host_p, load_MBH, load_mag,load_err
 from load_result import load_zs, load_n
 
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
@@ -125,15 +125,18 @@ MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID
 zs = np.asarray(load_zs(ID))
 mags = np.array(load_mag(ID)[0])
 
-zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 lumi_s = load_host_p(ID, dm = dm)[0]  #!!! This dm is important 
 MBs = load_MBH(ID,MB_ID)
+plt.scatter(lumi_s,MBs,c=zs,s=580,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+LR_err = load_err(prop = 'LR', ID=ID)
+yerr_highz = [(LR_err[:,0]**2+0.4**2)**0.5, (LR_err[:,1]**2+0.4**2)**0.5]
 
 #plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
 plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml),c='tomato',
-            s=880,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
-
+            s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml),
+            yerr=yerr_highz, color='tomato',ecolor='tomato', fmt='.',markersize=1)
 #####fit the evolution##########
 ################################
 z_pk,y_pk=pk[:,0],pk[:,1]-(m_ml*pk[:,2]+b_ml)
@@ -142,10 +145,21 @@ z_cosmos, y_cosmos = zs[MBs!=-99], MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml)
 z=np.concatenate((z_pk, z_cosmos),axis=0)
 y=np.concatenate((y_pk, y_cosmos),axis=0)
 
+yerr_pk=z_pk*0+(0.4**2+0.2**2)**0.5   # the error for the fitting
+yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
+yerr = np.concatenate((yerr_pk, yerr_hz),axis=0)
+
+##if consider 32 AGN only:
+#z=z_cosmos
+#y=y_cosmos
+#yerr = yerr_hz
+
 #### fit with emcee ###############
 x=np.log10(1+z)
 y=y
-yerr=y*0+(0.4**2+0.2**2)**0.5   # the error for the fitting
+
+
+
 def lnlike(theta, x, y, yerr):
     b, sint= theta
     model = b*x
@@ -242,5 +256,5 @@ plt.legend([Pkc, park, new_sample],[
 "Intermediate redshift AGNs",
 "This work"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':30},ncol=2,handletextpad=0)
-plt.savefig("MBH-L-vz.pdf")
+#plt.savefig("MBH-L-vz.pdf")
 plt.show()

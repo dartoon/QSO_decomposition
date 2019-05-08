@@ -265,19 +265,19 @@ for i in range(len(tab_list)):
 #    "{0}".format(round(Mstar[i],2)),  "+{0}-{1}".format(round(roots(IR_result[i][6][0]/2.5,0.1),2), round(roots(IR_result[i][6][1]/2.5,0.1),2)))
 
 ##%%
-#print "uncertainty for the LR:"
-#for i in range(len(tab_list)):
-#    if IR_result[i]=='xxx':
-#        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
-#    print(tab_list[i], 
-#    "+{0}-{1}".format(round(roots(IR_result[i][6][0],0.05)/2.5,2), round(roots(IR_result[i][6][1],0.05)/2.5,2)))
-#
-#print "uncertainty for the M*:"
-#for i in range(len(tab_list)):
-#    if IR_result[i]=='xxx':
-#        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
-#    print(tab_list[i],
-#    "+{0}-{1}".format(round(roots(IR_result[i][6][0]/2.5,0.1),2), round(roots(IR_result[i][6][1]/2.5,0.1),2)))
+print "uncertainty for the LR:"
+for i in range(len(tab_list)):
+    if IR_result[i]=='xxx':
+        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+    print(tab_list[i], 
+    "+{0}-{1}".format(round(roots(IR_result[i][6][0],0.05)/2.5,2), round(roots(IR_result[i][6][1],0.05)/2.5,2)))
+
+print "uncertainty for the M*:"
+for i in range(len(tab_list)):
+    if IR_result[i]=='xxx':
+        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+    print(tab_list[i],
+    "+{0}-{1}".format(round(roots(IR_result[i][6][0]/2.5,0.1),2), round(roots(IR_result[i][6][1]/2.5,0.1),2)))
     
 #%% To creat the tab for Aklant
 LR, Mstar, M_R =  load_host_p(tab_list)

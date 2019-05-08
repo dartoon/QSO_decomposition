@@ -31,7 +31,7 @@ ploc[:,1]=0.4*(4.61+0.46-4.83)+ploc[:,1]-0.4*dm*pass_dmag(ploc[:,0])  #Change to
 ploc[:,2]= Pklc[:,8]-0.03    #LogBHmassc, 0.03 is the updated recipe according to Daeseong's Email.
 ploc[:,3]= Pklc[:,9]    #delta mass
 #Pkc=plt.errorbar(ploc[:,1],ploc[:,2],yerr=ploc[:,3],fmt='*',color='green',markersize=18)
-plt.errorbar(ploc[:,1],ploc[:,2],yerr=ploc[:,3],fmt='.',color='gray',markersize=18)
+plt.errorbar(ploc[:,1],ploc[:,2], xerr=0.2, yerr=ploc[:,3],fmt='.',color='gray',ecolor='gray',markersize=18)
 Pkc=mlines.Line2D([], [], color='gray', ls='', marker='.', markersize=18)
 loc=np.zeros([len(ploc),3])
 loc[:,0]=ploc[:,1]
@@ -55,7 +55,7 @@ def lnlike(theta, x, y, yerr):
 
 import scipy.optimize as op
 nll = lambda *args: -lnlike(*args)
-result = op.minimize(nll, [1.036, -1.947, 0.3], args=(x, y, yerr))
+result = op.minimize(nll, [0.899, -1.509, 0.2], args=(x, y, yerr))
 m_ml, b_ml,sint_ml= result["x"]
 #print m_ml, b_ml, sint_ml, "ka=",lnlike(theta=[m_ml, b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
 
@@ -94,7 +94,7 @@ for i in range(100):
     m=np.percentile(samples,posi,axis=0)[0]
     b=samples[:,1][samples[:,0]==find_n(samples[:,0],m)][0]   #may find out many numbers
     rec[i,0],rec[i,1]=m,b
-    plt.plot(xl, m*xl+b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
+    plt.plot(xl, m*xl+b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1000)
 sm,sb=(np.amax(rec[:,0])-np.amin(rec[:,0]))/2,(np.amax(rec[:,1])-np.amin(rec[:,1]))/2
 plt.text(9.4, 6.5, "log$(M_{BH}/10^{7}M_{\odot})$=%s+%slog$(L_{R}/10^{10}L_{\odot})$"%(round(b_ml+m_ml*10-7,2),round(m_ml,2)),color='blue',fontsize=25)
 #plt.text(9.4, 6.5, "$log(M_{BH}/10^{7}M_{\odot})$=%s+%s$log(L_{R}/10^{10}L_{\odot})$"%(0.33,0.95),color='blue',fontsize=25)

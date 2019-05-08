@@ -18,8 +18,8 @@ bloc[:,1]= local25[:,5]    #LgMstar
 bloc[:,2]= local25[:,6]    #Sigma LgMstar
 bloc[:,3]= local25[:,7]    #LgMBH
 bloc[:,4]= local25[:,8]    #Sigma LgMBH
-#plt.errorbar(bloc[:,1],bloc[:,3], xerr=bloc[:,2] ,yerr=bloc[:,4],fmt='.',color='gray',markersize=15)
-plt.plot(bloc[:,1],bloc[:,3], '.',color='gray',markersize=15)
+plt.errorbar(bloc[:,1],bloc[:,3], xerr=bloc[:,2] ,yerr=bloc[:,4],fmt='.',color='gray',markersize=15)
+#plt.plot(bloc[:,1],bloc[:,3], '.',color='gray',markersize=15)
 Bkc=mlines.Line2D([], [], color='gray', ls='', marker='.', markersize=15)
 
 ########input 30 local by Haring 04 ############
@@ -31,8 +31,8 @@ hloc[:,2]= 0.18  # Mention in the Haring04 paper, note in fig 2
 hloc[:,3]= np.log10(Haring04[:,2] * 10 ** Haring04[:,5])    #LgMBH
 hloc[:,4]= (abs(np.log10(Haring04[:,2] + Haring04[:,3]) - np.log10(Haring04[:,2])) + abs(np.log10(Haring04[:,2] - Haring04[:,4]) - np.log10(Haring04[:,4])))/2
 # +  np.log10(Haring04[:,4] * 10 ** Haring04[:,5]))/2 #Sigma LgMBH
-#plt.errorbar(hloc[:,1],hloc[:,3], xerr=hloc[:,2] ,yerr=hloc[:,4],fmt='.',color='black',markersize=15)
-plt.plot(hloc[:,1],hloc[:,3], '.',color='black',markersize=15)
+plt.errorbar(hloc[:,1],hloc[:,3], xerr=hloc[:,2] ,yerr=hloc[:,4],fmt='.',color='black',markersize=15)
+#plt.plot(hloc[:,1],hloc[:,3], '.',color='black',markersize=15)
 Hkc=mlines.Line2D([], [], color='black', ls='', marker='.', markersize=15)
 
 #############################################################
@@ -56,6 +56,7 @@ m_ml, b_ml,sint_ml= result["x"]
 #print m_ml, b_ml, sint_ml, "ka=",lnlike(theta=[m_ml, b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
 
 #m_ml, b_ml = 1.12, -4.12  # Park's first use
+#m_ml, b_ml = 1.02, -2.91  # Park's inference from the two sample
 
 xp = np.array([5, 13])
 #plt.plot(xp, m_ml*xp+b_ml, 'r-')
@@ -88,7 +89,7 @@ for i in range(100):
     posi=np.random.uniform(16,84)
     m=np.percentile(samples,posi,axis=0)[0]
     b=samples[:,1][samples[:,0]==find_n(samples[:,0],m)][0]   #may find out many numbers
-    plt.plot(xl, m*xl+b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
+    plt.plot(xl, m*xl+b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1000)
 
 plt.text(9.3, 6.24, "log$(M_{BH}/10^{7}M_{\odot})$=%s+%slog$(M_*/10^{10}M_{\odot})$"%(round(b_ml+m_ml*10-7,2),round(m_ml,2)),color='blue',fontsize=25)
 
