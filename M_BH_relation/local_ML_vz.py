@@ -5,11 +5,11 @@ import matplotlib.pyplot as plt
 #select = 1
 host = 1
 
-select= 1 #input('with evolution-corrected or not??? 0 = no;   1= yes, with dmag using dmag.py:')
-if select == 0:
-   dm=0
-if select == 1:
-   dm=1
+#select= 0 #input('with evolution-corrected or not??? 0 = no;   1= yes, with dmag using dmag.py:')
+#if select == 0:
+#   dm=0
+#if select == 1:
+dm= 1
 import sys
 sys.path.insert(0,'../py_tools')
 from dmag import pass_dmag

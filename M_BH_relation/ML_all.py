@@ -12,7 +12,8 @@ import matplotlib as mat
 import matplotlib.lines as mlines
 from matplotlib import colors
 mat.rcParams['font.family'] = 'STIXGeneral'
-plt.figure(figsize=(14.5,12))
+plt.figure(figsize=(11.5,12))
+
 
 import matplotlib as mpl
 mpl.rc('image', cmap='jet')
@@ -41,9 +42,10 @@ pk[:,2]=4.83-pk[:,2]/0.4  # tansfer from L to Magnitude
 pk[:,2]=pk[:,2]-0.46  # transfer from V to R; 0.46 is the mean value of the data from Taka
 pk[:,2]=pk[:,2]+dm*pass_dmag(pk[:,0])  #evolution of stellar population makes the mag fainter.
 pk[:,2]=0.4*(4.61-pk[:,2])
-plt.scatter(pk[:,2],pk[:,1],c=pk[:,0],marker="^",s=80,zorder=100,vmin=0.3, vmax=5, edgecolors='k', alpha = 0.7)
-plt.text(9.05,9.1, "intermediate\n  sample\nuncertainties",  fontsize=20)
-plt.errorbar(9.25,9.05, xerr=0.2, yerr=0.4, color='blue',ecolor='black', fmt='^',zorder=-500,markersize=10)
+plt.scatter(pk[:,2],pk[:,1],c='darkseagreen',marker="^",s=80,zorder=100, alpha = 0.7, edgecolors='white')
+tx, ty = 9.05,9.1
+plt.text(tx, ty, "intermediate\n  sample\nuncertainties",  fontsize=20)
+plt.errorbar(tx+0.2,ty-0.05, xerr=0.2, yerr=0.4, color='darkseagreen',ecolor='black', fmt='^',zorder=-500,markersize=10)
 
 ##==============================================================================
 ## input Peng's data
@@ -124,22 +126,22 @@ zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 lumi_s = load_host_p(ID, dm = dm)[0] #!!! This dm is important 
 MBs = load_MBH(ID,MB_ID)
-plt.scatter(lumi_s,MBs,c=zs,s=580,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+plt.scatter(lumi_s,MBs,c='tomato',s=580,marker="*",zorder=100, edgecolors='k')
 LR_err = load_err(prop = 'LR', ID=ID)
 #for i in range(len(lumi_s)):
 plt.errorbar(lumi_s,MBs, xerr=[np.abs(LR_err)[:,0], np.abs(LR_err)[:,1]], yerr=0.4, color='blue',ecolor='orange', fmt='.',zorder=-500,markersize=1)
 #==============================================================================
 # The colorbar label setting up
 #==============================================================================
-cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
-cl.set_label('Source redshift',rotation=270,size=20)
-cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
-cl.ax.tick_params(labelsize=30)   #the labe size
+#cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
+#cl.set_label('Source redshift',rotation=270,size=20)
+#cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
+#cl.ax.tick_params(labelsize=30)   #the labe size
 
 if dm ==0:
-    plt.title("(a) Observed $M_{BH}-L_{host}$ relation",fontsize=35)
+    plt.title("$M_{BH}-L_{host}$ relation",fontsize=35)
 elif dm ==1:
-    plt.title("(b) Evolution-corrected $M_{BH}-L_{host}$ relation",fontsize=35)
+    plt.title("Evolution-corrected $M_{BH}-L_{host}$ relation",fontsize=35)
 
 plt.xlabel("log$(L_{R,host}/L_{\odot})$",fontsize=35)
 plt.ylabel("log$(M_{BH}/M_{\odot})$",fontsize=35)
@@ -150,9 +152,9 @@ plt.grid(linestyle='--')
 plt.tick_params(labelsize=25)
 
 #lens = mlines.Line2D([], [], color='cyan', ls='', marker='o', markersize=9)
-peng = mlines.Line2D([], [], color='cyan', ls='', marker='s', markersize=9)
-park = mlines.Line2D([], [], color='blue', ls='', marker='^', markersize=9)
-new_sample = mlines.Line2D([], [], color='orange', ls='', marker='*', markersize=20,markeredgecolor='k')
+#peng = mlines.Line2D([], [], color='cyan', ls='', marker='s', markersize=9)
+park = mlines.Line2D([], [], color='darkseagreen', ls='', marker='^', markersize=9)
+new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=20,markeredgecolor='k')
 
 plt.legend([Pkc, park, new_sample],[
 "Local AGNs by Bennert+10",
@@ -168,8 +170,8 @@ plt.legend([Pkc, park, new_sample],[
 #    "local AGNs",
 #    "our new samples"\
 #    ],scatterpoints=1,numpoints=1,loc=2,prop={'size':24},ncol=2)
-if dm ==0:
-    plt.savefig("MBH-L_obs.pdf")
-elif dm ==1:
-     plt.savefig("MBH-L_ev.pdf")
+#if dm ==0:
+#    plt.savefig("MBH-L_obs.pdf")
+#elif dm ==1:
+#     plt.savefig("MBH-L_ev.pdf")
 plt.show()

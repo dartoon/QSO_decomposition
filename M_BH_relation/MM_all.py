@@ -12,7 +12,7 @@ import matplotlib as mat
 import matplotlib.lines as mlines
 from matplotlib import colors
 mat.rcParams['font.family'] = 'STIXGeneral'
-plt.figure(figsize=(14.5,12))
+plt.figure(figsize=(11.5,12))
 
 import matplotlib as mpl
 mpl.rc('image', cmap='jet')
@@ -34,17 +34,17 @@ inp_SS13 = 1
 f0 ='data/SS13_MM.txt'
 ss = np.loadtxt(f0)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
 if inp_SS13 ==1:
-    plt.scatter(ss[:,1],ss[:,2],c=ss[:,0],marker="^",s=180,zorder=100,vmin=0.3, vmax=2, edgecolors='white')
+    plt.scatter(ss[:,1],ss[:,2],c='darkseagreen',marker="^",s=180,zorder=100, edgecolors='white')
   
 inp_b11= 1
 f1 ='data/B11_MM.txt'
 b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
 if inp_b11 ==1:
-    plt.scatter(b11[:,1],b11[:,2],c=b11[:,0],marker="^",s=180,zorder=100,vmin=0.3, vmax=2, edgecolors='white')
+    plt.scatter(b11[:,1],b11[:,2],c='darkseagreen',marker="^",s=180,zorder=100, edgecolors='white')
 
-tx, ty = 11.8, 7.3
+tx, ty = 11.85, 7.
 plt.text(tx, ty, "intermediate\n  sample\nuncertainties",  fontsize=20)
-plt.errorbar(tx+0.4,ty-0.25, xerr=0.2, yerr=0.4, color='blue',ecolor='black', fmt='^',zorder=-500,markersize=10)
+plt.errorbar(tx+0.2,ty-0.08, xerr=0.2, yerr=0.4, color='darkseagreen',ecolor='black', fmt='^',zorder=-500,markersize=10)
 #%%
 #==============================================================================
 # My new inference
@@ -76,7 +76,7 @@ zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
 MBs = load_MBH(ID,MB_ID)
-plt.scatter(Mstar,MBs,c=zs,s=580,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
+plt.scatter(Mstar,MBs,c='tomato',s=580,marker="*",zorder=100, edgecolors='k')
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
 #for i in range(len(lumi_s)):
 plt.errorbar(Mstar,MBs, xerr=[np.abs(Mstar_err)[:,0], np.abs(Mstar_err)[:,1]], yerr=0.4, color='blue',ecolor='orange', fmt='.',zorder=-500,markersize=1)
@@ -84,10 +84,10 @@ plt.errorbar(Mstar,MBs, xerr=[np.abs(Mstar_err)[:,0], np.abs(Mstar_err)[:,1]], y
 #==============================================================================
 # The colorbar label setting up
 #==============================================================================
-cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
-cl.set_label('Source redshift',rotation=270,size=20)
-cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
-cl.ax.tick_params(labelsize=30)   #the labe size
+#cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
+#cl.set_label('Source redshift',rotation=270,size=20)
+#cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
+#cl.ax.tick_params(labelsize=30)   #the labe size
 
 plt.title("$M_{BH}-M_*$ relation",fontsize=35)
 plt.xlabel("log$(M_*/M_{\odot})$",fontsize=35)
@@ -101,9 +101,9 @@ plt.tick_params(labelsize=25)
 
 Bkc=mlines.Line2D([], [], color='gray', ls='', marker='.', markersize=15)
 Hkc=mlines.Line2D([], [], color='black', ls='', marker='.', markersize=15)
-new_sample = mlines.Line2D([], [], color='orange', ls='', marker='*', markersize=16,markeredgecolor='k')
+SS13 = mlines.Line2D([], [], color='darkseagreen', ls='', marker='^', markersize=13)
+new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=16,markeredgecolor='k')
 #unlens = mlines.Line2D([], [], color='cyan', ls='', marker='s', markersize=9)
-SS13 = mlines.Line2D([], [], color='blue', ls='', marker='^', markersize=13)
 
 plt.legend([Bkc,Hkc,SS13,new_sample],[
 'Local by Bennert+11',\

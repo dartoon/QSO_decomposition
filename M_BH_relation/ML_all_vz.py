@@ -21,8 +21,6 @@ import sys
 sys.path.insert(0,'../py_tools')
 from dmag import pass_dmag
 
-inp_peng = 1
-
 ########## input local data ####
 #==============================================================================
 # The seleting for dm and host_total and dmag are in this local

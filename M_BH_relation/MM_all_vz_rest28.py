@@ -81,16 +81,16 @@ if style ==0:
 if style ==1:
 #    plt.scatter(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml), c='darkseagreen',
 #                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
-    plt.errorbar(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)
+#    plt.errorbar(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)
 
 #    plt.scatter(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml), c='darkseagreen',
 #                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')    
-    plt.errorbar(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  #used to be tomato
-    plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),c='tomato',
-                s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
-    plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),
-                 yerr= yerr_highz,
-                 color='tomato',ecolor='orange', fmt='.',markersize=1)    
+#    plt.errorbar(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  #used to be tomato
+#    plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),c='tomato',
+#                s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+#    plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),
+#                 yerr= yerr_highz,
+#                 color='tomato',ecolor='orange', fmt='.',markersize=1)    
     
     #####fit the evolution##########
     ################################
@@ -114,16 +114,16 @@ if style ==1:
 #    y=y_cosmos
 #    yerr = yerr_hz    
     
-#    #if exclude the top 4 y cosmos:
-#    z=z_cosmos[y_cosmos<0.844]
-#    y=y_cosmos[y_cosmos<0.844]
-#    yerr = yerr_hz[y_cosmos<0.844]
-#    bools = [y_cosmos<0.844]
-#    plt.scatter(np.log10(1+zs[MBs!=-99])[bools],(MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml))[bools],c='tomato',
-#                s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
-#    plt.errorbar(np.log10(1+zs[MBs!=-99])[bools],(MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml))[bools],
-#                 yerr= [yerr_highz[0][bools],yerr_highz[1][bools]] ,
-#                 color='tomato',ecolor='orange', fmt='.',markersize=1)
+    #if exclude the top 4 y cosmos:
+    z=z_cosmos[y_cosmos<0.844]
+    y=y_cosmos[y_cosmos<0.844]
+    yerr = yerr_hz[y_cosmos<0.844]
+    bools = [y_cosmos<0.844]
+    plt.scatter(np.log10(1+zs[MBs!=-99])[bools],(MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml))[bools],c='tomato',
+                s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+    plt.errorbar(np.log10(1+zs[MBs!=-99])[bools],(MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml))[bools],
+                 yerr= [yerr_highz[0][bools],yerr_highz[1][bools]] ,
+                 color='tomato',ecolor='orange', fmt='.',markersize=1)
     
     #### fit with emcee ###############
     x=np.log10(1+z)
@@ -213,12 +213,11 @@ plt.tick_params(labelsize=25)
 
 SS13 = mlines.Line2D([], [], color='darkseagreen', ls='', marker='^', markersize=8)
 
-plt.legend([Bkc, Hkc, SS13, new_sample],[
+plt.legend([Bkc, Hkc, new_sample],[
 'Local by Bennert+11',\
 "Local by H&R",
-"Intermediate redshift AGNs",
-"This work"
+"The other 28 AGN systems"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
 #plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
-#plt.savefig("MBH-Mstar-vz_subsample.pdf".format(style))
+plt.savefig("MBH-Mstar-vz_subsample.pdf".format(style))
 plt.show()
