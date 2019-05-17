@@ -180,17 +180,21 @@ cbar.set_label('Sersic n',  fontsize=12)
 plt.tick_params(labelsize=15)
 plt.show()   
         
+#%%
 #==============================================================================
 # Sersic_n, R_eff relation, host_flux_ratio corner relation
 #==============================================================================
+import matplotlib.lines as mlines
 num_boxs = 2
 gridshape = (num_boxs, num_boxs)
 print "Our multivariate grid will therefore be of shape", gridshape
 fig = plt.figure(figsize=(20, 15))
 axes = [[False for i in range(num_boxs)] for j in range(num_boxs)]
-axis_lab = [ "Effective Radius(arcsec)", "S\'ersic $n$", "host flux ratio percent (%)"]
+axis_lab = [ "Effective Radius (arcsec)", "S\'ersic index", "host flux ratio (%)"]
 value = [[Re_results[i], n_results[i], ratio_results[i]] for i in range(len(ratio_results))]
 n=1
+#normalize = matplotlib.colors.Normalize(vmin=1, vmax=6)
+#colors = [cmap(normalize(vs)) for vs in chisq_list]
 for j in range(num_boxs):
     for i in range(num_boxs):
         if i <= j :
@@ -204,14 +208,15 @@ for j in range(num_boxs):
             ax.xaxis.set_ticks_position('both')
             texts = []
             for k in range(len(value)):
-                filt = filt_info[ID[i]]
+                filt = filt_info[ID[k]]
                 if filt == "F140w":
                     ma = 'o'
                 elif filt == "F125w":
-                    ma = 's'
-                ax.errorbar(value[k][i][0], value[k][y_j][0], xerr= value[k][i][1], yerr= value[k][y_j][1], marker = ma, color = colors[k])
-                texts.append(ax.text(value[k][i][0], value[k][y_j][0], ID[k], fontsize=15))
-            adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red')) 
+                    ma = '^'
+                ax.errorbar(value[k][i][0], value[k][y_j][0], xerr= value[k][i][1], yerr= value[k][y_j][1], 
+                            marker = ma, markersize=9, color = colors[k])
+#                texts.append(ax.text(value[k][i][0], value[k][y_j][0], ID[k], fontsize=15))
+#            adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red')) 
             if i == 0:
 #                plt.ylabel('j+1={0}={1}'.format(axis_lab[y_j],y_j), fontsize=15)
                 plt.ylabel('{0}'.format(axis_lab[y_j]), fontsize=25)
@@ -228,12 +233,19 @@ for j in range(num_boxs):
                 ax.yaxis.set_ticklabels([])
             if y_j <2:
                 ax.xaxis.set_ticklabels([])
-            plt.tick_params(labelsize=25)     
+            plt.tick_params(labelsize=25)  
+            plt.legend(fontsize=15)
         fig.tight_layout(h_pad=-1.,w_pad=-0.3)
         if i== 0 and j ==0:
+            label_F140w = mlines.Line2D([], [], color='darkblue', ls='', marker='o', markersize=9)
+            label_F125w = mlines.Line2D([], [], color='darkblue', ls='', marker='^', markersize=9)
+            plt.legend([label_F140w,label_F125w],[
+                    'Observed by WFC3/F140W',
+                    "Observed by WFC3/F125W",
+                    ],scatterpoints=1,numpoints=1,loc=1,prop={'size':20},ncol=1)            
             cax, _ = matplotlib.colorbar.make_axes(ax)
             cbar = matplotlib.colorbar.ColorbarBase(cax, cmap=cmap, norm=normalize)
-            cbar.set_label('Sersic n',  fontsize=25)
+            cbar.set_label('S\'ersic index',  fontsize=25)
             cax.tick_params(labelsize=30)
             pos_o = cax.get_position()
             pos = [pos_o.x0+0.09, pos_o.y0, pos_o.width, pos_o.height]
