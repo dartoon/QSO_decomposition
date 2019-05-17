@@ -92,7 +92,7 @@ Throughout this paper, we adopt a standard concordance cosmology with $H_0= 70$ 
 
 
 
-We focus on the broad-line (type-1) AGNs as provided by the X-ray coverage of COSMOS~\citep{Civano2016}, (E)-CDFS-S~\citep{Lehmer2005, Xue2011}, and SXDS~\citep{Ueda2008} fields. We select the broad-line AGNs at redshift region $1.2<z<1.7$ which cover a BH range $7.5<{\rm log}$\mbh $<8.5$, \textcolor{blue}{estimated using \halpha\ emission line.} We present the selection window that used to choose the sample in Figure~\ref{fig:selection}. We list all the AGN systems analyzed in this work in Table~\ref{tab:objlist}. Overall, our final sample is composed of 32 new observations by \hst/WFC3.
+We focus on the broad-line (type-1) AGNs as provided by the X-ray coverage of COSMOS~\citep{Civano2016}, (E)-CDFS-S~\citep{Lehmer2005, Xue2011}, and SXDS~\citep{Ueda2008} fields. We select the broad-line AGNs at redshift region $1.2<z<1.7$ which cover a BH range $7.5<{\rm log}$\mbh $<8.5$ \textcolor{blue}{(\mbh\ estimated using \halpha\ emission line).} We present the selection window that used to choose the sample in Figure~\ref{fig:selection}. We list all the AGN systems analyzed in this work in Table~\ref{tab:objlist}. Overall, our final sample is composed of 32 new observations by \hst/WFC3.
 
 \begin{figure}
 \centering
@@ -331,8 +331,8 @@ The PSF is directly taken from the PSF library. Usually, a mismatch exists when 
 \end{enumerate}
 
 %Introduce the final inference using fitting:
-The host properties of one AGN system is inferred via the following steps. First, we model the AGN and host using each PSFs in the library. Inputting the fitting ingredients to \lenstronomy, the posterior distribution of the parameter space is calculated and optimized by adopting the Particle Swarm Optimizer (PSO)\footnote{Note that, the \lenstronomy\ enables one to further infer the parametric confidence interval using MCMC. However, in our case, given a fixed PSF, the $1-\sigma$ inference of each parameter are extremely narrow.}.
-To avoid any unphysical inferences, we set the upper and lower limit for the key parameters as effective radius \Reff$\in[0\farcs{}1,1\farcs{0}]$, and Sersic index $n\in[1,7]$. Then, we rank the performance of each PSF based on the $\chi^2$ value and select the top-eight PSFs as representative of the best fit PSFs. We infer the host \sersic\ parameters (i.e., host flux, \Reff, \sersic\ index) using a weighted arithmetic mean. The weight is calculated by:
+The host properties of one AGN system is inferred via the following steps. First, we model the AGN and host using each PSFs in the library. Inputting the fitting ingredients to \lenstronomy, the posterior distribution of the parameter space is calculated and optimized by adopting the Particle Swarm Optimizer (PSO)\footnote{Note that, the \lenstronomy\ enables one to further infer the parametric confidence interval using MCMC. In our case, given a fixed PSF, the $1-\sigma$ inference of each parameter are extremely narrow. Thus, we only take the best-fit inference using PSO for the further calcualtions.}.
+To avoid any unphysical inferences, we set the upper and lower limit for the key parameters as effective radius \Reff$\in[0\farcs{}1,1\farcs{0}]$, and \sersic\ index $n\in[1,7]$. Then, we rank the performance of each PSF based on the $\chi^2$ value and select the top-eight PSFs as representative of the best fit PSFs. We infer the host \sersic\ parameters (i.e., host flux, \Reff, \sersic\ index) using a weighted arithmetic mean. The weight is calculated by:
 \begin{eqnarray}
 \label{eq:weights}
 w_i = exp \big(- \alpha \frac{ (\chi_i ^2 - \chi_{best} ^2 )}{2 \chi_{best} ^2} \big),
@@ -532,57 +532,57 @@ Taking the stellar population, we estimate the stellar mass content of each host
 The inferred $L_R$ and $M_*$ are listed in Table~\ref{tab:result_sersic}. In the rest of this section, we compare their relations to the \mbh.
 
 \subsection{\mbh-\lhost\ relation}\label{sec:ml}
-We show our measurements of the \mbh-\lhost\ relation together with the comparison sample in Figure~\ref{fig:ML}, panel (a). Following common practice, we fit the local relation as a linear relation,
+We show our measurements of the \mbh-\lhost\ relation together with the comparison sample in Figure~\ref{fig:ML}. Following common practice, we fit the local relation as a linear relation,
 \begin{eqnarray}
 \label{eq:MLlocal}
 \log \big( \frac{\mathcal M_{\rm BH}}{10^{7}M_{\odot}})= \alpha + \beta \log(\frac{L_R}{10^{10}L_{\odot}}),
 \end {eqnarray}
-which enables direct comparison to the distant sample. The figure shows that the observed \mbh-\lhost\ relation for our measurements is nearly identical to the local and intermediate ones, indicating that the black hole mass and the host luminosity located at a similar relation at different galaxy age. However, considering that both the black hole and host galaxy are expected to evolve over cosmic time, it is essential to transfer high-$z$ measurements to their values at today so as to compare them in an equivalent frame. Especially, in a passive evolution scenario, we expect \lhost\ to fade over time. 
+which enables direct comparison to the distant sample. The figure shows that the observed \mbh-\lhost\ relation for our measurements is nearly identical to the local and intermediate ones, indicating that the black hole mass and the host luminosity located at a similar relation at different galaxy age.
 
-\begin{figure*}
+\begin{figure}
 \centering
-\begin{tabular}{c c}
-{\includegraphics[width=0.5\textwidth]{fig/MBH-L_obs.pdf}}&
-{\includegraphics[width=0.5\textwidth]{fig/MBH-L_ev.pdf}}\\
-\end{tabular}
+{\includegraphics[width=0.5\textwidth]{fig/MBH-L_obs.pdf}}
 \caption{\label{fig:ML} 
-Illustration of observed (left) and evolution-corrected (right) correlations between \mbh-\lhost, with local linear relation indicated.  The redshift are color-coded, for distant and intermediate AGNs.
+Illustration of observed correlations between \mbh-\lhost, with local linear relation indicated. The redshift are color-coded, for distant and intermediate AGNs.
 }
-\end{figure*} 
+\end{figure} 
 
-We follow \citet{Ding2017b} and parametrize the luminosity evolution with the functional form as
+However, considering that both the black hole and host galaxy are expected to evolve over cosmic time, it is essential to transfer high-$z$ measurements to their values at today so as to compare them in an equivalent frame. Especially, in a passive evolution scenario, we expect \lhost\ to fade over time. 
+We consider this scenario following \citet{Ding2017b} and parametrize the luminosity evolution with the functional form as
 $d{\rm mag}_{\rm R} \sim d\log(1+z)$, i.e.,
 \begin{eqnarray}
 \label{eq:L_relation}
 \log(L_{R,0})=\log(L_{R}) - 1.48 \log (1+z).
 \end{eqnarray} 
-This formalism is more accurate to fit a broad range redshift comparing to a single slope as $d$mag$/dz$. We refer to \citet[][section 5.4]{Ding2017b} for more details. Transferring the \lhost\ to today, we show the evolution-corrected \mbh-\lhost\ relation in Figure~\ref{fig:ML}, panel (b) and find that, at fixed \mbh, the BH in the more distant universe tends to reside in less luminous hosts.
-
-To quantitatively understand this trend, we fit the offset as a function of redshift in form as:
+This formalism is more accurate to fit a broad range redshift comparing to a single slope as $d$mag$/dz$. We refer to \citet[][section 5.4]{Ding2017b} for more details and find that, after transferring the \lhost\ to today, at fixed \mbh, the BH in the more distant universe tends to reside in less luminous hosts. To quantitatively understand this trend, we fit the offset as a function of redshift in form as:
 \begin{eqnarray}
 \label{eq:offset}
 \Delta \log \mathcal M_{\rm BH}= \gamma \log (1 + z),
 \end{eqnarray} 
-where $\Delta \log \mathcal M_{\rm BH} = \log \big( \frac{\mathcal M_{\rm  BH}}{10^{7}M_{\odot}}) -\alpha-\beta\log(\frac{L_{R,0}}{10^{10}L_{\odot}})$. The best-fit and  1-$\sigma$ inference are $\gamma = 0.70 \pm 0.15$, as shown in Figure~\ref{fig:ML-vz}.
+where $\Delta \log \mathcal M_{\rm BH} = \log \big( \frac{\mathcal M_{\rm  BH}}{10^{7}M_{\odot}}) -\alpha-\beta\log(\frac{L_{R,0}}{10^{10}L_{\odot}})$. The best-fit and  1-$\sigma$ inference are $\gamma = 0.70 \pm 0.15$.
 
-\begin{figure}
-\centering
-{
-\includegraphics[height=0.4\textwidth]{fig/MBH-L-vz.pdf}
-}
-\caption{\label{fig:ML-vz} 
-Illustration of the offset in log\mbh\ (VS. $L_R$) as a function of redshift. The orange band is the intrinsic scatter of local linear relation.}
-\end{figure} 
+\textcolor{blue}{Of course, this is a simplified correction, as we only consider the evolution of the host galaxy but not the BH. Anyway, we couldn't exactly know how they were evolving to $z=0$. Analyzing the correlation of the \mbh-\smass\ would be more efficient to help directly understand the connection between their coevolution.}
 
-Given that the current result does not take into account selection effects yet, we will draw the conclusion in section~\ref{select_eff}.
+%\begin{figure}
+%\centering
+%{
+%\includegraphics[height=0.4\textwidth]{fig/MBH-L-vz.pdf}
+%}
+%\caption{\label{fig:ML-vz} 
+%Illustration of the offset in log\mbh\ (VS. $L_R$) as a function of redshift. The orange band is the intrinsic scatter of local linear relation.}
+%\end{figure} 
+
+%Given that the current result does not take into account selection effects yet, we will draw the conclusion in section~\ref{select_eff}.
 
 \subsection{\mbh-\smass\ relation}\label{sec:mm}
-Analyzing the correlation of the \mbh-\smass\ would be more efficient to help directly understand the connection between their coevolution. In Figure~\ref{fig:MM}, we plot the \mbh-\smass\ relation and compare to the local and intermediate sample. We visually see that the relations for the three samples are close from one to another. Similarly, we consider the local as linear relation to fit offset (i.e., $\Delta\log \mathcal M_{\rm BH}$) as a function of $\gamma \log (1 + z)$. We obtain the $\gamma  = 0.74 \pm 0.17$, i.e. tentative evidence for evolution, see Figure~\ref{fig:MM-vz}, panel (a). We also show the ratio of \mbh-\smass\ of the three samples at different redshift in Figure~\ref{fig:MM-vz}, panel (b). We highlight that our results are less biased in both the measurement of \mbh\ and \smass. 
+In Figure~\ref{fig:MM}, we plot the \mbh-\smass\ relation and compare to the local and intermediate sample. We visually see that the relations for the three samples are close from one to another.
+
+Similarly, we consider the local as linear relation to fit offset (i.e., $\Delta\log \mathcal M_{\rm BH}$) as a function of $\gamma \log (1 + z)$. We obtain the $\gamma  = 0.74 \pm 0.17$, i.e. tentative evidence for evolution, see Figure~\ref{fig:MM-vz}, panel (a). We also show the ratio of \mbh-\smass\ of the three samples at different redshift in Figure~\ref{fig:MM-vz}, panel (b). We highlight that our results are less biased in both the measurement of \mbh\ and \smass. 
 
 \begin{figure}
 \centering
 {
-\includegraphics[height=0.4\textwidth]{fig/MBH-Mstar.pdf}
+\includegraphics[width=0.5\textwidth]{fig/MBH-Mstar.pdf}
 }
 \caption{\label{fig:MM} 
 Similar to the Figure~\ref{fig:ML}, but the comparison of the \mbh-\smass\ relations.}
@@ -598,6 +598,15 @@ Similar to the Figure~\ref{fig:ML}, but the comparison of the \mbh-\smass\ relat
 Left: illustration of the offset in log\mbh\ (VS. \smass) as a function of redshift. Right: redshift evolution of the \mbh/\smass.  }
 \end{figure*} 
 
+\textcolor{blue}{We also note that in Figure~\ref{fig:MM-vz}, panel (a), most of our new measurement is visually within the scatter of the local sample. The inference of the positive $\gamma$ seems to stem from the four outliers AGN systems which happens to have lower host mass relative to the BH mass. Thus, we only take the rest of the 28 sample and rerun the statistical analysis, aim to test if offset still exist among them only. As a result, we obtain the $\gamma  = 0.54 \pm 0.22$, indicating a slighter but still positive evolution.}
+
+\begin{figure}
+\centering
+{\includegraphics[width=0.5\textwidth]{fig/MBH-Mstar-vz_subsample.pdf}}
+\caption{\label{fig:MM_restsample} 
+Same as Figure~\ref{fig:MM-vz}, left, but excluding the 4 outliers systems. The result shows the evolution still exist among the other 28 AGN sample.
+}
+\end{figure} 
 
 We highlight that the local sample employed are bulge-dominated galaxies and the adopted \smass\ are equivalent to their bulge masses. That is, we are comparing the \mbh-\smass$_{,total}$ at the distant universe to the \mbh-\smass$_{,bulge}$ at the local. Considering that a major part of the distant systems has indicated the disk component (i.e., the systems with fitted \sersic\ index close to 1), the \smass$_{,bluge}$ of them are supposed to be even less.
 
@@ -624,19 +633,19 @@ We also study the selection effect by only consider the new 32 AGNs, result in a
 \centering
     \caption{The summary for the different inference of $\gamma$.}\label{table:gamma_sf}
      \resizebox{8cm}{!}{
-     \begin{tabular}{lccc}
+     \begin{tabular}{cccc}
      \hline
      Sample & Selection effects& \mbh-\lhost &  \mbh-\smass \\
      &&&\\
      \hline\hline
-Entire sample & No & 0.70$\pm$0.15 & 0.74$\pm$0.17 \\
-Entire sample & Yes & 0.60 $\pm$ 0.30 & 0.80 $\pm$ 0.30 \\
-Only 32 AGNs & No & 1.13$\pm$0.20 & 0.80$\pm$0.20\\
-Only 32 AGNs& Yes & 1.70$\pm$0.40 & 1.30$\pm$0.50\\
+32 AGNs + intermediate & No & 0.70$\pm$0.15 & 0.74$\pm$0.17 \\
+32 AGNs + intermediate& Yes & 0.60 $\pm$ 0.30 & 0.80 $\pm$ 0.30 \\
+32 AGNs & No & 1.13$\pm$0.20 & 0.80$\pm$0.20\\
+32 AGNs& Yes & 1.70$\pm$0.40 & 1.30$\pm$0.50\\
      \hline
      \end{tabular}}
     \tablecomments{
-    Entire sample includes the 32 AGNs and the intermediate redshift AGNs from the reference in Section~\ref{sec:compare_sample}.
+    Entire sample includes the 32 AGNs and the intermediate redshift AGNs from the reference in Section~\ref{sec:compare_sample}. Note that the adopted \lhost\ have been transferred to today assuming the passive evolution scenario using Equation~\ref{eq:L_relation}.
 The results of selection effects used the lognormal prior of \sint.
 }
 \end{table}
