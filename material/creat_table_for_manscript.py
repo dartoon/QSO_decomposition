@@ -302,10 +302,11 @@ for tar_in in range(len(tab_list)):
         
 print "Table for Aklant=========="
 for i in range(len(tab_list)):
-    print tab_list[i], round(MB_Lbol_info[i],2),round(MBH[i],2), round(Mstar[i],2), round(M_R[i],3)
+    print tab_list[i], round(MB_Lbol_info[i],2),round(MBH[i],2), round(Mstar[i],2), round(M_R[i],3), round(IR_result[i][5],3), round(UV_result[i][5],3)
+
   
-print  "Calculate the Eddington ratio:"
-logLedd = 38 + np.log10(1.2) + MBH
-logEdd = MB_Lbol_info - logLedd
-for i in range(len(tab_list)):
-    print tab_list[i], logEdd[i]
+#print  "Calculate the Eddington ratio:"
+#logLedd = 38 + np.log10(1.2) + MBH
+#logEdd = MB_Lbol_info - logLedd
+#for i in range(len(tab_list)):
+#    print tab_list[i], logEdd[i]
