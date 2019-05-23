@@ -104,9 +104,10 @@ if style ==1:
     z=np.concatenate((z_ss, z_b11, z_cosmos),axis=0)
     y=np.concatenate((y_ss, y_b11, y_cosmos),axis=0)
 
-    yerr_imd= np.zeros(len(z_ss)+len(z_b11))+(0.4**2+0.2**2)**0.5   # the error for the fitting
+#    yerr_imd= np.zeros(len(z_ss)+len(z_b11))+(0.4**2+0.2**2)**0.5   # the error for the fitting
     yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
-    yerr = np.concatenate((yerr_imd, yerr_hz),axis=0)
+#    yerr = np.concatenate((yerr_imd, yerr_hz),axis=0)
+#    yerr = np.sqrt(yerr**2 + sint_ml**2)
     
     
 #    #if consider 32 AGN only:
@@ -118,6 +119,7 @@ if style ==1:
     z=z_cosmos[y_cosmos<0.844]
     y=y_cosmos[y_cosmos<0.844]
     yerr = yerr_hz[y_cosmos<0.844]
+    yerr = np.sqrt(yerr**2 + sint_ml**2)
     bools = [y_cosmos<0.844]
     plt.scatter(np.log10(1+zs[MBs!=-99])[bools],(MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml))[bools],c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
@@ -141,7 +143,7 @@ if style ==1:
     import scipy.optimize as op
     nll = lambda *args: -lnlike(*args)
     result = op.minimize(nll, [1.8, 0.3], args=(x, y, yerr))
-    b_ml,sint_ml= result["x"]
+    b_ml, _= result["x"]
     #print b_ml, sint_ml, "ka=",lnlike(theta=[b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
     
     xp = np.array([5, 13])
@@ -163,7 +165,7 @@ if style ==1:
     sampler.run_mcmc(pos, 500)
     samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
     
-    b_ml, sint_mid =np.percentile(samples, 50,axis=0)
+    b_ml, _ =np.percentile(samples, 50,axis=0)
     #print "lnlike=",lnlike(theta=[b_ml, sint_mid],x=x, y=y, yerr=yerr)
     xl = np.linspace(0, 5, 100)
     plt.plot(xl, xl*0+xl*b_ml, color="red", linewidth=4.0,zorder=0)
@@ -219,5 +221,5 @@ plt.legend([Bkc, Hkc, new_sample],[
 "The other 28 AGN systems"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
 #plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
-plt.savefig("MBH-Mstar-vz_subsample.pdf".format(style))
+#plt.savefig("MBH-Mstar-vz_subsample.pdf".format(style))
 plt.show()

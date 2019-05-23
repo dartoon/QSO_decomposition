@@ -140,8 +140,8 @@ plt.errorbar(lumi_s,MBs, xerr=[np.abs(LR_err)[:,0], np.abs(LR_err)[:,1]], yerr=0
 
 if dm ==0:
     plt.title("$M_{BH}-L_{host}$ relation",fontsize=35)
-elif dm ==1:
-    plt.title("Evolution-corrected $M_{BH}-L_{host}$ relation",fontsize=35)
+#elif dm ==1:
+#    plt.title("Evolution-corrected $M_{BH}-L_{host}$ relation",fontsize=35)
 
 plt.xlabel("log$(L_{R,host}/L_{\odot})$",fontsize=35)
 plt.ylabel("log$(M_{BH}/M_{\odot})$",fontsize=35)

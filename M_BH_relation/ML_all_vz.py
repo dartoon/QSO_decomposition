@@ -151,6 +151,7 @@ yerr = np.concatenate((yerr_pk, yerr_hz),axis=0)
 #z=z_cosmos
 #y=y_cosmos
 #yerr = yerr_hz
+yerr = np.sqrt(yerr**2 + sint_ml**2)
 
 #### fit with emcee ###############
 x=np.log10(1+z)
@@ -170,7 +171,7 @@ def lnlike(theta, x, y, yerr):
 import scipy.optimize as op
 nll = lambda *args: -lnlike(*args)
 result = op.minimize(nll, [1.8, 0.3], args=(x, y, yerr))
-b_ml,sint_ml= result["x"]
+b_ml,_= result["x"]
 #print b_ml, sint_ml, "ka=",lnlike(theta=[b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
 
 xp = np.array([5, 13])
@@ -192,7 +193,7 @@ sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(x, y, yerr))
 sampler.run_mcmc(pos, 500)
 samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
 
-b_ml, sint_mid =np.percentile(samples, 50,axis=0)
+b_ml, _ =np.percentile(samples, 50,axis=0)
 #print "lnlike=",lnlike(theta=[b_ml, sint_mid],x=x, y=y, yerr=yerr)
 xl = np.linspace(0, 5, 100)
 plt.plot(xl, xl*0+xl*b_ml, color="red", linewidth=4.0,zorder=0)
