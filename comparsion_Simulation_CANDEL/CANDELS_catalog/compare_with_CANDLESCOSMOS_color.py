@@ -91,7 +91,7 @@ da_result = 1/(1+results[:,0])*c*vec_EE(results[:,0])/h0  #in Mpc
 
 #%% Plot and input my sample
 
-relation = 2  # 0 M*- Reff ; 1 M*-color; 2 M*-n
+relation = 0  # 0 M*- Reff ; 1 M*-color; 2 M*-n; 3 Reff-n relation
 z_range = [1.2,1.7]
 
 z_cut = ((results[:,0]>z_range[0]) * (results[:,0]<z_range[1]))
@@ -99,8 +99,21 @@ z_cut = ((results[:,0]>z_range[0]) * (results[:,0]<z_range[1]))
 #ssfr_break =-10.5
 ssfr_break =100
 
+
+def logR_mstar(mstar, logA, alpha):
+    """
+    The R_Mstar relation in
+    http://adsabs.harvard.edu/abs/2014ApJ...788...28V
+    mstar in unit of log(M*/Msun)
+    """
+#    mstar = np.log10(10**mstar/7.*10**10.)
+#    logr = logA + alpha*(mstar) + 10*alpha + alpha*np.log10(1/7.)
+    r = 10**logA*(10**mstar/(5.*10**10))**alpha
+    logr = np.log10(r)
+    return logr
+
 #blue_galaxy = ([results[:,5]>ssfr_break])[0]
-red_galaxy = ([results[:,5]<ssfr_break])[0]
+all_galaxy = ([results[:,5]<ssfr_break])[0]  #As all galaxy
 #z_cut = ([results[:,0]>0]) 
 
 cmap_r = matplotlib.cm.get_cmap('jet')
@@ -108,15 +121,24 @@ cmap_r = matplotlib.cm.get_cmap('jet')
 plt.figure(figsize=(15, 11))
 if relation == 0:
     Reff_kpc = da_result * 10 **3 * (results[:,1]/3600./180.*np.pi)
-    plt.scatter(results[:,3][z_cut* red_galaxy],np.log10(Reff_kpc[z_cut * red_galaxy]),
-                c=(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
-
+    plt.scatter(results[:,3][z_cut* all_galaxy],np.log10(Reff_kpc[z_cut * all_galaxy]),
+                c=(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
+    mstar_line = np.linspace(10.5,11.5,20)
+    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.155 , alpha=0.76), 'r')
+    mstar_line = np.linspace(9,11.5,20)
+    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.675 , alpha=0.23), 'b')
+    
 elif relation == 1:
-    plt.scatter(results[:,3][z_cut* red_galaxy],(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),
-                c=(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
+    plt.scatter(results[:,3][z_cut* all_galaxy],(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),
+                c=(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
 elif relation == 2:
-    plt.scatter(results[:,3][z_cut* red_galaxy],results[:,2][z_cut* red_galaxy],
-                c=(results[:,7][z_cut* red_galaxy]/results[:,8][z_cut * red_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
+    plt.scatter(results[:,3][z_cut* all_galaxy],results[:,2][z_cut* all_galaxy],
+                c=(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
+elif relation == 3:
+    Reff_kpc = da_result * 10 **3 * (results[:,1]/3600./180.*np.pi)
+    mstar_cut = [(results[:,3]>9.5) * (results[:,3]<11.5)][0]
+    plt.scatter(np.log10(Reff_kpc[z_cut * all_galaxy * mstar_cut]),results[:,2][z_cut* all_galaxy* mstar_cut],
+                c=(results[:,7][z_cut* all_galaxy* mstar_cut]/results[:,8][z_cut * all_galaxy* mstar_cut]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
 
 import sys
 sys.path.insert(0,'../../py_tools')
@@ -130,11 +152,13 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 zs = np.asarray(load_zs(ID))
 mags = np.array(load_mag(ID, folder = '../../')[0])
 Reffs = np.array(load_re(ID, folder = '../../'))[:,0]
+Reffs_e = np.array(load_re(ID, folder = '../../'))[:,1]
 indexs = np.array(load_n(ID, folder = '../../'))[:,0]
 
 dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
 da=1/(1+zs)*c*vec_EE(zs)/h0   #in Mpc
 ID_Reff_kpc = da * 10 **3 * (Reffs/3600./180.*np.pi)
+ID_Reff_kpc_e = da * 10 **3 * ((Reffs_e)/3600./180.*np.pi)
 
 from load_result import load_host_p
 
@@ -165,11 +189,20 @@ cl.set_label('filter flux ratio, WFC3 / ACS',rotation=270,size=30)
 cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
 cl.ax.tick_params(labelsize=30)
 
+
 if relation == 0:
     plt.scatter(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
                 marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
+    plt.errorbar(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],
+             yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS>0],
+             color='k',ecolor='k', fmt='.',markersize=1, zorder = 100)  
     plt.scatter(Mstar[host_flux_ACS<0],np.log10(ID_Reff_kpc)[host_flux_ACS<0],s=180, c ='black',
                 marker="s",zorder=99, vmin=0, vmax=7, edgecolors='white')
+    plt.errorbar(Mstar[host_flux_ACS<0],np.log10(ID_Reff_kpc)[host_flux_ACS<0],
+             yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS<0],
+             color='k',ecolor='k', fmt='.',markersize=1, zorder = 100)  
+
+
 elif relation ==1:
     plt.scatter(Mstar[host_flux_ACS>0],(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
                 marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
@@ -178,14 +211,26 @@ elif relation ==2:
                 marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
     plt.scatter(Mstar[host_flux_ACS<0],indexs[host_flux_ACS<0],s=180, c ='black',
                 marker="s",zorder=99, vmin=0, vmax=7, edgecolors='white') 
+elif relation ==3:
+    plt.scatter(np.log10(ID_Reff_kpc)[host_flux_ACS>0],indexs[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
+                marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
+    plt.errorbar(np.log10(ID_Reff_kpc)[host_flux_ACS>0],indexs[host_flux_ACS>0],
+             xerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS>0],
+             color='k',ecolor='orange', fmt='.',markersize=1, zorder = 10)    
+    plt.scatter(np.log10(ID_Reff_kpc)[host_flux_ACS<0],indexs[host_flux_ACS<0],s=180, c ='black',
+                marker="s",zorder=99, vmin=0, vmax=7, edgecolors='white') 
+    plt.errorbar(np.log10(ID_Reff_kpc)[host_flux_ACS<0],indexs[host_flux_ACS<0],
+             xerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS<0],
+             color='k',ecolor='orange', fmt='.',markersize=1, zorder = 10)  
 
-plt.xlim([8, 12.5])
-plt.xlabel("log$(M_*)/M_{\odot}$",fontsize=35)
+
+plt.xlim([9.5, 12.0])
+plt.xlabel("log$(M_*/M_{\odot})$",fontsize=35)
 plt.tick_params(labelsize=25)
 if relation ==0:
     plt.ylabel("log$(Reff)$ (kpc)",fontsize=35)
     plt.title('$M_* - Reff$ relation, sample redshift range {0}'.format(z_range), fontsize = 25)
-    plt.ylim([-1.1, 2.6])
+    plt.ylim([-0.5, 1.5])
     plt.savefig('Mstar-Reff_z{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
 elif relation ==1:
     plt.ylabel("filter flux ratio, WFC3 / ACS",fontsize=35)
@@ -193,12 +238,17 @@ elif relation ==1:
     plt.ylim([0, 20])
 #    plt.savefig('Mstar-color{0}-{1}_Reff.pdf'.format(z_range[0],z_range[1]))
 elif relation ==2:
-    plt.ylabel("Sersic n",fontsize=35)
+    plt.ylabel("Sersic index",fontsize=35)
     plt.title('$M_* - $Sersic index relation, sample redshift range {0}'.format(z_range), fontsize = 25)
-    plt.ylim([0, 8])
+    plt.ylim([0, 7])
     plt.savefig('Mstar-Sersic_n{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
+elif relation ==3:
+    plt.xlabel("log$(Reff)$ (kpc)",fontsize=35)
+    plt.ylabel("Sersic index",fontsize=35)
+    plt.title('$Reff - $Sersic index relation, sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.xlim([-0.5, 1.5])
+    plt.ylim([0, 8])
+    plt.savefig('Reff-Sersic_n{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
 
 #cl.ax.tick_params(labelsize=15)   #the labe size
-    
-plt.xlim([8, 12.5])
 plt.show()

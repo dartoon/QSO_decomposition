@@ -23,6 +23,7 @@ ID = path.split('/')[-2]
 
 from filter_info import filt_info
 filt = filt_info[ID]
+del filt_info['CID255']
 
 import re
 f = open("fit_result_each/each_PSF_fit_qso.txt","r")
@@ -133,17 +134,17 @@ fixcenter = False
 count = 0
 for i in np.array(range(psf_id, psf_id+1)):   #(psf_name_list))):
     print "{2} by PSF: {0}, PSF NO. {1}".format(psf_name_list[i], i, ID)
-    tag = '../../bestfit_plot/best_fit_{0}'.format(ID)
+#    tag = '../../bestfit_plot/best_fit_{0}'.format(ID)
     psf_i = psf_list[i] * PSF_mask_img_list[i]
     psf_i = psf_i[ct:-ct,ct:-ct]
     source_result, ps_result, image_ps, image_host, error_map=fit_qso(QSO_im, psf_ave=psf_i, psf_std = None,
                                                                      background_rms=background_rms,
                                                                      source_params=source_params, QSO_msk = QSO_msk, fixcenter=fixcenter,
-                                                                     pix_sz = 'drz06', no_MCMC =True,
-                                                                     QSO_std =QSO_std, tag=tag, image_plot=False)
+                                                                     pix_sz = 0.0642, no_MCMC =True, pltshow=1,
+                                                                     QSO_std =QSO_std, tag=None, image_plot=True)
     result = transfer_to_result(data=QSO_im, pix_sz = 'drz06',
             source_result=source_result, ps_result=ps_result, image_ps=image_ps, image_host=image_host, error_map=error_map,
-            filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk =QSO_msk, tag=tag)
+            filt=filt, fixcenter=fixcenter,ID=ID,QSO_msk =QSO_msk, tag=None)
 #    if count == 0:
 #        fit_result.write("#QSO_img intensity: {0} \n".format(round(np.sum(QSO_im*QSO_msk),2)))
 #    fit_result.write("#fit by PSF{0}: \n".format(psf_name_list[i]))

@@ -51,14 +51,14 @@ plt.errorbar(kor_e[:,1],kor_e[:,3], xerr=kor_e[:,2] ,yerr=kor_e[:,4],fmt='.',col
 f4 = 'data/Kormendy_classical_bulges.txt'
 Kocb_loc = np.loadtxt(f4)
 #Kocb_loc = Kocb_loc[Kocb_loc[:,-1]!=2]
-kocb_e = np.zeros([len(Kocb_loc),5])
-kocb_e[:,0] = Kocb_loc[:,-1]
-kocb_e[:,1]= Kocb_loc[:,1]    #LgMstar
-kocb_e[:,2]= Kocb_loc[:,2]  # error
-kocb_e[:,3]= np.log10(Kocb_loc[:,3]) + Kocb_loc[:,6]     #LgMBH
-kocb_e[:,4]= np.sqrt((np.log10(Kocb_loc[:,3]) - np.log10(Kocb_loc[:,4]))**2 +  (np.log10(Kocb_loc[:,5]) - np.log10(Kocb_loc[:,3]))**2) # error
-plt.errorbar(kocb_e[:,1],kocb_e[:,3], xerr=kocb_e[:,2] ,
-             yerr=kocb_e[:,4],fmt='.',color='blue',markersize=15, label='Kormendy 2013 classical bulge')
+kocb = np.zeros([len(Kocb_loc),5])
+kocb[:,0] = Kocb_loc[:,-1]
+kocb[:,1]= Kocb_loc[:,1]    #LgMstar
+kocb[:,2]= Kocb_loc[:,2]  # error
+kocb[:,3]= np.log10(Kocb_loc[:,3]) + Kocb_loc[:,6]     #LgMBH
+kocb[:,4]= np.sqrt((np.log10(Kocb_loc[:,3]) - np.log10(Kocb_loc[:,4]))**2 +  (np.log10(Kocb_loc[:,5]) - np.log10(Kocb_loc[:,3]))**2) # error
+plt.errorbar(kocb[:,1],kocb[:,3], xerr=kocb[:,2] ,
+             yerr=kocb[:,4],fmt='.',color='blue',markersize=15, label='Kormendy 2013 classical bulge')
 
 
 #############################################################
@@ -84,9 +84,9 @@ plt.plot(xl, m_ml0*xl+b_ml0, color="k", linewidth=4.0,zorder=-0.5)
 
 ###################fitting f1 f3 f4 with MCMC#########################
 #np.concatenate((z_ss, z_b11, z_cosmos),axis=0)
-x1=np.concatenate((bloc[:,1], kor_e[:,1], kocb_e[:,1]),axis=0)
-y1=np.concatenate((bloc[:,3], kor_e[:,3], kocb_e[:,3]),axis=0)
-yerr1=(np.concatenate((bloc[:,2], kor_e[:,2], kocb_e[:,2]),axis=0)**2+np.concatenate((bloc[:,4], kor_e[:,4], kocb_e[:,4]),axis=0)**2)**0.5  # 0.2 is the uncertainty level for the L_R
+x1=np.concatenate((bloc[:,1], kor_e[:,1], kocb[:,1]),axis=0)
+y1=np.concatenate((bloc[:,3], kor_e[:,3], kocb[:,3]),axis=0)
+yerr1=(np.concatenate((bloc[:,2], kor_e[:,2], kocb[:,2]),axis=0)**2+np.concatenate((bloc[:,4], kor_e[:,4], kocb[:,4]),axis=0)**2)**0.5  # 0.2 is the uncertainty level for the L_R
 #x = bloc[:,1]
 #y = bloc[:,3]
 #yerr = bloc[:,2]

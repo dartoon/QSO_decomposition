@@ -247,7 +247,7 @@ def load_host_p(ID, folder='../', temp='1Gyrs', dm = 0):
     Mstar = np.log10(host_LR_Vega * 0.54 * 0.684 * 1.4191)  
     return np.log10(host_LR), Mstar, host_Mags
 
-def load_MBH(ID, MB_ID, if_reportHb=0,folder = '..'):
+def load_MBH(ID, MB_ID, if_reportHb=1,folder = '..'):
     #ID change:
     #XID2202 to LID1622
     #XID2138 to LID1820
@@ -282,9 +282,9 @@ def load_MBH(ID, MB_ID, if_reportHb=0,folder = '..'):
     #        cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
             mbh = cal_logMa
             MBs.append(mbh)
-        if ser!=-99 and float(samples[ser][21]) != 0:
-            if if_reportHb ==1:
-                print "use Hb for", ID[tar_in]
+        if ser!=-99 and float(samples[ser][21]) != 0 and if_reportHb==1:
+#            if if_reportHb ==1:
+            print "use Hb for", ID[tar_in]
             FWMH_b = float(samples[ser][19])
             logL5100dr = float(samples[ser][16])
             cal_logMb = 6.91+0.5*(logL5100dr-44)+2.*np.log10(FWMH_b/1000)  # as used in Andreas
@@ -378,7 +378,40 @@ def load_err(prop, ID):
     errs = [un_dict[ID[i]] for i in range(len(ID))]
     return np.array(errs)
     
-
+def load_Lbol(ID, folder='../'):
+    ext_ID = {'XID2202':'LID1622', 'XID2138':'LID1820', 'XID2396':'LID1878', 'CDFS-321':'ECDFS-321'}
+    f_mbh = open(folder+"M_BH_relation/fmos_MBH_table","r")
+    with f_mbh as g:
+        lines = g.readlines()
+    samples = [lines[i].split(' ') for i in range(1,len(lines))]
+    #outliers = ['CDFS-1', 'SXDS-X1136', 'SXDS-X763', 'CDFS-724']
+    ID_ser_dic =  {}
+    import copy
+    tab_sub_list = copy.deepcopy(ID)
+    for i in range(len(tab_sub_list)):
+        if tab_sub_list[i] in ext_ID.keys():
+            tab_sub_list[i] = ext_ID[tab_sub_list[i]]
+    for j in range(len(ID)):
+        count = 0
+        for i in range(len(samples)):
+            if samples[i][1] == tab_sub_list[j]:
+                ID_ser_dic.update({ID[j]:i})
+                count += 1
+        if count == 0:
+            ID_ser_dic.update({ID[j]: -99})
+    samples_Lbol = np.loadtxt(folder+"/M_BH_relation/fmos_BH_Lbol")
+    MB_Lbol_info = []
+    CDFS_Lbol = {'CDFS-1': 45.89,'CDFS-229': 45.68, 'CDFS-724': 44.95}
+    for tar_in in range(len(ID)):       
+        t_name = ID[tar_in]
+        ser = ID_ser_dic[t_name]
+        if ser!=-99 and float(samples_Lbol[ser, 1]) != 0:
+            logLbol = float(samples_Lbol[ser, 1])
+            MB_Lbol_info.append(logLbol)
+        elif ser==-99 and t_name in CDFS_Lbol.keys():
+            logLbol = float(CDFS_Lbol[t_name])
+            MB_Lbol_info.append(logLbol)      
+    return MB_Lbol_info
 #ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 #'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 #'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
