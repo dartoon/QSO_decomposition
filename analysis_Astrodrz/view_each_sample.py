@@ -20,7 +20,12 @@ from filter_info import filt_info, redshift_info
 #'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
 #'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
 #]
-ID = ['CID255']  # note the others and active the line 63,
+ID = ['SXDS-X717']
+ID = ['CID3242']
+ID = ['CDFS-1']
+ID = ['CID237']
+ID = ['CID216']
+
 
 import pickle
 ratio_results, Re_results, n_results, total_flux_results, host_amp_results = [], [], [], [], []
@@ -28,7 +33,14 @@ chisq_list, inf_list, best_PSF_id = [],[], []
 flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PSFs_lib_dict','rb'))
 for j in range(len(ID)):
     filt = filt_info[ID[j]]
-    f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
+    if filt == "F140w":
+        zp = 26.4524
+    elif filt == "F125w":
+        zp = 26.2303
+    elif filt == "F814w":
+        zp = 25.94333    
+#    f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
+    f = open("{0}/analysis_n<4/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
     string = f.read()
     PSF_id = re.findall(r"by PSF(.*?):",string)  # The PSF id as noted in the result files.
     S_n_list = re.findall(r"n_sersic':(.*?),",string)
@@ -86,6 +98,25 @@ for j in range(len(ID)):
     round(weighted_Re,3), round(rms_Re,3), round(weighted_index,3),round(rms_index,3),\
     round(weighted_total_flux,3), round(rms_total_flux,3),\
     round(weighted_host_flux,3), round(rms_host_flux,3))
+    mag = -2.5*np.log10(weighted_host_flux) + zp
+    print "magnitude:", round(mag,3)
+    
+    zs = redshift_info[ID[0]]
+    from dmag import k_corr_R
+    from load_result import EE
+    vec_EE=np.vectorize(EE)
+    dm_k_R = k_corr_R(zs,filt, galaxy_age = '1Gyrs')
+    h0=70.             #km/s/Mpc
+    om=0.3
+    c=299790.        #speed of light [km/s]
+    dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
+    host_Mags = mag -5*(np.log10(dl)-1) + dm_k_R
+    host_LR = 10 ** (0.4*(4.61-host_Mags)) #LR in AB
+    host_Mags_Vega = host_Mags - 0.21  # Transfer to Vega system
+    host_LR_Vega = 10 ** (0.4*(4.43-host_Mags_Vega)) #LR in Vega
+    Mstar = np.log10(host_LR_Vega * 0.54 * 0.684 * 1.4191)  
+    print "Mstar:", round(Mstar,3)
+                                                      
     ratio_results.append([round(weighted_host_ratio,3), round(rms_host_ratio,3)])
     Re_results.append([round(weighted_Re,3), round(rms_Re,3)])
     n_results.append([round(weighted_index,3),round(rms_index,3)])
