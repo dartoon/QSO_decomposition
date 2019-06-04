@@ -55,18 +55,18 @@ def rho_lam_2d(lam, mbh, alpha=-0.29 , lam_star=-1.19, k_lam=0.099, logMc=8.):
     rho_lam_vs_Mbh = 1/np.log10(np.e) * (10**lam/10**lamstar)**(alpha+1) * np.exp(-(10**lam/10**lamstar))
     return np.log10(rho_lam_vs_Mbh)
 vec_rho_lam_2d=np.vectorize(rho_lam_2d)
-mbh = np.linspace(7.4,10, 100)
+mbh_grid = np.linspace(7.4,10, 100)
 lam = np.linspace(-2, 0.25, 101)
 rho_lam_vs_mbh_list = []
-for i in range(len(mbh)):
-    rho_lam_vs_mbh_list.append(vec_rho_lam_2d(lam, mbh[i]))
+for i in range(len(mbh_grid)):
+    rho_lam_vs_mbh_list.append(vec_rho_lam_2d(lam, mbh_grid[i]))
 rho_lam_vs_mbh = np.asarray(rho_lam_vs_mbh_list)
 import matplotlib
 my_cmap = copy.copy(matplotlib.cm.get_cmap('Oranges',10)) # copy the default cmap
-rho_2d = np.asarray([(rho_lam_vs_mbh[i]+rho_bh(mbh[i])) for i in range(len(mbh))])
-for i in range(len(mbh)):
+rho_2d = np.asarray([(rho_lam_vs_mbh[i]+rho_bh(mbh_grid[i])) for i in range(len(mbh_grid))])
+for i in range(len(mbh_grid)):
 #    print mbh[i], rho_bh(mbh[i])
-    plt.scatter(lam*0+mbh[i], lam, c= rho_2d[i], s = 140, vmin = np.min(rho_2d), vmax = np.max(rho_2d),
+    plt.scatter(lam*0+mbh_grid[i], lam, c= rho_2d[i], s = 140, vmin = np.min(rho_2d), vmax = np.max(rho_2d),
                    marker='s', alpha=0.9, edgecolors='none', cmap = my_cmap)
 cl=plt.colorbar()
 cl.set_label('Value in Col. 4', size=20)
@@ -90,7 +90,7 @@ y_line_0 = x_cline*0 - 1.5
 ax.plot(x_cline, y_line_0,'k--')
 y_line_1 = x_cline*0 + 0.0
 ax.plot(x_cline, y_line_1,'k--')
-y_cline = np.linspace(-20, 1, 10)
+y_cline = np.linspace(-20, 20, 10)
 x_line = y_cline*0 + 8.6
 ax.plot(x_line, y_cline,'r--')
 x_cline = np.linspace(7.1, 8.5)
@@ -126,30 +126,38 @@ divider = make_axes_locatable(ax)
 mbh_star = 9.09
 alpha = -1.50
 beta = 0.96
-mbh_x = mbh
+mbh_x = mbh_grid
 #mbh_rho = rho_bh(mbh_x)
 mbh_rho = np.log10(np.sum(10**(rho_2d), axis=1)) # !!! Note the way to combining the likelihood.
 #normize mbh_rho:
 mbh_rho = 10**mbh_rho
 mbh_rho /= np.sum(mbh_rho)* (mbh_x[-1]-mbh_x[1])/len(mbh_x)
-mbh_rho = np.log10(mbh_rho)
 ax_x = divider.append_axes("top", 1.5, pad=0.1, sharex=ax)
-ax_x.plot(mbh_x,mbh_rho, 'k')
 
-#lam_reg = [-1.5,0]
-#ind0, ind1= np.where(lam>=-1.5)[0][0], np.where(lam<=0.)[0][-1]
-#mbh_rho_select = np.log10(np.sum(10**(rho_2d[:,ind0:ind1]), axis=1)) # !!! Note the way to combining the likelihood.
-##normize mbh_rho_select:
-#mbh_rho_select = 10**mbh_rho_select
-#mbh_rho_select /= np.sum(mbh_rho_select)* (mbh_x[-1]-mbh_x[1])/len(mbh_x)
+lam_reg = [-1.5,0]
+#y_line_3 = -1.1*(x_cline-7.5) -0.5
+rho_2d_int = copy.deepcopy(rho_2d)
+for i in range(len(rho_2d_int)):
+    bot_lim = -1.5
+#    bot_lim = -1.1*(mbh_grid[i]-7.5) -0.5
+    ind0, ind1= np.where(lam>=bot_lim)[0][0], np.where(lam<=0.)[0][-1] #y region
+#    print ind0, ind1
+    rho_2d_int[i,:ind0] = -np.inf
+    rho_2d_int[i,ind1:] = -np.inf
+mbh_rho_select = np.log10(np.sum(10**(rho_2d_int), axis=1)) # !!! Note the way to combining the likelihood.
+#normize mbh_rho_select:
+mbh_rho_select = 10**mbh_rho_select
+mbh_rho_select /= np.sum(mbh_rho_select)* (mbh_x[-1]-mbh_x[1])/len(mbh_x)
+
+mbh_rho = np.log10(mbh_rho)
 #mbh_rho_select = np.log10(mbh_rho_select)
+ax_x.plot(mbh_x,mbh_rho, 'k')
 #ax_x.plot(mbh_x,mbh_rho_select, 'b')
-
 ax_x.plot(x_line, y_cline,'r--')
-plt.yticks(np.arange(-10,10,1))
+#plt.yticks(np.arange(-10,10,1))
 plt.ylim([int(mbh_rho.min()),int(mbh_rho.max())+1])
 plt.tick_params(labelsize=15)
-plt.ylabel("log$\phi(M_{BH})$", fontsize=25) 
+#plt.ylabel("log$\phi(M_{BH})$", fontsize=25) 
 
 
 #%%    

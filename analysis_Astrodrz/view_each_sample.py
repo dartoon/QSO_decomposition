@@ -25,6 +25,7 @@ ID = ['CID3242']
 ID = ['CDFS-1']
 ID = ['CID237']
 ID = ['CID216']
+ID = ['CID255']
 
 
 import pickle
@@ -40,7 +41,7 @@ for j in range(len(ID)):
     elif filt == "F814w":
         zp = 25.94333    
 #    f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
-    f = open("{0}/analysis_n<4/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
+    f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
     string = f.read()
     PSF_id = re.findall(r"by PSF(.*?):",string)  # The PSF id as noted in the result files.
     S_n_list = re.findall(r"n_sersic':(.*?),",string)

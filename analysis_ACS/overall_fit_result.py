@@ -28,7 +28,7 @@ flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PS
 folder = "fit_result_each_fix" #"fit_result_each_fix" or "fit_result_each"
 
 for j in range(len(ID)):
-    f = open("{0}/analysis/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
+    f = open("{0}/first_analysis/{1}/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
     string = f.read()
     PSF_id = re.findall(r"by PSF(.*?):",string)
     S_n_list = re.findall(r"n_sersic':(.*?),",string)
@@ -120,7 +120,7 @@ cbar.set_label('Sersic n',  fontsize=12)
 plt.show()
 
 for i in range(len(ID)):
-    print "open {0}/{2}/*_PSF{1}_SB_profile.pdf".format(ID[i],best_PSF_id[i][0],folder)
+    print "open {0}/first_analysis/{2}/*_PSF{1}_SB_profile.pdf".format(ID[i],best_PSF_id[i][0],folder)
 
 #==============================================================================
 # Plot Chisq and alpha distribution
@@ -167,17 +167,18 @@ cbar.set_label('Sersic n',  fontsize=12)
 plt.tick_params(labelsize=15)
 plt.show()   
                
-        
+#%%     
 #==============================================================================
 # Sersic_n, R_eff relation, host_flux_ratio corner relation
 #==============================================================================
+import matplotlib.lines as mlines
 num_boxs = 2
 gridshape = (num_boxs, num_boxs)
 print "Our multivariate grid will therefore be of shape", gridshape
 
 fig = plt.figure(figsize=(20, 15))
 axes = [[False for i in range(num_boxs)] for j in range(num_boxs)]
-axis_lab = [ "Effective Radius", "Sersic n", "host_flux_ratio"]
+axis_lab = [ "Effective Radius (arcsec)", "S\'ersic index", "host flux ratio (%)"]
 value = [[Re_results[i], n_results[i], ratio_results[i]] for i in range(len(ratio_results))]
 n=1
 for j in range(num_boxs):
@@ -193,11 +194,13 @@ for j in range(num_boxs):
             ax.xaxis.set_ticks_position('both')
             texts = []
             for k in range(len(value)):
-                filt = filt_info[ID[i]]
+#                filt = filt_info[ID[i]]
                 ma = 'o'
-                ax.errorbar(value[k][i][0], value[k][y_j][0], xerr= value[k][i][1], yerr= value[k][y_j][1], marker = ma, color = colors[k])
-                texts.append(ax.text(value[k][i][0], value[k][y_j][0], ID[k], fontsize=15))
-            adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red')) 
+                ax.errorbar(value[k][i][0], value[k][y_j][0], 
+                            xerr= value[k][i][1], yerr= value[k][y_j][1],
+                            marker = ma, color = colors[k], markersize=19)
+#                texts.append(ax.text(value[k][i][0], value[k][y_j][0], ID[k], fontsize=15))
+#            adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red')) 
             if i == 0:
 #                plt.ylabel('j+1={0}={1}'.format(axis_lab[y_j],y_j), fontsize=15)
                 plt.ylabel('{0}'.format(axis_lab[y_j]), fontsize=25)
@@ -214,7 +217,16 @@ for j in range(num_boxs):
                 ax.yaxis.set_ticklabels([])
             if y_j <2:
                 ax.xaxis.set_ticklabels([])
-            plt.tick_params(labelsize=25)     
+            plt.tick_params(labelsize=25)   
+        fig.tight_layout(h_pad=-1.,w_pad=-0.3)
+        if i== 0 and j ==0:
+            cax, _ = matplotlib.colorbar.make_axes(ax)
+            cbar = matplotlib.colorbar.ColorbarBase(cax, cmap=cmap, norm=normalize)
+            cbar.set_label('S\'ersic index',  fontsize=25)
+            cax.tick_params(labelsize=30)
+            pos_o = cax.get_position()
+            pos = [pos_o.x0+0.09, pos_o.y0, pos_o.width, pos_o.height]
+            cax.set_position(pos)            
         n += 1
 #        if i==1 and j ==0:
 #            ax.legend(bbox_to_anchor=(1.5, 1), loc=2, borderaxespad=0.,prop={'size': 16})

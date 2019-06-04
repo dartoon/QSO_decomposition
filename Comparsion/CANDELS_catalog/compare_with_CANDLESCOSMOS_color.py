@@ -91,7 +91,7 @@ da_result = 1/(1+results[:,0])*c*vec_EE(results[:,0])/h0  #in Mpc
 
 #%% Plot and input my sample
 
-relation = 0  # 0 M*- Reff ; 1 M*-color; 2 M*-n; 3 Reff-n relation
+relation = 4  # 0 M*- Reff ; 1 M*-color; 2 M*-n; 3 Reff-n relation
 z_range = [1.2,1.7]
 
 z_cut = ((results[:,0]>z_range[0]) * (results[:,0]<z_range[1]))
@@ -119,15 +119,15 @@ all_galaxy = ([results[:,5]<ssfr_break])[0]  #As all galaxy
 cmap_r = matplotlib.cm.get_cmap('jet')
 
 plt.figure(figsize=(15, 11))
+Reff_kpc = da_result * 10 **3 * (results[:,1]/3600./180.*np.pi)
+mstar_cut = [(results[:,3]>9.5) * (results[:,3]<11.5)][0]
 if relation == 0:
-    Reff_kpc = da_result * 10 **3 * (results[:,1]/3600./180.*np.pi)
     plt.scatter(results[:,3][z_cut* all_galaxy],np.log10(Reff_kpc[z_cut * all_galaxy]),
                 c=(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
     mstar_line = np.linspace(10.5,11.5,20)
     plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.155 , alpha=0.76), 'r')
     mstar_line = np.linspace(9,11.5,20)
     plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.675 , alpha=0.23), 'b')
-    
 elif relation == 1:
     plt.scatter(results[:,3][z_cut* all_galaxy],(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),
                 c=(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
@@ -135,10 +135,16 @@ elif relation == 2:
     plt.scatter(results[:,3][z_cut* all_galaxy],results[:,2][z_cut* all_galaxy],
                 c=(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
 elif relation == 3:
-    Reff_kpc = da_result * 10 **3 * (results[:,1]/3600./180.*np.pi)
-    mstar_cut = [(results[:,3]>9.5) * (results[:,3]<11.5)][0]
     plt.scatter(np.log10(Reff_kpc[z_cut * all_galaxy * mstar_cut]),results[:,2][z_cut* all_galaxy* mstar_cut],
                 c=(results[:,7][z_cut* all_galaxy* mstar_cut]/results[:,8][z_cut * all_galaxy* mstar_cut]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
+elif relation == 4:
+    plt.scatter(results[:,0][z_cut* all_galaxy* mstar_cut], np.log10(Reff_kpc[z_cut * all_galaxy * mstar_cut]),
+                c=(results[:,7][z_cut* all_galaxy* mstar_cut]/results[:,8][z_cut * all_galaxy* mstar_cut]),s=280,marker=".",zorder=90, vmin=0, vmax=7, alpha=0.6, edgecolors='white', cmap=cmap_r)
+   
+    z_line = np.linspace(1,2,21)
+    plt.plot(z_line, np.log10(8.9*(1+z_line)**(-0.75)), 'b')
+    plt.plot(z_line, np.log10(5.6*(1+z_line)**(-1.48)), 'r')
+    
 
 import sys
 sys.path.insert(0,'../../py_tools')
@@ -201,16 +207,16 @@ if relation == 0:
     plt.errorbar(Mstar[host_flux_ACS<0],np.log10(ID_Reff_kpc)[host_flux_ACS<0],
              yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS<0],
              color='k',ecolor='k', fmt='.',markersize=1, zorder = 100)  
-
-
 elif relation ==1:
     plt.scatter(Mstar[host_flux_ACS>0],(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
                 marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
+    
 elif relation ==2:
     plt.scatter(Mstar[host_flux_ACS>0],indexs[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
                 marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
     plt.scatter(Mstar[host_flux_ACS<0],indexs[host_flux_ACS<0],s=180, c ='black',
                 marker="s",zorder=99, vmin=0, vmax=7, edgecolors='white') 
+    
 elif relation ==3:
     plt.scatter(np.log10(ID_Reff_kpc)[host_flux_ACS>0],indexs[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
                 marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
@@ -222,7 +228,18 @@ elif relation ==3:
     plt.errorbar(np.log10(ID_Reff_kpc)[host_flux_ACS<0],indexs[host_flux_ACS<0],
              xerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS<0],
              color='k',ecolor='orange', fmt='.',markersize=1, zorder = 10)  
-
+elif relation ==4:
+    plt.scatter(zs[host_flux_ACS>0], np.log10(ID_Reff_kpc)[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
+                marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
+    plt.errorbar(zs[host_flux_ACS>0], np.log10(ID_Reff_kpc)[host_flux_ACS>0],
+             yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS>0],
+             color='k',ecolor='orange', fmt='.',markersize=1, zorder = 10)    
+    plt.scatter(zs[host_flux_ACS<0], np.log10(ID_Reff_kpc)[host_flux_ACS<0],s=180, c ='black',
+                marker="s",zorder=99, vmin=0, vmax=7, edgecolors='white') 
+    plt.errorbar(zs[host_flux_ACS<0], np.log10(ID_Reff_kpc)[host_flux_ACS<0],
+             yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS<0],
+             color='k',ecolor='orange', fmt='.',markersize=1, zorder = 10)  
+   
 
 plt.xlim([9.5, 12.0])
 plt.xlabel("log$(M_*/M_{\odot})$",fontsize=35)
@@ -231,7 +248,7 @@ if relation ==0:
     plt.ylabel("log$(Reff)$ (kpc)",fontsize=35)
     plt.title('$M_* - Reff$ relation, sample redshift range {0}'.format(z_range), fontsize = 25)
     plt.ylim([-0.5, 1.5])
-    plt.savefig('Mstar-Reff_z{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
+#    plt.savefig('Mstar-Reff_z{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
 elif relation ==1:
     plt.ylabel("filter flux ratio, WFC3 / ACS",fontsize=35)
     plt.title('$M_* -$ color relation, sample redshift range {0}'.format(z_range), fontsize = 25)
@@ -241,14 +258,21 @@ elif relation ==2:
     plt.ylabel("Sersic index",fontsize=35)
     plt.title('$M_* - $Sersic index relation, sample redshift range {0}'.format(z_range), fontsize = 25)
     plt.ylim([0, 7])
-    plt.savefig('Mstar-Sersic_n{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
+#    plt.savefig('Mstar-Sersic_n{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
 elif relation ==3:
     plt.xlabel("log$(Reff)$ (kpc)",fontsize=35)
     plt.ylabel("Sersic index",fontsize=35)
     plt.title('$Reff - $Sersic index relation, sample redshift range {0}'.format(z_range), fontsize = 25)
     plt.xlim([-0.5, 1.5])
     plt.ylim([0, 8])
-    plt.savefig('Reff-Sersic_n{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
+#    plt.savefig('Reff-Sersic_n{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
+elif relation ==4:
+    plt.xlabel("z",fontsize=35)
+    plt.ylabel("log$(Reff)$ (kpc)",fontsize=35)
+    plt.title('$z- Reff$ relation, sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.xlim([1., 2])
+    plt.ylim([-0.5, 1.5])
+#    plt.savefig('Reff-z_{0}-{1}_color.pdf'.format(z_range[0],z_range[1]))
 
 #cl.ax.tick_params(labelsize=15)   #the labe size
 plt.show()

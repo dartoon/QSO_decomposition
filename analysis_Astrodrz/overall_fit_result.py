@@ -193,6 +193,7 @@ axes = [[False for i in range(num_boxs)] for j in range(num_boxs)]
 axis_lab = [ "Effective Radius (arcsec)", "S\'ersic index", "host flux ratio (%)"]
 value = [[Re_results[i], n_results[i], ratio_results[i]] for i in range(len(ratio_results))]
 n=1
+outl = ['CDFS-1', 'SXDS-X763', 'CDFS-724']
 #normalize = matplotlib.colors.Normalize(vmin=1, vmax=6)
 #colors = [cmap(normalize(vs)) for vs in chisq_list]
 for j in range(num_boxs):
@@ -215,8 +216,11 @@ for j in range(num_boxs):
                     ma = '^'
                 ax.errorbar(value[k][i][0], value[k][y_j][0], xerr= value[k][i][1], yerr= value[k][y_j][1], 
                             marker = ma, markersize=9, color = colors[k])
-#                texts.append(ax.text(value[k][i][0], value[k][y_j][0], ID[k], fontsize=15))
-#            adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red')) 
+                if ID[k] in outl:
+                    ax.errorbar(value[k][i][0], value[k][y_j][0], xerr= value[k][i][1], yerr= value[k][y_j][1], 
+                                marker = ma, markersize=12, color = 'k')                    
+                    texts.append(ax.text(value[k][i][0], value[k][y_j][0], ID[k], fontsize=15))
+            adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red')) 
             if i == 0:
 #                plt.ylabel('j+1={0}={1}'.format(axis_lab[y_j],y_j), fontsize=15)
                 plt.ylabel('{0}'.format(axis_lab[y_j]), fontsize=25)

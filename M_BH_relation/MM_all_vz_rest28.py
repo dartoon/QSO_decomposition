@@ -48,25 +48,25 @@ b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
 #==============================================================================
 # My new inference
 #==============================================================================
-from load_result import load_host_p, load_MBH, load_err
+from load_result import load_host_p, load_MBH, load_err, load_re
 from load_result import load_zs, load_n
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
-'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
+'SXDS-X50', 'SXDS-X717','SXDS-X969','XID2138','XID2202',\
 'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
 MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
-'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','LID1820','LID1622',\
+'SXDS-X50', 'SXDS-X717','SXDS-X969','LID1820','LID1622',\
 'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
 zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
-MBs = load_MBH(ID,MB_ID, if_reportHb=1)
+MBs = load_MBH(ID,MB_ID, if_reportHb=0)
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
 yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
-
+Re_results = np.asarray(load_re(ID))
 #plt.scatter(Mstar,MBs,c=zs,s=880,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
 
 #plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
@@ -102,8 +102,8 @@ if style ==1:
     z_cosmos, y_cosmos = zs[MBs!=-99], MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml)
                                   
     
-    z=np.concatenate((z_ss, z_b11, z_cosmos),axis=0)
-    y=np.concatenate((y_ss, y_b11, y_cosmos),axis=0)
+#    z=np.concatenate((z_cosmos),axis=0)
+#    y=np.concatenate((y_cosmos),axis=0)
 
 #    yerr_imd= np.zeros(len(z_ss)+len(z_b11))+(0.4**2+0.2**2)**0.5   # the error for the fitting
     yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
@@ -116,18 +116,20 @@ if style ==1:
 #    y=y_cosmos
 #    yerr = yerr_hz    
     
-    #if exclude the top 4 y cosmos:
-    z=z_cosmos[y_cosmos<0.844]
-    y=y_cosmos[y_cosmos<0.844]
-    yerr = yerr_hz[y_cosmos<0.844]
+#    if exclude the top 4 y cosmos:
+#    bools = [[Re_results[:,0]>0.2][0] * [y_cosmos<0.844][0]]
+    bools = [y_cosmos<844]
+    z=z_cosmos[bools]
+    y=y_cosmos[bools]
+    yerr = yerr_hz[bools]
     yerr = np.sqrt(yerr**2 + sint_ml**2)
-    bools = [y_cosmos<0.844]
     plt.scatter(np.log10(1+zs[MBs!=-99])[bools],(MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml))[bools],c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
     plt.errorbar(np.log10(1+zs[MBs!=-99])[bools],(MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml))[bools],
                  yerr= [yerr_highz[0][bools],yerr_highz[1][bools]] ,
                  color='tomato',ecolor='orange', fmt='.',markersize=1)
-    
+#    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)),facecolors='none',
+#                s=680,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green')    
     #### fit with emcee ###############
     x=np.log10(1+z)
     y=y
@@ -221,6 +223,9 @@ plt.legend([Bkc, Hkc, new_sample],[
 "Local by H&R",
 "The other 28 AGN systems"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
-#plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
 #plt.savefig("MBH-Mstar-vz_subsample.pdf".format(style))
 plt.show()
+
+#for i in range(len(bools[0])):
+#    if bools[0][i] == False:
+#        print ID[i]

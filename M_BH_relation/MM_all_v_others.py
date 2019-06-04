@@ -12,42 +12,22 @@ import matplotlib as mat
 import matplotlib.lines as mlines
 from matplotlib import colors
 mat.rcParams['font.family'] = 'STIXGeneral'
-host=plt.figure(figsize=(13,12))
-ax=host.add_subplot(111)   #to get the log(1+z) and z label
-
 import matplotlib as mpl
 mpl.rc('image', cmap='jet')
 import sys
 sys.path.insert(0,'../py_tools')
 
-########## input local data ####
-#==============================================================================
-# The seleting for dm and host_total and dmag are in this local
-#==============================================================================
-from local_MM_v_others import *
-#==============================================================================
-#input Park's data 
-#==============================================================================
-################ bulge or total relaiton? #################
-#host= input('with bulge or total relation??? 0 = bulge;   1= total:')
-####### input Park data ####
-#######in AB system, V band#######
+#The mid-z data
 f0 ='data/SS13_MM.txt'
 ss = np.loadtxt(f0)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
-#if inp_SS13 ==1:
-#    plt.scatter(ss[:,1],ss[:,2],c=ss[:,0],marker="^",s=180,zorder=100,vmin=0.5, vmax=2, edgecolors='white')
-
 f1 ='data/B11_MM.txt'
 b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
-#if inp_b11 ==1:
-#    plt.scatter(b11[:,1],b11[:,2],c=b11[:,0],marker="^",s=180,zorder=100,vmin=0.3, vmax=2, edgecolors='white')
-
 
 #%%
 #==============================================================================
 # My new inference
 #==============================================================================
-from load_result import load_host_p, load_MBH, load_err
+from load_result import load_host_p, load_MBH, load_err, load_re
 from load_result import load_zs, load_n
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
@@ -62,21 +42,28 @@ MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID
 zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
-MBs = load_MBH(ID,MB_ID,if_reportHb=0)
+MBs, La, FWHMa = load_MBH(ID,MB_ID,if_reportHb=0, return_line=1)
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
 yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
+Re_results = np.asarray(load_re(ID))
+n_results = np.asarray(load_n(ID))
+#%%Plot sig_MBH as MBH
+########## input local data ####
+host=plt.figure(figsize=(13,12))
+ax=host.add_subplot(111)   #to get the log(1+z) and z label
+from local_MM_v_others import *
 
+#select_eff = np.loadtxt('../comparsion_Simulation_CANDEL/Select_effect/Andreas/hst_study_bias_logm.txt')
+#plt.scatter(select_eff[:,0],select_eff[:,1],c='blue',
+#            s=100   ,marker=".",zorder=100)
 
-#plt.errorbar(ss[:,2],ss[:,2]-(m_ml*ss[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)
-
-#plt.errorbar(b11[:,2],b11[:,2]-(m_ml*b11[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  #used to be tomato
-plt.scatter(MBs[MBs!=-99],MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),c='tomato',
+plt.scatter(MBs,MBs-(m_ml*Mstar+b_ml),c='tomato',
             s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
-plt.errorbar(MBs[MBs!=-99],MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),
+plt.errorbar(MBs,MBs-(m_ml*Mstar+b_ml),
              yerr= yerr_highz,
              color='tomato',ecolor='orange', fmt='.',markersize=1)    
 
-plt.xlabel("log$M_{BH}$",fontsize=35)
+plt.xlabel("log$(M_{BH}/M_{\odot})$",fontsize=35)
 new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=20,markeredgecolor='k')
 
 plt.yticks(np.arange(-5.5,6,0.5))
@@ -84,15 +71,69 @@ plt.axis([7,9.6,-2.0,3.5])
 plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
 plt.grid()
 plt.tick_params(labelsize=25)
-SS13 = mlines.Line2D([], [], color='darkseagreen', ls='', marker='^', markersize=8)
 
-plt.legend([Bkc, Hkc, SS13, new_sample],[
+plt.legend([Bkc, Hkc, new_sample],[
 'Local by Bennert+11',\
 "Local by H&R",
-"Intermediate redshift AGNs",
 "This work"
-],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
-#plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
+],scatterpoints=1,numpoints=1,loc=2,prop={'size':23},ncol=3,handletextpad=0)
+#plt.savefig("offset_vs_MBH.pdf")
+plt.show()
+
+"""
+#%%Plot sig_MBH as FWHM(Ha)
+host=plt.figure(figsize=(13,12))
+ax=host.add_subplot(111)   #to get the log(1+z) and z label
+xl = np.linspace(-100, 100, 100)
+plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
+plt.scatter(La,MBs-(m_ml*Mstar+b_ml),c='tomato',
+            s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+plt.errorbar(La,MBs-(m_ml*Mstar+b_ml),
+             yerr= yerr_highz,
+             color='tomato',ecolor='orange', fmt='.',markersize=1)    
+
+plt.xlabel("L_Halpha",fontsize=35)
+plt.axis([int(La.min()),int(La.max())+1,-2.0,3.5])
+plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
+plt.grid()
+plt.tick_params(labelsize=25)
+plt.show()
+
+
+#%%Plot sig_MBH as FWHM(Ha)
+host=plt.figure(figsize=(13,12))
+ax=host.add_subplot(111)   #to get the log(1+z) and z label
+xl = np.linspace(1500, 6000, 100)
+plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
+plt.scatter(FWHMa,MBs-(m_ml*Mstar+b_ml),c='tomato',
+            s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+plt.errorbar(FWHMa,MBs-(m_ml*Mstar+b_ml),
+             yerr= yerr_highz,
+             color='tomato',ecolor='orange', fmt='.',markersize=1)    
+
+plt.xlabel("FWHM_Halpha",fontsize=35)
+plt.axis([1800,5500,-2.0,3.5])
+plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
+plt.grid()
+plt.tick_params(labelsize=25)
+plt.show()
+
+#%%Plot sig_MBH as FWHM(Ha)
+host=plt.figure(figsize=(13,12))
+ax=host.add_subplot(111)   #to get the log(1+z) and z label
+xl = np.linspace(1500, 6000, 100)
+plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
+plt.scatter(FWHMa,MBs-(m_ml*Mstar+b_ml),c='tomato',
+            s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+plt.errorbar(FWHMa,MBs-(m_ml*Mstar+b_ml),
+             yerr= yerr_highz,
+             color='tomato',ecolor='orange', fmt='.',markersize=1)    
+
+plt.xlabel("FWHM_Halpha",fontsize=35)
+plt.axis([1800,5500,-2.0,3.5])
+plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
+plt.grid()
+plt.tick_params(labelsize=25)
 plt.show()
 
 #%%
@@ -148,20 +189,87 @@ host=plt.figure(figsize=(13,12))
 ax=host.add_subplot(111)   #to get the log(1+z) and z label
 xl = np.linspace(-100, 100, 100)
 plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
-plt.scatter(logEdd,MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),c='tomato',
+plt.scatter(logEdd,MBs-(m_ml*Mstar+b_ml),c='tomato',
             s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
-plt.errorbar(logEdd,MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),
+plt.errorbar(logEdd,MBs-(m_ml*Mstar+b_ml),
              yerr= yerr_highz,
              color='tomato',ecolor='orange', fmt='.',markersize=1)    
 
 plt.xlabel("log($L_{bol}/L_{Edd}$)",fontsize=35)
-new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=20,markeredgecolor='k')
-
 plt.yticks(np.arange(-5.5,6,0.5))
 plt.xlim([-1.5,0])
 plt.ylim([-2.0,3.5])
 plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
 plt.grid()
 plt.tick_params(labelsize=25)
+#plt.savefig("offset_vs_Edd.pdf")
 plt.show()   
 
+#%%Plot sig_MBH color in 2-D
+host=plt.figure(figsize=(13,12))
+ax=host.add_subplot(111)   #to get the log(1+z) and z label
+xl = np.linspace(1500, 6000, 100)
+plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
+
+import copy, matplotlib
+my_cmap = copy.copy(matplotlib.cm.get_cmap('Oranges',10)) # copy the default cmap
+plt.scatter(MBs,logEdd,c=MBs-(m_ml*Mstar+b_ml),
+            s=580,marker="*",zorder=300, vmin=-0.5, vmax=1., edgecolors='k', cmap=my_cmap)
+cl=plt.colorbar()
+cl.set_label("$\Delta$log$M_{BH}$ (vs $M_*$)", size=20)
+x_cline = np.linspace(7.1, 10)
+y_line_0 = x_cline*0 - 1.5
+plt.plot(x_cline, y_line_0,'k--')
+y_line_1 = x_cline*0 + 0.0
+plt.plot(x_cline, y_line_1,'k--')
+y_cline = np.linspace(-20, 1, 10)
+x_line = y_cline*0 + 8.6
+plt.plot(x_line, y_cline,'r--')
+x_cline = np.linspace(7.1, 8.5)
+y_line_3 = -1.1*(x_cline-7.5) -0.5
+plt.plot(x_cline, y_line_3,'k--')
+
+plt.xlabel("log$(M_{BH}/M_{\odot})$",fontsize=35)
+plt.ylabel("log$L_{bol}/L_{Edd}$", fontsize=35) 
+#plt.yticks(np.arange(-5.5,6,0.5))
+plt.axis([7,9.6,-1.9, 0.3])
+plt.grid()
+plt.tick_params(labelsize=25)
+plt.show()
+
+#%%Plot sig_MBH as Re_result
+host=plt.figure(figsize=(13,12))
+ax=host.add_subplot(111)   #to get the log(1+z) and z label
+xl = np.linspace(0, 6000, 100)
+plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
+plt.scatter(Re_results[:,0],MBs-(m_ml*Mstar+b_ml),c='tomato',
+            s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+plt.errorbar(Re_results[:,0],MBs-(m_ml*Mstar+b_ml),
+             yerr= yerr_highz, xerr=Re_results[:,1],
+             color='tomato',ecolor='orange', fmt='.',markersize=1)    
+
+plt.xlabel("Reff (arcsec)",fontsize=35)
+plt.axis([0.05,1.0,-2.0,3.5])
+plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
+plt.grid()
+plt.tick_params(labelsize=25)
+plt.show()
+
+#%%Plot sig_MBH as Re_result(Ha)
+host=plt.figure(figsize=(13,12))
+ax=host.add_subplot(111)   #to get the log(1+z) and z label
+xl = np.linspace(0, 6000, 100)
+plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
+plt.scatter(n_results[:,0],MBs-(m_ml*Mstar+b_ml),c='tomato',
+            s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+plt.errorbar(n_results[:,0],MBs-(m_ml*Mstar+b_ml),
+             yerr= yerr_highz, xerr=n_results[:,1],
+             color='tomato',ecolor='orange', fmt='.',markersize=1)    
+
+plt.xlabel("Sersic",fontsize=35)
+plt.axis([0.0,5.0,-2.0,3.5])
+plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
+plt.grid()
+plt.tick_params(labelsize=25)
+plt.show()
+"""

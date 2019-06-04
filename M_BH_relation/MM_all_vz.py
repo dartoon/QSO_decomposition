@@ -62,7 +62,7 @@ MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID
 zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
-MBs = load_MBH(ID,MB_ID,if_reportHb=1)
+MBs = load_MBH(ID,MB_ID,if_reportHb=0)
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
 yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
 
@@ -91,6 +91,13 @@ if style ==1:
     plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),
                  yerr= yerr_highz,
                  color='tomato',ecolor='orange', fmt='.',markersize=1)    
+    
+#    #Plot the median circle.
+#    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)),facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+#    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml))-0.21,facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+#    plt.arrow(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)), 0, -0.2, zorder=900, head_length=0.05,head_width=0.01,fc='k',ec='k')
     
     #####fit the evolution##########
     ################################
@@ -158,6 +165,7 @@ if style ==1:
     xl = np.linspace(0, 5, 100)
     plt.plot(xl, xl*0+xl*b_ml, color="red", linewidth=4.0,zorder=0)
     
+    plt.plot(xl, xl*0, color="black", linewidth=2.0,zorder=0)
     def find_n(array,value):           #get the corresponding b for a given m 
         idx= (np.abs(array-value)).argmin()
         return array[idx]
