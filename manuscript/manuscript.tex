@@ -68,8 +68,9 @@ Most galactic nuclei are thought to harbor a supermassive black hole (BH), whose
 Currently, the physical mechanism that can produce such a tight relationship is unknown, due to the daunting range of scales between the BHs dynamical sphere ($\sim$pc) and their host galaxy ($\sim10$ kpc). On the one hand, cosmological simulations of structure formation are able to reproduce the mean local correlations considering the active galactic nucleus (AGN) feedback as the physical driver~\citep{Springel2005, Hopkins2008, Matteo2008, DeG++15}.
 On the other hand, \citet{Peng2007, Jahnke2011, Hirschmann2010} show that, without the need of physical coupling, another possibility is a statistical convergence from the galaxy mergers which reproduces the observed correlations.
 
-A powerful way to understand the origin of these correlations is to study them as a function of redshift, determining how and when they emerged and evolved over cosmic time~\citep[e.g.,][]{TMB04,Sal++06,Woo++06, Jah++09,SS13}. During the past decade, there has been much progress on this front at $z<1$ using type 1 AGNs. For example, the work by \citet{Park15, Tre++07, Pen++06qsob} demonstrated that \mbh\ at fixed mass resided in less luminous galaxies than today. This offset can be explained by a scenario in which supermassive BHs were built up first with galaxy then growing around their deep potential wells. Similarly, the works by \citet{Bennert11, Woo++08} supported this general scenario from the observation of the \mbh-\smass and \mbh-\sigstar relations. \textcolor{red}{[More reference to be added, such as positive evolution for Merloni et al. and other high-z studies such as Peng, non-evolution for Mechtley et al. Xuheng also need to also mention the observables some are stellar mass while others are velocity dispersion.
-]}It should be kept in mind, however, that the evolution is detected at low significance given the considerable error bars, and some studies report results consistent with no evolution given their larger error bars \citet{SS13, Sun2015, Cisternas2011}.
+A powerful way to understand the origin of these correlations is to study them as a function of redshift, determining how and when they emerged and evolved over cosmic time~\citep[e.g.,][]{TMB04,Sal++06,Woo++06, Jah++09,SS13}. During the past decade, there has been much progress on this front at $z<1$ using type 1 AGNs. For example, the work by \citet{Park15, Tre++07, Pen++06qsob} demonstrated that \mbh\ at fixed mass resided in less luminous galaxies than today. Similarly, the works by \citet{Bennert11, Woo++08} find the positive evolution of \mbh\ in the observation of the \mbh-\smass and \mbh-\sigstar relations. \textcolor{blue}{In addition, based on spectroscopic information, \citet{Merloni2010} decomposed the entire spectral energy distributions (SED) into a nuclear AGN and host-galaxy components, finding a positive evolution of black holes to the galaxies in their correlation.
+This offset can be explained by a scenario in which supermassive BHs were built up first with galaxy then growing around their deep potential wells.
+It should be kept in mind, however, that the evolution is detected at low significance given the considerable error bars and limited size of the sample. For example, some studies report results consistent with no evolution given their larger error bars \citet{SS13, Sun2015, Cisternas2011}. In addition, once considering the selection effect \citet{Mechtley2012, Schulze2014}, the observed apparent offset at high redshift is fully consistent with no intrinsic offset.}
 
 In order to make progress, it is important to reduce as much as possible the uncertainties and take great care of selection effects and systematic errors. First, one needs to deal with the inherent uncertainties in BH mass estimates using the so-called ``virial" method. In particular, many studies rely on \mbh\ estimates using the \Civ\ (or \Mgii) line that may have unknown systematics, such as non-gravitational component of the BLR gas dynamics, when compared to local samples with masses based on broad Balmer lines~\citep[i.e. \halpha\ and \hbeta,][]{Schulze2018, Baskin2005, Trakhtenbrot2012}. Second, since the host information is swamped by the bright nuclear light, measuring the host galaxy properties is challenging. Great care is required for modeling the point spread function and whenever possible it is beneficial to study lensed AGNs, since lensing magnifies the host image to lensed arcs~\citep{Pen++06qsob, Ding2017a, Ding2017b}. Last but not least, the selection function needs to be taken into account when interpreting the observations~\citep{Treu2007, Lauer2007}. For instance, it has been demonstrated~\citep{Schulze2011, Schulze2014} that selecting bright AGNs at high redshift results in display steeper slopes than random ones, suggesting the selecting effects can exhibit faster evolution than a random sample. It is also important to consider the selection function when comparing the observed scaling relations with simulated ones~\citep{DeG++15}.
 \textcolor{blue}{
@@ -94,7 +95,7 @@ We design to choose our sample that meets the following criterion to overcome th
 \item Sufficient Eddington ratios to assure the AGN contains accreting black hole.
 \item Balmer lines are available to estimate their \mbh, which avoids potential systematic uncertainties in the UV-based estimators \citep{Greene2005}.
 \item X-ray selected sample results in lower nuclear-to-host ratios facilitating the galaxy mass measurements.
-\item Images of the host galaxy observed by adopted \hst/WFC3 above the 4000 \angstrom\ break, given their redshift range.
+\item Images of the host galaxy observed by adopted \hst/WFC3 above the 4000 \angstrom\ break and below the broad \halpha\ line (6563 \angstrom) given their redshift range.
 \item The large proportion of the sample has multi-band \hst\ imaging, providing extra color information to achieve reliable K-correction and stellar mass inference. 
 \end{enumerate}
 
@@ -108,7 +109,7 @@ The Near IR spectra of the AGNs in these fields are available from the survey of
 
 
 Using the \mbh\ estimator introduced in Section~\ref{mbh}, we estimate the value of \mbh\ and select the targets meets range $7.5 \lesssim {\rm log}$~\mbh$\lesssim8.5$.
-The bolometric luminosities presented in \citet{Schulze2018} enable us to calculate their Eddington ratio $\lambda = L_{\rm bol}/L_{\rm Edd}$ and select the sample which meets our selection window, as shown in Figure~\ref{fig:selection}. Moreover, we have higher preference to select the target which has rest-frame UV images as provided by \citet{Scoville2007}.
+The bolometric luminosities presented in \citet{Schulze2018} help us to calculate their Eddington ratio $\lambda = L_{\rm bol}/L_{\rm Edd}$. We are able to select the sample which have higher Eddington ratios when \mbh\ is lower, to assure the AGN is still activate, as shown in Figure~\ref{fig:selection}. Moreover, we have higher preference to select the target which has rest-frame UV images as provided by \citet{Scoville2007}.
 
 We list all the AGN systems analyzed in this work in Table~\ref{tab:objlist}.
 
@@ -119,7 +120,7 @@ We list all the AGN systems analyzed in this work in Table~\ref{tab:objlist}.
 \includegraphics[height=0.5\textwidth]{fig/AGN_selection.pdf}
 }
 \caption{\label{fig:selection} 
-We present the selection window as used to choose our AGN sample, which is based on the Eddington ratios ($\lambda = L_{\rm Bol}/L_{\rm Edd}$) and \mbh. Our sample (color coded) falls well below the knee of BH mass function at $z=1.5$ \citep[top panel,][]{Schulze2015}. For comparing propose, we plot the high-$z$ luminous SDSS QSO samples that has been studied based on the observation of \hst\ in the reference~\citep[grey squares and circles from][respectively]{Peng2006a, Decarli2010}. 
+We present the selection window as used to choose our AGN sample, which is based on the Eddington ratios ($\lambda = L_{\rm Bol}/L_{\rm Edd}$) and \mbh. Our sample (color coded) falls well below the knee of BH mass function at $z=1.5$ \citep[top panel,][]{Schulze2015}. We also control the sample to have higher Eddington ratios when their \mbh\ is lower, to guarantee the AGN activity. For comparing propose, we plot the high-$z$ luminous SDSS QSO samples that has been studied based on the observation of \hst\ in the reference~\citep[grey squares and circles from][respectively]{Peng2006a, Decarli2010}. 
 }
 \end{figure} 
 
@@ -198,7 +199,7 @@ To avoid any systematic bias between our samples and the literature ones, we com
 
 \begin{eqnarray}
 \label{eq:Ha}
-\log \left(\frac{\mathcal M_{\rm BH} (H\alpha)}{M_{\odot}}\right)&~=~& 6.71+0.48 \log \left(\frac{ \lambda \rm L _{H\alpha}}{10^{42}{\rm erg~s^{-1}}}\right) \nonumber\\
+\log \left(\frac{\mathcal M_{\rm BH} (H\alpha)}{M_{\odot}}\right)&~=~& 6.71+0.48 \log \left(\frac{ \rm L _{H\alpha}}{10^{42}{\rm erg~s^{-1}}}\right) \nonumber\\
 &~+~& 2.12 \log \left(\frac{\rm FWHM(H\alpha)}{1000 ~{\rm km~s^{-1}}}\right) ,
 \end {eqnarray}
 
@@ -206,13 +207,16 @@ and
 
 \begin{eqnarray}
 \label{eq:Hb}
-\log \left(\frac{\mathcal M_{\rm BH}(H\beta) }{M_{\odot}}\right)&~=~& 6.91+0.50\log \left(\frac{ \lambda \rm L _{\lambda_{5100}}}{10^{44}{\rm erg~s^{-1}}}\right) \nonumber\\
+\log \left(\frac{\mathcal M_{\rm BH}(H\beta) }{M_{\odot}}\right)&~=~& 6.91+0.50\log \left(\frac{ \rm L _{\lambda_{5100}}}{10^{44}{\rm erg~s^{-1}}}\right) \nonumber\\
 &~+~& 2.0 \log \left(\frac{\rm FWHM(5100)}{1000 ~{\rm km~s^{-1}}}\right) .
 \end {eqnarray}
 
-Having defined the recipes, we estimate \mbh\ by adopting the emission line properties measured by \citet{Schulze2018}. 14/32 systems have both \halpha\ and \hbeta\ emission line information; we adopt the averaged value for log(\mbh). \textcolor{blue}{3/32 systems, including CDFS-1, CDFS-229 and CDFS-724, are not included in \citet{Schulze2018}; their \halpha\ emission lines information is provided by \citet{Suh2015}}.
+Having defined the recipes, we estimate \mbh\ by adopting the emission line properties measured by \citet{Schulze2018}. {\color{blue} 3/32 systems, including CDFS-1, CDFS-229 and CDFS-724, are not included in \citet{Schulze2018}; their \halpha\ emission lines information is provided by \citet{Suh2015}.
+14/32 systems have both \halpha\ and \hbeta\ emission line information. However, we only adopt the value for \mbh\ using the \halpha emission line, to assure they are self-consistent.
+%Given that 18/32 sample are lack of \hbeta\ line, we thus adopt the \mbh\ estimated by \halpha\ to our sample in the rest of the work, to avoid the scatter of the \mbh\ by \hbeta\ unevenly spreading into the overall sample.
 
 We summarized the inference of the \mbh\ together with the properties of the emission line in Table~\ref{tab:result_mbh}. 
+}
 
 \begin{deluxetable*}
 {@{\extracolsep{4pt}}lcccccccc}   % need for the gap between the clines.
@@ -226,8 +230,8 @@ We summarized the inference of the \mbh\ together with the properties of the emi
   \multicolumn{4}{c}{using emission line \hbeta} \\
   \cline{2-5}  \cline{6-9} \\
 \colhead{}& 
-\colhead{FWHM}& \colhead{$\log(\lambda \rm L _{H\alpha}$)}& \colhead{$\log$\mbh}& Eddington ratio &
-\colhead{FWHM(5100)}& \colhead{$\log(\lambda \rm L _{\lambda5100})$}& \colhead{$\log$\mbh}& Eddington ratio \\
+\colhead{FWHM}& \colhead{$\log( \rm L _{H\alpha}$)}& \colhead{$\log$\mbh}& Eddington ratio &
+\colhead{FWHM(5100)}& \colhead{$\log( \rm L _{\lambda5100})$}& \colhead{$\log$\mbh}& Eddington ratio \\
 \colhead{}& 
 \colhead{(\kms)}& \colhead{(${\rm erg~s^{-1}}$)}& 
 \colhead{(M$_{\odot}$)}& (log$\lambda$)&
@@ -301,7 +305,7 @@ High spatial resolution imaging is required for the decomposition of the nuclear
 For each of the 32 new AGNs we obtained six separate exposures with $\sim399s$ (i.e. total exposure time $\sim2394s$). Table~\ref{tab:objlist} lists the details of the observation. The six exposures for each dither image were combined with the {\sc astrodrizzle} software package, with an output pixel scale of 0\farcs{0642} by setting \texttt{pixfrac} parameter as 0.8 using the \texttt{gaussian} kernel\footnote{\label{note1}For CID255, 3/6 of the dither WFC3 images are corrupted. We achieve to analyze this sample with a same approach, taking the 3 available frames.}. 
 To accurately estimate the background light which could come from both the sky and the detector, we adopt the {\sc photutils} tool.
 
-Multi-band information provides the spectral energy distributions (SED) at a more precise level. 21/32 objects in our sample have rest-frame UV images by \citet{Scoville2007}. Images were taken through the wide ACS/F814W filter at four dither pointing with $507s$ exposures. The final image is drizzled to 0\farcs{03} pixel scale. Given the multi-band image for these systems, we are able to infer their host color and assess the contribution of both the young and old stellar population %to the stellar mass budget 
+Multi-band information provides the SED at a more precise level. 21/32 objects in our sample have rest-frame UV images by \citet{Scoville2007}. Images were taken through the wide ACS/F814W filter at four dither pointing with $507s$ exposures. The final image is drizzled to 0\farcs{03} pixel scale. Given the multi-band image for these systems, we are able to infer their host color and assess the contribution of both the young and old stellar population %to the stellar mass budget 
 which insures an accurate inference of rest-frame R-band luminosity by K-correction, stellar mass and star formation rate (SFR) \citep{Gallazzi2009} . 
 
 %\subsubsection{AGN Emission Line}
@@ -347,8 +351,12 @@ The PSF is directly taken from the PSF library. Usually, a mismatch exists when 
 \end{enumerate}
 
 %Introduce the final inference using fitting:
-The host properties of one AGN system is inferred via the following steps. First, we model the AGN and host using each PSFs in the library. Inputting the fitting ingredients to \lenstronomy, the posterior distribution of the parameter space is calculated and optimized by adopting the Particle Swarm Optimizer (PSO)\footnote{Note that, the \lenstronomy\ enables one to further infer the parametric confidence interval using MCMC. In our case, given a fixed PSF, the $1-\sigma$ inference of each parameter are extremely narrow. Thus, we only take the best-fit inference using PSO for the further calcualtions.}.
-To avoid any unphysical inferences, we set the upper and lower limit for the key parameters as effective radius \Reff$\in[0\farcs{}1,1\farcs{0}]$, and \sersic\ index $n\in[1,7]$. Then, we rank the performance of each PSF based on the $\chi^2$ value and select the top-eight PSFs as representative of the best fit PSFs. We infer the host \sersic\ parameters (i.e., host flux, \Reff, \sersic\ index) using a weighted arithmetic mean. The weight is calculated by:
+The host properties of one AGN system is inferred via the following steps. First, we model the AGN and host using each PSFs in the library. Inputting the fitting ingredients to \lenstronomy, the posterior distribution of the parameter space is calculated and optimized by adopting the Particle Swarm Optimizer (PSO)\footnote{Note that, the \lenstronomy\ enables one to further infer the parametric confidence interval using MCMC. In our case, given a fixed PSF, the $1-\sigma$ inference of each parameter are extremely narrow. Thus, we only take the best-fit inference using PSO for the further calculations.}.
+To avoid any unphysical inferences, we set the upper and lower limit for the key parameters as effective radius \Reff$\in[0\farcs{}1,1\farcs{0}]$, and \sersic\ index $n\in[1,7]$\footnote{{\color{blue}
+%As will see, three AGN systems would have finally inference with abnormally high \sersic\ index value (i.e., $n>5$). We test to reanalyze these sample and fix the \sersic\ index within $n\in[1,4]$ and find their results changes very little ---  $\Delta$\lhost\ and $\Delta$\smass\ within 0.1 dex.
+We also test to use $n\in[1,4]$ as prior, and find that the changes on the inference of the host properties are very limited.
+}}.
+Then, we rank the performance of each PSF based on the $\chi^2$ value and select the top-eight PSFs as representative of the best fit PSFs. We infer the host \sersic\ parameters (i.e., host flux, \Reff, \sersic\ index) using a weighted arithmetic mean. The weight is calculated by:
 \begin{eqnarray}
 \label{eq:weights}
 w_i = exp \big(- \alpha \frac{ (\chi_i ^2 - \chi_{best} ^2 )}{2 \chi_{best} ^2} \big),
@@ -369,9 +377,7 @@ Note that since each AGN system was observed in different location of the detect
 \sigma =   \sqrt{ \frac{  \sum_{i=1}^{8}   (x_i -  \bar{x} ) ^2 * w_i  }{\Sigma w_i} }.
 \end{eqnarray} 
 
-In Figure~\ref{fig:AGN_decomp}, we demonstrate the optimized results inferred by \lenstronomy, including the AGN images, best-fit models, image subtract point source (i.e. host) and the residuals, taking COSMOS-CID1174 as an example. The weights adopted in the analysis are listed in Table~\ref{tab:weight_CID1174}. In order to quickly overview our inference, we summarize the relations of the properties between effective radius \Reff, 2) \sersic\ index and 3) host to total flux ratio in Figure~\ref{fig:flux_r_n_corner}.
-
-
+In Figure~\ref{fig:AGN_decomp}, we demonstrate the optimized results inferred by \lenstronomy, including the AGN images, best-fit models, image subtract point source (i.e. host) and the residuals, taking COSMOS-CID1174 as an example. The weights adopted in the analysis are listed in Table~\ref{tab:weight_CID1174}. In order to quickly overview our inference, we summarize the relations of the properties between effective radius \Reff, 2) \sersic\ index and 3) host to total flux ratio\footnote{We also comparing the distribution of the \sersic\ values to the inactive galaxies in the Appendix~\ref{sec:comp_inactive}.} in Figure~\ref{fig:flux_r_n_corner}.
 
 \begin{figure*}
 \centering
@@ -380,7 +386,7 @@ In Figure~\ref{fig:AGN_decomp}, we demonstrate the optimized results inferred by
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID1174_SB_profile.pdf}
 \caption{\label{fig:AGN_decomp} 
 Figure illustrates the inference for the 32 objects based on the WFC3 images.
-In each row, observed data (first column), best-fit models (second column), data subtracted by the inferred point source (third column),  normalized residuals (fourth column) are presented together with the target ID. In the fifth column, we present the 1-D surface brightness profiles (top) and the corresponding residual (bottom). The 1-D profiles indicate the surface brightness including the data (open circles), the best-fit model (blue line), the AGN (orange line), and the model for the extended sources (green line, i.e., host and other objects). Note that the one-dimensional surface brightness profiles are only for illustration purposes. The actual fitting is based on the two-dimensional images. The remaining 31 objects of the sample are shown in appendix A.
+In each row, observed data (first column), best-fit models (second column), data subtracted by the inferred point source (third column),  normalized residuals (fourth column) are presented together with the target ID. In the fifth column, we present the 1-D surface brightness profiles (top) and the corresponding residual (bottom). The 1-D profiles indicate the surface brightness including the data (open circles), the best-fit model (blue line), the AGN (orange line), and the model for the extended sources (green line, i.e., host and other objects). Note that the one-dimensional surface brightness profiles are only for illustration purposes. The actual fitting is based on the two-dimensional images. The remaining 31 objects of the sample are shown in Appendix~\ref{sec:restsample}.
 }}
 \end{figure*} 
 
@@ -438,7 +444,7 @@ For this sample, the inflation parameter $\alpha$ calculated by Eq.~\ref{eq:alph
 Illustration of the relations between the inferred host \sersic\ parameters.}
 \end{figure*} 
 
-The inference of the host properties is weighted by eight top-ranked PSFs. With a smaller amount of PSFs, one would possibly underestimate the uncertainties. To understand how the choice of the number of top-ranked PSF affects our inference, we compare to the inference by five and ten top-ranked PSFs. As shown in Figure~\ref{fig:hist_compare}, the results are very consistent, meaning that the host inference has been solid when the amount of selected PSF exceeds five. 
+The inference of the host properties is weighted by eight top-ranked PSFs. The smaller volume of top-ranked  PSFs would possibly underestimate the uncertainties of the inference. To understand how the choice of the number of top-ranked PSF affects our inference, we compare to the inference by using five and ten top-ranked PSFs. As shown in Figure~\ref{fig:hist_compare}, the results are very consistent, meaning that the host inference has been solid when the amount of selected PSF exceeds five. 
 
 \begin{figure*}
 \centering
@@ -554,7 +560,6 @@ We show our measurements of the \mbh-\lhost\ relation together with the comparis
 \end {eqnarray}
 which enables direct comparison to the distant sample. The inferred local relations, as presented in the Figure~\ref{fig:ML}, shows that the observed \mbh-\lhost\ relation for our measurements is nearly identical to the local and intermediate ones. The observational result indicates that the relation between black hole mass and the host luminosity are similar at different period of the universe.
 
-{\color{blue} 
 Considering that both the black hole and host galaxy are expected to evolve over cosmic time, it is essential to transfer high-$z$ measurements to their values at today so as to compare them in an equivalent frame. We will make this comparison taking the evolution effect into account in Section~\ref{sec:ml-ev}.
 
 \begin{figure}
@@ -600,13 +605,13 @@ Similar to the Figure~\ref{fig:ML}, but the comparison of the \mbh-\smass\ relat
 Left: illustration of the offset in log\mbh\ (VS. \smass) as a function of redshift. The orange band is the intrinsic scatter of local linear relation. Right: \mbh/\smass\ as a function of redshift.}
 \end{figure*} 
 
-We visually see that in Figure~\ref{fig:MM-vz}, panel (a), most of our measurements locate within the scattering range of the local sample. We doubt whether the positivity of $\gamma$ stems from the four outliers (i.e., the top-four systems in Figure~\ref{fig:MM}). We thus exclude these systems and re-run the statistical analysis to see if offset still exists among the rest of our sample. As a result, we obtain that $\gamma  = 0.55 \pm 0.29$, indicating the positive evolution trend become weaker but still exists, as shown in Figure~\ref{fig:MM_restsample}.
+We visually see that in Figure~\ref{fig:MM-vz}, panel (a), most of our measurements locate within the scattering range of the local sample. We doubt whether the positivity of $\gamma$ stems from the three outliers (i.e., the top-three systems in Figure~\ref{fig:MM}). We thus exclude these systems and re-run the statistical analysis to see if offset still exists among the rest of our sample. As a result, we obtain that $\gamma  = 0.55 \pm 0.29$, indicating the positive evolution trend become weaker but still exists, as shown in Figure~\ref{fig:MM_restsample}.
 
 \begin{figure}
 \centering
 {\includegraphics[width=0.5\textwidth]{fig/MBH-Mstar-vz_subsample.pdf}}
 \caption{\label{fig:MM_restsample} 
-Same as Figure~\ref{fig:MM-vz}, left, but excluding the 4 outliers systems. The result shows the evolution still exist among the other 28 AGN sample.
+Same as Figure~\ref{fig:MM-vz}, left, but excluding the 3 outliers systems. The result shows the evolution still exist among the other 29 AGN sample.
 }
 \end{figure} 
 
@@ -681,9 +686,9 @@ The inferred $\gamma$ here could have large systematic given the limitations in 
 \centering
 \begin{tabular}{c c}
 \subfloat[\mbh-\lhost\ relation, evolution-corrected]
-{\includegraphics[height=0.4\textwidth]{fig/MBH-L_ev.pdf}}&
+{\includegraphics[height=0.5\textwidth]{fig/MBH-L_ev.pdf}}&
 \subfloat[offset in log\mbh\ (VS. \lhost) as a function of redshift]
-{\includegraphics[height=0.4\textwidth]{fig/MBH-L-vz.pdf}}\\
+{\includegraphics[height=0.5\textwidth]{fig/MBH-L-vz.pdf}}\\
 \subfloat[\mbh-\lhost, flat prior]
 {\includegraphics[width=0.5\textwidth]{fig/ML_MC_seleff_flatprior.pdf}}&
 \subfloat[\mbh-\lhost, lognormal prior]
@@ -693,62 +698,46 @@ The inferred $\gamma$ here could have large systematic given the limitations in 
 Same as previous figures but for \mbh-\lhost relation, considering the passive evolution correction for host galaxy luminosity.}
 \end{figure*} 
 
+{\color{blue}
+\subsection{The origin of the offset}
+We seek for the cause that could raise the evolution in the BH and host galaxy correlations at high redshift. We consider if the offset is related to the AGN activities. The straightforward way is to study such offset, i.e. $\Delta \log \mathcal M_{\rm BH}$, as a function of \mbh\ and Eddington ratios, showing in Figure~\ref{fig:offset_vs_MBH_edd}. Interestingly, we visually see the trend that the offset turns to be larger with at value of \mbh. However, at higher Eddington ratio, the offset turns to be lower.
+ {\color{red} Some interpretations need to be presented.}
+
+\begin{figure*}
+\centering
+\begin{tabular}{c c}
+\subfloat[Offset of the \mbh-\smass\ relation as a function of \mbh.]
+{\includegraphics[height=0.5\textwidth]{fig/offset_vs_MBH.pdf}}&
+\subfloat[Offset of the \mbh-\smass\ relation as a function of Eddington ratio.]
+{\includegraphics[height=0.5\textwidth]{fig/offset_vs_Edd.pdf}}\\
+\end{tabular}
+\caption{\label{fig:offset_vs_MBH_edd} 
+Illustration of the offset for high-$z$ \mbh-\smass\ sample as a function of \mbh\ (left) and Eddington ratio (right).}
+\end{figure*} 
+}
 
 \subsection{Systematic error}
 In this work, we use the start-of-the-art techniques to derive the host flux from the AGN image. The fidelity of the inferred apparent magnitudes of the host galaxies are high. Nevertheless, we adopt one stellar population to the overall sample to derive the rest-frame R band luminosity and stellar mass.
 We note that adopting the private stellar populations for each samples which havs both multi-band host magnitude could be more robust in principle. However, considering that the host magnitude in ACS band is faint (host-total flux ratio $< 30\%$), the fidelity of the SED fitting is actually lost. Perhaps the best way to derive the stellar population is to combining our measurements to the ground-based photometry.
+
 We highlight that, in this particular paper, we focus most on the decomposing of the AGN image to present our inference of the host. In the mean time, we carry out a rapid analysis of the \mbh\ and host properties relations. The measurements incorporating the ground-based photometry and the comparison with the simulations are presented in our companion paper.
 
 At last, we stress that the uncertainty in the scaling relations is dominated by the single epoch black hole mass estimates. That is to say, the intrinsic scatter is not necessarily worse at high-$z$ than the low-$z$.
 
 \subsection{Systematic by different local anchor}
-%Why we local anchor for this paper, for a consistency to the previous work.
-%However, the other local samples could be different.
-%The comparison of the local MM?
-%The corresponding systemic error?
-To compare with the local relation, we adopt the local measurements by \citet{Ben++10, Bennert++2011, H+R04}. 
-%This adopting enable a direct comparison with the previous work \citep{Park15, SS13}, which adopted the same local sample. 
-We realize that, in the literature, there are other local measurements have been studied which could also be considered as the local anchor. For example, we present our local \mbh-\smass\ sample and the ones by \citet{Kormendy13} (hereafter K13) together in Figure~\ref{fig:local_MM_comp}. To test whether different local sample changes the conclusion of the co-evolution, we use different combinations of the these sample and compare their difference by fitting them as linear relation, i.e. Equation~\ref{eq:MMlocal}. It turns out that the local anchor inferred by HR04+B11 has a lower intercept value $\alpha$ compared to the one by K13+B11 by 0.3~dex. As a consequence, adopting the local by K13+B11 would raise the local relation, hence mitigate the offset of $\Delta\log\mathcal M_{\rm BH}$ and $\gamma$ by a factor of 0.3~dex. Given the values in Table~\ref{fig:MM_restsample}, this mitigating wouldn't change our inference of $\gamma$ from positive to negative. However, this quick comparison of the local sample highlights the need of the solid local baseline for the future studies (Bennert et al., in prep).
+To compare our high-$z$ sample the local relation, we adopt the local measurements by \citet{Ben++10, Bennert++2011, H+R04} as the anchor at today. In the literature, there are other local measurements have been studied which could also be considered as the local anchor. We realize that the inconsistency in the different local samples shift our local anchor and thus changes the result of the co-evolutions. 
 
-\begin{figure}
-\centering
-{\includegraphics[width=0.5\textwidth]{fig/local_MM_comparison.pdf}}
-\caption{\label{fig:local_MM_comp} 
-The local \mbh-\smass\ relations from different literature. The black and red line are the best-fit linear relation using the sample by combining B11+HR04 and B11+ K13, respectively, showing a 0.3~dex offset in the intercept value.
-}
-\end{figure} 
+For example, we compare our local \mbh-\smass\ sample to the local quiescent galaxies in \citet{Kormendy13} (hereafter K13). We find that K13's local \mbh-\smass\ relation would raise the anchor by $\sim$0.3~dex. This could mitigate our offset value $\gamma$ by 0.3~dex. However, we also note that the \mbh-\sigstar\ relations in K13 is also higher than the one by our local sample. Note that the \mbh-\sigstar\ relations by the quiescent galaxy are usually used to determine the virial coefficient for AGNs. That is, adopting the K13 would boost the value of our \mbh\ by $\sim$0.3~dex as well. As a result, our inference of the fitted offset $\gamma$ still remains at the same level.
 
-\subsection{Comparison to the inactive galaxies}
-We compared the morphology of AGNs host galaxies to the inactive galaxies in CANDLES imaging survey. We select 4401 inactive galaxies in a comparable redshift range ($1.2<z<1.7$) whose \sersic\ properties are inferred by \citet{VDwel++2012} by \galfit, and their stellar masses are derived by 3-D-HST spectroscopic survey~\citep{Momcheva2016, Brammer2012}.
+This quick comparison of the local sample highlights the need of the solid local baseline for the future studies (Bennert et al., in prep).
 
-In Figure~\ref{fig:Mstar-rn}, we plot the \smass\ versus the \Reff\ and \sersic\ index. The color coding is based on the filter flux ratio between WFC3 and ACS. The distribution of \smass-\Reff\ relation show that our AGN hosts concentrate at the high end of the stellar mass, close to the red sequence. 
-
-\begin{figure*}
-\centering
-\begin{tabular}{c c}
- \hspace{-2.5em}
-{\includegraphics[trim = 0mm 0mm 90mm 0mm, clip, height=0.45\textwidth]{fig/Mstar-Reff.pdf}}&
-{\includegraphics[ height=0.45\textwidth]{fig/Mstar-Sn.pdf}}\\
-\end{tabular}
-\caption{\label{fig:Mstar-rn} 
-The comparison of the galaxy properties between our 32 AGNs' hosts to the CANDLES sample including 4401 inactive galaxies (circles). The color coding is based on the filter flux ratio between WFC3 and ACS. For CANDLES sample, the WFC3/F125W flux is taken. The black squares are the AGN samples with only WFC3 band observation.
-}
-\end{figure*} 
-
-We also compare the histogram of the inferred \Reff\ and \sersic\ n to the inactive galaxies in Figure~\ref{fig:hist_rn}, where there is no significant difference between their distribution and median value. We perform the Kolmogorov-Smirnov test to interpret the p-value as 0.42 and 0.04 for \Reff\ and $n$, respectively. We thus conclude that the host galaxies of our AGN sample are representative of the overall population of galaxies at comparable luminosity and stellar mass at the same redshift.
-
-\begin{figure}
-\centering
-{\includegraphics[ height=0.3\textwidth]{fig/Hist_Reff.pdf}}\\
-{\includegraphics[ height=0.3\textwidth]{fig/Hist_Sn.pdf}}
-\caption{\label{fig:hist_rn} 
-The comparison of the histogram of the \Reff\ and \sersic\ n, with median value indicated.}
-\end{figure} 
-
-%The distribution shows that our AGN host are located at a higher end of the stellar mass at region where 
-
-\subsection{JWST}
-\textcolor{red}{Xuheng: some comments on JWST have been made at the end of the Summary. Do we need to put more discussion here?}
+%\begin{figure}
+%\centering
+%{\includegraphics[width=0.5\textwidth]{fig/local_MM_comparison.pdf}}
+%\caption{\label{fig:local_MM_comp} 
+%The local \mbh-\smass\ relations from different literature. The black and red line are the best-fit linear relation using the sample by combining B11+HR04 and B11+ K13, respectively, showing a 0.3~dex offset in the intercept value.
+%}
+%\end{figure} 
 
 \section{Summary} \label{sec:sum}
 We studied the evolution of the correlations between the supermassive black hole and their host galaxies using new measurements of 32 X-ray selected AGNs at $1.2<z<1.7$.
@@ -768,7 +757,6 @@ Our inference indicates the evidence of disk component, i.e. the ones with \sers
 Towards a better estimation of the evolution of the scaling relations, we need to address the limitations of this work. First, most of the host-total ration in the \hst/ACS band, the fidelity of the host flux are thus limited at UV. We thus adopt a universal stellar template to the overall galaxies based on the general inference between UV band and IR band, rather than carry out the SED fitting for each galaxy, to derive the \lhost\ and \smass. Second, at this moment, the local scaling relations that we current have are not yet solid. We have found the values of $\gamma$ could vary from 0.8 to 2.0, using different local sample from different literature \citep{Ben++10, Bennert++2011, H+R04, Kormendy13, Bentz2018}. Thus, a solid sample served as the local anchor still needed to be well defined (Bennert et al., in prep). One the other hand, comparing the observational measurements to the ones by the simulation could avoid not only the dependency to the local anchor, but also the bias by selection effect \citep{DeG++15, Khandai2015, Menci2014}. To overcome these limitation, we are currently incorporating our measurement with the ground-based photometry to derive SED fitting, in order to compare with the sample by simulations, which will be presented in our coming up paper.
 
 Looking into the future, the forthcoming lunching of {\it James Webb Space Telescope} ({\it JWST}) would provide the high quality imaging data of AGN at higher redshift (up to $z\sim$7-10) and thus trace the evolution of correlation at more distant universe. Furthermore, {\it JWST} is capable of showing the morphology of structures feeding black hole accretion and feedback on the host galaxy~\citep{Ford2014}, thus providing the opportunity to understand the origin of the scaling relations and their evolution.
-}
 
 
 \section*{Acknowledgments}
@@ -787,10 +775,39 @@ and standard Python libraries.
 
 \newpage
 \appendix
-\section{A. The demonstration of remaining 31 AGNs}\label{appA}
+
+\section{A. Comparison to the inactive galaxies}\label{sec:comp_inactive}
+We aim to compared the morphology of AGNs host galaxies to the inactive ones. From the CANDLES imaging survey. we collect 4401 inactive galaxies in a comparable redshift range ($1.2<z<1.7$) whose \sersic\ properties are inferred by \citet{VDwel++2012} by \galfit, and their stellar masses are derived by 3-D-HST spectroscopic survey~\citep{Momcheva2016, Brammer2012}.
+%In Figure~\ref{fig:Mstar-rn}, we plot the \smass\ versus the \Reff\ and \sersic\ index. The color coding is based on the filter flux ratio between WFC3 and ACS. The distribution of \smass-\Reff\ relation show that our AGN hosts concentrate at the high end of the stellar mass, close to the red sequence. 
+%\begin{figure*}
+%\centering
+%\begin{tabular}{c c}
+% \hspace{-2.5em}
+%{\includegraphics[trim = 0mm 0mm 90mm 0mm, clip, height=0.45\textwidth]{fig/Mstar-Reff.pdf}}&
+%{\includegraphics[ height=0.45\textwidth]{fig/Mstar-Sn.pdf}}\\
+%\end{tabular}
+%\caption{\label{fig:Mstar-rn} 
+%The comparison of the galaxy properties between our 32 AGNs' hosts to the CANDLES sample including 4401 inactive galaxies (circles). The color coding is based on the filter flux ratio between WFC3 and ACS. For CANDLES sample, the WFC3/F125W flux is taken. The black squares are the AGN samples with only WFC3 band observation.
+%}
+%\end{figure*} 
+We compare the histogram of the inferred \Reff\ and \sersic\ index to the inactive galaxies in Figure~\ref{fig:hist_rn}, where there is no significant difference between their distribution and median value. We also compare the difference by performing the Kolmogorov-Smirnov test and inferring the p-value as 0.42 and 0.04 for \Reff\ and $n$, respectively.
+
+We conclude that the host galaxies of our AGN sample are representative of the overall population of galaxies at comparable luminosity and stellar mass at the same redshift.
+\begin{figure*}[ht]
+\centering
+\begin{tabular}{c c}
+{\includegraphics[ height=0.3\textwidth]{fig/Hist_Reff.pdf}}&
+{\includegraphics[ height=0.3\textwidth]{fig/Hist_Sn.pdf}}
+\end{tabular}
+\caption{\label{fig:hist_rn} 
+The comparison of the histogram of the \Reff\ and \sersic\ n, with median value indicated.}
+\end{figure*} 
+
+\newpage
+\section{B. The demonstration of remaining 31 AGNs}\label{sec:restsample}
 The AGNs decomposition for the other 31 objects of our sample, presented in the same way as Figure~\ref{fig:AGN_decomp}.
 
-\begin{figure}[H]
+\begin{figure}[ht]
 \centering
 %\hspace{-5.5em}
 {
