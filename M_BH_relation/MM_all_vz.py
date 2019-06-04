@@ -78,6 +78,16 @@ if style ==0:
     
     plt.scatter(np.log10(1+zs[MBs!=-99]), 10**( MBs[MBs!=-99]- Mstar[MBs!=-99]),c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
+
+    #Plot the median circle.
+    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]),facecolors='none',
+                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+    plt.arrow(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]), 0,  -0.0013, zorder=900, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
+    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]-0.21),facecolors='none',
+                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+        
+#    
+#    
 if style ==1:
 #    plt.scatter(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml), c='darkseagreen',
 #                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
@@ -92,12 +102,12 @@ if style ==1:
                  yerr= yerr_highz,
                  color='tomato',ecolor='orange', fmt='.',markersize=1)    
     
-#    #Plot the median circle.
-#    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)),facecolors='none',
-#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-#    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml))-0.21,facecolors='none',
-#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-#    plt.arrow(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)), 0, -0.2, zorder=900, head_length=0.05,head_width=0.01,fc='k',ec='k')
+    #Plot the median circle.
+    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)),facecolors='none',
+                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml))-0.21,facecolors='none',
+                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+    plt.arrow(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)), 0, -0.19, zorder=900, head_length=0.05,head_width=0.005,fc='k',ec='k')
     
     #####fit the evolution##########
     ################################
@@ -138,11 +148,9 @@ if style ==1:
     import scipy.optimize as op
     nll = lambda *args: -lnlike(*args)
     result = op.minimize(nll, [1.8, 0.3], args=(x, y, yerr))
-    b_ml,_= result["x"]
-    #print b_ml, sint_ml, "ka=",lnlike(theta=[b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
+    b_ml_offset,_= result["x"]
     
     xp = np.array([5, 13])
-    #plt.plot(xp, m_ml*xp+b_ml, 'r-')
     def lnprior(theta):
         b, sint	 = theta
         if -10 < b < 10.0 and 0 < sint < 10:
@@ -160,10 +168,10 @@ if style ==1:
     sampler.run_mcmc(pos, 500)
     samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
     
-    b_ml, _ =np.percentile(samples, 50,axis=0)
-    #print "lnlike=",lnlike(theta=[b_ml, sint_mid],x=x, y=y, yerr=yerr)
+    b_ml_offset, _ =np.percentile(samples, 50,axis=0)
+    #print "lnlike=",lnlike(theta=[b_ml_offset, sint_mid],x=x, y=y, yerr=yerr)
     xl = np.linspace(0, 5, 100)
-    plt.plot(xl, xl*0+xl*b_ml, color="red", linewidth=4.0,zorder=0)
+    plt.plot(xl, xl*0+xl*b_ml_offset, color="red", linewidth=4.0,zorder=0)
     
     plt.plot(xl, xl*0, color="black", linewidth=2.0,zorder=0)
     def find_n(array,value):           #get the corresponding b for a given m 
@@ -176,9 +184,9 @@ if style ==1:
         b=np.percentile(samples,posi,axis=0)[0]    
         #print b
         plt.plot(xl, xl*0+xl*b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
-    value=round(b_ml,2)
+    value=round(b_ml_offset,2)
     #####################
-    value,sig=round(b_ml,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
+    value,sig=round(b_ml_offset,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
     print value,sig
     plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
     #plt.text(0.15, -1.75, "$M_{BH} $VS$ L_{host}\propto (1+z)^{%s\pm%s}$"%(value,sig),color='blue',fontsize=25)
@@ -217,5 +225,5 @@ plt.legend([Bkc, Hkc, SS13, new_sample],[
 "Intermediate redshift AGNs",
 "This work"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
-#plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
+plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
 plt.show()

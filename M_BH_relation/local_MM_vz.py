@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 ############### with evolution-corrected or not? #################
 #select = 1
-host = 1
+#host = 1
 
 import sys
 sys.path.insert(0,'../py_tools')
@@ -84,7 +84,7 @@ m_ml, b_ml,sint_ml= result["x"]
 #print m_ml, b_ml, sint_ml, "ka=",lnlike(theta=[m_ml, b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
 
 #m_ml, b_ml = 1.12, -4.12  # Park's first use
-m_ml, b_ml = 1.02, -2.91  # Park's inference from the two sample
+#m_ml, b_ml = 1.02, -2.91  # Park's inference from the two sample
 
 xp = np.array([5, 13])
 #plt.plot(xp, m_ml*xp+b_ml, 'r-')
