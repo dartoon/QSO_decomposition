@@ -42,6 +42,13 @@ b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
 if inp_b11 ==1:
     plt.scatter(b11[:,1],b11[:,2],c='darkseagreen',marker="^",s=180,zorder=100, edgecolors='white')
 
+inp_Cis= 1
+f2 = 'data/Cisternas_data.txt'
+cis11 = np.loadtxt(f2)  #0 redshift; 1 M*; 2 BH mass;
+if inp_Cis ==1:
+    plt.scatter(cis11[:,2],cis11[:,1],c='darkseagreen',marker="^",s=180,zorder=100, edgecolors='white')
+
+
 tx, ty = 11.85, 7.
 plt.text(tx, ty, "intermediate\n  sample\nuncertainties",  fontsize=20)
 plt.errorbar(tx+0.2,ty-0.08, xerr=0.2, yerr=0.4, color='darkseagreen',ecolor='black', fmt='^',zorder=-500,markersize=10)
@@ -111,5 +118,5 @@ plt.legend([Bkc,Hkc,SS13,new_sample],[
 "intermediate redshift AGNs",
 "This work"\
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':20},ncol=2)
-#plt.savefig("MBH-Mstar.pdf")
+plt.savefig("MBH-Mstar.pdf")
 plt.show()

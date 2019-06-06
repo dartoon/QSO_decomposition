@@ -292,7 +292,10 @@ We aim to collect the \mbh-\lhost\ and \mbh-\smass\ relations of our samples and
 For comparison with the local relation, we use the local AGN measurements by \citet{Ben++10} and \citet{Bennert++2011} (hereafter, B10 and B11) to define our zero-point. The sample by B10 consists of 19 \mbh-\lhost\ measured with reliable \mbh\ measured using reverberation-mapped (uncertainty level $\sim0.15$ dex). The work of B11 contains 25 \mbh-\smass\ local active AGNs, where the \mbh\ are measured from the single-epoch method (\mbh\ uncertainty level $\sim0.4$ dex). To increase the local \smass\ and \mbh\ to the higher range, we also include 30 inactive galaxies (mainly ellipticals or S0) as measured by \citet{H+R04} (hereafter HR04).
 It is worth noting that in the local comparison sample, the bulge mass is equivalent to the total stellar mass for the local comparison sample. In other words, our local comparison is the \mbh-\smass$_{Bulge}$ and not those involving total quantities.
 
-We include in our analysis published samples at intermediate redshift range to understand the redshift evolution of these correlations. We select samples that were analyzed by members of our team, in order to ensure uniform measurements. The intermediate redshift AGNs that we consider include, for the \mbh-\lhost\ relation, 52 objects published by \citet{Park15} at $0.36<z<0.57$ and 27 objects published by \citet{Bennert11, SS13} at $0.5<z<1.9$. Moreover, \citet{Bennert11, SS13} also derive the \smass\ for the 27 objects which enable us to compare to the \mbh-\smass\ relation. We recalibrate the \mbh\ of the intermediate sample using the self-consistent recipes introduced in Section~\ref{mbh}.
+We include in our analysis published samples at intermediate redshift range to understand the redshift evolution of these correlations. We select samples that were analyzed by members of our team, in order to ensure uniform measurements. The intermediate redshift AGNs that we consider include, for the \mbh-\lhost\ relation, 52 objects published by \citet{Park15} at $0.36<z<0.57$ and 27 objects published by \citet{Bennert11, SS13} at $0.5<z<1.9$. Moreover, \citet{Bennert11, SS13} also derive the \smass\ for the 27 objects which enable us to compare to the \mbh-\smass\ relation. {\color{blue} In addition, we adopt a sample of 32 \mbh-\smass\ measurements at $0.3<z<0.9$ by \citet{Cisternas2011} to compare with our sample.
+
+Across the intermediate redshift sample, we recalibrate the \mbh\ by \halpha\ or \hbeta\ using the self-consistent recipes introduced in Section~\ref{mbh}. For \mbh\ estimated by \Mgii\, we adopt the recipe by \citet{Ding2017b} to recalibrate them.
+}
 
 \section{\hst\ observations}
 \label{observation}
@@ -353,8 +356,8 @@ The PSF is directly taken from the PSF library. Usually, a mismatch exists when 
 The host properties of one AGN system is inferred via the following steps. First, we model the AGN and host using each PSFs in the library. Inputting the fitting ingredients to \lenstronomy, the posterior distribution of the parameter space is calculated and optimized by adopting the Particle Swarm Optimizer (PSO)\footnote{Note that, the \lenstronomy\ enables one to further infer the parametric confidence interval using MCMC. In our case, given a fixed PSF, the $1-\sigma$ inference of each parameter are extremely narrow. Thus, we only take the best-fit inference using PSO for the further calculations.}.
 To avoid any unphysical inferences, we set the upper and lower limit for the key parameters as effective radius \Reff\ $\in[0\farcs{}1,1\farcs{0}]$, and \sersic\ index $n\in[1,7]$\footnote{{\color{blue}
 %As will see, three AGN systems would have finally inference with abnormally high \sersic\ index value (i.e., $n>5$). We test to reanalyze these sample and fix the \sersic\ index within $n\in[1,4]$ and find their results changes very little ---  $\Delta$\lhost\ and $\Delta$\smass\ within 0.1 dex.
-We test to use $n\in[1,4]$ as prior, and find that the changes on the inference of the host properties are very limited.
-}}.
+We test to use $n\in[1,4]$ as prior to fit the systemic with high \sersic\ index ($n>4.5$), and find that the changes on the inference of their host magnitude are very limited ($<0.03$ dex).}
+}.
 Then, we rank the performance of each PSF based on the $\chi^2$ value and select the top-eight PSFs as representative of the best fit PSFs. We infer the host \sersic\ parameters (i.e., host flux, \Reff, \sersic\ index) using a weighted arithmetic mean. The weight is calculated by:
 \begin{eqnarray}
 \label{eq:weights}
@@ -376,7 +379,7 @@ Note that since each AGN system was observed in different location of the detect
 \sigma =   \sqrt{ \frac{  \sum_{i=1}^{8}   (x_i -  \bar{x} ) ^2 * w_i  }{\Sigma w_i} }.
 \end{eqnarray} 
 
-In Figure~\ref{fig:AGN_decomp}, we demonstrate the optimized results inferred by \lenstronomy, including the AGN images, best-fit models, image subtract point source (i.e. host) and the residuals, taking COSMOS-CID1174 as an example. The weights adopted in the analysis are listed in Table~\ref{tab:weight_CID1174}. In order to quickly overview our inference, we summarize the relations of the properties between effective radius \Reff, 2) \sersic\ index and 3) host to total flux ratio\footnote{We also comparing the distribution of the \sersic\ values to the inactive galaxies in the Appendix~\ref{sec:comp_inactive}.} in Figure~\ref{fig:flux_r_n_corner}.
+In Figure~\ref{fig:AGN_decomp}, we demonstrate the optimized results inferred by \lenstronomy, including the AGN images, best-fit models, image subtract point source (i.e. host) and the residuals, taking COSMOS-CID1174 as an example. The weights adopted in the analysis are listed in Table~\ref{tab:weight_CID1174}. In order to quickly overview our inference, we summarize the relations of the properties between effective radius \Reff, 2) \sersic\ index and 3) host to total flux ratio in Figure~\ref{fig:flux_r_n_corner}. We also comparing the distribution of the \sersic\ values to the inactive galaxies in the Appendix~\ref{sec:comp_inactive}.
 
 \begin{figure*}
 \centering
@@ -601,7 +604,9 @@ Similar to the Figure~\ref{fig:ML}, but the comparison of the \mbh-\smass\ relat
 {\includegraphics[width=0.5\textwidth]{fig/MBH-Mstar-vz_style0.pdf}}\\
 \end{tabular}
 \caption{\label{fig:MM-vz} 
-Left: illustration of the offset in log\mbh\ (VS. \smass) as a function of redshift. The orange band is the intrinsic scatter of local linear relation. Right: \mbh/\smass\ as a function of redshift. We use open green circle to show the expected shifting of the median offset value before and after consider the selection effect using framework by \citet{Schulze2011} in Section~\ref{sec:sf_framework}.
+Left: illustration of the offset in log\mbh\ (VS. \smass) as a function of redshift. The orange band is the intrinsic scatter of local linear relation. Right: \mbh/\smass\ as a function of redshift. 
+{\color{blue} We use green open circles to show the expected shifting of the median value of the $\Delta$\mbh\ before and after consider the selection effect using framework by \citet{Schulze2011} in Section~\ref{sec:sf_framework}.}
+{\color{red} [Xuheng: The blue points are from Cisternas et al. 2011, they are consistent to the local ones.]}
 }
 \end{figure*} 
 
@@ -666,9 +671,9 @@ Constraining the evolution factor $\gamma$ of \mbh-\smass\ relation using Equati
 \end{figure*} 
 
 \subsubsection{Test selection effect using Bayesian framework} \label{sec:sf_framework}
-We use the Bayesian framework introduced by \citet{Schulze2011} to estimate the expected bias that could be raised by the selection window and local sample that we adopted. The framework considers the fact that, with the particular selection window, the intrinsic scatter in the BH-bulge relation has trend to decline regime of the stellar mass function, result in an average stellar masses lower than the relation. Moreover, the other relevant sources of bias are considered, for example the active fraction among SMBHs varies by the black hole mass function, in the sense that BHs with higher mass are less likely to be active than lower mass ones. 
+We use the Bayesian framework introduced by \citet{Schulze2011} to estimate the expected bias that could be raised by our selection window and local sample that adopted. Given the particular selection window (\mbh,  $L_{\rm bol}$ and Eddington ratio $\lambda$), the framework considers the fact that the intrinsic scatter in the BH-bulge relation has trend to decline regime of the stellar mass function, result in an average stellar masses lower than the relation. Moreover, the other relevant sources of bias are considered in this framework, for example the active fraction among SMBHs varies by the black hole mass function, in the sense that BHs with higher mass are less likely to be active than lower mass ones. 
 
-Considering our specific selection limits: $\log($\mbh$)~\in[7.5, 8.56]$, $\log(L_{\rm bol}) \in [45.0, 46.2] $ and  $\log(\lambda) \in [-2.0, 0.5]$, their is an expected bias of 0.21~dex in the inference of $\Delta\log($\mbh$)$ for samples at $z\sim1.5$. Interestingly, this bias could account for the offset that obtained in Section~\ref{sec:mm}. We use open green circle to point out the shifting of the expected population given the biases in Figure~\ref{fig:MM-vz}.
+Considering our specific selection limits: $\log($\mbh$)~\in[7.5, 8.56]$, $\log(L_{\rm bol}) \in [45.0, 46.2] $ and  $\log(\lambda) \in [-2.0, 0.5]$, we infer an expected bias of 0.21~dex in the observed $\Delta\log($\mbh$)$ for samples at $z\sim1.5$. Interestingly, this bias could account for the offset that obtained in the \mbh-\smass\ correlations in Section~\ref{sec:mm}. We use green open circles to point out the shifting of the expected population given these biases, as shown in Figure~\ref{fig:MM-vz}.
 
 Our conclusion is that the considering the selection effect using framework by \citet{Schulze2011}, we get consistent \mbh-\smass\ with the local sample.
 
@@ -709,7 +714,7 @@ Same as previous figures but for \mbh-\lhost relation, considering the passive e
 
 {\color{blue}
 \subsection{The origin of the offset}
-{\color{red}[Xuheng:  Given their larger uncertainty, do we still want to present this?]}
+{\color{red}[Xuheng:  Given their larger uncertainty, do we still want to present these figures?]}
 We seek for the cause that could raise the evolution in the BH and host galaxy correlations at high redshift. We consider if the offset is related to the AGN activities. The straightforward way is to study such offset, i.e. $\Delta \log \mathcal M_{\rm BH}$, as a function of \mbh\ and Eddington ratios, showing in Figure~\ref{fig:offset_vs_MBH_edd}. Interestingly, we visually see the trend that the offset turns to be larger with at value of \mbh. However, at higher Eddington ratio, the offset turns to be lower.
  {\color{red} Some interpretations need to be presented.}
 
@@ -734,10 +739,10 @@ We highlight that, in this particular paper, we focus most on the decomposing of
 
 At last, we stress that the uncertainty in the scaling relations is dominated by the single epoch black hole mass estimates. That is to say, the intrinsic scatter is not necessarily worse at high-$z$ than the low-$z$.
 
-\subsection{Systematic by different local anchor}
-To compare our high-$z$ sample the local relation, we adopt the local measurements by \citet{Ben++10, Bennert++2011, H+R04} as the anchor at today. In the literature, there are other local measurements have been studied which could also be considered as the local anchor. We realize that the inconsistency in the different local samples shift our local anchor and thus changes the result of the co-evolutions. 
+\subsection{Systematic with different local anchor}
+To compare our high-$z$ sample to the local relation, we adopt the local measurements by \citet{Ben++10, Bennert++2011, H+R04}. In the literature, there are other local sample have been measured which also usually be considered as the local anchor. We note that different local samples have inconsistency which could change the result of the co-evolutions. 
 
-For example, we compare our local \mbh-\smass\ sample to the local quiescent galaxies in \citet{Kormendy13} (hereafter K13). We find that K13's local \mbh-\smass\ relation would raise the anchor by $\sim$0.3~dex. This could mitigate our offset value $\gamma$ by 0.3~dex. However, we also note that the \mbh-\sigstar\ relations in K13 is also higher than the one by our local sample. Note that the \mbh-\sigstar\ relations by the quiescent galaxy are usually used to determine the virial coefficient for AGNs. That is, adopting the K13 would boost the value of our \mbh\ by $\sim$0.3~dex as well. As a result, our inference of the fitted offset $\gamma$ still remains at the same level.
+To estimate this effect, we compare our local \mbh-\smass\ sample to the local quiescent galaxies by \citet{Kormendy13} (hereafter K13). We find that K13's local \mbh-\smass\ relation would raise the anchor by $\sim$0.3~dex and totally erase the offset of $\Delta\log$\mbh. However, we also note that the \mbh-\sigstar\ relations in K13 is also higher than the one by our local sample. Note that the \mbh-\sigstar\ relations by the quiescent galaxy are usually used to determine the virial coefficient for AGNs. That is, adopting the K13 would boost the value of our \mbh\ by $\sim$0.3~dex as well. As a result, our inference of the fitted offset $\gamma$ still remains at the same level.
 
 This quick comparison of the local sample highlights the need of the solid local baseline for the future studies (Bennert et al., in prep).
 
@@ -754,7 +759,7 @@ We studied the evolution of the correlations between the supermassive black hole
 
 We used the published near-infrared spectroscopic observations \halpha\ and \hbeta\ emission lines to estimate the reliable values of BH mass. To obtain the properties of the AGN host galaxies, we performed the AGN image decomposition using the state-of-the-art techniques. We adopted the \hst/WFC3 infrared channel to observe the high-resolution AGN imaging data and collected the PSF-stars in across all the fields to build to a library of PSF for the fitting. Using the latest image modeling tool \lenstronomy, we decomposed the AGN image in 2-D plane taking each PSF in the library. We obtained the host \sersic\ property (i.e., host flux, effective radius, \sersic\ index) using a weighted arithmetic mean based on the inference by the eight top-ranked PSFs. Incorporating with the inference by \hst/ACS image, we selected the stellar population, hence derived the rest-frame R band Luminosity (\lhost) and stellar mass of the host (\smass).
 
-Combining out high-$z$ measurements with the intermediate redshift samples from the literature~\citep{Park15, Bennert11, SS13}, we compared the scaling relations to the ones by the local with main results summarized as follows:
+Combining our high-$z$ measurements with the intermediate redshift samples from the literature~\citep{Park15, Bennert11, SS13, Cisternas2011}, we compared the scaling relations to the ones by the local with main results summarized as follows:
 \begin{enumerate}
 \item The \mbh-\smass\ relations at higher redshift are inconsistent with the local ones, i.e. Figure~\ref{fig:MM}, \ref{fig:MM-vz}.
 \item Considering the correction for passive evolution of galaxy luminosity, the \mbh-\lhost\ relations at higher redshift are inconsistent with the local ones,  i.e. Figure~\ref{fig:ML-vz}.
@@ -762,7 +767,7 @@ Combining out high-$z$ measurements with the intermediate redshift samples from 
 \item We compare the properties of our active galaxy sample to the ones from inactive galaxy in the CANDLES imaging survey at the same redshift range, finding no significant discrepancy among them.
 \end{enumerate}
 
-Our inference indicates the evidence of disk component, i.e. the ones with \sersic\ $n<2$, and the local comparing samples are bulge dominated sample, we hence conclude that the BHs 8-10~Gyrs ago reside in bulges, if not entire galaxies, which are less massive/luminous than today.
+Our inference indicates the evidence of disk+bluge component, i.e. the ones with \sersic\ $n<2$, and the local comparing samples are bulge dominated sample, we hence conclude that the BHs 8-10~Gyrs ago reside in bulges, if not entire galaxies, which are less massive/luminous than today.
 
 Towards a better estimation of the evolution of the scaling relations, we need to address the limitations of this work. First, most of the host-total ration in the \hst/ACS band, the fidelity of the host flux are thus limited at UV. We thus adopt a universal stellar template to the overall galaxies based on the general inference between UV band and IR band, rather than carry out the SED fitting for each galaxy, to derive the \lhost\ and \smass. Second, at this moment, the local scaling relations that we current have are not yet solid. We have found the values of $\gamma$ could vary from 0.8 to 2.0, using different local sample from different literature \citep{Ben++10, Bennert++2011, H+R04, Kormendy13, Bentz2018}. Thus, a solid sample served as the local anchor still needed to be well defined (Bennert et al., in prep). One the other hand, comparing the observational measurements to the ones by the simulation could avoid not only the dependency to the local anchor, but also the bias by selection effect \citep{DeG++15, Khandai2015, Menci2014}. To overcome these limitation, we are currently incorporating our measurement with the ground-based photometry to derive SED fitting, in order to compare with the sample by simulations, which will be presented in our coming up paper.
 
@@ -773,7 +778,7 @@ Looking into the future, the forthcoming lunching of {\it James Webb Space Teles
 Based in part on observations made with the NASA/ESA Hubble Space Telescope, obtained at the Space Telescope Science Institute, which is operated by the Association of Universities for Research in Astronomy, Inc., under NASA contract NAS 5-26555. These observations are associated with programs
 \#15115. Support for this work was provided by NASA through grant number HST-GO-15115 from the Space Telescope Science Institute, which is operated by AURA, Inc., under NASA contract NAS 5-26555.
 
-The authors fully appreciate the discussions with Hyewon Suh, Vardha N. Bennert, Anton M. Koekemoer, Takahiro Morishita.
+The authors fully appreciate the discussions with Hyewon Suh, Vardha N. Bennert, Anton M. Koekemoer, Takahiro Morishita and Peter Williams.
 
 XD, SB and TT acknowledge support by the Packard Foundation through a Packard Research fellowship to TT.
 

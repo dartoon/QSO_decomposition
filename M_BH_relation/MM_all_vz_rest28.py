@@ -118,7 +118,7 @@ if style ==1:
     
 #    if exclude the top 4 y cosmos:
 #    bools = [[Re_results[:,0]>0.2][0] * [y_cosmos<0.844][0]]
-    bools = [y_cosmos<844]
+    bools = [y_cosmos<0.844]
     z=z_cosmos[bools]
     y=y_cosmos[bools]
     yerr = yerr_hz[bools]

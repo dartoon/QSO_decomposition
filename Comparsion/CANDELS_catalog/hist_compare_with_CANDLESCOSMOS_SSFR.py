@@ -161,29 +161,29 @@ host_Mags = host_Mags - 0.21  # Transfer to Vega system
 host_LR = 10 ** (0.4*(4.61-host_Mags))
 Mstar = np.log10(host_LR * 0.54 * 0.684 * 1.4191)  
 
-if relation == 0:
-    plt.scatter(Mstar,np.log10(ID_Reff_kpc),s=180, c =zs,marker="s",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
-elif relation ==1:
-    plt.scatter(Mstar,indexs,s=180, c =zs,marker="s",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
-cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
-plt.clim(1.2,1.8)
-plt.xlim([8, 12.5])
-cl.set_label('Source redshift',rotation=270,size=30)
-cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
-cl.ax.tick_params(labelsize=30)   
-plt.xlabel("log$(M_*)/M_{\odot}$",fontsize=35)
-plt.tick_params(labelsize=25)
-if relation ==0:
-    plt.ylabel("log$(Reff)$ (kpc)",fontsize=35)
-    plt.title('$M_* - Reff$ relation, sample redshift range {0}'.format(z_range), fontsize = 25)
-    plt.ylim([-1.5, 2.6])
-    plt.savefig('Mstar-Reff_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))
-elif relation ==1:
-    plt.ylabel("Sersic n",fontsize=35)
-    plt.title('$M_* -$ Sersic_n relation, sample redshift range {0}'.format(z_range), fontsize = 25)
-    plt.ylim([0, 8.2])
-    plt.savefig('Mstar-Sn_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))  
-plt.show()
+#if relation == 0:
+#    plt.scatter(Mstar,np.log10(ID_Reff_kpc),s=180, c =zs,marker="s",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
+#elif relation ==1:
+#    plt.scatter(Mstar,indexs,s=180, c =zs,marker="s",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')
+#cl=plt.colorbar()          #cl take the inforamtion from the lastest plt
+#plt.clim(1.2,1.8)
+#plt.xlim([8, 12.5])
+#cl.set_label('Source redshift',rotation=270,size=30)
+#cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
+#cl.ax.tick_params(labelsize=30)   
+#plt.xlabel("log$(M_*)/M_{\odot}$",fontsize=35)
+#plt.tick_params(labelsize=25)
+#if relation ==0:
+#    plt.ylabel("log$(Reff)$ (kpc)",fontsize=35)
+#    plt.title('$M_* - Reff$ relation, sample redshift range {0}'.format(z_range), fontsize = 25)
+#    plt.ylim([-1.5, 2.6])
+#    plt.savefig('Mstar-Reff_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))
+#elif relation ==1:
+#    plt.ylabel("Sersic n",fontsize=35)
+#    plt.title('$M_* -$ Sersic_n relation, sample redshift range {0}'.format(z_range), fontsize = 25)
+#    plt.ylim([0, 8.2])
+##    plt.savefig('Mstar-Sn_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))  
+#plt.show()
 
 #%% Compare hist
 #Compare their hist

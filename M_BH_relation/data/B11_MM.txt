@@ -1,4 +1,4 @@
-#ID z Mtot MBH
+#ID z Mtot MBH  (MBH updated already with H0liCOW7 paper by -0.144)
 -99 1.227  10.58  8.87
 -99 1.9  10.64    9.17
 -99 1.22  10.54   8.24

@@ -53,9 +53,9 @@ host=plt.figure(figsize=(13,12))
 ax=host.add_subplot(111)   #to get the log(1+z) and z label
 from local_MM_v_others import *
 
-#select_eff = np.loadtxt('../comparsion_Simulation_CANDEL/Select_effect/Andreas/hst_study_bias_logm.txt')
-#plt.scatter(select_eff[:,0],select_eff[:,1],c='blue',
-#            s=100   ,marker=".",zorder=100)
+select_eff = np.loadtxt('../Comparsion/Select_effect/Andreas/hst_study_bias_logm.txt')
+plt.scatter(select_eff[:,0],select_eff[:,1]+0.1,c='blue',
+            s=100   ,marker=".",zorder=100)
 
 plt.scatter(MBs,MBs-(m_ml*Mstar+b_ml),c='tomato',
             s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')

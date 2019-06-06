@@ -34,13 +34,12 @@ from local_MM_vz import *
 #######in AB system, V band#######
 f0 ='data/SS13_MM.txt'
 ss = np.loadtxt(f0)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
-#if inp_SS13 ==1:
-#    plt.scatter(ss[:,1],ss[:,2],c=ss[:,0],marker="^",s=180,zorder=100,vmin=0.5, vmax=2, edgecolors='white')
 
 f1 ='data/B11_MM.txt'
 b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
-#if inp_b11 ==1:
-#    plt.scatter(b11[:,1],b11[:,2],c=b11[:,0],marker="^",s=180,zorder=100,vmin=0.3, vmax=2, edgecolors='white')
+
+f2 = 'data/Cisternas_data.txt'
+cis11 = np.loadtxt(f2)  #0 redshift; 1 BH mass; 2 M*;
 
 
 #%%
@@ -68,7 +67,7 @@ yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
 
 #plt.scatter(Mstar,MBs,c=zs,s=880,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
 
-#plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*lumi_s[MBs!=-99]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
+#plt.errorbar(np.log10(1+zs),MBs-(m_ml*lumi_s+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
 if style ==0:
     plt.scatter(np.log10(1+ss[:,0]), 10** (ss[:,2]-ss[:,1]), c='darkseagreen',
                 s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
@@ -76,7 +75,11 @@ if style ==0:
     plt.scatter(np.log10(1+b11[:,0]), 10** (b11[:,2]-b11[:,1]), c='darkseagreen',
                 s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')    
     
-    plt.scatter(np.log10(1+zs[MBs!=-99]), 10**( MBs[MBs!=-99]- Mstar[MBs!=-99]),c='tomato',
+    plt.scatter(np.log10(1+cis11[:,0]),10** (cis11[:,1]-cis11[:,2]), c='blue',
+                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
+    
+    
+    plt.scatter(np.log10(1+zs), 10**( MBs- Mstar),c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
 
     #Plot the median circle.
@@ -92,13 +95,17 @@ if style ==1:
 #    plt.scatter(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml), c='darkseagreen',
 #                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
     plt.errorbar(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)
-
 #    plt.scatter(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml), c='darkseagreen',
 #                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')    
-    plt.errorbar(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  #used to be tomato
-    plt.scatter(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),c='tomato',
+    plt.errorbar(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  
+    
+    plt.errorbar(np.log10(1+cis11[:,0]),cis11[:,1]-(m_ml*cis11[:,2]+b_ml),yerr=(0.4**2+0.3**2)**0.5,fmt='^',color='blue',markersize=9) 
+
+    
+    
+    plt.scatter(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
-    plt.errorbar(np.log10(1+zs[MBs!=-99]),MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml),
+    plt.errorbar(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),
                  yerr= yerr_highz,
                  color='tomato',ecolor='orange', fmt='.',markersize=1)    
     
@@ -115,15 +122,17 @@ if style ==1:
     
     z_b11, y_b11 = b11[:,0], b11[:,2]-(m_ml*b11[:,1]+b_ml)
     
-    z_cosmos, y_cosmos = zs[MBs!=-99], MBs[MBs!=-99]-(m_ml*Mstar[MBs!=-99]+b_ml)
-                                  
+    z_cis, y_cis = cis11[:,0], cis11[:,1]-(m_ml*cis11[:,2]+b_ml)
     
-    z=np.concatenate((z_ss, z_b11, z_cosmos),axis=0)
-    y=np.concatenate((y_ss, y_b11, y_cosmos),axis=0)
+    z_cosmos, y_cosmos = zs, MBs-(m_ml*Mstar+b_ml)
+                                  
+    z=np.concatenate((z_ss, z_b11, z_cis, z_cosmos),axis=0)
+    y=np.concatenate((y_ss, y_b11, y_cis, y_cosmos),axis=0)
 
     yerr_imd= np.zeros(len(z_ss)+len(z_b11))+(0.4**2+0.2**2)**0.5   # the error for the fitting
+    yerr_cis = np.zeros(len(z_cis)) + (0.4**2+0.35**2)**0.5 
     yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
-    yerr = np.concatenate((yerr_imd, yerr_hz),axis=0)
+    yerr = np.concatenate((yerr_imd,yerr_cis, yerr_hz),axis=0)
     
 #    #if consider 32 AGN only:
 #    z=z_cosmos
@@ -131,7 +140,6 @@ if style ==1:
 #    yerr = yerr_hz    
     
     yerr = np.sqrt(yerr**2 + sint_ml**2)
-    
     #### fit with emcee ###############
     x=np.log10(1+z)
     y=y
