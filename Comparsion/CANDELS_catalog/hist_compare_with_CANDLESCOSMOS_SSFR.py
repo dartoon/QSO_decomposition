@@ -35,7 +35,7 @@ galfit = np.loadtxt('cos_2epoch_wfc3_f160w_060mas_v1.0_galfit.cat')[:,[4,6,8,3]]
 ##The data from 3D HST
 stellar_loc = np.loadtxt('cosmos_3dhst.v4.1.cat')[:,[3,4]]  # RA, DEC
 stellar_flux_ap = np.loadtxt('cosmos_3dhst.v4.1.cat')[:,[69,51,39]]  # flux, F140w, F125w, F814w.
-stellar = np.loadtxt('cosmos_3dhst.v4.1.fout')[:,[1,6,8]]  # redshift, stellar mass, star formation rate
+stellar = np.loadtxt('cosmos_3dhst.v4.1.fout')[:,[1,6,8]]  # redshift, stellar mass, sstar formation rate
 
 ## Check if they are in a same field.
 #plt.plot(galfit_loc[:,0], galfit_loc[:,1],'.')
@@ -65,7 +65,7 @@ for i in range(len(lists)):
     result2 = galfit[lists[i][0]][2]      #Sersic n
     result3 = stellar[lists[i][1]][1]     #Stellar_mass
     result4 = galfit[lists[i][0]][3]      #flag
-    result5 = stellar[lists[i][1]][2]     #Star formation rate
+    result5 = stellar[lists[i][1]][2]     #sStar formation rate
     result6 = stellar_flux_ap[lists[i][1]][0]
     result7 = stellar_flux_ap[lists[i][1]][1]
     result8 = stellar_flux_ap[lists[i][1]][2]
@@ -138,7 +138,7 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281', 'CID255']
 zs = np.asarray(load_zs(ID))
 mags = np.array(load_mag(ID, folder = '../../')[0])
 Reffs = np.array(load_re(ID, folder = '../../'))[:,0]
@@ -200,21 +200,21 @@ plt.figure(figsize=(10,6))
 #                     normed=True,
 #                     label=('QSO sample Reff','CANDLES-COSMOS sample Reff'))
 #plt.hist([QSO_reff, Candles_reff], **common_params)
-high0, x0, _ =plt.hist(QSO_reff, normed=True, histtype=u'step', label=('QSO sample'), linewidth = 2, color='orange')
-high1, x1, _ =plt.hist(Candles_reff, normed=True, histtype=u'step', label=('CANDLES sample'), linewidth = 2, color='green')
+high0, x0, _ =plt.hist(QSO_reff, normed=True, histtype=u'step', label=('AGN sample'), linewidth = 2, color='black')
+high1, x1, _ =plt.hist(Candles_reff, normed=True, histtype=u'step',linestyle=('dashed'), label=('CANDLES sample'), linewidth = 2, color='green')
 x0_m = np.median(QSO_reff)
 high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]]
 x1_m = np.median(Candles_reff)
 high_m1 = high1[np.where(abs(x1_m-x1) == abs(x1_m-x1).min())[0][0]]
-plt.plot(np.linspace(0,high_m0)*0+np.median(QSO_reff) , np.linspace(0,high_m0), linewidth = 4,color='orange')
-plt.plot(np.linspace(0,high_m1)*0+np.median(Candles_reff) , np.linspace(0,high_m1), linewidth = 4, color='green')
-plt.text(np.median(QSO_reff)-0.2, high_m0*1.05, '{0}'.format(round(np.median(QSO_reff),3)), color='orange',fontsize=25)
-plt.text(np.median(Candles_reff)-0.2, high_m1*1.05, '{0}'.format(round(np.median(Candles_reff),3)), color='green',fontsize=25)
-plt.xlabel("Reff (kpc)",fontsize=27)
+plt.plot(np.linspace(0,high_m0)*0+np.median(QSO_reff) , np.linspace(0,high_m0), linewidth = 4,color='black')
+plt.plot(np.linspace(0,high_m1)*0+np.median(Candles_reff) , np.linspace(0,high_m1), linewidth = 4, color='green', linestyle=('dashed'))
+plt.text(np.median(QSO_reff)-0.3, high_m0*1.05, '{0}'.format(round(np.median(QSO_reff),3)), color='black',fontsize=25)
+plt.text(np.median(Candles_reff)-0.1, high_m1*1.05, '{0}'.format(round(np.median(Candles_reff),3)), color='green',fontsize=25)
+plt.xlabel("log(Reff) (kpc)",fontsize=27)
 plt.ylabel("Density",fontsize=27)
 plt.tick_params(labelsize=20)
 plt.legend(prop={'size':20})
-plt.savefig('Hist_Reff.pdf'.format(z_range[0],z_range[1]))  
+#plt.savefig('Hist_Reff.pdf'.format(z_range[0],z_range[1]))  
 plt.show()
 #Plot step
 #fig = plt.figure(figsize=(8,6))
@@ -229,6 +229,7 @@ plt.show()
 #pvalue = stats.ks_2samp(QSO_reff, Candles_reff).pvalue
 #print "p-value between QSO_reff and Candles_reff:", round(pvalue,3)
 #
+#%%
 #
 plt.figure(figsize=(10,6))
 #common_params = dict(#bins=20, 
@@ -237,21 +238,22 @@ plt.figure(figsize=(10,6))
 #plt.hist([QSO_n, Candles_n], **common_params)
 #plt.legend()
 #plt.show()
-high0, x0, _ =plt.hist(QSO_n, normed=True, histtype=u'step', label=('QSO sample'), linewidth = 2, color='orange')
-high1, x1, _ =plt.hist(Candles_n, normed=True, histtype=u'step', label=('CANDLES sample'), linewidth = 2, color='green')
+high0, x0, _ =plt.hist(QSO_n, normed=True, histtype=u'step', label=('AGN sample'), linewidth = 2, color='black')
+high1, x1, _ =plt.hist(Candles_n, normed=True, histtype=u'step', linestyle=('dashed'), label=('CANDLES sample'), linewidth = 2, color='green')
 x0_m = np.median(QSO_n)
 high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]-1]
 x1_m = np.median(Candles_n)
 high_m1 = high1[np.where(abs(x1_m-x1) == abs(x1_m-x1).min())[0][0]-1]
-plt.plot(np.linspace(0,high_m0)*0+np.median(QSO_n) , np.linspace(0,high_m0), linewidth = 4,color='orange')
-plt.plot(np.linspace(0,high_m1)*0+np.median(Candles_n) , np.linspace(0,high_m1), linewidth = 4, color='green')
-plt.text(np.median(QSO_n)-0.2, high_m0*1.05, '{0}'.format(round(np.median(QSO_n),3)), color='orange',fontsize=25)
-plt.text(np.median(Candles_n)-0.2, high_m1*1.05, '{0}'.format(round(np.median(Candles_n),3)), color='green',fontsize=25)
-plt.xlabel("Sersic index",fontsize=27)
+plt.plot(np.linspace(0,high_m0)*0+np.median(QSO_n) , np.linspace(0,high_m0), linewidth = 4,color='black')
+plt.plot(np.linspace(0,high_m1)*0+np.median(Candles_n) , np.linspace(0,high_m1), linewidth = 4, linestyle=('dashed'), color='green')
+plt.text(np.median(QSO_n)+0.1, high_m0*1.03, '{0}'.format(round(np.median(QSO_n),3)), color='black',fontsize=25)
+plt.text(np.median(Candles_n)-0.3, high_m1*1.05, '{0}'.format(round(np.median(Candles_n),3)), color='green',fontsize=25)
+plt.xlabel("S\'ersic index",fontsize=27)
 plt.ylabel("Density",fontsize=27)
 plt.tick_params(labelsize=20)
 plt.legend(prop={'size':20})
-plt.savefig('Hist_Sn.pdf'.format(z_range[0],z_range[1]))  
+#plt.savefig('Hist_Sn.pdf'.format(z_range[0],z_range[1]))  
+plt.ylim([0.0,0.5])
 plt.show()
 
 ##Plot step

@@ -118,5 +118,5 @@ plt.legend([Bkc,Hkc,SS13,new_sample],[
 "intermediate redshift AGNs",
 "This work"\
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':20},ncol=2)
-plt.savefig("MBH-Mstar.pdf")
+#plt.savefig("MBH-Mstar.pdf")
 plt.show()

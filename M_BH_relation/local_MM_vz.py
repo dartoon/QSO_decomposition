@@ -121,12 +121,12 @@ if style == 0:
 elif style ==1:
     xl = np.linspace(-0.9, 13, 100)
     plt.errorbar(np.log10(hloc[:,0]+1),
-                 hloc[:,3]-(m_mid*hloc[:,1]+b_mid),yerr=(hloc[:,2]**2 + hloc[:,4]**2)**0.5 ,fmt='.',color='black',markersize=10)
+                 hloc[:,3]-(m_ml*hloc[:,1]+b_ml),yerr=(hloc[:,2]**2 + hloc[:,4]**2)**0.5 ,fmt='.',color='black',markersize=10)
     plt.errorbar(np.log10(bloc[:,0]+1),
-                 bloc[:,3]-(m_mid*bloc[:,1]+b_mid),yerr=(bloc[:,2]**2 + bloc[:,4]**2)**0.5 ,fmt='.',color='gray',markersize=10)
+                 bloc[:,3]-(m_ml*bloc[:,1]+b_ml),yerr=(bloc[:,2]**2 + bloc[:,4]**2)**0.5 ,fmt='.',color='gray',markersize=10)
     ty=xl*0
-    ty1=xl*0+np.std(y-(m_mid*x+b_mid))
-    ty2=xl*0-np.std(y-(m_mid*x+b_mid))
+    ty1=xl*0+np.std(y-(m_ml*x+b_ml))
+    ty2=xl*0-np.std(y-(m_ml*x+b_ml))
     plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
 
 Bkc=mlines.Line2D([], [], color='gray', ls='', marker='.', markersize=15)

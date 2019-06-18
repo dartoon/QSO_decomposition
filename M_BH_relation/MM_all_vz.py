@@ -75,7 +75,7 @@ if style ==0:
     plt.scatter(np.log10(1+b11[:,0]), 10** (b11[:,2]-b11[:,1]), c='darkseagreen',
                 s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')    
     
-    plt.scatter(np.log10(1+cis11[:,0]),10** (cis11[:,1]-cis11[:,2]), c='blue',
+    plt.scatter(np.log10(1+cis11[:,0]),10** (cis11[:,1]-cis11[:,2]), c='darkseagreen',
                 s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
     
     
@@ -99,7 +99,7 @@ if style ==1:
 #                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')    
     plt.errorbar(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  
     
-    plt.errorbar(np.log10(1+cis11[:,0]),cis11[:,1]-(m_ml*cis11[:,2]+b_ml),yerr=(0.4**2+0.3**2)**0.5,fmt='^',color='blue',markersize=9) 
+    plt.errorbar(np.log10(1+cis11[:,0]),cis11[:,1]-(m_ml*cis11[:,2]+b_ml),yerr=(0.4**2+0.3**2)**0.5,fmt='^',color='darkseagreen',markersize=9) 
 
     
     
@@ -125,19 +125,18 @@ if style ==1:
     z_cis, y_cis = cis11[:,0], cis11[:,1]-(m_ml*cis11[:,2]+b_ml)
     
     z_cosmos, y_cosmos = zs, MBs-(m_ml*Mstar+b_ml)
+    yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
                                   
     z=np.concatenate((z_ss, z_b11, z_cis, z_cosmos),axis=0)
     y=np.concatenate((y_ss, y_b11, y_cis, y_cosmos),axis=0)
-
     yerr_imd= np.zeros(len(z_ss)+len(z_b11))+(0.4**2+0.2**2)**0.5   # the error for the fitting
     yerr_cis = np.zeros(len(z_cis)) + (0.4**2+0.35**2)**0.5 
-    yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
     yerr = np.concatenate((yerr_imd,yerr_cis, yerr_hz),axis=0)
     
-#    #if consider 32 AGN only:
-#    z=z_cosmos
-#    y=y_cosmos
-#    yerr = yerr_hz    
+    #if consider 32 AGN only:
+    z=z_cosmos
+    y=y_cosmos
+    yerr = yerr_hz    
     
     yerr = np.sqrt(yerr**2 + sint_ml**2)
     #### fit with emcee ###############
@@ -196,8 +195,7 @@ if style ==1:
     #####################
     value,sig=round(b_ml_offset,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
     print value,sig
-    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
-    #plt.text(0.15, -1.75, "$M_{BH} $VS$ L_{host}\propto (1+z)^{%s\pm%s}$"%(value,sig),color='blue',fontsize=25)
+#    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 
 
 plt.xlabel("log$(1+z)$",fontsize=35)
@@ -233,5 +231,5 @@ plt.legend([Bkc, Hkc, SS13, new_sample],[
 "Intermediate redshift AGNs",
 "This work"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
-plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
+#plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
 plt.show()

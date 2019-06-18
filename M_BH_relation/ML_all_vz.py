@@ -125,7 +125,7 @@ mags = np.array(load_mag(ID)[0])
 
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 lumi_s = load_host_p(ID, dm = dm)[0]  #!!! This dm is important 
-MBs = load_MBH(ID,MB_ID)
+MBs = load_MBH(ID,MB_ID,if_reportHb=0)
 plt.scatter(lumi_s,MBs,c=zs,s=580,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
 LR_err = load_err(prop = 'LR', ID=ID)
 yerr_highz = [(LR_err[:,0]**2+0.4**2)**0.5, (LR_err[:,1]**2+0.4**2)**0.5]

@@ -125,7 +125,7 @@ MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID
 zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 lumi_s = load_host_p(ID, dm = dm)[0] #!!! This dm is important 
-MBs = load_MBH(ID,MB_ID)
+MBs = load_MBH(ID,MB_ID,if_reportHb=0   )
 plt.scatter(lumi_s,MBs,c='tomato',s=580,marker="*",zorder=100, edgecolors='k')
 LR_err = load_err(prop = 'LR', ID=ID)
 #for i in range(len(lumi_s)):

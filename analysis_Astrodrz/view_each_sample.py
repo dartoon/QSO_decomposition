@@ -20,12 +20,15 @@ from filter_info import filt_info, redshift_info
 #'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
 #'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
 #]
+
+#ID = ['CID216']
+#ID = ['CID255']
+#ID = ['CID237']
 ID = ['SXDS-X717']
 ID = ['CID3242']
 ID = ['CDFS-1']
-ID = ['CID237']
-ID = ['CID216']
-#ID = ['CID255']
+ID = ['CDFS-229']
+ID = ['CDFS-724']
 
 
 import pickle
@@ -73,10 +76,10 @@ for j in range(len(ID)):
     weight = np.zeros(len(Chisq))
     for i in sort_Chisq[:count_n]:
         weight[i] = np.exp(-1/2. * (Chisq[i]-Chisq_best)/(Chisq_best* inf_alp))
-    for i in sort_Chisq:
+#    for i in sort_Chisq:
 #        print PSF_id[i], Chisq[i], weight[i], host_flux_ratio[i], Re[i], S_n_list[i], round(total_flux[i],3),  round(host_amp[i],3),\
 #    round(flux_dict[PSF_id[i]],3), round(FWHM_dict[PSF_id[i]],3), "[{0},{1}]".format(int(round(locs_dict[PSF_id[i]][0])) , int(round(locs_dict[PSF_id[i]][1]))), round(id_stars_dict[PSF_id[i]],3)
-        print i, round(Chisq[i],3), round(weight[i],3),round(host_amp[i],3), round(host_flux_ratio[i],1),round(Re[i], 3), round(S_n_list[i],3)
+#        print i, round(Chisq[i],3), round(weight[i],3),round(host_amp[i],3), round(host_flux_ratio[i],1),round(Re[i], 3), round(S_n_list[i],3)
 
     # =============================================================================
     # Weighting result
@@ -91,16 +94,16 @@ for j in range(len(ID)):
     rms_total_flux = np.sqrt(np.sum((total_flux-weighted_total_flux)**2*weight) / np.sum(weight))
     weighted_host_flux = np.sum(np.asarray(host_amp)*weight) / np.sum(weight)
     rms_host_flux = np.sqrt(np.sum((np.asarray(host_amp)-weighted_host_flux)**2*weight) / np.sum(weight))
-    print "ID:{0}, filt:{1}".format(ID[j], filt[0])
-    print "the best PSFs for {0} is ID ".format(ID[j]), sort_Chisq[:8]
+#    print "ID:{0}, filt:{1}".format(ID[j], filt[0])
+#    print "the best PSFs for {0} is ID ".format(ID[j]), sort_Chisq[:8]
     best_PSF_id.append(sort_Chisq[:8])
-    print "Weighted: HOST_Ratio, Reff, Sersic_n, total_flux, host_flux: {0}+-{1} {2}+-{3} {4}+-{5} {6}+-{7} {8}+-{9}".format(\
-    round(weighted_host_ratio,3), round(rms_host_ratio,3),\
-    round(weighted_Re,3), round(rms_Re,3), round(weighted_index,3),round(rms_index,3),\
-    round(weighted_total_flux,3), round(rms_total_flux,3),\
-    round(weighted_host_flux,3), round(rms_host_flux,3))
+#    print "Weighted: HOST_Ratio, Reff, Sersic_n, total_flux, host_flux: {0}+-{1} {2}+-{3} {4}+-{5} {6}+-{7} {8}+-{9}".format(\
+#    round(weighted_host_ratio,3), round(rms_host_ratio,3),\
+#    round(weighted_Re,3), round(rms_Re,3), round(weighted_index,3),round(rms_index,3),\
+#    round(weighted_total_flux,3), round(rms_total_flux,3),\
+#    round(weighted_host_flux,3), round(rms_host_flux,3))
     mag = -2.5*np.log10(weighted_host_flux) + zp
-    print "magnitude:", round(mag,3)
+#    print "magnitude:", round(mag,3)
     
     zs = redshift_info[ID[0]]
     from dmag import k_corr_R
@@ -116,8 +119,7 @@ for j in range(len(ID)):
     host_Mags_Vega = host_Mags - 0.21  # Transfer to Vega system
     host_LR_Vega = 10 ** (0.4*(4.43-host_Mags_Vega)) #LR in Vega
     Mstar = np.log10(host_LR_Vega * 0.54 * 0.684 * 1.4191)  
-    print "Mstar:", round(Mstar,3)
-                                                      
+#    print "Mstar:", round(Mstar,3)
     ratio_results.append([round(weighted_host_ratio,3), round(rms_host_ratio,3)])
     Re_results.append([round(weighted_Re,3), round(rms_Re,3)])
     n_results.append([round(weighted_index,3),round(rms_index,3)])
@@ -125,3 +127,5 @@ for j in range(len(ID)):
     total_flux_results.append([round(weighted_total_flux,3), round(rms_total_flux,3)])
     chisq_list.append(Chisq_best)
     inf_list.append(inf_alp)
+
+print "Total flux, AGN flux", round(weighted_total_flux,1), round(weighted_total_flux-weighted_host_flux,1)
