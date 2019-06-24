@@ -57,8 +57,8 @@ Mstar_err = load_err(prop = 'Mstar', ID=ID)
 yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
 yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
 
-yerr_hz = yerr_hz[highz_offset<0.9]
-highz_offset = highz_offset[highz_offset<0.9]
+yerr_hz = yerr_hz#[highz_offset<0.9]
+highz_offset = highz_offset#[highz_offset<0.9]
 
 plt.figure(figsize=(8,6))
 high0, x0, _ = plt.hist(local_offset,normed=True, histtype=u'step', linestyle=('dashed'),
@@ -68,7 +68,8 @@ high1, x1, _ = plt.hist(highz_offset,normed=True, histtype=u'step',
 
 x0_m = np.median(local_offset)
 high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]]
-x1_m = np.median(highz_offset)
+#x1_m = np.median(highz_offset)
+x1_m = np.mean(highz_offset)
 high_m1 = high1[np.where(abs(x1_m-x1) == abs(x1_m-x1).min())[0][0]]
 
 x1_mean = np.mean(highz_offset)
@@ -90,6 +91,6 @@ plt.ylabel("Density",fontsize=27)
 plt.ylim([0, 1.8])
 plt.tick_params(labelsize=20)
 plt.legend(prop={'size':18})
-plt.savefig('hist_offset.pdf')
+#plt.savefig('hist_offset.pdf')
 plt.show()
 

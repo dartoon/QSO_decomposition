@@ -12,6 +12,9 @@ import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 import copy
 
+import matplotlib as mat
+mat.rcParams['font.family'] = 'STIXGeneral'
+
 data_all = np.loadtxt('bulge_disk_result.txt')
 # 0ID, 1RA, 2DEC, 3FIELD(GDS:0, gdn:1, COSMOS:2, UDS:3, egs: 4), 4B_T_m, 5MAG_F125w, 6RE_F125w, 7single_Sersic_n_F125w, 8LogMass 
 data = data_all[data_all[:,3] == 2]
@@ -130,19 +133,20 @@ for n in n_list:
     
 plt.figure(figsize=(11, 11))
 plt.scatter((results[:, 3]+results[:, 7])/2.,results[:, 0],
-            c='green',s=280,marker=".",zorder=0, vmin=1.2, vmax=1.8, edgecolors='white',alpha=0.7)
+            c='gray',s=280,marker=".",zorder=0, vmin=1.2, vmax=1.8, edgecolors='white',alpha=0.7)
 n_line = np.linspace(n_list.min(),n_list.max(),300) #300 represents number of points to make between T.min and T.max
 BTR_smooth_mean = spline(n_list,BT_mean_list,n_line)
 BTR_smooth_median = spline(n_list,BT_median_list,n_line)
 
 #plt.plot(n_list, BT_mean_list,zorder=1,linewidth=2.0)
-plt.plot(n_line,BTR_smooth_mean,'r',zorder=1,linewidth=3.0,label = 'By mean value')
-plt.plot(n_line,BTR_smooth_median,'b',zorder=1,linewidth=3.0,label = 'By median value')
+plt.plot(n_line,BTR_smooth_mean,'r',zorder=1,linewidth=3.0,label = 'The averaged B/T relation')
+#plt.plot(n_line,BTR_smooth_median,'b',zorder=1,linewidth=3.0,label = 'By median value')
 #plt.title('', fontsize=27)
-plt.xlabel("Sersic_n",fontsize=27)
-plt.ylabel("B/T mass ratio",fontsize=27)
+plt.xlabel("Sersic index",fontsize=27)
+plt.ylabel("B/T stellar mass ratio",fontsize=27)
 plt.tick_params(labelsize=20)
 plt.legend(prop={'size':28})
+plt.savefig('BT_relation.pdf')
 plt.show()
 
 #import pickle

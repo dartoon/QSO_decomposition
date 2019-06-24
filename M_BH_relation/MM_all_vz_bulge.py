@@ -31,15 +31,15 @@ from local_MM_vz import *
 ################ bulge or total relaiton? #################
 #host= input('with bulge or total relation??? 0 = bulge;   1= total:')
 ####### input Park data ####
-#######in AB system, V band#######
-f0 ='data/SS13_MM.txt'
-ss = np.loadtxt(f0)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
-
-f1 ='data/B11_MM.txt'
-b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
-
-f2 = 'data/Cisternas_data.txt'
-cis11 = np.loadtxt(f2)  #0 redshift; 1 BH mass; 2 M*;
+########in AB system, V band#######
+#f0 ='data/SS13_MM.txt'
+#ss = np.loadtxt(f0)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
+#
+#f1 ='data/B11_MM.txt'
+#b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
+#
+#f2 = 'data/Cisternas_data.txt'
+#cis11 = np.loadtxt(f2)  #0 redshift; 1 BH mass; 2 M*;
 
 
 #%%
@@ -61,6 +61,14 @@ MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID
 zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
+import pickle
+n_BT_relation = pickle.load(open('../Comparsion/CANDELS_catalog/bulge_disk_fit/n_BT_relation.pkl','rb'))
+n_list,BTR_smooth_mean,BTR_smooth_median = n_BT_relation
+idx = [np.where( abs(host_n[i] - n_list) == abs(host_n[i] - n_list).min())[0][0] for i in range(len(host_n))]
+host_BT = np.array([BTR_smooth_mean[idx[i]] for i in range(len(host_n))])
+Mstar = np.log10(10**Mstar*host_BT)  #Bulge Mstar
+
+
 MBs = load_MBH(ID,MB_ID,if_reportHb=0)
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
 yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
@@ -69,75 +77,40 @@ yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
 
 #plt.errorbar(np.log10(1+zs),MBs-(m_ml*lumi_s+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='x',color='royalblue',markersize=28,zorder=250)#, mec='k')
 if style ==0:
-    plt.scatter(np.log10(1+ss[:,0]), 10** (ss[:,2]-ss[:,1]), c='darkseagreen',
-                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
-    
-    plt.scatter(np.log10(1+b11[:,0]), 10** (b11[:,2]-b11[:,1]), c='darkseagreen',
-                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')    
-    
-    plt.scatter(np.log10(1+cis11[:,0]),10** (cis11[:,1]-cis11[:,2]), c='darkseagreen',
-                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
-    
-    
     plt.scatter(np.log10(1+zs), 10**( MBs- Mstar),c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
 
-    #Plot the median circle.
-    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]),facecolors='none',
-                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-    plt.arrow(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]), 0,  -0.0013, zorder=900, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
-    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]-0.21),facecolors='none',
-                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+#    #Plot the median circle.
+#    plt.scatter(np.log10(1+zs[?]),10**( MBs[?]- Mstar[?]),facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+#    plt.arrow(np.log10(1+zs[?]),10**( MBs[?]- Mstar[?]), 0,  -0.0013, zorder=900, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
+#    plt.scatter(np.log10(1+zs[?]),10**( MBs[?]- Mstar[?]-0.21),facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
         
 #    
 #    
 if style ==1:
-#    plt.scatter(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml), c='darkseagreen',
-#                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
-    plt.errorbar(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)
-#    plt.scatter(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml), c='darkseagreen',
-#                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')    
-    plt.errorbar(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  
-    
-    plt.errorbar(np.log10(1+cis11[:,0]),cis11[:,1]-(m_ml*cis11[:,2]+b_ml),yerr=(0.4**2+0.3**2)**0.5,fmt='^',color='darkseagreen',markersize=9) 
-
-    
-    
     plt.scatter(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
     plt.errorbar(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),
                  yerr= yerr_highz,
                  color='tomato',ecolor='orange', fmt='.',markersize=1)    
     
-    #Plot the median circle.
-    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)),facecolors='none',
-                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml))-0.21,facecolors='none',
-                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-    plt.arrow(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)), 0, -0.19, zorder=900, head_length=0.05,head_width=0.005,fc='k',ec='k')
-    
+#    #Plot the median circle.
+#    plt.scatter(np.log10(1+zs[?]),(MBs[?]-(m_ml*Mstar[?]+b_ml)),facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+#    plt.scatter(np.log10(1+zs[?]),(MBs[?]-(m_ml*Mstar[?]+b_ml))-0.21,facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
     #####fit the evolution##########
     ################################
-    z_ss, y_ss = ss[:,0], ss[:,2]-(m_ml*ss[:,1]+b_ml)
-    
-    z_b11, y_b11 = b11[:,0], b11[:,2]-(m_ml*b11[:,1]+b_ml)
-    
-    z_cis, y_cis = cis11[:,0], cis11[:,1]-(m_ml*cis11[:,2]+b_ml)
-    
     z_cosmos, y_cosmos = zs, MBs-(m_ml*Mstar+b_ml)
     yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
-                                  
-    z=np.concatenate((z_ss, z_b11, z_cis, z_cosmos),axis=0)
-    y=np.concatenate((y_ss, y_b11, y_cis, y_cosmos),axis=0)
-    yerr_imd= np.zeros(len(z_ss)+len(z_b11))+(0.4**2+0.2**2)**0.5   # the error for the fitting
-    yerr_cis = np.zeros(len(z_cis)) + (0.4**2+0.35**2)**0.5 
-    yerr = np.concatenate((yerr_imd,yerr_cis, yerr_hz),axis=0)
+
     
 #    #if consider 32 AGN only:
-#    z=z_cosmos
-#    y=y_cosmos
-#    yerr = yerr_hz    
-    
+    z=z_cosmos
+    y=y_cosmos
+    yerr = yerr_hz    
     yerr = np.sqrt(yerr**2 + sint_ml**2)
     #### fit with emcee ###############
     x=np.log10(1+z)
@@ -195,7 +168,8 @@ if style ==1:
     #####################
     value,sig=round(b_ml_offset,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
     print value,sig
-#    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
+    value,sig = 1.71, 0.27
+    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 
 
 plt.xlabel("log$(1+z)$",fontsize=35)
@@ -207,12 +181,12 @@ xh=np.log10(1+2.5)
 if style ==0:
     ax.set_yscale('log')
     plt.axis([xl,xh,0,0.5])
-    plt.ylabel("$M_{BH}/M_*$",fontsize=35)
+    plt.ylabel("$M_{BH}/M_{*,bulge}$",fontsize=35)
 if style ==1:
     plt.yticks(np.arange(-5.5,6,0.5))
     plt.axis([xl,xh,-2.0,3.5])
     plt.ylim([-2.0,3.5])
-    plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
+    plt.ylabel("$\Delta$log$M_{BH}$ (vs $ M_{*,bulge}$)",fontsize=35)
 plt.grid()
 plt.tick_params(labelsize=25)
 
@@ -225,11 +199,10 @@ plt.tick_params(labelsize=25)
 
 SS13 = mlines.Line2D([], [], color='darkseagreen', ls='', marker='^', markersize=8)
 
-plt.legend([Bkc, Hkc, SS13, new_sample],[
+plt.legend([Bkc, Hkc, new_sample],[
 'Local by Bennert+11',\
 "Local by H&R",
-"Intermediate redshift AGNs",
-"This work"
+"High-z bulge"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
-#plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
+plt.savefig("MBH-Mbulge-style{0}.pdf".format(style))
 plt.show()

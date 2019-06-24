@@ -197,6 +197,7 @@ b_ml, _ =np.percentile(samples, 50,axis=0)
 #print "lnlike=",lnlike(theta=[b_ml, sint_mid],x=x, y=y, yerr=yerr)
 xl = np.linspace(0, 5, 100)
 plt.plot(xl, xl*0+xl*b_ml, color="red", linewidth=4.0,zorder=0)
+plt.plot(xl, xl*0, color="black", linewidth=2.0,zorder=0)
 
 def find_n(array,value):           #get the corresponding b for a given m 
     idx= (np.abs(array-value)).argmin()
@@ -213,6 +214,7 @@ value=round(b_ml,2)
 #####################
 value,sig=round(b_ml,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
 #print value,sig
+value,sig = 0.66, 0.18
 plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 #plt.text(0.15, -1.75, "$M_{BH} $VS$ L_{host}\propto (1+z)^{%s\pm%s}$"%(value,sig),color='blue',fontsize=25)
 ##
@@ -255,5 +257,5 @@ plt.legend([Pkc, park, new_sample],[
 "Intermediate redshift AGNs",
 "This work"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':30},ncol=2,handletextpad=0)
-plt.savefig("MBH-L-vz.pdf")
+#plt.savefig("MBH-L-vz.pdf")
 plt.show()

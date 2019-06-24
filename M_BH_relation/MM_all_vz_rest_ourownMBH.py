@@ -64,14 +64,17 @@ zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar_tot = load_host_p(ID)[1]
 
-#n_line, BTR_smooth_mean
-import pickle
-n_BT_relation = pickle.load(open('../Comparsion/CANDELS_catalog/bulge_disk_fit/n_BT_relation.pkl','rb'))
-n_list,BTR_smooth_mean,BTR_smooth_median = n_BT_relation
-idx = [np.where( abs(host_n[i] - n_list) == abs(host_n[i] - n_list).min())[0][0] for i in range(len(host_n))]
-host_BT = np.array([BTR_smooth_mean[idx[i]] for i in range(len(host_n))])
+##n_line, BTR_smooth_mean
+#import pickle
+#n_BT_relation = pickle.load(open('../Comparsion/CANDELS_catalog/bulge_disk_fit/n_BT_relation.pkl','rb'))
+#n_list,BTR_smooth_mean,BTR_smooth_median = n_BT_relation
+#idx = [np.where( abs(host_n[i] - n_list) == abs(host_n[i] - n_list).min())[0][0] for i in range(len(host_n))]
+#host_BT = np.array([BTR_smooth_mean[idx[i]] for i in range(len(host_n))])
+#
+Mstar = Mstar_tot
+#Mstar = np.log10(10**Mstar_tot*host_BT)  #Bulge Mstar
 
-Mstar = np.log10(10**Mstar_tot*host_BT)  #Bulge Mstar
+
 
 MBs = load_MBH(ID,MB_ID, if_reportHb=0)
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
@@ -186,7 +189,7 @@ if style ==1:
     plt.yticks(np.arange(-5.5,6,0.5))
     plt.axis([xl,xh,-2.0,3.5])
     plt.ylim([-2.0,3.5])
-    plt.ylabel("$\Delta$log$M_{BH}$ (vs $bulge M_*$)",fontsize=35)
+    plt.ylabel("$\Delta$log$M_{BH}$ (vs $ M_*$)",fontsize=35)
 plt.grid()
 plt.tick_params(labelsize=25)
 
