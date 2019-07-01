@@ -213,7 +213,18 @@ Adopting our specific selection limits into the framework (i.e., $\log($\mbh$)~\
 
 The \mbh\ of type-1 AGNs can be inferred using the so-called virial method~\citep{Peterson2004, Shen2013}. The kinematics of the broad-line region (BLR) trace the gravitational field of the central supermassive black hole, assuming the gravity dominates the motion of the BLR gas. Under these assumptions, the width of the emission-line provided the scale of the velocity, while the AGN continuum luminosity establishes an empirical scale of the BLR size. As a result, the estimation of the \mbh\ is achieved by these measurements.
 
-To avoid any systematic bias between samples in the literature, we compare the recipes implemented in \citet{Schulze2018} and \citet{Ding2017b}. We find that the \hbeta\ estimator is very consistent (\mbh\ r.m.s. $<0.03$~dex) between the two reference samples. We also find that the cross-calibration between the \halpha\ and \hbeta\ has better agreement in \citet{Schulze2018}. Thus, we adopt the scheme given in \citet{Schulze2018} that is based on the recalibration of these relations using luminous quasars out to high redshift \citep{Jun2015} :
+{\color{red} To avoid any systematic bias between samples in the literature, we aim to adopt a class of self-consistent estimators for our sample. We first compare the estimators implemented in \citet{Schulze2018} to the self-consistent ones in \citet{Ding2017b}, and find that their \hbeta(FWHM(5100)) estimators are very consistent (\mbh\ r.m.s. $<0.03$~dex). However, there is a $\sim~0.2$ dex inconsistency in their \halpha\ estimators. Thus, we adopt all the AGNs in \citet{Schulze2018} which have both \halpha\ and \hbeta\ lines (35 AGNs in total) and carry out a cross-calibration to select the \halpha\ estimator which has better consistency. The result show that the \halpha\ estimators in \citet{Schulze2018} demonstrate the better agreement, which are adopted by this work:
+%Thus, we adopt the scheme given in \citet{Schulze2018} that is based on the recalibration of these relations using luminous quasars out to high redshift \citep{Jun2015} :
+
+\begin{figure}
+\centering
+{
+\includegraphics[height=0.55\textwidth]{fig/cross-calibrate.pdf}
+}
+\caption{\label{fig:cross-calibrate} 
+Cross-calibration using the AGNs in \citet{Schulze2018} for \halpha\ and \hbeta\ estimators. The \citet{Schulze2018} demonstrate better agreement (\mbh\ mean offset $\sim~0.09$~dex) than \citet{Ding2017b} (\mbh\ mean offset $\sim~0.27$~dex). {\bf Xuheng: The Jun+2015's recipe has a 0.4 dex mismatch in this comparison.}}
+\end{figure} 
+}
 
 \begin{eqnarray}
 \label{eq:Ha}
@@ -306,9 +317,9 @@ The typical uncertainty level for FWHM and $\log( \rm L _{\lambda})$ are $15\%$ 
 
 We make use of the \mbh-\lhost\ and \mbh-\smass\ relations in the literature for comparison with our high-z data. For the local relation, we use the measurements of \citet{Ben++10} and \citet{Bennert++2011} (hereafter, B10 and B11) to define our zero-point for local AGN samples. The sample by B10 consists of 19 AGN with the \mbh-\lhost\ relation determined with reliable \mbh\ masses using reverberation mapping with an uncertainty level $\sim0.15$ dex. The work of B11 contains 25 local active AGNs, where the \mbh\ are measured using the single-epoch method (\mbh\ uncertainty level $\sim0.4$ dex). To track the local \smass\ and \mbh\  relations to higher values, we include 30 inactive galaxies (mainly ellipticals or S0) from \citet{H+R04} (hereafter HR04). It is worth noting that for the local comparison sample, the bulge mass is equivalent to the total stellar mass. In other words, our local comparison is the \mbh-\smass$_{\rm ,bulge}$ and not those involving total quantities.
 
-We include in our analysis published samples at intermediate redshifts to understand the evolution of these correlations. We select samples that were analyzed by members of our team, in order to ensure uniform measurements. The intermediate redshift AGNs that we include are 52 objects published by \citet{Park15} applicable for the \mbh-\lhost\ relation at $0.36<z<0.57$ and 27 objects published by \citet{Bennert11} and \citet{SS13} at $0.5<z<1.9$. In addition, we adopt a sample of 32 \mbh-\smass\ measurements at $0.3<z<0.9$ by \citet{Cisternas2011} to compare with our sample. Across the intermediate redshift sample, we recalibrate the \mbh\ using the self-consistent recipes introduced in Section~\ref{mbh}. For \mbh\ estimated from \Mgii\, we adopt the recipe by \citet{Ding2017b}.
+We include in our analysis published samples at intermediate redshifts to understand the evolution of these correlations. We select samples that were analyzed by members of our team, in order to ensure uniform measurements. The intermediate redshift AGNs that we include are 52 objects published by \citet{Park15} applicable for the \mbh-\lhost\ relation at $0.36<z<0.57$ and 27 objects published by \citet{Bennert11} and \citet{SS13} at $0.5<z<1.9$. In addition, we adopt a sample of 32 \mbh-\smass\ measurements at $0.3<z<0.9$ by \citet{Cisternas2011} to compare with our sample. 
 
-
+{\color{red} For all the comparison AGN samples, we recalibrate the \mbh\ using the self-consistent recipes introduced in Section~\ref{mbh}. For \mbh\ estimated using \Mgii\ and  \hbeta$(\sigma_{\rm H\beta})$ lines, we adopt the recipes by \citet{Ding2017b}. }
 
 
 \section{\hst\ observations}
