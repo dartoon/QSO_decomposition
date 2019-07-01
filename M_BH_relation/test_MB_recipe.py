@@ -11,6 +11,9 @@ import numpy as np
 import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 
+import matplotlib as mat
+mat.rcParams['font.family'] = 'STIXGeneral'
+
 f = open("fmos_MBH_table","r")
 with f as g:
     lines = g.readlines()
@@ -29,6 +32,7 @@ for i in range(len(two_line_sample)):
     logLHadr = float(two_line_sample[i][6])
     cal_logMa_And = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWMH_a/1000)  # as used in Andreas
     cal_logMa_my = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWMH_a/1000)  # as used in H0liCOW 7 and McGill
+#    cal_logMa_my = 6.301+0.55*(logLHadr-42)+2.06*np.log10(FWMH_a/1000)  # as used in Jun2015
     MB_info_a.append([t_name, FWMH_a, logLHadr, cal_logMa_And, float(two_line_sample[i][10]), cal_logMa_my])
     
     FWMH_b = float(two_line_sample[i][19])
@@ -48,10 +52,13 @@ for i in range(len(two_line_sample)):
 plt.figure(figsize=(10, 10))
 diff_And, diff_my = [], []
 for i in range(len(MB_info_a)):
-    plt.plot(MB_info_a[i][3], MB_info_b[i][3],'bo')
+    if i ==0:
+        string1, string0 = 'Ding 2017', 'Schulze 2018'
+    plt.plot(MB_info_a[i][3], MB_info_b[i][3],'bo', label=string0)
     diff_And.append([MB_info_a[i][3]-MB_info_b[i][3]])
-    plt.plot(MB_info_a[i][5], MB_info_b[i][5],'ks')
+    plt.plot(MB_info_a[i][5], MB_info_b[i][5],'ks', label=string1)
     diff_my.append([MB_info_a[i][5]-MB_info_b[i][5]])
+    string0, string1 = None, None
 diff_And = np.asarray(diff_And)
 diff_my = np.asarray(diff_my)
 #texts = []
@@ -59,11 +66,13 @@ x=np.linspace(6,12,20)
 y = x
 plt.plot(x,y,'y')
 #plt.title('', fontsize=30)
-plt.xlabel('Calibrated by Ha',fontsize=25)
-plt.ylabel('Calibrated by Hb', fontsize=25)
+plt.xlabel("log($M_{BH}$) calibrated by H"+r'$_\alpha$',fontsize=25)
+plt.ylabel("log($M_{BH}$) calibrated by H"+r'$_\beta$', fontsize=25)
 #val_min, val_max = np.min([mag_k_corrected_UV, mag_k_corrected_IR]), np.max([mag_k_corrected_UV, mag_k_corrected_IR])
 plt.xlim(7.2, 9.8)
 plt.ylim(7.2, 9.8)
 plt.tick_params(labelsize=25)     
+plt.legend(prop={'size':24})
+#plt.savefig('cross-calibrate.pdf')
 plt.show()
 

@@ -74,8 +74,6 @@ Mstar_tot = load_host_p(ID)[1]
 Mstar = Mstar_tot
 #Mstar = np.log10(10**Mstar_tot*host_BT)  #Bulge Mstar
 
-
-
 MBs = load_MBH(ID,MB_ID, if_reportHb=0)
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
 yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]

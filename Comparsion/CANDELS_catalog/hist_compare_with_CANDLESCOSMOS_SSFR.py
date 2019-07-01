@@ -132,7 +132,7 @@ cmap_r = matplotlib.cm.get_cmap('jet_r')
 
 import sys
 sys.path.insert(0,'../../py_tools')
-from load_result import load_zs, load_mag, load_re, load_n
+from load_result import load_zs, load_mag, load_re, load_n, load_host_p
 
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
@@ -156,10 +156,11 @@ for i in range(len(zs)):
     dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '1Gyrs'))
 dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
 
-host_Mags = mags -5*(np.log10(dl)-1) + dm_k_R # This is in AB system
-host_Mags = host_Mags - 0.21  # Transfer to Vega system
-host_LR = 10 ** (0.4*(4.61-host_Mags))
-Mstar = np.log10(host_LR * 0.54 * 0.684 * 1.4191)  
+#host_Mags = mags -5*(np.log10(dl)-1) + dm_k_R # This is in AB system
+#host_Mags = host_Mags - 0.21  # Transfer to Vega system
+#host_LR = 10 ** (0.4*(4.61-host_Mags))
+#Mstar = np.log10(host_LR * 0.54 * 0.684 * 1.4191)  
+Mstar = load_host_p(ID,folder = '../../')[1]
 
 #if relation == 0:
 #    plt.scatter(Mstar,np.log10(ID_Reff_kpc),s=180, c =zs,marker="s",zorder=100, vmin=1.2, vmax=1.8, edgecolors='k')

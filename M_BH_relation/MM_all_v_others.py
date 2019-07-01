@@ -80,7 +80,6 @@ plt.legend([Bkc, Hkc, new_sample],[
 #plt.savefig("offset_vs_MBH.pdf")
 plt.show()
 
-"""
 #%%Plot sig_MBH as FWHM(Ha)
 host=plt.figure(figsize=(13,12))
 ax=host.add_subplot(111)   #to get the log(1+z) and z label
@@ -255,7 +254,45 @@ plt.grid()
 plt.tick_params(labelsize=25)
 plt.show()
 
-#%%Plot sig_MBH as Re_result(Ha)
+#%%Plot sig_MBH as Re_result (in kpc)
+host=plt.figure(figsize=(13,12))
+ax=host.add_subplot(111)   #to get the log(1+z) and z label
+xl = np.linspace(0, 6000, 100)
+plt.fill_between(xl,ty1,ty2,color='linen',zorder=-50)
+
+local_offset_bloc = bloc[:,3]- (m_ml*bloc[:,1]+b_ml)
+local_reff_b11 = local25[:,9]
+plt.scatter(local_reff_b11,local_offset_bloc,c='gray',
+            s=200,marker="o",zorder=100, vmin=0.3, vmax=5, edgecolors='k', label="Bennert 2011")
+zs = np.asarray(load_zs(ID))
+from scipy.integrate import quad
+h0=70.             #km/s/Mpc
+om=0.3
+c=299790.        #speed of light [km/s]
+def EZ(z,om):
+      return 1/np.sqrt(om*(1+z)**3+(1-om))
+def EE(z):
+      return quad(EZ, 0, z , args=(om))[0]
+vec_EE=np.vectorize(EE)
+da=1/(1+zs)*c*vec_EE(zs)/h0   #in Mpc
+ID_Reff_kpc = da * 10 **3 * (Re_results[:,0]/3600./180.*np.pi)
+
+plt.scatter(ID_Reff_kpc, MBs-(m_ml*Mstar+b_ml),c='tomato',
+            s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k', label = "High $z$ sample")
+plt.errorbar(ID_Reff_kpc,MBs-(m_ml*Mstar+b_ml),
+             yerr= yerr_highz, xerr=Re_results[:,1]/Re_results[:,0]*ID_Reff_kpc,
+             color='tomato',ecolor='orange', fmt='.',markersize=1)    
+
+plt.xlabel("Reff (kpc)",fontsize=35)
+plt.axis([0.3,8,-2.0,3.5])
+plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
+plt.grid()
+plt.legend(prop={'size':28})
+plt.tick_params(labelsize=25)
+plt.savefig('deltaMBH-Reff-compare.pdf')
+plt.show()
+
+#%%Plot sig_MBH as Sersic index
 host=plt.figure(figsize=(13,12))
 ax=host.add_subplot(111)   #to get the log(1+z) and z label
 xl = np.linspace(0, 6000, 100)
@@ -272,4 +309,3 @@ plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
 plt.grid()
 plt.tick_params(labelsize=25)
 plt.show()
-"""

@@ -48,10 +48,11 @@ MBs = load_MBH(ID,MB_ID,if_reportHb=0)
 #Mstar_err = load_err(prop = 'Mstar', ID=ID)
 #yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
 #%%
-local_offset = y -(m_ml*x+b_ml)
+#local_offset = y -(m_ml*x+b_ml)
+local_offset_bloc = bloc[:,3]- (m_ml*bloc[:,1]+b_ml)
+local_offset_hloc = hloc[:,3]- (m_ml*hloc[:,1]+b_ml)
+
 highz_offset = MBs-(m_ml*Mstar+b_ml)
-
-
 
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
 yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
@@ -61,13 +62,17 @@ yerr_hz = yerr_hz#[highz_offset<0.9]
 highz_offset = highz_offset#[highz_offset<0.9]
 
 plt.figure(figsize=(8,6))
-high0, x0, _ = plt.hist(local_offset,normed=True, histtype=u'step', linestyle=('dashed'),
-         label=('local sample'), linewidth = 2, color='gray')
+#high0, x0, _ = plt.hist(local_offset,normed=True, histtype=u'step', linestyle=('dashed'),
+#         label=('local sample'), linewidth = 2, color='gray')
+plt.hist(local_offset_bloc,normed=True, histtype=u'step', linestyle=('dashed'),
+         label=('Local by Bennert+11'), linewidth = 2, color='gray')
+plt.hist(local_offset_hloc,normed=True, histtype=u'step', linestyle=(':'),
+         label=("Local by H&R"), linewidth = 2, color='gray')
 high1, x1, _ = plt.hist(highz_offset,normed=True, histtype=u'step',
-         label=('high z sample'), linewidth = 2, color='black')
+         label=('High z sample'), linewidth = 2, color='black')
 
-x0_m = np.median(local_offset)
-high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]]
+#x0_m = np.median(local_offset)
+#high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]]
 #x1_m = np.median(highz_offset)
 x1_m = np.mean(highz_offset)
 high_m1 = high1[np.where(abs(x1_m-x1) == abs(x1_m-x1).min())[0][0]]
@@ -90,7 +95,7 @@ plt.xlabel("$\Delta$log($M_{BH}$)",fontsize=27)
 plt.ylabel("Density",fontsize=27)
 plt.ylim([0, 1.8])
 plt.tick_params(labelsize=20)
-plt.legend(prop={'size':18})
+plt.legend(prop={'size':14})
 #plt.savefig('hist_offset.pdf')
 plt.show()
 
