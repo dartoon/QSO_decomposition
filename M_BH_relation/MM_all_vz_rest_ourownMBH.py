@@ -85,24 +85,9 @@ Re_results = np.asarray(load_re(ID))
 #####fit the evolution##########
 ################################
 z_cosmos, y_cosmos = zs, MBs-(m_ml*Mstar+b_ml)
-                              
 
-#    z=np.concatenate((z_cosmos),axis=0)
-#    y=np.concatenate((y_cosmos),axis=0)
-
-#    yerr_imd= np.zeros(len(z_ss)+len(z_b11))+(0.4**2+0.2**2)**0.5   # the error for the fitting
 yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
-#    yerr = np.concatenate((yerr_imd, yerr_hz),axis=0)
-#    yerr = np.sqrt(yerr**2 + sint_ml**2)
 
-##if consider 32 AGN only:
-#z=z_cosmos
-#y=y_cosmos
-#yerr = yerr_hz    
-
-#if exclude the top 4 y cosmos:
-#bools = [[Re_results[:,0]>0.2][0] * [y_cosmos<0.844][0]]
-#bools = [y_cosmos<0.844]
 bools = [Re_results[:,0]>0][0]  #Select all sample
 z=z_cosmos[bools]
 y=y_cosmos[bools]
@@ -130,11 +115,9 @@ def lnlike(theta, x, y, yerr):
 import scipy.optimize as op
 nll = lambda *args: -lnlike(*args)
 result = op.minimize(nll, [1.8, 0.3], args=(x, y, yerr))
-b_ml, _= result["x"]
-#print b_ml, sint_ml, "ka=",lnlike(theta=[b_ml, sint_ml],x=loc[:,0], y=loc[:,1], yerr=loc[:,2])
+b_ml_z, _= result["x"]
 
 xp = np.array([5, 13])
-#plt.plot(xp, m_ml*xp+b_ml, 'r-')
 def lnprior(theta):
     b, sint	 = theta
     if -10 < b < 10.0 and 0 < sint < 10:
@@ -152,10 +135,10 @@ sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(x, y, yerr))
 sampler.run_mcmc(pos, 500)
 samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
 
-b_ml, _ =np.percentile(samples, 50,axis=0)
-#print "lnlike=",lnlike(theta=[b_ml, sint_mid],x=x, y=y, yerr=yerr)
+b_mid_z, _ =np.percentile(samples, 50,axis=0)
+#print "lnlike=",lnlike(theta=[b_ml_z, sint_mid],x=x, y=y, yerr=yerr)
 xl = np.linspace(0, 5, 100)
-plt.plot(xl, xl*0+xl*b_ml, color="red", linewidth=4.0,zorder=0)
+plt.plot(xl, xl*0+xl*b_ml_z, color="red", linewidth=4.0,zorder=0)
 
 def find_n(array,value):           #get the corresponding b for a given m 
     idx= (np.abs(array-value)).argmin()
@@ -167,9 +150,9 @@ for i in range(100):
     b=np.percentile(samples,posi,axis=0)[0]    
     #print b
     plt.plot(xl, xl*0+xl*b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
-value=round(b_ml,2)
+value=round(b_ml_z,2)
 #####################
-value,sig=round(b_ml,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
+value,sig=round(b_ml_z,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
 print value,sig
 plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 
@@ -211,3 +194,10 @@ plt.show()
 #for i in range(len(bools[0])):
 #    if bools[0][i] == False:
 #        print ID[i]
+
+#%%
+##calcualte the mean offset:
+#weighted_offset = np.sum(np.asarray(y_cosmos)*yerr_hz) / np.sum(yerr_hz)                              
+#rms_offset = np.sqrt(np.sum((np.asarray(y_cosmos)-weighted_offset)**2*yerr_hz) / np.sum(yerr_hz))
+##rms_offset = np.sqrt(np.mean((np.asarray(y_cosmos)-weighted_offset)**2)) #No error bar
+#print weighted_offset, rms_offset

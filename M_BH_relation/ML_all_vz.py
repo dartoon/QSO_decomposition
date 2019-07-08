@@ -214,9 +214,8 @@ value=round(b_ml,2)
 #####################
 value,sig=round(b_ml,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
 #print value,sig
-value,sig = 0.66, 0.18
-plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
-#plt.text(0.15, -1.75, "$M_{BH} $VS$ L_{host}\propto (1+z)^{%s\pm%s}$"%(value,sig),color='blue',fontsize=25)
+#value,sig = 0.66, 0.18
+#plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 ##
 plt.xlabel("log$(1+z)$",fontsize=35)
 plt.ylabel("$\Delta$log$M_{BH}$ (vs $L_R$)",fontsize=35)

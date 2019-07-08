@@ -132,3 +132,10 @@ elif style ==1:
 Bkc=mlines.Line2D([], [], color='gray', ls='', marker='.', markersize=15)
 Hkc=mlines.Line2D([], [], color='black', ls='', marker='.', markersize=15)
 ######################
+#%%
+#calcualte the mean offset for the local:
+y_local=np.append(hloc[:,3]-(m_ml*hloc[:,1]+b_ml),bloc[:,3]-(m_ml*bloc[:,1]+b_ml))
+y_local_err = np.append((hloc[:,2]**2 + hloc[:,4]**2)**0.5, (bloc[:,2]**2 + bloc[:,4]**2)**0.5)
+weighted_offset = np.sum(np.asarray(y_local)*y_local_err) / np.sum(y_local_err)                              
+rms_offset = np.sqrt(np.sum((np.asarray(y_local)-weighted_offset)**2*y_local_err) / np.sum(y_local_err))
+print weighted_offset, rms_offset

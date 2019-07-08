@@ -170,8 +170,8 @@ plt.legend([Pkc, park, new_sample],[
 #    "local AGNs",
 #    "our new samples"\
 #    ],scatterpoints=1,numpoints=1,loc=2,prop={'size':24},ncol=2)
-#if dm ==0:
-#    plt.savefig("MBH-L_obs.pdf")
+if dm ==0:
+    plt.savefig("MBH-L_obs.pdf")
 #elif dm ==1:
 #     plt.savefig("MBH-L_ev.pdf")
 plt.show()

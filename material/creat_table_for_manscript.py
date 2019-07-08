@@ -186,8 +186,11 @@ for i in range(len(tab_list)):
 #CDFS-321 to ECDFS321
 ext_ID = {'XID2202':'LID1622', 'XID2138':'LID1820', 'XID2396':'LID1878', 'CDFS-321':'ECDFS-321'}
 
-CDFS_FWHMa = {'CDFS-1': 5449.4022,'CDFS-229': 2254.0105, 'CDFS-724': 3351.852239}
-CDFS_logLHadr = {'CDFS-1': 43.08,'CDFS-229': 43.30, 'CDFS-724': 42.561413}
+#CDFS_FWHMa = {'CDFS-1': 5449.4022,'CDFS-229': 2254.0105, 'CDFS-724': 3351.852239}
+#CDFS_logLHadr = {'CDFS-1': 43.08,'CDFS-229': 43.30, 'CDFS-724': 42.561413}
+CDFS_FWHMa = {'CDFS-1': 2000,'CDFS-229': 2190, 'CDFS-724': 2541}  # by Malte #!!!
+CDFS_logLHadr = {'CDFS-1': 43.02,'CDFS-229': 43.60, 'CDFS-724': 42.95} # by Malte   
+
 
 f_mbh = open("../M_BH_relation/fmos_MBH_table","r")
 with f_mbh as g:
@@ -281,32 +284,45 @@ for i in range(len(tab_list)):
     
 #%% To creat the tab for Aklant
 LR, Mstar, M_R =  load_host_p(tab_list)
-MBH = load_MBH(tab_list,tab_sub_list)
+MBH = load_MBH(tab_list,tab_sub_list, if_reportHb=0)
 samples_Lbol = np.loadtxt("../M_BH_relation/fmos_BH_Lbol")
 MB_Lbol_info = []
 CDFS_Lbol = {'CDFS-1': 45.89,'CDFS-229': 45.68, 'CDFS-724': 44.95}
 for tar_in in range(len(tab_list)):       
     t_name = tab_list[tar_in]
     ser = ID_ser_dic[t_name]
+    MB_Lbol = [-99, -99]
     if ser!=-99 and float(samples_Lbol[ser, 1]) != 0:
         logLbol = float(samples_Lbol[ser, 1])
-        MB_Lbol_info.append(logLbol)
+        MB_Lbol[0] = logLbol
     elif ser==-99 and t_name in CDFS_Lbol.keys():
         logLbol = float(CDFS_Lbol[t_name])
-        MB_Lbol_info.append(logLbol)    
-        print t_name, MB_Lbol_info[-1]
+        MB_Lbol[0] = logLbol
+        print t_name, MB_Lbol[0]
     if ser!=-99 and float(samples_Lbol[ser, 3]) != 0:
         logLbol = float(samples_Lbol[ser, 3])
-        print "use Hb for", tab_list[tar_in], logLbol, MB_Lbol_info[-1]
-        MB_Lbol_info[-1] = (logLbol + MB_Lbol_info[-1])/2
+        print "use Hb for", tab_list[tar_in], logLbol, MB_Lbol[0]
+        MB_Lbol[1] = logLbol
+    else:
+        MB_Lbol[1] = -99
+    MB_Lbol_info.append(MB_Lbol)
         
 print "Table for Aklant=========="
 for i in range(len(tab_list)):
-    print tab_list[i], round(MB_Lbol_info[i],2),round(MBH[i],2), round(Mstar[i],2), round(M_R[i],3), round(IR_result[i][5],3), round(UV_result[i][5],3)
+    print tab_list[i], MB_Lbol_info[i],round(MBH[i],2), round(Mstar[i],2), round(M_R[i],3), round(IR_result[i][5],3), round(UV_result[i][5],3)
 
-  
-#print  "Calculate the Eddington ratio:"
-#logLedd = 38 + np.log10(1.2) + MBH
+#%%  
+print  "Print the table3 with Eddington ratio:"
+#logLedd = 38. + np.log10(1.2) + MBH
 #logEdd = MB_Lbol_info - logLedd
 #for i in range(len(tab_list)):
-#    print tab_list[i], logEdd[i]
+#    print tab_list[i], round(logEdd[i],2)
+for i in range(len(tab_list)):
+    logLedd_a = 38. + np.log10(1.2) + MB_info_a[i][2]
+    logEdd_a = MB_Lbol_info[i][0] - logLedd_a
+    logLedd_b = 38. + np.log10(1.2) + MB_info_b[i][2]
+    if  MB_Lbol_info[i][1] == -99:
+        logEdd_b = -99
+    else:
+        logEdd_b = MB_Lbol_info[i][1] - logLedd_b
+    print(tab_list[i], MB_info_a[i][0], MB_info_a[i][1], round(MB_info_a[i][2],3), round(logEdd_a,2), MB_info_b[i][0],MB_info_b[i][1],round(MB_info_b[i][2],3),round(logEdd_b,2)) 

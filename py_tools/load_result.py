@@ -272,7 +272,7 @@ def load_MBH(ID, MB_ID, if_reportHb=0,folder = '..', return_line = 0):
     LogLa_list, FWHMa_list =[], []
 #    CDFS_FWHMa = {'CDFS-1': 5449.4022,'CDFS-229': 2254.0105, 'CDFS-724': 3351.852239}  # by Hyewon
 #    CDFS_logLHadr = {'CDFS-1': 43.08,'CDFS-229': 43.30, 'CDFS-724': 42.561413} # by Hyewon
-    CDFS_FWHMa = {'CDFS-1': 2000,'CDFS-229': 2190, 'CDFS-724': 2541}  # by Malte
+    CDFS_FWHMa = {'CDFS-1': 2000,'CDFS-229': 2190, 'CDFS-724': 2541}  # by Malte #!!!
     CDFS_logLHadr = {'CDFS-1': 43.02,'CDFS-229': 43.60, 'CDFS-724': 42.95} # by Malte    
     for tar_in in range(len(ID)):       
         t_name = ID[tar_in]
@@ -281,7 +281,7 @@ def load_MBH(ID, MB_ID, if_reportHb=0,folder = '..', return_line = 0):
         if ser!=-99 and float(samples[ser][10]) != 0:
             FWHM_a = float(samples[ser][8])
             logLHadr = float(samples[ser][6])
-            cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWHM_a/1000)  # as used in Andreas
+            cal_logMa = 6.71+0.48*(logLHadr-42)+2.12*np.log10(FWHM_a/1000)  # as used in Andreas#!!!
 #            cal_logMa = 6.301+0.55*(logLHadr-42)+2.06*np.log10(FWHM_a/1000)  # as used in GREENE & HO 2005
 #            cal_logMa = 6.459+0.55*(logLHadr-42)+2.*np.log10(FWHM_a/1000)  # as used in H0liCOW 7 and McGill
             mbh = cal_logMa
@@ -293,7 +293,7 @@ def load_MBH(ID, MB_ID, if_reportHb=0,folder = '..', return_line = 0):
             print "use Hb for", ID[tar_in]
             FWHM_b = float(samples[ser][19])
             logL5100dr = float(samples[ser][16])
-            cal_logMb = 6.91+0.5*(logL5100dr-44)+2.*np.log10(FWHM_b/1000)  # as used in Andreas
+            cal_logMb = 6.91+0.5*(logL5100dr-44)+2.*np.log10(FWHM_b/1000)  # as used in Andreas #!!!
     #        cal_logMb = 6.882+0.518*(logL5100dr-44)+2.*np.log10(FWHM_b/1000)        # calibrated in H0liCOW 7
             mbh = (cal_logMa + cal_logMb)/2
     #        print mbh

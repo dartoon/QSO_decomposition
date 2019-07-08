@@ -168,8 +168,8 @@ if style ==1:
     #####################
     value,sig=round(b_ml_offset,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
     print value,sig
-    value,sig = 1.71, 0.27
-    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
+#    value,sig = 1.71, 0.27
+#    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 
 
 plt.xlabel("log$(1+z)$",fontsize=35)
@@ -204,5 +204,16 @@ plt.legend([Bkc, Hkc, new_sample],[
 "Local by H&R",
 "High-z bulge"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
-plt.savefig("MBH-Mbulge-style{0}.pdf".format(style))
+#plt.savefig("MBH-Mbulge-style{0}.pdf".format(style))
 plt.show()
+
+##%%Print the Mstar:
+#tab_list = ['CID1174', 'CID1281', 'CID206', 'CID216', 'CID237', 'CID255', 'CID3242', 'CID3570',
+#            'CID452', 'CID454', 'CID50', 'CID543', 'CID597', 'CID607', 'CID70', 'LID1273',
+#            'LID1538', 'LID360', 'XID2138', 'XID2202', 'XID2396', 'CDFS-1', 'CDFS-229',
+#            'CDFS-321', 'CDFS-724', 'ECDFS-358', 'SXDS-X1136', 'SXDS-X50', 'SXDS-X717', 'SXDS-X735', 'SXDS-X763', 'SXDS-X969']
+#for i in range(len(tab_list)):
+#    j = [jj for jj in range(len(ID)) if tab_list[i] == ID[jj]][0]
+##    print tab_list[i], ID[j]
+#    print tab_list[i], round(Mstar[j],2)
+#
