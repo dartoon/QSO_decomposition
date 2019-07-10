@@ -18,6 +18,9 @@ sys.path.insert(0,'../py_tools')
 from filter_info import filt_info, redshift_info
 import pickle
 
+import matplotlib as mat
+mat.rcParams['font.family'] = 'STIXGeneral'
+
 def load_result(ID, count_rank=8, sort_PSF_by='fit_result_each', cam = 'WFC3'):
     '''
     Read the fitting result by given the ID, 
@@ -157,25 +160,26 @@ mag_k_corrected_UV=mags_obs_UV-5*(np.log10(dl)-1) + dm_k_UV
 #    print ID[i], mag_k_corrected_IR[i], mag_k_corrected_UV[i]
 #if needed lumi_s = 0.4*(4.61-mag_k_corrected)
 
-plt.figure(figsize=(10, 10))
+plt.figure(figsize=(9, 9))
 plt.errorbar(mag_k_corrected_IR, mag_k_corrected_UV,xerr= mag_IR_err.T, yerr=mag_UV_err.T,color='red', fmt='o',ecolor='gray' )
-texts = []
-for i in range(len(ID)):
-    texts.append(plt.text(mag_k_corrected_IR[i], mag_k_corrected_UV[i], ID[i], fontsize=17))
-adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red'))
+#texts = []
+#for i in range(len(ID)):
+#    texts.append(plt.text(mag_k_corrected_IR[i], mag_k_corrected_UV[i], ID[i], fontsize=17))
+#adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red'))
 x=np.linspace(-26,-20,15)
 y = x
 plt.plot(x,y,'b')
-plt.title('Galaxy age: '+galay_temp, fontsize=30)
-plt.xlabel('Absolute rest-frame R mag by WFC3',fontsize=25)
-plt.ylabel('Absolute rest-frame R mag by ACS', fontsize=25)
+#plt.title('Galaxy age: '+galay_temp, fontsize=24)
+plt.xlabel('Absolute rest-frame R mag by WFC3',fontsize=21)
+plt.ylabel('Absolute rest-frame R mag by ACS', fontsize=21)
 val_min, val_max = np.min([mag_k_corrected_UV, mag_k_corrected_IR]), np.max([mag_k_corrected_UV, mag_k_corrected_IR])
 plt.xlim(val_min-0.5, val_max+0.5)
 plt.ylim(val_min-0.5, val_max+0.5)
-plt.tick_params(labelsize=25)     
-#plt.savefig('/Users/Dartoon/Desktop/Comp_gtemp_{0}.pdf'.format(galay_temp))
+plt.tick_params(labelsize=20)     
+plt.savefig('comp_gtemp_{0}.pdf'.format(galay_temp))
 plt.show()
 
+#%%
 #Plot the color and compare with the Tommaso's color value:
 #Plot TT's figure:
 from dmag import k_corr_R
