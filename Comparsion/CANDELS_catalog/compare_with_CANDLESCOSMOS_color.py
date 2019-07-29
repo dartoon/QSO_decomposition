@@ -91,7 +91,7 @@ da_result = 1/(1+results[:,0])*c*vec_EE(results[:,0])/h0  #in Mpc
 
 #%% Plot and input my sample
 
-relation = 4  # 0 M*- Reff ; 1 M*-color; 2 M*-n; 3 Reff-n relation
+relation = 0  # 0 M*- Reff ; 1 M*-color; 2 M*-n; 3 Reff-n relation
 z_range = [1.2,1.7]
 
 z_cut = ((results[:,0]>z_range[0]) * (results[:,0]<z_range[1]))
@@ -197,13 +197,21 @@ cl.ax.tick_params(labelsize=30)
 
 
 if relation == 0:
+    f1 ='../../M_BH_relation/data//Bennert+2011_local.txt'
+    b11_l = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
+    b11_local_Reff = b11_l[:,-1]
+    b11_local_mstar = b11_l[:,4]
+    plt.scatter(b11_local_mstar,np.log10(b11_local_Reff),s=180, c ='black',
+                marker="o",zorder=100, vmin=0, vmax=7, edgecolors='white')     
+    plt.scatter(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
+                marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')    
     plt.scatter(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
                 marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white')
     plt.errorbar(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],
              yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS>0],
              color='k',ecolor='k', fmt='.',markersize=1, zorder = 100)  
-    plt.scatter(Mstar[host_flux_ACS<0],np.log10(ID_Reff_kpc)[host_flux_ACS<0],s=180, c ='black',
-                marker="s",zorder=99, vmin=0, vmax=7, edgecolors='white')
+    plt.scatter(Mstar[host_flux_ACS<0],np.log10(ID_Reff_kpc)[host_flux_ACS<0],s=680, c ='none',
+                marker="*",zorder=101, vmin=0, vmax=7, edgecolors='black')
     plt.errorbar(Mstar[host_flux_ACS<0],np.log10(ID_Reff_kpc)[host_flux_ACS<0],
              yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS<0],
              color='k',ecolor='k', fmt='.',markersize=1, zorder = 100)  

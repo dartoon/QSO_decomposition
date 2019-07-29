@@ -4,6 +4,8 @@
 Created on Fri Oct 26 15:50:27 2018
 
 @author: Dartoon
+
+Note: Assuming B/T as a function of n, linearly.
 """
 import numpy as np
 np.set_printoptions(precision=4)
@@ -87,8 +89,6 @@ if style ==0:
 #    plt.scatter(np.log10(1+zs[?]),10**( MBs[?]- Mstar[?]-0.21),facecolors='none',
 #                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
         
-#    
-#    
 if style ==1:
     plt.scatter(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')

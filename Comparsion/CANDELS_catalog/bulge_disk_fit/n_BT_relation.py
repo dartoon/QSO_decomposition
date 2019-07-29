@@ -120,7 +120,7 @@ plt.close()
 #%%
 from scipy.interpolate import spline
 n_list = np.logspace(np.log10(0.3),np.log10(7),41)
-sersic_n_arr = (results[:, 3]+results[:, 7])/2
+sersic_n_arr = (results[:, 3]+results[:, 7])/2  #Average value of Sersic_n
 BT_mean_list, BT_median_list = [], []
 for n in n_list:
     if n <4:
@@ -152,6 +152,10 @@ plt.show()
 #import pickle
 #pickle.dump([n_line,BTR_smooth_mean,BTR_smooth_median], open("n_BT_relation.pkl", 'wb'))
 
+#import pickle
+#pickle.dump([sersic_n_arr,results[:, 0]], open("Sersic_BT_data.pkl", 'wb'))
+
+'''
 #%%Plot B/T , n relation with Reff as color
 from scipy.integrate import quad
 h0=70.             #km/s/Mpc
@@ -210,3 +214,4 @@ plt.show()
 #plt.tick_params(labelsize=20)
 #plt.legend(prop={'size':28})
 #plt.show()
+'''

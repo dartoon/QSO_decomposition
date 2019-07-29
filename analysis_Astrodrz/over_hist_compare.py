@@ -136,7 +136,7 @@ plt.hist((ratio_results_0[:,0], ratio_results_1[:,0], ratio_results_2[:,0]), **c
 plt.xlabel('Host flux ratio (%)',fontsize=25)
 plt.ylabel('#', fontsize=25)
 plt.tick_params(labelsize=25)
-plt.legend(fontsize=15)
+plt.legend(fontsize=25)
 #plt.savefig('hist_compare.pdf')
 plt.show()
 

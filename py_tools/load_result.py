@@ -185,7 +185,7 @@ def load_n(ID, folder='../',result_folder = 'analysis'):
     _, _, n_results, _, _, _, _, _ = load_result(ID, flt = 'WFC3', folder=folder,result_folder=result_folder)
     return n_results
 
-def load_re(ID, folder='../',result_folder = 'analysis'):
+def load_re(ID, flt = 'WFC3', folder='../',result_folder = 'analysis'):
     '''
     Load the name as a list based on the ID list 
     
@@ -197,7 +197,7 @@ def load_re(ID, folder='../',result_folder = 'analysis'):
     --------
         A list of the zs
     '''
-    _, re_results, _, _, _, _, _, _ = load_result(ID, flt = 'WFC3', folder=folder,result_folder=result_folder)
+    _, re_results, _, _, _, _, _, _ = load_result(ID, flt = flt, folder=folder,result_folder=result_folder)
     return re_results
 
 def load_flux(ID, flt = 'WFC3', folder='../',result_folder = 'analysis'):

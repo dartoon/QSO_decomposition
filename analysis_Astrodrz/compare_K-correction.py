@@ -160,7 +160,7 @@ mag_k_corrected_UV=mags_obs_UV-5*(np.log10(dl)-1) + dm_k_UV
 #    print ID[i], mag_k_corrected_IR[i], mag_k_corrected_UV[i]
 #if needed lumi_s = 0.4*(4.61-mag_k_corrected)
 
-plt.figure(figsize=(9, 9))
+plt.figure(figsize=(10, 10))
 plt.errorbar(mag_k_corrected_IR, mag_k_corrected_UV,xerr= mag_IR_err.T, yerr=mag_UV_err.T,color='red', fmt='o',ecolor='gray' )
 #texts = []
 #for i in range(len(ID)):
@@ -168,10 +168,10 @@ plt.errorbar(mag_k_corrected_IR, mag_k_corrected_UV,xerr= mag_IR_err.T, yerr=mag
 #adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red'))
 x=np.linspace(-26,-20,15)
 y = x
-plt.plot(x,y,'b')
+plt.plot(x,y,'b',linewidth=4.0,alpha=0.5)
 #plt.title('Galaxy age: '+galay_temp, fontsize=24)
-plt.xlabel('Absolute rest-frame R mag by WFC3',fontsize=21)
-plt.ylabel('Absolute rest-frame R mag by ACS', fontsize=21)
+plt.xlabel('Absolute rest-frame R mag by WFC3',fontsize=30)
+plt.ylabel('Absolute rest-frame R mag by ACS', fontsize=30)
 val_min, val_max = np.min([mag_k_corrected_UV, mag_k_corrected_IR]), np.max([mag_k_corrected_UV, mag_k_corrected_IR])
 plt.xlim(val_min-0.5, val_max+0.5)
 plt.ylim(val_min-0.5, val_max+0.5)
@@ -204,9 +204,9 @@ for i in range(len(ID)):
         plt.plot(zs[i], mags_obs_UV[i] - mags_obs_IR[i], 'ko')
     texts.append(plt.text(zs[i], mags_obs_UV[i] - mags_obs_IR[i], ID[i], fontsize=17))
 adjust_text(texts, arrowprops=dict(arrowstyle='->', color='green'))  
-plt.xlabel('redshift',fontsize=25)
-plt.ylabel('Observed Color', fontsize=25)
-plt.tick_params(labelsize=15)    
+plt.xlabel('redshift',fontsize=35)
+plt.ylabel('Observed Color', fontsize=35)
+plt.tick_params(labelsize=20)    
 plt.show()
 
 
