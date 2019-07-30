@@ -301,7 +301,7 @@ From our AGN-host decomposition, we detect the host galaxy in essentially all ca
 \label{sec:result-hosts}
 As shown in Figure~\ref{fig:hist_compare}, the host-to-total flux ratio (total=host+nuclear) of the sample spans a wide range from $10\%$ to $90\%$ with most of the sample concentrated between $20\%$ to $50\%$ (median value $37\%$). Those with flux ratios above $\sim20\%$ have a higher degree of significance with respect to the detection of the host galaxy, while the very few cases around 10\% should be considered as marginal detections. 
 
-The distributions of effective radius \Reff\ and \sersic\ index are shown in Figure~\ref{fig:hist_rn}. These values are distributed within the allowed range and not concentrated on either the upper or lower bound. The \Reff\ of our sample are between $\sim1-7$~kpc (peaked at $\sim2.2$~kpc). Nearly half ($15/32$) of our systems have \sersic\ index $n<2$, indicating they have a significant disk component, likely in addition to the presence of a bulge. Five systems had a high \sersic\ index ($n>4.5$) for the first run; we use $n\in[1,4]$ as prior to re-fit these systems and find that the changes on the inference of their host luminosity are very limited ($<0.03$ dex). {\bf The inferred \Reff\ for systems (CID543, XID2202, and SXDS-X1136) have hit the lower limit (i.e., $0\farcs{}1$), and thus their scatters are zero. This means the size inference of these three systems could be biased. However, the inference of their host luminosities and stellar masses are still reliable given the small scatter in the host flux ($<10\%$).}
+The distributions of effective radius \Reff\ and \sersic\ index are shown in Figure~\ref{fig:hist_rn}. These values are distributed within the allowed range and not concentrated on either the upper or lower bound. The \Reff\ of our sample are between $\sim1-7$~kpc (peaked at $\sim2.2$~kpc). Nearly half ($15/32$) of our systems have \sersic\ index $n<2$, indicating they have a significant disk component, likely in addition to the presence of a bulge. Five systems had a high \sersic\ index ($n>4.5$) for the first run; we use $n\in[1,4]$ as prior to re-fit these systems and find that the changes on the inference of their host luminosity are very limited ($<0.03$ dex). {\bf The inferred \Reff\ for systems (CID543, XID2202, and SXDS-X1136) have hit the lower limit (i.e., $0\farcs{}1$), and thus the scatter on the parameter is formally zero. This means the size inference of these three systems should really be considered an upper limit, rather than a measurement. However, the inference of their host luminosities and stellar masses are still reliable given the small scatter in the host flux ($<10\%$).}
 
 We compare the morphology of AGNs host galaxies to the inactive ones from the CANDELS/COSMOS imaging survey. We identify 4401 inactive galaxies in a comparable redshift range ($1.2<z<1.7$) whose \sersic\ properties are inferred by \citet{VDwel++2012} using \galfit, and their stellar masses are derived based on 3-D-\hst\ spectroscopic survey~\citep{Momcheva2016, Brammer2012}. We compare the histogram of the inferred \Reff\ and \sersic\ index to the inactive galaxies in Figure~\ref{fig:hist_rn}, where we find no significant difference between their distributions and median value. We also test whether the distributions can be drawn from the same parent population using a Kolmogorov-Smirnov test and determining the p-value to be 0.42 and 0.04 for \Reff\ and $n$, respectively. We conclude that the host galaxies of our AGN sample are representative of the overall population of galaxies, with a significant disk component, at comparable luminosity and stellar mass at the same redshift. In Section~\ref{sec:bh_bulge}, we use this information to infer the likely bulge masses, hence the \mbh\ -- \bmass\ relation.
 
@@ -343,13 +343,18 @@ The comparison of the histogram of the \Reff\ (top panel) and \sersic\ $n_s$ (bo
 
 For $21/32$ AGNs, we have multi-band host magnitudes that enable us to select an appropriate stellar population template to determine rest-frame luminosities and stellar masses for the overall sample. To minimize the uncertainty associated with these corrections, we use this template to interpolate to the rest-frame R band which is very close to the observed wavelengths.  We find that a $1$~Gyr stellar population with solar metallicity and a Chabrier IMF~\citep{Bruzual2003} provides a good match to the observed colors of our sample (see Figure~\ref{fig:compare_temp}). We note that the choice is not unique, and other combinations of ages and metallicities and star formation history could match the observed colors and would provide very similar R-band magnitudes, and also stellar masses \citep{Bell2000, Bell2001}. %(cite Bell \& de Jong 2001, 2003),
 
-\begin{figure}
+\begin{figure*}
 \centering
-{\includegraphics[width=0.4\textwidth]{fig/comp_gtemp_1Gyrs.pdf}}
+\begin{tabular}{c c}
+{\includegraphics[height=0.4\textwidth]{fig/comp_gtemp_1Gyrs.pdf}}&
+{\includegraphics[height=0.4\textwidth]{fig/colorVSz.pdf}}\\
+\end{tabular}
 \caption{\label{fig:compare_temp} 
-Comparison of the inferred rest-frame R band magnitude based on the adopted stellar population, using $21/32$ AGNs which have both WFC3 and ACS imaging data.
+ {\it Left}: Comparison of the inferred rest-frame R band magnitude based on the adopted stellar population, using $21/32$ AGNs which have both WFC3 and ACS imaging data.  {\it Right}: The observed color as a function of redshift. Note that the filter WFC3/F125W and WFC3/F140W are adopted for sample at $z<1.44$ and $z>1.44$, respectively. The blue curve is the predicted model by the $1$~Gyr stellar population. As comparison, we plot the predicted model by the $5$~Gyr stellar population.
 }
-\end{figure} 
+\end{figure*} 
+
+
  
 \subsection{\mbh-\lhost\ relation}\label{sec:ml}
 
@@ -418,8 +423,8 @@ Black hole mass vs. stellar mass relation ( \mbh -- \smass\ ). The best-fit loca
 {\includegraphics[width=0.5\textwidth]{fig/MBH-Mstar-vz_style0.pdf}}\\
 \end{tabular}
 \caption{\label{fig:MM-vz} 
-Left: Offset in  $\log($\mbh$)$ (vs. \smass) as a function of redshift. The orange band is the intrinsic scatter of local linear relation. The red line and gray band are the best-fit and $1\sigma$ offset fitting by Equation~\ref{eq:offset} using our 32 high-$z$ AGNs, with slope value $\gamma  = 0.78 \pm 0.26$.
-Right: \mbh/\smass\ as a function of redshift. 
+ {\it Left}: Offset in  $\log($\mbh$)$ (vs. \smass) as a function of redshift. The orange band is the intrinsic scatter of local linear relation. The red line and gray band are the best-fit and $1\sigma$ offset fitting by Equation~\ref{eq:offset} using our 32 high-$z$ AGNs, with slope value $\gamma  = 0.78 \pm 0.26$.
+ {\it Right}: \mbh/\smass\ as a function of redshift. 
 We use green open circles to show the expected shifting of the median value of the $\Delta \log$\mbh\ before and after consider the selection effect using framework by \citet{Schulze2011} in Section~\ref{sec:sf_framework}.}
 \end{figure*} 
 
@@ -434,8 +439,7 @@ As shown in these panels, the scatter of the high-$z$ correlation presents a sim
 
 In Section~\ref{sec:sf_framework}, we used the Bayesian framework introduced by \citet{Schulze2011} to forward model the distribution functions through a selection convolution. The result show that in the case of no intrinsic evolution of the correlations we would expect to measure an offset corresponding to a $+0.21$~dex bias in the inferred $\Delta \log$\mbh, owing to our selection function. Interestingly, this bias could account for the majority of the observed offset as obtained in the \mbh-\smass\ correlations in the last section. %~\ref{sec:mm}.
 To illustrate the expected bias, we use green open circles to show the corresponding shift of the observed points if one were to correct for this bias in Figure~\ref{fig:MM-vz}. We also show, in Figure~\ref{fig:offset_hist}, the histogram $\Delta \log$\mbh\ by the high-$z$ sample and compare to the local ones. 
-The plots show that the correlations between \mbh\ and host galaxy total stellar mass or luminosity could be consistent with those of the local samples given the uncertainties and selection function
-
+The plots show that the correlations between \mbh\ and host galaxy total stellar mass or luminosity could be consistent with those of the local samples given the uncertainties and selection function.
 
 
 \begin{figure}

@@ -176,7 +176,7 @@ val_min, val_max = np.min([mag_k_corrected_UV, mag_k_corrected_IR]), np.max([mag
 plt.xlim(val_min-0.5, val_max+0.5)
 plt.ylim(val_min-0.5, val_max+0.5)
 plt.tick_params(labelsize=20)     
-plt.savefig('comp_gtemp_{0}.pdf'.format(galay_temp))
+#plt.savefig('comp_gtemp_{0}.pdf'.format(galay_temp))
 plt.show()
 
 #%%
@@ -184,30 +184,37 @@ plt.show()
 #Plot TT's figure:
 from dmag import k_corr_R
 plt.figure(figsize=(10, 8))
-z_d = np.linspace(1,2,40)
+z_d = np.linspace(1.1,1.8,200)
 k_c_140_5gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '5Gyrs')
 k_c_814_5gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '5Gyrs')
 k_c_125_5gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '5Gyrs')
 k_c_140_1gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '1Gyrs')
 k_c_814_1gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '1Gyrs')
 k_c_125_1gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '1Gyrs')
-plt.plot(z_d[z_d>1.44],(k_c_140_5gy-k_c_814_5gy)[z_d>1.44], label = '5gy', c='r')
-plt.plot(z_d[z_d<1.44],(k_c_125_5gy-k_c_814_5gy)[z_d<1.44], c='r')
-plt.plot(z_d[z_d>1.44],(k_c_140_1gy-k_c_814_1gy)[z_d>1.44], label = '1gy', c='b')
-plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], c='b')
-plt.legend(fontsize=25)
+plt.plot(z_d[z_d>1.44],(k_c_140_5gy-k_c_814_5gy)[z_d>1.44], 'r--', label = '5 Gyr template', linewidth=3.0,alpha=0.4)
+plt.plot(z_d[z_d<1.44],(k_c_125_5gy-k_c_814_5gy)[z_d<1.44], 'r--', linewidth=3.0,alpha=0.4)
+plt.plot(z_d[z_d>1.44],(k_c_140_1gy-k_c_814_1gy)[z_d>1.44], label = '1 Gyr template', c='b', linewidth=4.0,alpha=0.5)
+plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], c='b', linewidth=4.0,alpha=0.5)
+plt.legend(fontsize=20)
 texts = []
 for i in range(len(ID)):
     if zs[i] > 1.44 :
-        plt.plot(zs[i], mags_obs_UV[i] - mags_obs_IR[i], 'go')
+        plt.plot(zs[i], mags_obs_UV[i] - mags_obs_IR[i], 'ro')
+        plt.errorbar(zs[i], mags_obs_UV[i] - mags_obs_IR[i],
+                yerr= np.sqrt(mag_IR_err[i].mean()**2+ mag_UV_err[i].mean()**2),
+                color='red', fmt='o',ecolor='gray') 
+#                zmag_k_corrected_IR, mag_k_corrected_UV,xerr= mag_IR_err.T, yerr=mag_UV_err.T,color='red', fmt='o',ecolor='gray' )        
     else:
-        plt.plot(zs[i], mags_obs_UV[i] - mags_obs_IR[i], 'ko')
-    texts.append(plt.text(zs[i], mags_obs_UV[i] - mags_obs_IR[i], ID[i], fontsize=17))
-adjust_text(texts, arrowprops=dict(arrowstyle='->', color='green'))  
-plt.xlabel('redshift',fontsize=35)
-plt.ylabel('Observed Color', fontsize=35)
-plt.tick_params(labelsize=20)    
+        plt.plot(zs[i], mags_obs_UV[i] - mags_obs_IR[i], 'ro')
+        plt.errorbar(zs[i], mags_obs_UV[i] - mags_obs_IR[i],
+                yerr= np.sqrt(mag_IR_err[i].mean()**2+ mag_UV_err[i].mean()**2),
+                color='red', fmt='o',ecolor='gray')         
+        
+#    texts.append(plt.text(zs[i], mags_obs_UV[i] - mags_obs_IR[i], ID[i], fontsize=17))
+#adjust_text(texts, arrowprops=dict(arrowstyle='->', color='green'))  
+plt.xlabel('$z$',fontsize=35)
+plt.ylabel('mag(ACS) - mag(WFC3)', fontsize=30)
+plt.tick_params(labelsize=20)   
+#plt.savefig('colorVSz.pdf') 
 plt.show()
-
-
     
