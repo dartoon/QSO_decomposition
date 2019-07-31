@@ -39,7 +39,10 @@ f1 ='data/B11_MM.txt'
 b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
 
 f2 = 'data/Cisternas_data.txt'
-cis11 = np.loadtxt(f2)  #0 redshift; 1 BH mass; 2 M*;
+cis11 = np.loadtxt(f2)  #0 redshift;
+
+f3 = 'data/high_edd_agn.txt'
+Knud = np.loadtxt(f3)[:,2:]  # 0 redshift; 1 L_bol; 2 M_BH; 3 M_acc; 4 M_*
 
 
 #%%
@@ -101,6 +104,9 @@ if style ==1:
     
     plt.errorbar(np.log10(1+cis11[:,0]),cis11[:,1]-(m_ml*cis11[:,2]+b_ml),yerr=(0.4**2+0.3**2)**0.5,fmt='^',color='darkseagreen',markersize=9) 
 
+#    plt.errorbar(np.log10(1+Knud[:,0]),Knud[:,2]-(m_ml*Knud[:,4]+b_ml),yerr=0,fmt='o',color='blue',markersize=9) 
+
+   
     
     
     plt.scatter(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),c='tomato',

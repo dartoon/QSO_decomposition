@@ -44,9 +44,15 @@ if inp_b11 ==1:
 
 inp_Cis= 1
 f2 = 'data/Cisternas_data.txt'
-cis11 = np.loadtxt(f2)  #0 redshift; 1 M*; 2 BH mass;
+cis11 = np.loadtxt(f2)  #0 redshift;
 if inp_Cis ==1:
     plt.scatter(cis11[:,2],cis11[:,1],c='darkseagreen',marker="^",s=180,zorder=100, edgecolors='white')
+
+inp_Knud= 0
+f3 = 'data/high_edd_agn.txt'
+Knud = np.loadtxt(f3)[:,2:]  # 0 redshift; 1 L_bol; 2 M_BH; 3 M_acc; 4 M_*
+if inp_Knud ==1:
+    plt.scatter(Knud[:,4], Knud[:,2],c='blue',marker="o",s=180,zorder=101, edgecolors='white')
 
 
 tx, ty = 11.85, 7.

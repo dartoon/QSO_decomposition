@@ -179,14 +179,15 @@ if style ==1:
 #    #print "lnlike=",lnlike(theta=[b_ml_offset, sint_mid],x=x, y=y, yerr=yerr)
 #    xl = np.linspace(0, 5, 100)
 #    b=np.percentile(samples,50,axis=0)[0]
-#    yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
 #    #print samples[:,1][samples[:,0]==find_n(samples[:,0],m)]
+#    plt.plot(xl, xl*0+xl*b_ml_offset, color="red", linewidth=4.0,zorder=0)
     
+    yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
     for i in range(100):
         posi=np.random.uniform(16,84)
         b=np.percentile(samples,posi,axis=0)#[0]
         plt.plot(xl, xl*0+xl*b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1)
-    plt.plot(xl, xl*0+xl*b_ml_offset, color="red", linewidth=4.0,zorder=0)
+    plt.plot(xl, xl*0+xl*np.percentile(gamma,50,axis=0), color="red", linewidth=4.0,zorder=0)        
     plt.plot(xl, xl*0, color="black", linewidth=2.0,zorder=0)
     plt.scatter(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
@@ -224,5 +225,48 @@ plt.legend([Bkc, Hkc, SS13, new_sample],[
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
 #plt.savefig("MBH-Mbulge-style{0}.pdf".format(style))
 plt.show()
+
+#%% Plot Figure12-b:
+#The histogram of the M_BH/M_star.
+high_ratio = []
+fig = plt.figure(figsize=(12,9))
+ax = fig.add_subplot(111)
+for i in range(len(Mstar_samp)):
+    high_ratio.append(10**(MBs-Mstar_samp[i,:])) 
+dis0 = np.asarray(high_ratio)
+dis0 = dis0.flatten()
+high0, x0, _ = plt.hist(np.log10(dis0),normed=True , histtype=u'step',
+         label=('High-z sample'), linewidth = 4, color='red')
+
+dis1 = np.concatenate([10**(hloc[:,3]-hloc[:,1]), 10**(bloc[:,3]-bloc[:,1])])
+
+high1, x1, _ = plt.hist(np.log10(dis1),normed=True, histtype=u'step',
+         label=('Local sample'), linewidth = 2, color='gray',linestyle=('dashed'))
+
+x0_m = np.median(np.log10(dis0))
+high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]-1]
+#plt.plot(np.linspace(0,high_m0)*0+np.median(x0_m) , np.linspace(0,high_m0), linewidth = 4,color='orange',linestyle=('dashed'))
+
+x1_m = np.median(np.log10(dis1))
+high_m1 = high1[np.where(abs(x1_m-x1) == abs(x1_m-x1).min())[0][0]-1]
+#plt.plot(np.linspace(0,high_m1)*0+np.median(x1_m) , np.linspace(0,high_m1), linewidth = 4, color='green')
+#
+#plt.text(np.median(x0_m)-0.2, high_m0*1.05, '{0}'.format(round(np.median(x0_m),1)), color='orange',fontsize=25)
+#plt.text(np.median(x1_m)-0.2, high_m1*1.05, '{0}'.format(round(np.median(x1_m),1)), color='green',fontsize=25)
+
+plt.xlabel("$M_{BH}/M_{*,bulge}$",fontsize=40)
+plt.ylabel("PDF",fontsize=40)
+plt.tick_params(labelsize=30)
+plt.legend(prop={'size':30})
+
+fig.canvas.draw()
+labels = [item.get_text().encode('ascii', 'replace').replace('?','-') for item in ax.get_xticklabels()]
+for i in range(len(labels)-2):
+    labels[i+1] = '10$^{'+ labels[i+1] + '}$'
+plt.yticks([])
+ax.set_xticklabels(labels)
+
+plt.savefig('realizations_M_BH_M_star.pdf')
+plt.show()
     
-    
+

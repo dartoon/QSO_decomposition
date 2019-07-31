@@ -197,7 +197,7 @@ cl.ax.tick_params(labelsize=30)
 
 
 if relation == 0:
-    f1 ='../../M_BH_relation/data//Bennert+2011_local.txt'
+    f1 ='../../M_BH_relation/data/Bennert+2011_local.txt'
     b11_l = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
     b11_local_Reff = b11_l[:,-1]
     b11_local_mstar = b11_l[:,4]
