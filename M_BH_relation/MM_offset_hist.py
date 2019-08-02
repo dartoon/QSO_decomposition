@@ -89,7 +89,7 @@ plt.plot(np.linspace(0,high_m1)*0+x1_m , np.linspace(0,high_m1),
 plt.plot(np.linspace(0,high_m1)*0+x1_m-0.21 , np.linspace(0,high_m1)*2,
          linewidth = 2, color='red',alpha=0.5)
 
-plt.text((x1_m)*0.85, 0.25, '{0}'.format(round(np.median(x1_m),2)), color='gray',fontsize=18)
+plt.text((x1_m)*0.85, 0.25, '{0}'.format(round(x1_m,2)), color='gray',fontsize=18)
 #plt.text(np.median(x1_m)-0.21, 0.25, '{0}'.format(round(np.median(x1_m)-0.21,2)), color='red',fontsize=18)
 plt.xlabel("$\Delta$log($M_{BH}$)",fontsize=27)
 plt.ylabel("Density",fontsize=27)

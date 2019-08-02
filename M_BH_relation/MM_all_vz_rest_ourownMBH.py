@@ -196,8 +196,8 @@ plt.show()
 #        print ID[i]
 
 #%%
-##calcualte the mean offset:
-#weighted_offset = np.sum(np.asarray(y_cosmos)*yerr_hz) / np.sum(yerr_hz)                              
-#rms_offset = np.sqrt(np.sum((np.asarray(y_cosmos)-weighted_offset)**2*yerr_hz) / np.sum(yerr_hz))
-##rms_offset = np.sqrt(np.mean((np.asarray(y_cosmos)-weighted_offset)**2)) #No error bar
-#print weighted_offset, rms_offset
+#calcualte the mean offset:
+weighted_offset = np.sum(np.asarray(y_cosmos)*yerr_hz) / np.sum(yerr_hz)                              
+rms_offset = np.sqrt(np.sum((np.asarray(y_cosmos)-weighted_offset)**2*yerr_hz) / np.sum(yerr_hz))
+#rms_offset = np.sqrt(np.mean((np.asarray(y_cosmos)-weighted_offset)**2)) #No error bar
+print weighted_offset, rms_offset/np.sqrt(32.)

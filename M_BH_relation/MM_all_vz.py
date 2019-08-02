@@ -86,12 +86,18 @@ if style ==0:
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
 
     #Plot the median circle.
-    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]),facecolors='none',
-                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-    plt.arrow(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]), 0,  -0.0013, zorder=900, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
-    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]-0.21),facecolors='none',
-                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-        
+#    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]),facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+#    plt.arrow(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]), 0,  -0.0013, zorder=900, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
+#    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]-0.21),facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)   
+    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(hloc[:,3]-hloc[:,1]),10**(bloc[:,3]-bloc[:,1])])),
+                facecolors='none', s=280,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='blue', linewidth='6', alpha=0.5)       
+    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(hloc[:,3]-hloc[:,1]+0.21),10**(bloc[:,3]-bloc[:,1]+0.21)])),
+                facecolors='none', s=280,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='blue', linewidth='6', alpha=0.5)      
+    plt.arrow(np.log10(1+zs[9]),np.median(np.concatenate([10**(hloc[:,3]-hloc[:,1]),10**(bloc[:,3]-bloc[:,1])])), 0, +0.0009,
+              zorder=800, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
+    
 #    
 #    
 if style ==1:
@@ -106,8 +112,6 @@ if style ==1:
 
 #    plt.errorbar(np.log10(1+Knud[:,0]),Knud[:,2]-(m_ml*Knud[:,4]+b_ml),yerr=0,fmt='o',color='blue',markersize=9) 
 
-   
-    
     
     plt.scatter(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
@@ -116,11 +120,16 @@ if style ==1:
                  color='tomato',ecolor='orange', fmt='.',markersize=1)    
     
     #Plot the median circle.
-    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)),facecolors='none',
-                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-    plt.scatter(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml))-0.21,facecolors='none',
-                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-    plt.arrow(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)), 0, -0.19, zorder=900, head_length=0.05,head_width=0.005,fc='k',ec='k')
+#    plt.scatter(np.log10(1+zs[9]),np.median((MBs-(m_ml*Mstar+b_ml))),facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+#    plt.scatter(np.log10(1+zs[9]),np.median((MBs-(m_ml*Mstar+b_ml)))-0.21,facecolors='none',
+#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
+#    plt.arrow(np.log10(1+zs[9]),(MBs[9]-(m_ml*Mstar[9]+b_ml)), 0, -0.19, zorder=900, head_length=0.05,head_width=0.005,fc='k',ec='k')
+    plt.scatter(np.log10(1+zs[9]),0,facecolors='none',
+                s=280,marker="o",zorder=900, edgecolors='blue', linewidth='6', alpha=0.5)    
+    plt.scatter(np.log10(1+zs[9]),0+0.21,facecolors='none',
+                s=280,marker="o",zorder=900, edgecolors='blue', linewidth='6', alpha=0.5)    
+    plt.arrow(np.log10(1+zs[9]),0, 0, +0.19, zorder=800, head_length=0.05,head_width=0.005,fc='k',ec='k')
     
     #####fit the evolution##########
     ################################

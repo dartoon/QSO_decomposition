@@ -194,6 +194,8 @@ if style ==1:
     plt.errorbar(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),
                  yerr= yerr_highz,
                  color='tomato',ecolor='orange', fmt='.',markersize=1)  
+plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(1.86,0.30),color='blue',fontsize=25)
+
 plt.xlabel("log$(1+z)$",fontsize=35)
 new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=20,markeredgecolor='k')
 plt.xticks(np.arange(-0.1,1,0.1))
@@ -225,6 +227,14 @@ plt.legend([Bkc, Hkc, SS13, new_sample],[
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
 #plt.savefig("MBH-Mbulge-style{0}.pdf".format(style))
 plt.show()
+
+ #%%
+#calcualte the mean offset:
+weighted_offset = np.sum(np.asarray(MBs-(m_ml*Mstar+b_ml))*yerr_highz) / np.sum(yerr_highz)                              
+rms_offset = np.sqrt(np.sum((np.asarray(MBs-(m_ml*Mstar+b_ml))-weighted_offset)**2*yerr_highz) / np.sum(yerr_highz))
+#rms_offset = np.sqrt(np.mean((np.asarray(y_cosmos)-weighted_offset)**2)) #No error bar
+print weighted_offset, rms_offset/np.sqrt(32.)
+
 
 #%% Plot Figure12-b:
 #The histogram of the M_BH/M_star.
