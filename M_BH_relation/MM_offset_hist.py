@@ -86,13 +86,17 @@ xi_weight_err = np.sqrt(np.sum((np.asarray(highz_offset)-x1_weight)**2*yerr_hz) 
 
 plt.plot(np.linspace(0,high_m1)*0+x1_m , np.linspace(0,high_m1),
          linewidth = 2, color='black',alpha=0.3)
-plt.plot(np.linspace(0,high_m1)*0+x1_m-0.21 , np.linspace(0,high_m1)*2,
+#plt.plot(np.linspace(0,high_m1)*0+x1_m-0.21 , np.linspace(0,high_m1)*2,
+#         linewidth = 2, color='red',alpha=0.5)
+plt.plot(np.linspace(0,high_m1)*0 + 0.21 , np.linspace(0,high_m1)*2,
          linewidth = 2, color='red',alpha=0.5)
 
-plt.text((x1_m)*0.85, 0.25, '{0}'.format(round(x1_m,2)), color='gray',fontsize=18)
+
+plt.text((x1_m)*0.85+0.05, 0.15, '{0}'.format(round(x1_m,2)), color='gray',fontsize=18)
+plt.text((x1_m)*0+0.02, 0.15, '0.21', color='red',fontsize=18,alpha=0.5)
 #plt.text(np.median(x1_m)-0.21, 0.25, '{0}'.format(round(np.median(x1_m)-0.21,2)), color='red',fontsize=18)
 plt.xlabel("$\Delta$log($M_{BH}$)",fontsize=27)
-plt.ylabel("Density",fontsize=27)
+plt.ylabel("Number Density",fontsize=27)
 plt.ylim([0, 1.8])
 plt.tick_params(labelsize=20)
 plt.legend(prop={'size':14})

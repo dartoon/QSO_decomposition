@@ -97,7 +97,7 @@ x_cline = np.linspace(7.1, 8.5)
 y_line_3 = -1.1*(x_cline-7.5) -0.5
 #ax.plot(x_cline, y_line_3,'k--')
 plt.xlabel("log$(M_{BH}/M_{\odot})$",fontsize=25)
-plt.ylabel("log$L_{bol}/L_{Edd}$", fontsize=25) 
+plt.ylabel("log $L_{bol}/L_{Edd}$", fontsize=25) 
 plt.tick_params(labelsize=15)
 plt.xticks(np.arange(7.5,9.6,0.5))
 other_data = np.loadtxt('Peng_Decarli_data.txt')
@@ -177,7 +177,7 @@ ax_y.plot(x_cline, y_line_1, 'k--')
 plt.xticks(np.arange(-10,10,2))
 plt.xlim([int(rho_lam.min()),int(rho_lam.max())+1])
 plt.tick_params(labelsize=15)
-plt.xlabel("log$\phi(\lambda))$", fontsize=25) 
+plt.xlabel("log$\phi(\lambda)$", fontsize=25) 
 
 #%%
 # the xaxis of ax_x and yaxis of ax_y are shared with ax,
@@ -191,7 +191,7 @@ for tl in ax_y.get_yticklabels():
     tl.set_visible(False) 
 ax.set_xlim([7.4, 9.7])
 ax.set_ylim([-1.9, 0.3])
-#plt.savefig("AGN_selection.pdf")
+plt.savefig("AGN_selection.pdf")
 plt.show()
 
 #%%Print them for Andreas
