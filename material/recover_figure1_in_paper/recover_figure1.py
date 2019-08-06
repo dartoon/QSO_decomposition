@@ -97,7 +97,7 @@ x_cline = np.linspace(7.1, 8.5)
 y_line_3 = -1.1*(x_cline-7.5) -0.5
 #ax.plot(x_cline, y_line_3,'k--')
 plt.xlabel("log$(M_{BH}/M_{\odot})$",fontsize=25)
-plt.ylabel("log $L_{bol}/L_{Edd}$", fontsize=25) 
+plt.ylabel("log($L_{bol}/L_{Edd})$", fontsize=25) 
 plt.tick_params(labelsize=15)
 plt.xticks(np.arange(7.5,9.6,0.5))
 other_data = np.loadtxt('Peng_Decarli_data.txt')

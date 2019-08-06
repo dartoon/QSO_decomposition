@@ -16,7 +16,7 @@ import matplotlib.lines as mlines
 from matplotlib import colors
 import pickle
 
-gamma,Mstar_samp = pickle.load(open('gamma_Mbulge_result_(BT_min_0.1)_part2.pkl','rb'))
+gamma,Mstar_samp = pickle.load(open('gamma_Mbulge_result_(BT_min_0.1)_exclude6outliers.pkl','rb'))
 Mstar_samp = np.asarray(Mstar_samp)
 hist_value = gamma #Mstar_samp[:,1]
 plt.figure(figsize=(10,8))
