@@ -165,6 +165,69 @@ for i in range(len(tab_list)):
     UV_result[i][-1],
     "{0}%pm{1}%".format(round(UV_result[i][0][0],1), round(UV_result[i][0][1],1)),  #host flux ratio
     "{0}+{1}-{2}".format(round(UV_result[i][5],3), round(UV_result[i][6][0],3),round(UV_result[i][6][1],3))) #host mag, l, h
+
+#%%Calculate the flux
+for i in range(len(tab_list)):
+    if IR_result[i]=='xxx':
+        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+    if UV_result[i]=='xxx':
+        UV_result[i] = [np.asarray(UV_result[0][j])*0-99 for j in range(len(UV_result[0]))]
+    print(tab_list[i],i,
+    "{0}pm{1}, {2}pm{3} ".format(round(IR_result[i][3][0],1), round(IR_result[i][3][1],1),round(IR_result[i][4][0]-IR_result[i][3][0],1), round(IR_result[i][4][1],1)),  #host flux ratio
+    "{0}pm{1}, {2}pm{3} ".format(round(UV_result[i][3][0],1), round(UV_result[i][3][1],1),round(UV_result[i][4][0]-UV_result[i][3][0],1), round(UV_result[i][4][1],1)))  #host flux ratio
+
+#Calculate the magnitude
+for i in range(len(tab_list)):
+    if IR_result[i]=='xxx':
+        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
+    if UV_result[i]=='xxx':
+        UV_result[i] = [np.asarray(UV_result[0][j])*0-99 for j in range(len(UV_result[0]))]
+    filt = filt_info[tab_list[i]]
+    if filt == "F140w":
+        zp_ir = 26.4524
+    elif filt == "F125w":
+        zp_ir = 26.2303
+#    elif filt == "F814w":
+    zp_uv = 25.94333
+    IR_flux_host = IR_result[i][3][0]
+    IR_flux_host_err = IR_result[i][3][1]
+    IR_flux_qso = IR_result[i][4][0]-IR_result[i][3][0]
+    IR_flux_qso_err = (IR_result[i][3][1]**2 + IR_result[i][4][1]**2)**0.5
+    UV_flux_host = UV_result[i][3][0]
+    UV_flux_host_err = UV_result[i][3][1]
+    UV_flux_qso = UV_result[i][4][0]-UV_result[i][3][0]
+    UV_flux_qso_err = (UV_result[i][3][1]**2 + UV_result[i][4][1]**2)**0.5
+    IR_mag_host = -2.5*log10(IR_flux_host) + zp_ir
+    IR_mag_host_err_0 = abs(-2.5*log10(IR_flux_host+IR_flux_host_err) + zp_ir - IR_mag_host)
+    IR_mag_host_err_1 = abs(-2.5*log10(IR_flux_host-IR_flux_host_err) + zp_ir - IR_mag_host)
+    IR_mag_host_err = (IR_mag_host_err_0+IR_mag_host_err_1)/2.
+    IR_mag_qso = -2.5*log10(IR_flux_qso) + zp_ir
+    IR_mag_qso_err_0 = abs(-2.5*log10(IR_flux_qso+IR_flux_qso_err) + zp_ir - IR_mag_qso)
+    IR_mag_qso_err_1 = abs(-2.5*log10(IR_flux_qso-IR_flux_qso_err) + zp_ir - IR_mag_qso)
+    IR_mag_qso_err = (IR_mag_qso_err_0+IR_mag_qso_err_1)/2
+    if UV_flux_host>0:
+        UV_mag_host = -2.5*log10(UV_flux_host) + zp_uv
+        UV_mag_host_err_0 = abs(-2.5*log10(UV_flux_host+UV_flux_host_err) + zp_uv - UV_mag_host)
+        UV_mag_host_err_1 = abs(-2.5*log10(UV_flux_host-UV_flux_host_err) + zp_uv - UV_mag_host)
+        UV_mag_host_err = (UV_mag_host_err_0+UV_mag_host_err_1)/2.
+        UV_mag_qso = -2.5*log10(UV_flux_qso) + zp_uv
+        UV_mag_qso_err_0 = abs(-2.5*log10(UV_flux_qso+UV_flux_qso_err) + zp_uv - UV_mag_qso)
+        UV_mag_qso_err_1 = abs(-2.5*log10(UV_flux_qso-UV_flux_qso_err) + zp_uv - UV_mag_qso)
+        UV_mag_qso_err = (UV_mag_qso_err_0+UV_mag_qso_err_1)/2
+    else:
+        UV_mag_host, UV_mag_host_err, UV_mag_qso, UV_mag_qso_err = -99, -99, -99, -99
+#    print(tab_list[i],
+#    "{0}pm{1}, {2}pm{3} ".format(round(IR_mag_host,2), round(IR_mag_host_err,2),
+#     round(IR_mag_qso,2), round(IR_mag_qso_err,2)),  #host flux ratio
+#    "{0}pm{1}, {2}pm{3} ".format(round(UV_mag_host,2), round(UV_mag_host_err,2),
+#     round(UV_mag_qso,2), round(UV_mag_qso_err,2)))  #host flux ratio
+    print filt
+    
+    
+    
+    #%%
+
+
 #for i in range(len(tab_list)):
 #    if IR_result[i]=='xxx':
 #        IR_result[i] = [np.asarray(IR_result[0][j])*0-99 for j in range(len(IR_result[0]))]
