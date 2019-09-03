@@ -77,3 +77,17 @@ plt.tick_params(labelsize=25)
 plt.ylim([1.2, 2.8])
 plt.legend(scatterpoints=1,numpoints=1,loc=2,prop={'size':24},ncol=1)
 plt.show()
+
+#%%
+plt.figure(figsize=(15, 11))
+plt.scatter((10**Mstar_c/10**R_lumi_c)[zs_c>1.44], (host_mag_ACS_c)[zs_c>1.44],s=680, c ='green',
+            marker="*",zorder=100, vmin=0, vmax=7, edgecolors='white', label='WFC/F140W')
+plt.scatter((10**Mstar_c/10**R_lumi_c)[zs_c<1.44], (host_mag_ACS_c)[[zs_c<1.44]],s=280, c ='green',
+            marker="o",zorder=100, vmin=0, vmax=7, edgecolors='white', label='WFC/F125W')
+plt.ylabel("mag_$_{ACS}$",fontsize=35)
+plt.xlabel("(M_*/M_sun)/(L_R/L_Rsun)",fontsize=35)
+plt.tick_params(labelsize=25)
+#plt.ylim([1.2, 2.8])
+#plt.ylim(23.0, 20.75)  # 
+plt.legend(scatterpoints=1,numpoints=1,loc=2,prop={'size':24},ncol=1)
+plt.show()

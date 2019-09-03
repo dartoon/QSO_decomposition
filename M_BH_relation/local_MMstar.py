@@ -43,6 +43,7 @@ yerr=(np.append(bloc[:,2], hloc[:,2])**2+np.append(bloc[:,4], hloc[:,4])**2)**0.
 def lnlike(theta, x, y, yerr):
     m, b, sint= theta
     model = m * x + b
+#    yerr=(m*(np.append(bloc[:,2], hloc[:,2]))**2+np.append(bloc[:,4], hloc[:,4])**2)**0.5  # right error level
     sigma2 = (yerr**2 + sint**2)
     if sint>=0 :
       return -0.5*(np.sum((y-model)**2/sigma2)+np.sum(np.log(2*np.pi*sigma2)))

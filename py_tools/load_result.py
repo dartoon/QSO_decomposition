@@ -236,16 +236,26 @@ def load_host_p(ID, folder='../', temp='1Gyrs', dm = 0):
     from dmag import k_corr_R
     from filter_info import filt_info
     dm_k_R = []
-    for i in range(len(zs)):
-        dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = temp))
-    dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
+    if temp != '3Gyrs':
+        for i in range(len(zs)):
+            dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = temp))
+        dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
+    else:
+        for i in range(len(zs)):
+            dm_k_R.append( (k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '1Gyrs')+k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '5Gyrs'))/2. )
+        dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
     dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
     host_Mags = mags -5*(np.log10(dl)-1) + dm_k_R + dm*pass_dmag(zs) # This is in AB system
-    host_LR = 10 ** (0.4*(4.61-host_Mags)) #LR in AB
+    host_LR = np.log10(10 ** (0.4*(4.61-host_Mags))) #LR in AB
     host_Mags_Vega = host_Mags - 0.21  # Transfer to Vega system
     host_LR_Vega = 10 ** (0.4*(4.43-host_Mags_Vega)) #LR in Vega
-    Mstar = np.log10(host_LR_Vega * 0.54 * 0.684 * 1.4191)  
-    return np.log10(host_LR), Mstar, host_Mags
+    if temp =='1Gyrs':
+        Mstar = np.log10(host_LR_Vega * 0.54 * 0.684 * 1.4191)  
+    elif temp=='5Gyrs':
+        Mstar = np.log10(host_LR_Vega * 2.32 * 0.59 * 1.4191)
+    if temp =='3Gyrs':
+        Mstar = np.log10(host_LR_Vega * 1.50 * 0.60 * 1.4191)      
+    return host_LR, Mstar, host_Mags
 
 def load_MBH(ID, MB_ID, if_reportHb=0,folder = '..', return_line = 0):
     #ID change:

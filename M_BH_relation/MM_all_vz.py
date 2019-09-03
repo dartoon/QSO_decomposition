@@ -66,7 +66,7 @@ host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
 MBs = load_MBH(ID,MB_ID,if_reportHb=0)
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
-yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
+yerr_highz = [((m_ml*Mstar_err[:,0])**2+0.4**2)**0.5, ((m_ml*Mstar_err[:,1])**2+0.4**2)**0.5]
 
 #plt.scatter(Mstar,MBs,c=zs,s=880,marker="*",zorder=100, vmin=0.3, vmax=2, edgecolors='k')
 
@@ -103,12 +103,12 @@ if style ==0:
 if style ==1:
 #    plt.scatter(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml), c='darkseagreen',
 #                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')
-    plt.errorbar(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)
+    plt.errorbar(np.log10(1+ss[:,0]),ss[:,2]-(m_ml*ss[:,1]+b_ml),yerr=(0.4**2+(m_ml*0.2)**2)**0.5,fmt='^',color='darkseagreen',markersize=9)
 #    plt.scatter(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml), c='darkseagreen',
 #                s=180,marker="^", zorder=100,vmin=0.3, vmax=2, edgecolors='white')    
-    plt.errorbar(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  
+    plt.errorbar(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,1]+b_ml),yerr=(0.4**2+(m_ml*0.2)**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  
     
-    plt.errorbar(np.log10(1+cis11[:,0]),cis11[:,1]-(m_ml*cis11[:,2]+b_ml),yerr=(0.4**2+0.3**2)**0.5,fmt='^',color='darkseagreen',markersize=9) 
+    plt.errorbar(np.log10(1+cis11[:,0]),cis11[:,1]-(m_ml*cis11[:,2]+b_ml),yerr=(0.4**2+(m_ml*0.35)**2)**0.5,fmt='^',color='darkseagreen',markersize=9) 
 
 #    plt.errorbar(np.log10(1+Knud[:,0]),Knud[:,2]-(m_ml*Knud[:,4]+b_ml),yerr=0,fmt='o',color='blue',markersize=9) 
 
@@ -144,8 +144,8 @@ if style ==1:
                                   
     z=np.concatenate((z_ss, z_b11, z_cis, z_cosmos),axis=0)
     y=np.concatenate((y_ss, y_b11, y_cis, y_cosmos),axis=0)
-    yerr_imd= np.zeros(len(z_ss)+len(z_b11))+(0.4**2+0.2**2)**0.5   # the error for the fitting
-    yerr_cis = np.zeros(len(z_cis)) + (0.4**2+0.35**2)**0.5 
+    yerr_imd= np.zeros(len(z_ss)+len(z_b11))+(0.4**2+(m_ml*0.2)**2)**0.5   # the error for the fitting
+    yerr_cis = np.zeros(len(z_cis)) + (0.4**2+(m_ml*0.35)**2)**0.5 
     yerr = np.concatenate((yerr_imd,yerr_cis, yerr_hz),axis=0)
     
 #    #if consider 32 AGN only:
@@ -210,7 +210,7 @@ if style ==1:
     #####################
     value,sig=round(b_ml_offset,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
     print value,sig
-#    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
+    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 
 
 plt.xlabel("log$(1+z)$",fontsize=35)

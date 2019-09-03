@@ -86,8 +86,6 @@ m_ml, b_ml,sint_ml= result["x"]
 #m_ml, b_ml = 1.12, -4.12  # Park's first use
 #m_ml, b_ml = 1.02, -2.91  # Park's inference from the two sample
 
-xp = np.array([5, 13])
-#plt.plot(xp, m_ml*xp+b_ml, 'r-')
 def lnprior(theta):
     m, b, sint	 = theta
     if -5.0 < m < 5 and -10 < b < 10.0 and 0 < sint < 10:
