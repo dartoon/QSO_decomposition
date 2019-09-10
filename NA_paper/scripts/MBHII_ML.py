@@ -52,13 +52,13 @@ def lfit(x,m,c):
     return m*x+c
 
 import scipy.optimize
-f,ax=plt.subplots(1,1,figsize=(8,8))
+f,ax=plt.subplots(1,1,figsize=(11,10))
 
 obj=ax
 redshift=1.5
-#panel2=obj.hist2d(r_band_magnitudes_overall,bhmass_overall,
-#                  norm=mpl.colors.LogNorm(),cmap='Blues_r',bins=50,zorder=0,alpha=0.5)
-panel2=obj.scatter(r_band_magnitudes_overall,bhmass_overall,c='gray',alpha=0.5, label='Simulated population')
+panel2=obj.hist2d(r_band_magnitudes_overall,bhmass_overall,
+                  norm=mpl.colors.LogNorm(),cmap='copper',bins=50,zorder=0,alpha=0.5)
+#panel2=obj.scatter(r_band_magnitudes_overall,bhmass_overall,c='gray',alpha=0.5, label='Simulated population')
 
 ####Fit the overall sample (x as function of y):
 #fit=scipy.optimize.curve_fit(lfit,-r_band_magnitudes_overall,log10_bhmass_overall)
@@ -71,8 +71,8 @@ panel2=obj.scatter(r_band_magnitudes_overall,bhmass_overall,c='gray',alpha=0.5, 
 ##r_band_space_lb=lfit(lmbh_space,fit[0][0]-fit_err[0]/2,fit[0][1]-fit_err[1]/2)
 ##plt.fill_betweenx(lmbh_space,r_band_space_lb,r_band_space_ub,color='blue',alpha=0.3)
 
-#cbar=f.colorbar(panel2[3],ax=obj)
-#cbar.ax.tick_params(labelsize=30) 
+cbar=f.colorbar(panel2[3],ax=obj)
+cbar.ax.tick_params(labelsize=30) 
 
 obj.errorbar(r_band_magnitudes_selected,bhmass_selected,zorder=1,
              color='red',label='Simulated population',linestyle=' ',marker='o',ms=10,mec='k')
@@ -99,6 +99,22 @@ plt.plot(r_band_space,lmbh_space,color='green',linewidth=3)
 
 print "mismatch:", fit_fixm[0]- fit[0][1]
 
+
+obj.set_yticks([7.5,8.0,8.5,9.0])
+obj.set_xticks([-18, -20,-22,-24,-26])
+#obj.set_xticklabels(['-18','-20','-22','-24','-26'])
+ax.set_xlim(-19.8, -26)  # 
+ax.set_ylim(7.2, 9.4)  # 
+
+obj.tick_params(labelsize=30)
+#ax.set_rasterized(True)
+obj.set_ylabel('log(M$_{BH}$/M$_{\odot}$)',fontsize=30)
+obj.set_xlabel('R band magnitude',fontsize=30)
+obj.legend(loc='upper left',fontsize=21,numpoints=1)
+plt.savefig("MBII_ML_.pdf")
+plt.show()
+
+##%%
 #import linmix
 #x = r_band_magnitudes_selected
 #xsig = np.zeros(len(bhmass_selected))
@@ -111,7 +127,9 @@ print "mismatch:", fit_fixm[0]- fit[0][1]
 #xs = np.arange(-26,-19)
 #ys = alpha + xs * beta
 #plt.plot(xs, ys, color='red',linewidth=3)
-#print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean())
+#sig_std = ((np.sqrt(lm.chain['sigsqr'].mean()+lm.chain['sigsqr'].std()) - np.sqrt(lm.chain['sigsqr'].mean()))\
+# + (np.sqrt(lm.chain['sigsqr'].mean()) - np.sqrt(lm.chain['sigsqr'].mean()-lm.chain['sigsqr'].std())))/2
+#print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
 ###Don't know how to fix the slope value...
 #x = M_r_obs
 #xsig = (abs(M_r_obs_err[:,0]) + abs(M_r_obs_err[:,1]))/2
@@ -124,19 +142,7 @@ print "mismatch:", fit_fixm[0]- fit[0][1]
 #xs = np.arange(-26,-19)
 #ys = alpha_obs + xs * beta_obs
 #plt.plot(xs, ys, color='green',linewidth=3)
-#print "intrinsic scatter:", np.sqrt(lm_obs.chain['sigsqr'].mean())
-
-
-obj.set_yticks([7.5,8.0,8.5,9.0])
-obj.set_xticks([-18, -20,-22,-24,-26])
-#obj.set_xticklabels(['-18','-20','-22','-24','-26'])
-ax.set_xlim(-19.8, -26)  # 
-ax.set_ylim(7.2, 9.4)  # 
-
-obj.tick_params(labelsize=30)
-#ax.set_rasterized(True)
-obj.set_ylabel('log(M$_{BH}$/M$_{\odot}$)',fontsize=30)
-obj.set_xlabel('Mag $_R$',fontsize=30)
-obj.legend(loc='upper left',fontsize=17,numpoints=1)
-plt.savefig("MBII_ML_.pdf")
-plt.show()
+#sig_std = ((np.sqrt(lm_obs.chain['sigsqr'].mean()+lm_obs.chain['sigsqr'].std()) - np.sqrt(lm_obs.chain['sigsqr'].mean()))\
+##+ (np.sqrt(lm_obs.chain['sigsqr'].mean()) - np.sqrt(lm_obs.chain['sigsqr'].mean()-lm_obs.chain['sigsqr'].std())))/2
+# + (np.sqrt(lm_obs.chain['sigsqr'].mean()) - 0))/2
+#print "intrinsic scatter:", np.sqrt(lm_obs.chain['sigsqr'].mean()), sig_std

@@ -46,24 +46,36 @@ stellar_mass_obs_err= load_err(prop='Mstar', ID=tab_list)
 #r_band_magnitudes_overall=np.loadtxt('../Aklant/new_sample/log10_host_r_mag_full_population.txt')
 #r_band_magnitudes_selected=np.loadtxt('../Aklant/new_sample/log10_host_r_mag_selected_population.txt')
 
-bhmass_overall=np.loadtxt('../Aklant/new_sample/log10_bh_mass_full_population.txt') - np.log10(h) 
-bhmass_selected=np.loadtxt('../Aklant/new_sample/log10_bh_mass_selected_population.txt') - np.log10(h) 
-
 mstar_overall=np.loadtxt('../Aklant/new_sample/log10_stellar_mass_full_population.txt') - np.log10(h) 
-mstar_selected=np.loadtxt('../Aklant/new_sample/log10_stellar_mass_selected_population.txt') - np.log10(h) 
+mstar_selected_int=np.loadtxt('../Aklant/new_sample/log10_stellar_mass_selected_population.txt') - np.log10(h) 
+
+bhmass_overall=np.loadtxt('../Aklant/new_sample/log10_bh_mass_full_population.txt') - np.log10(h) 
+bhmass_selected_int=np.loadtxt('../Aklant/new_sample/log10_bh_mass_selected_population.txt') - np.log10(h) 
+
+#%%
+obs_mstar_sig = 0.171
+mstar_selected = mstar_selected_int + np.random.normal(0, obs_mstar_sig, size=mstar_selected_int.shape)
+
+obs_bhmass_sig = 0.4
+bhmass_selected = bhmass_selected_int + np.random.normal(0, obs_bhmass_sig, size=bhmass_selected_int.shape)
+
+
+mstar_selected = mstar_selected[(bhmass_selected<bhmass_selected_int.max()) * (bhmass_selected>bhmass_selected_int.min())]
+bhmass_selected = bhmass_selected[(bhmass_selected<bhmass_selected_int.max()) * (bhmass_selected>bhmass_selected_int.min())]
+
 
 #%% Plot it out:
 def lfit(x,m,c):
     return m*x+c
 
 import scipy.optimize
-f,ax=plt.subplots(1,1,figsize=(11,10))
+f,ax=plt.subplots(1,1,figsize=(8,8))
 
 obj=ax
 redshift=1.5
-panel2=obj.hist2d(mstar_overall,bhmass_overall,
-                  norm=mpl.colors.LogNorm(),cmap='copper',bins=50,zorder=0,alpha=0.5)
-#panel2=obj.scatter(mstar_overall,bhmass_overall,c='gray',alpha=0.5,label='Simulated population')
+#panel2=obj.hist2d(mstar_overall,bhmass_overall,
+#                  norm=mpl.colors.LogNorm(),cmap='Blues_r',bins=50,zorder=0,alpha=0.5)
+panel2=obj.scatter(mstar_overall,bhmass_overall,c='gray',alpha=0.5,label='Simulated population')
 
 ####Fit the overall sample (x as function of y):
 #fit=scipy.optimize.curve_fit(lfit,-r_band_magnitudes_overall,log10_bhmass_overall)
@@ -76,11 +88,11 @@ panel2=obj.hist2d(mstar_overall,bhmass_overall,
 ##r_band_space_lb=lfit(lmbh_space,fit[0][0]-fit_err[0]/2,fit[0][1]-fit_err[1]/2)
 ##plt.fill_betweenx(lmbh_space,r_band_space_lb,r_band_space_ub,color='blue',alpha=0.3)
 
-cbar=f.colorbar(panel2[3],ax=obj)
-cbar.ax.tick_params(labelsize=30) 
+#cbar=f.colorbar(panel2[3],ax=obj)
+#cbar.ax.tick_params(labelsize=30) 
 
 obj.errorbar(mstar_selected,bhmass_selected,zorder=1,
-             color='red',label='Simulated population',linestyle=' ',marker='o',ms=10,mec='k')
+             color='red',label='Selected population',linestyle=' ',marker='o',ms=10,mec='k')
 obj.errorbar(stellar_mass_obs,bh_mass_obs, 
 #             xerr = [abs(M_r_obs_err[:,0]),abs(M_r_obs_err[:,1])], yerr=np.ones(len(bh_mass_obs))*0.4, 
              zorder=1,color='green',label='Observed population',
@@ -104,21 +116,32 @@ plt.plot(mstar_space,lmbh_space,color='green',linewidth=3)
 
 print "mismatch:", fit_fixm[0]- fit[0][1]
 
-obj.set_yticks([7.5,8.0,8.5,9.0])
-obj.set_xticks([10,10.5,11,11.5,12])
-#obj.set_xticklabels(['-18','-20','-22','-24','-26'])
-ax.set_xlim(9.7,12)  # decreasing time
-ax.set_ylim(7.2, 9.4)  # decreasing time
 
 obj.tick_params(labelsize=30)
 #ax.set_rasterized(True)
 obj.set_ylabel('log(M$_{BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('log(M$_{*}$/M$_{\odot}$)',fontsize=30)
-obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("MBII_MM_.pdf")
+obj.legend(loc='upper left',fontsize=17,numpoints=1)
+#plt.savefig("MBII_MM_.pdf")
 plt.show()
 
-##%%
+
+#%%Plot the 1-D scatter.
+plt.figure(figsize=(8,6))
+plt.hist(bhmass_selected - lfit(mstar_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
+         label=('MBII sample'), linewidth = 2, color='orange')
+plt.hist(bh_mass_obs - lfit_fixm(stellar_mass_obs,fit_fixm[0]), histtype=u'step',normed=True,
+         label=('HST sample'), linewidth = 2, color='green')
+plt.tick_params(labelsize=20)
+plt.legend(prop={'size':20})
+plt.yticks([])
+plt.show()
+
+print np.std(bh_mass_obs - lfit_fixm(stellar_mass_obs,fit_fixm[0]))
+print np.std(bhmass_selected - lfit(mstar_selected,fit[0][0],fit[0][1]))
+
+#%% Fit the scatter:
+
 #import linmix
 #x = mstar_selected
 #xsig = np.zeros(len(bhmass_selected))
@@ -131,18 +154,24 @@ plt.show()
 #xs = np.arange(-26,-19)
 #ys = alpha + xs * beta
 ##plt.plot(xs, ys, color='red',linewidth=3)
-#print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
+#print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean())
 ###Don't know how to fix the slope value...
 #x = stellar_mass_obs
 #xsig = (abs(stellar_mass_obs_err[:,0]) + abs(stellar_mass_obs_err[:,1]))/2
 #y = bh_mass_obs
 #ysig = np.ones(len(bh_mass_obs))*0.4
-#lm_obs = linmix.LinMix(x, y, xsig=xsig, ysig=ysig, K=3)
+#lm_obs = linmix.LinMix(x, y, xsig=xsig, ysig=ysig,  K=3)
 #lm_obs.run_mcmc(silent=True)
 #alpha_obs = lm_obs.chain['alpha'].mean()
 #beta_obs = lm_obs.chain['beta'].mean()
 #xs = np.arange(-26,-19)
 #ys = alpha_obs + xs * beta_obs
 ##plt.plot(xs, ys, color='green',linewidth=3)
-#print "intrinsic scatter:", np.sqrt(lm_obs.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
-
+#print "intrinsic scatter:", np.sqrt(lm_obs.chain['sigsqr'].mean())
+#
+#
+#obj.set_yticks([7.5,8.0,8.5,9.0])
+#obj.set_xticks([10,10.5,11,11.5,12])
+##obj.set_xticklabels(['-18','-20','-22','-24','-26'])
+#ax.set_xlim(9.7,12)  # decreasing time
+#ax.set_ylim(7.2, 9.4)  # decreasing time

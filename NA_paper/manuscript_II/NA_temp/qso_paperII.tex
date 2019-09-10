@@ -44,7 +44,7 @@
 \newcommand{\galfit}{{\sc Galfit}}
 \newcommand{\mbh}{$\mathcal M_{\rm BH}$}
 \newcommand{\lhost}{$L_{\rm host}$}
-\newcommand{\mr}{$Mag_{\rm ~R}$}
+\newcommand{\mr}{Mag$_{\rm ~R}$}
 \newcommand{\jcap}{Journal of Cosmology and Astroparticle Physics}
 \newcommand{\halpha}{${\it H}\alpha$}
 \newcommand{\hbeta}{${\it H}\beta$}
@@ -134,11 +134,11 @@ MBII and SAM have made successful predictions in previous works \cite{Menci2014,
 
 %\section*{Results}
 %Selection effect into account
-We collect the scaling relations by a comparable AGN sample in the MBII to compare with the observed ones. The simulated sample is selected at $z=1.5$ using a comparable selection window, as shown in Figure~\ref{fig:selectfunc}. We investigated the predicted relations of the \mbh-\mr\ and \mbh-\mstar\ by the MBII and compared to the observational constraints. In Figure~\ref{fig:MBII_comp}, we show the comparisons of both relations and find that the predicted scaling relations have an excellent agreement to the observations. We carry out the linear fitting of the observed sample and the {\it selection-effect-considered} sample using the same slope value. The mismatch of the interceptions between the two lines are relatively small within $1-\sigma$ level. We adopt the {\sc Limnux} to estimate the intrinsic scatter of both the sample. Interestingly, we find the observed sample have an intrinsic scatter of $0.13$~dex, which is even smaller than the one in the simulation, which is $0.23$~dex.
+We collect the scaling relations by a comparable AGN sample in the MBII to compare with the observed ones. The simulated sample is selected at $z=1.5$ using a comparable selection window, as shown in Figure~\ref{fig:selectfunc}. We investigated the predicted relations of the \mbh-\mr\ and \mbh-\mstar\ by the MBII and compared to the observational constraints. In Figure~\ref{fig:MBII_comp}, we show the comparisons of both relations and find that the predicted scaling relations have an excellent agreement to the observations. We carry out the linear fitting of the observed sample and the {\it selection-effect-considered} sample using the same slope value. The mismatch of the interceptions between the two lines are relatively small within $1-\sigma$ level. We adopt the {\sc Limnux} to estimate the intrinsic scatter for both sample. Interestingly, the observed sample have an intrinsic scatter of $0.13\pm0.10$~dex, which is not larger than the one in the MBII, which is $0.23\pm0.06$~dex.
 
 \begin{figure}[t]
 \includegraphics[width=1.0\linewidth]{MBII_selectfunc.pdf}
-\caption{The selection window as adopted for selecting the MBII simulated sample. The blue background clouds shows the overall sample at $z=1.5$. The sample that only located in the selection windows are selected, labeled red.
+\caption{The selection window as adopted for selecting the MBII simulated sample. The yellow background clouds shows the overall sample at $z=1.5$. The compared sample would be selected when they in the selection windows, i.e. red region.
 }
 \label{fig:selectfunc}
 \end{figure}
@@ -146,11 +146,11 @@ We collect the scaling relations by a comparable AGN sample in the MBII to compa
 
 \begin{figure*}[t]%[!b]
 \begin{tabular}{c c}
-\includegraphics[height=0.5\linewidth]{MBII_ML_.pdf} &
-\includegraphics[height=0.5\linewidth]{MBII_MM_.pdf} \\
+\includegraphics[width=0.5\linewidth]{MBII_ML.pdf} &
+\includegraphics[width=0.5\linewidth]{MBII_MM.pdf} \\
 \end{tabular}
 \caption{
-Comparing the scaling relations between the observed scaling relations to the predicted samples by the MBII simulation. In the left and right panel, we present the \mbh-\mr\ and \mbh-\mstar\ correlation, respectively. The blue grids are the overall galaxies that predicted in the MBII simulation and the red ones are selection effect considered. We red line shows the best-fit linear relations for the simulated selected sample. We fix the slope value to fit for the observed sample and find that the mismatch of the interceptions are within $1-\sigma$ difference for both relations. {\bf For the right panel, I currently adopt a 3 Gyrs template for the HST sample...}
+Comparing the scaling relations between the observed scaling relations to the predicted samples by the MBII simulation. In the left and right panel, we present the \mbh-\mr\ and \mbh-\mstar\ correlation, respectively. The blue grids are the overall galaxies that predicted in the MBII simulation and the red ones are selection effect considered. We red line shows the best-fit linear relations for the simulated selected sample. We fix the slope value to fit for the observed sample and find that the mismatch of the interceptions are within $1-\sigma$ difference for both relations. %{\bf For the right panel, I currently adopt a 3 Gyrs template for the HST sample...}
 }
 \label{fig:MBII_comp}
 \end{figure*}
@@ -167,7 +167,7 @@ The comparisons between the observed scaling relations to the SAM model are pres
 \label{fig:SAM_comp}
 \end{figure*}
 
-To test if any unexpected selection effects exist, we compare the distribution of the host-total flux ratio among these three samples. For the observed sample, we calculate the flux ratio at the imaging band, i.e., \hst/WFC3. For the simulated sample, we consider the AGN bolometric correction~\cite{Elvis1994} to estimate the AGN light flux at WFC3/F125W band. We compare their host-total flux histogram distribution in Figure~\ref{fig:comp_hist} and see that the three samples are well matched each other. The median values for the flux ratio distribution of the observed, MBII, SAM sample are $37.3\%$, $32.3\%$, and $42.8\%$, respectively. We perform the Kolmogorov-Smirnov test the inferred p-values are 0.34 (for observed -- MBII) and 0.14 (for observed -- SAM), respectively. {\bf More interpretations}.
+To help understand if any unexpected selection effects exist, we compare the distribution of the host-total flux ratio among these three samples. For the observed sample, we calculate the flux ratio at the imaging band, i.e., \hst/WFC3. For the simulated sample, we consider the AGN bolometric correction~\cite{Elvis1994} to estimate the AGN light flux at WFC3/F125W band. We compare their host-total flux histogram distribution in Figure~\ref{fig:comp_hist} and see that the three samples are well matched each other. The median values for the flux ratio distribution of the observed, MBII, SAM sample are $37.3\%$, $32.3\%$, and $42.8\%$, respectively. We perform the Kolmogorov-Smirnov test the inferred p-values are 0.34 (for observed -- MBII) and 0.14 (for observed -- SAM), respectively. {\bf Xuheng: more interpretations needs to put here}.
 
 \begin{figure}[t]
 \includegraphics[width=0.9\linewidth]{comp_host_ratio.pdf}
@@ -218,7 +218,7 @@ We adopted the \hst/WFC3 infrared channel and selected to use the filters F125W 
 
 To address the bias which might be raised by the unknown PSF, we manually collect the isolated-unsaturated PSF-stars from the 32 observed fields, to assemble a PSF library for the fitting. To decompose each AGN image, we assume the unresolved active nuclei as the scaled point source and the host galaxy as the \sersic\ profile. We adopt imaging modeling tool \lenstronomy\cite{lenstronomy} to simultaneously fit their 2-D flux distribution, taking each PSF one by one from the library. Based on the reduced $\chi^2$, we are capable of evaluating the performance of each PSF. We adopt the result from the top-eight PSFs and infer the host property, including flux, \reff, \sersic\ index, using a weighted arithmetic mean.
 
-21/32 images in the COSMOS survey also have imaging data in the ACS/F814W with drizzled pixel scale as 0\farcs03, providing us the multi-band information. We decompose the AGN image in the ACS band to obtain the color of the host. We find that the 1Gyr template would well match their color from which we estimate the rest-frame R band luminosity and stellar mass. 
+21/32 images in the COSMOS survey also have imaging data in the ACS/F814W with drizzled pixel scale as 0\farcs03, providing us the multi-band information. We decompose the AGN image in the ACS band to obtain the color of the host. We find that the 1Gyr template would well match their color from which we estimate the rest-frame R band luminosity and stellar mass. A Salpeter initial mass function is employed consistently to the observed and simulated sample.
 
 %\textbf{SED fitting and host properties}
 %We perform the SED fitting to derive the robust physical properties of the host galaxy, including the rest-frame R band luminosity and stellar mass. 
