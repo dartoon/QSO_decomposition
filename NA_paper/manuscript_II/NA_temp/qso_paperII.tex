@@ -123,7 +123,7 @@ We measure reliable \mbh\ and host properties to overcome the systematic. Specif
 
 \begin{figure}[t]
 \includegraphics[width=0.9\linewidth]{AGN_selection.pdf}
-\caption{The selection function as used for choosing the 32 AGN sample. The top and right panels are the BH mass function and Eddington ratio function.
+\caption{The selection for the 32 AGN sample. The top and right panels are the BH mass function and Eddington ratio function.
 }
 \label{fig:AGN_select}
 \end{figure}
@@ -131,15 +131,13 @@ We measure reliable \mbh\ and host properties to overcome the systematic. Specif
 To make the comparison to the simulating models, we adopt two independent simulating projects, including MassiveBlack-II (MBII) and semi-analytic models (SAM). These two models are based on independent model strategies, i.e., hydrodynamic simulation for MBII and semi-analytic model for SAM, respectively. The MassiveBlack-II (MBII) simulation is the highest resolution at the size of a comoving volume $V_{\rm box} = (100~{\rm Mpc}~h^{-1})$, including a self-consistent model for star formation, black hole accretion, and associated feedback. The large simulation volume enables the simulating objects to evolve independently; the high enough mass and spatial resolution meet the requirements for the object details. On the theoretical side, aimed, high-resolution N-body simulations can study specific galaxy systems. However, understanding the mechanism of the scaling relation requires an analytical description of such processes to be implemented into existing semi-analytic models, such as (SAM). 
 MBII and SAM have made successful predictions in previous works \cite{Menci2014, Menci2016, Khandai2015}. We refer the interested readers to these works for more details.
 
-
 %\section*{Results}
 %Selection effect into account
-We collect the scaling relations by a comparable AGN sample in the MBII to compare with the observed ones. The simulated sample is selected at $z=1.5$ using a comparable selection window, as shown in Figure~\ref{fig:selectfunc}. We investigated the predicted relations of the \mbh-\mr\ and \mbh-\mstar\ by the MBII and compared to the observational constraints. In Figure~\ref{fig:MBII_comp}, we show the comparisons of both relations and find that the predicted scaling relations have an excellent agreement to the observations. We carry out the linear fitting of the observed sample and the {\it selection-effect-considered} sample using the same slope value. The mismatch of the interceptions between the two lines are relatively small within $1-\sigma$ level. We adopt the {\sc Limnux} to estimate the intrinsic scatter for both sample. Interestingly, the observed sample have an intrinsic scatter of $0.13\pm0.10$~dex, which is not larger than the one in the MBII, which is $0.23\pm0.06$~dex.
+We select the AGNs in the MBII simulation at $z=1.5$ and collect their scaling relations to compare with the observed ones. To take the measurement uncertainty and the selection effect into account, we added the random noise to the simulated sample to mimic the scatter effect. The assumed uncertainties are $\Delta$\mbh =0.4~dex, $\Delta$\mr=0.3~dex, $\Delta$\mstar=0.17~dex and $\Delta L_{\rm bol}$=0.03~dex, respectively, which is comparable to the measurement. We then select the sample that falls in the selection window, as shown in Figure~\ref{fig:selectfunc}. We investigated the predicted relations of the \mbh-\mr\ and \mbh-\mstar\ by the MBII and compared to the observational constraints. In Figure~\ref{fig:MBII_comp}, we show the comparisons of both relations and find that the predicted scaling relations have an excellent agreement to the observations. We carry out the linear fitting of the observed sample and the {\it selection-effect-considered} sample using the same slope value. The mismatch of the interceptions between the two lines are relatively small within $1-\sigma$ level. We adopt the {\sc Linmix} to estimate the intrinsic scatter for both sample. Interestingly, the observed sample have an intrinsic scatter of $0.13\pm0.10$~dex, which is not larger than the one in the MBII, which is $0.23\pm0.06$~dex.
 
 \begin{figure}[t]
 \includegraphics[width=1.0\linewidth]{MBII_selectfunc.pdf}
-\caption{The selection window as adopted for selecting the MBII simulated sample. The yellow background clouds shows the overall sample at $z=1.5$. The compared sample would be selected when they in the selection windows, i.e. red region.
-}
+\caption{The selection window as adopted for selecting the MBII simulated sample. The yellow background clouds shows the overall sample at $z=1.5$. We add the random uncertainty to the simulation and select the ones located in the selection window (i.e. red region). The green sample are the high-$z$ sample.}
 \label{fig:selectfunc}
 \end{figure}
 %comparison to simulation (flux ratio also)

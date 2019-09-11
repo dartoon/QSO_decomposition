@@ -12,7 +12,7 @@ import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
 import copy
 import sys
-
+from scipy import stats
 import matplotlib.lines as mlines
 from matplotlib import colors
 import matplotlib as mat
@@ -120,7 +120,7 @@ plt.fill_between(xfill, y4, y2=0, color='red', alpha='0.5', zorder=-1)
 plt.tick_params(labelsize=30)
 plt.ylabel(r"log(L$_{\rm bol}$/L$_{\rm Edd}$)",fontsize=30)
 plt.xlabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
-#plt.savefig('MBII_selectfunc.pdf')
+plt.savefig('MBII_selectfunc.pdf')
 plt.show()
 
 #%%Plot MM data
@@ -186,9 +186,9 @@ fit_err=np.sqrt(np.diag(fit[1]))
 y_space=np.linspace(-50,50,100)
 x_space=lfit(y_space,fit[0][0],fit[0][1])   #y_space become to x_space
 plt.plot(x_space, y_space, color='red',linewidth=3)
-y_space_ub=lfit(x_space,fit[0][0]+fit_err[0]/2,fit[0][1]+fit_err[1]/2)
-y_space_lb=lfit(x_space,fit[0][0]-fit_err[0]/2,fit[0][1]-fit_err[1]/2)
-plt.fill_betweenx(x_space,y_space_lb,y_space_ub,color='red',alpha=0.15)
+x_space_ub=lfit(y_space,fit[0][0]+fit_err[0]/2,fit[0][1]+fit_err[1]/2)
+x_space_lb=lfit(y_space,fit[0][0]-fit_err[0]/2,fit[0][1]-fit_err[1]/2)
+plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='red',alpha=0.15)
 def lfit_fixm(y,c):
     m_0 = fit[0][0]
     return m_0*y+c
@@ -210,11 +210,11 @@ obj.tick_params(labelsize=30)
 plt.xlabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('log(M$_{*}$/M$_{\odot}$)',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-#plt.savefig("MBII_MM_.pdf")
+plt.savefig("MBII_MM.pdf")
 plt.show()
 
-'''
 #%%
+'''
 import linmix
 x = mstar_selected
 xsig = np.zeros(len(bhmass_selected))+dMstar
@@ -242,7 +242,7 @@ ys = alpha_obs + xs * beta_obs
 #plt.plot(xs, ys, color='green',linewidth=3)
 print "intrinsic scatter:", np.sqrt(lm_obs.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
 '''
-#%%Plot the 1-D scatter.
+#%%Plot the 1-D scatter for MM.
 plt.figure(figsize=(8,6))
 plt.hist(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
          label=('MBII sample'), linewidth = 2, color='orange')
@@ -253,8 +253,10 @@ plt.legend(prop={'size':20})
 plt.yticks([])
 plt.show()
 
-print "obs scatter:", np.std(bh_mass_obs - lfit_fixm(stellar_mass_obs,fit_fixm[0]))
-print "sim scatter:", np.std(bhmass_selected - lfit(mstar_selected,fit[0][0],fit[0][1]))
+print "obs scatter:", np.std(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]))
+print "sim scatter:", np.std(stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))
+print "KS scatter:", stats.ks_2samp((mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1])),
+                                    (stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))).pvalue
 
 
 #%%Plot ML data
@@ -322,6 +324,8 @@ fit_fixm=scipy.optimize.curve_fit(lfit_fixm, y_obs, x_obs)
 #fit_err=np.sqrt(np.diag(fit[1]))
 x_space_obs=lfit_fixm(y_space,fit_fixm[0])
 plt.plot(x_space_obs,y_space,color='green',linewidth=3)
+
+print "\n\nPlot M-Mag relation:"
 print "mismatch:", fit_fixm[0]- fit[0][1]
 
 obj.set_yticks([7.5,8.0,8.5,9.0])
@@ -335,10 +339,10 @@ obj.tick_params(labelsize=30)
 plt.xlabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('R band magnitude',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("MBII_ML_.pdf")
+plt.savefig("MBII_ML.pdf")
 plt.show()
 
-#%%Plot the 1-D scatter.
+#%%Plot the 1-D scatter for ML.
 plt.figure(figsize=(8,6))
 plt.hist(r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
          label=('MBII sample'), linewidth = 2, color='orange')
@@ -349,6 +353,46 @@ plt.legend(prop={'size':20})
 plt.yticks([])
 plt.show()
 
-print "obs scatter:", np.std(bh_mass_obs - lfit_fixm(stellar_mass_obs,fit_fixm[0]))
-print "sim scatter:", np.std(bhmass_selected - lfit(mstar_selected,fit[0][0],fit[0][1]))
+print "obs scatter:", np.std(r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]))
+print "sim scatter:", np.std(M_r_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))
+print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1])),
+                                    (M_r_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))).pvalue
 
+
+
+
+##%%Plot the 1-D hist for Mstar, R_Mag and MBH and do the K-S test in 1D.
+#
+#plt.figure(figsize=(8,6))
+#plt.hist(bhmass_selected ,histtype=u'step',normed=True,
+#         label=('MBII BH sample'), linewidth = 2, color='orange')
+#plt.hist(bh_mass_obs , histtype=u'step',normed=True,
+#         label=('HST BH sample'), linewidth = 2, color='green')
+#plt.tick_params(labelsize=20)
+#plt.legend(prop={'size':20})
+#plt.yticks([])
+#plt.show()
+#print stats.ks_2samp(bhmass_selected, bh_mass_obs).pvalue
+#
+#plt.figure(figsize=(8,6))
+#plt.hist(mstar_selected ,histtype=u'step',normed=True,
+#         label=('MBII M* sample'), linewidth = 2, color='orange')
+#plt.hist(stellar_mass_obs , histtype=u'step',normed=True,
+#         label=('HST M* sample'), linewidth = 2, color='green')
+#plt.tick_params(labelsize=20)
+#plt.legend(prop={'size':20})
+#plt.yticks([])
+#plt.show()
+#print stats.ks_2samp(mstar_selected, stellar_mass_obs).pvalue
+#
+#plt.figure(figsize=(8,6))
+#plt.hist(r_band_magnitudes_selected ,histtype=u'step',normed=True,
+#         label=('MBII MagR sample'), linewidth = 2, color='orange')
+#plt.hist(M_r_obs , histtype=u'step',normed=True,
+#         label=('HST MagR sample'), linewidth = 2, color='green')
+#plt.tick_params(labelsize=20)
+#plt.legend(prop={'size':20})
+#plt.yticks([])
+#plt.show()
+#print stats.ks_2samp(r_band_magnitudes_selected, M_r_obs).pvalue
+#
