@@ -1,39 +1,29 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 """
-Created on Wed Aug 28 20:15:08 2019
+Created on Fri Sep 13 08:03:39 2019
 
 @author: Dartoon
 
-Plot the MBHII MBH-Mr relation and fit their scatter.
+my_selection_for_SAM's sample
 """
 import numpy as np
 import astropy.io.fits as pyfits
 import matplotlib.pyplot as plt
-import copy
 import sys
-from scipy import stats
-import matplotlib.lines as mlines
-from matplotlib import colors
-import matplotlib as mat
-mat.rcParams['font.family'] = 'STIXGeneral'
-np.random.seed(5)  #12345
 sys.path.insert(0,'../../py_tools')
+import copy
 from load_result import load_MBH, load_host_p, load_err, load_Lbol
 import matplotlib as mpl
-h=0.7
+from scipy import stats
 
-bhmass_overall=np.loadtxt('../Aklant/new_sample/log10_bh_mass_full_population.txt') - np.log10(h) 
-#bhmass_selected=np.loadtxt('../Aklant/new_sample/log10_bh_mass_selected_population.txt') - np.log10(h) 
 
-mstar_overall=np.loadtxt('../Aklant/new_sample/log10_stellar_mass_full_population.txt') - np.log10(h) 
-#mstar_selected=np.loadtxt('../Aklant/new_sample/log10_stellar_mass_selected_population.txt') - np.log10(h) 
+data_overall = np.loadtxt('../Nicola/realization/lagn_lhost1.dat')
 
-magr_overall=np.loadtxt('../Aklant/new_sample/log10_host_r_mag_full_population.txt')
-#r_band_magnitudes_selected=np.loadtxt('../Aklant/new_sample/log10_host_r_mag_selected_population.txt')
-
-Lbol_overall=np.loadtxt('../Aklant/new_sample/log10_L_bol_full_population.txt') - np.log10(h) 
-#Lbol_selected=np.loadtxt('../Aklant/new_sample/log10_L_bol_selected_population.txt') - np.log10(h) 
+bhmass_overall=data_overall[:,-1]
+Lbol_overall=np.log10(data_overall[:,-2]*10**45.)
+mstar_overall=data_overall[:,2]
+magr_overall=data_overall[:,0]
 
 logLedd_overall = 38. + np.log10(1.2) + bhmass_overall
 #logLedd_selected = 38. + np.log10(1.2) + bhmass_selected
@@ -65,6 +55,8 @@ Eddr_select_noi = Eddr_overall_noi[select_window]
 #Now can just plot the figure1 from figures_producer.py
 plt.figure(figsize=(11,9))
 plt.hist2d(bhmass_overall,Eddr_overall,norm=mpl.colors.LogNorm(),cmap='copper',bins=50,zorder=0,alpha=0.5)
+plt.errorbar(bhmass_overall, Eddr_overall, c='gray',linestyle=' ',marker='.',ms=10,mec='k')
+
 cbar = plt.colorbar()
 cbar.ax.tick_params(labelsize=30) 
 plt.errorbar(bhmass_select_noi, Eddr_select_noi, c='red',linestyle=' ',marker='o',ms=10,mec='k')
@@ -120,7 +112,7 @@ plt.fill_between(xfill, y4, y2=0, color='red', alpha='0.5', zorder=-1)
 plt.tick_params(labelsize=30)
 plt.ylabel(r"log(L$_{\rm bol}$/L$_{\rm Edd}$)",fontsize=30)
 plt.xlabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
-#plt.savefig('MBII_selectfunc.pdf')
+#plt.savefig('SAM_selectfunc.pdf')
 plt.show()
 
 #%%Plot MM data
@@ -210,7 +202,7 @@ obj.tick_params(labelsize=30)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('log(M$_{*}$/M$_{\odot}$)',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("MBII_MM.pdf")
+#plt.savefig("SAM_MM.pdf")
 plt.show()
 
 #%%
@@ -247,7 +239,7 @@ plt.figure(figsize=(8,7))
 plt.hist(stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]), histtype=u'step',normed=True,
          label=('HST sample'), linewidth = 2, color='orange')
 plt.hist(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
-         label=('MBII sample'), linewidth = 2, color='green')
+         label=('SAM sample'), linewidth = 2, color='green')
 plt.title(r"The offset comparison for the M$_{\rm BH}$-M$_{*}$ relation", fontsize = 20)
 plt.tick_params(labelsize=20)
 plt.legend(prop={'size':20})
@@ -256,8 +248,8 @@ plt.xlabel('$\Delta$log(M$_{*}$/M$_{\odot}$)',fontsize=30)
 #plt.savefig('comp_scatter_MM.pdf')
 plt.show()
 
-print "obs scatter:", np.std(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]))
-print "sim scatter:", np.std(stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))
+print "sim scatter:", np.std(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]))
+print "obs scatter:", np.std(stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))
 print "KS scatter:", stats.ks_2samp((mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1])),
                                     (stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))).pvalue
 
@@ -340,7 +332,7 @@ obj.tick_params(labelsize=30)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('R band magnitude',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("MBII_ML.pdf")
+#plt.savefig("SAM_ML.pdf")
 plt.show()
 
 #%%Plot the 1-D scatter for ML.
@@ -348,7 +340,7 @@ plt.figure(figsize=(8,7))
 plt.hist(M_r_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]), histtype=u'step',normed=True,
          label=('HST sample'), linewidth = 2, color='orange')
 plt.hist(r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
-         label=('MBII sample'), linewidth = 2, color='green')
+         label=('SAM sample'), linewidth = 2, color='green')
 plt.title(r"The offset comparison for the M$_{\rm BH}$-mag relation", fontsize = 20)
 plt.tick_params(labelsize=20)
 plt.legend(prop={'size':20})
@@ -357,8 +349,8 @@ plt.xlabel(r"$\Delta$magnitude",fontsize=30)
 #plt.savefig('comp_scatter_ML.pdf')
 plt.show()
 
-print "obs scatter:", np.std(r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]))
-print "sim scatter:", np.std(M_r_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))
+print "sim scatter:", np.std(r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]))
+print "obs scatter:", np.std(M_r_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))
 print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1])),
                                     (M_r_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))).pvalue
 
@@ -368,7 +360,7 @@ print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_se
 #
 #plt.figure(figsize=(8,6))
 #plt.hist(bhmass_selected ,histtype=u'step',normed=True,
-#         label=('MBII BH sample'), linewidth = 2, color='orange')
+#         label=('SAM BH sample'), linewidth = 2, color='orange')
 #plt.hist(bh_mass_obs , histtype=u'step',normed=True,
 #         label=('HST BH sample'), linewidth = 2, color='green')
 #plt.tick_params(labelsize=20)
@@ -379,7 +371,7 @@ print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_se
 #
 #plt.figure(figsize=(8,6))
 #plt.hist(mstar_selected ,histtype=u'step',normed=True,
-#         label=('MBII M* sample'), linewidth = 2, color='orange')
+#         label=('SAM M* sample'), linewidth = 2, color='orange')
 #plt.hist(stellar_mass_obs , histtype=u'step',normed=True,
 #         label=('HST M* sample'), linewidth = 2, color='green')
 #plt.tick_params(labelsize=20)
@@ -390,7 +382,7 @@ print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_se
 #
 #plt.figure(figsize=(8,6))
 #plt.hist(r_band_magnitudes_selected ,histtype=u'step',normed=True,
-#         label=('MBII MagR sample'), linewidth = 2, color='orange')
+#         label=('SAM MagR sample'), linewidth = 2, color='orange')
 #plt.hist(M_r_obs , histtype=u'step',normed=True,
 #         label=('HST MagR sample'), linewidth = 2, color='green')
 #plt.tick_params(labelsize=20)

@@ -92,12 +92,13 @@ y_line_1 = x_cline*0 + 0.0
 ax.plot(x_cline, y_line_1,'k--')
 y_cline = np.linspace(-20, 20, 10)
 x_line = y_cline*0 + 8.6
-ax.plot(x_line, y_cline,'r--')
+ax.plot(x_line, y_cline,'k--')
+ax.plot(y_cline*0 + 7.7, y_cline,'k--')
 x_cline = np.linspace(7.1, 8.5)
 y_line_3 = -1.1*(x_cline-7.5) -0.5
-#ax.plot(x_cline, y_line_3,'k--')
-plt.xlabel("log$(M_{BH}/M_{\odot})$",fontsize=25)
-plt.ylabel("log($L_{bol}/L_{Edd})$", fontsize=25) 
+ax.plot(x_cline, y_line_3,'k--')  #
+plt.xlabel(r"log(M$_{\rm BH}$/M$_{\odot})$",fontsize=25)
+plt.ylabel(r"log(L$_{\rm bol}$/L$_{\rm Edd}$)", fontsize=25) 
 plt.tick_params(labelsize=15)
 plt.xticks(np.arange(7.5,9.6,0.5))
 other_data = np.loadtxt('Peng_Decarli_data.txt')
@@ -153,7 +154,7 @@ mbh_rho = np.log10(mbh_rho)
 #mbh_rho_select = np.log10(mbh_rho_select)
 ax_x.plot(mbh_x,mbh_rho, 'k')
 #ax_x.plot(mbh_x,mbh_rho_select, 'b')
-ax_x.plot(x_line, y_cline,'r--')
+ax_x.plot(x_line, y_cline,'k--')
 #plt.yticks(np.arange(-10,10,1))
 plt.ylim([int(mbh_rho.min()),int(mbh_rho.max())+1])
 plt.tick_params(labelsize=15)
@@ -177,7 +178,7 @@ ax_y.plot(x_cline, y_line_1, 'k--')
 plt.xticks(np.arange(-10,10,2))
 plt.xlim([int(rho_lam.min()),int(rho_lam.max())+1])
 plt.tick_params(labelsize=15)
-plt.xlabel("log$\phi(\lambda)$", fontsize=25) 
+plt.xlabel(r"log${\rm \phi(\lambda)}$", fontsize=25) 
 
 #%%
 # the xaxis of ax_x and yaxis of ax_y are shared with ax,

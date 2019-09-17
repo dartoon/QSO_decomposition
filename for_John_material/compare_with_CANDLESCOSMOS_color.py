@@ -131,9 +131,9 @@ if relation == 0:
     plt.scatter(results[:,3][z_cut* all_galaxy],np.log10(Reff_kpc[z_cut * all_galaxy]),
                 c='darkgrey',s=280,marker=".",zorder=-90, alpha=0.6, edgecolors='white', cmap=cmap_r, label='inactive sample from CANDLES')
     mstar_line = np.linspace(10.5,11.5,20)
-    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.155 , alpha=0.76), 'r')
+    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.155 , alpha=0.76), 'r',linewidth=3)
     mstar_line = np.linspace(9,11.5,20)
-    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.675 , alpha=0.23), 'b')    
+    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.675 , alpha=0.23), 'b',linewidth=3)    
     
 elif relation == 1:
     plt.scatter(results[:,3][z_cut* all_galaxy],(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),
@@ -209,9 +209,9 @@ if relation == 0:
     b11_local_Reff = b11_l[:,-1]
     b11_local_mstar = b11_l[:,4]
     plt.scatter(b11_local_mstar,np.log10(b11_local_Reff),s=180, c ='black',
-                marker="o",zorder=100, vmin=0, vmax=7, edgecolors='white', label='local AGN sample by Vardha')     
+                marker="o",zorder=100, vmin=0, vmax=7, edgecolors='white', label='local AGN sample by VB2011')     
     plt.scatter(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],s=200, c ='firebrick',
-                marker="D",zorder=101, vmin=0, vmax=7, edgecolors='white', label='our AGN sample')    
+                marker="D",zorder=101, vmin=0, vmax=7, edgecolors='white', label='our AGN sample, 1.2<z<1.7')    
     plt.errorbar(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],
              yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS>0],
              color='k',ecolor='k', fmt='.',markersize=1, zorder = 99)  
