@@ -108,7 +108,7 @@ logLbol_obs = load_Lbol(ID=tab_list, folder = '../../')
 logLedd_obs = 38. + np.log10(1.2) + bh_mass_obs
 logEddR_obs = logLbol_obs - logLedd_obs
 
-plt.errorbar(bh_mass_obs, logEddR_obs, c='green',linestyle=' ',marker='o',ms=10,mec='k')
+plt.errorbar(bh_mass_obs, logEddR_obs, c='yellow',linestyle=' ',marker='o',ms=10,mec='k',zorder = 100)
 plt.xlim([7.15,9.15])
 plt.ylim([-3,1])
 xfill = np.linspace(7.7, 8.6)
@@ -153,10 +153,10 @@ cbar=f.colorbar(panel2[3],ax=obj)
 cbar.ax.tick_params(labelsize=30) 
 
 obj.errorbar(mstar_selected,bhmass_selected,zorder=1,
-             color='red',label='Simulated population',linestyle=' ',marker='o',ms=10,mec='k')
+             color='red',label='MBII population',linestyle=' ',marker='o',ms=10,mec='k')
 obj.errorbar(stellar_mass_obs,bh_mass_obs, 
 #             xerr = [abs(M_r_obs_err[:,0]),abs(M_r_obs_err[:,1])], yerr=np.ones(len(bh_mass_obs))*0.4, 
-             zorder=1,color='green',label='Observed population',
+             zorder=100,color='yellow',label='Observed population',
              linestyle=' ',marker='o',ms=10,mec='k')
 
 ##Fit y as function of x
@@ -271,63 +271,63 @@ panel2=obj.hist2d(magr_overall,bhmass_overall,
 #panel2=obj.scatter(mstar_overall,bhmass_overall,c='gray',alpha=0.5,label='Simulated population')
 
 ####Fit the overall sample (x as function of y):
-#fit=scipy.optimize.curve_fit(lfit,-r_band_magnitudes_overall,log10_bhmass_overall)
-#fit_err=np.sqrt(np.diag(fit[1]))
+#fit_1=scipy.optimize.curve_fit(lfit,-r_band_magnitudes_overall,log10_bhmass_overall)
+#fit_err=np.sqrt(np.diag(fit_1[1]))
 #r_band_space=np.linspace(20,26,100)
-#lmbh_space=lfit(r_band_space,fit[0][0],fit[0][1])
+#lmbh_space=lfit(r_band_space,fit_1[0][0],fit_1[0][1])
 #plt.plot(r_band_space,lmbh_space,color='blue',linewidth=3)
 ###Not corrected yet:
-##r_band_space_ub=lfit(lmbh_space,fit[0][0]+fit_err[0]/2,fit[0][1]+fit_err[1]/2)
-##r_band_space_lb=lfit(lmbh_space,fit[0][0]-fit_err[0]/2,fit[0][1]-fit_err[1]/2)
+##r_band_space_ub=lfit(lmbh_space,fit_1[0][0]+fit_err[0]/2,fit_1[0][1]+fit_err[1]/2)
+##r_band_space_lb=lfit(lmbh_space,fit_1[0][0]-fit_err[0]/2,fit_1[0][1]-fit_err[1]/2)
 ##plt.fill_betweenx(lmbh_space,r_band_space_lb,r_band_space_ub,color='blue',alpha=0.3)
 
 cbar=f.colorbar(panel2[3],ax=obj)
 cbar.ax.tick_params(labelsize=30) 
 
 obj.errorbar(r_band_magnitudes_selected,bhmass_selected,zorder=1,
-             color='red',label='Simulated population',linestyle=' ',marker='o',ms=10,mec='k')
+             color='red',label='MBII population',linestyle=' ',marker='o',ms=10,mec='k')
 obj.errorbar(M_r_obs,bh_mass_obs, 
 #             xerr = [abs(M_r_obs_err[:,0]),abs(M_r_obs_err[:,1])], yerr=np.ones(len(bh_mass_obs))*0.4, 
-             zorder=1,color='green',label='Observed population',
+             zorder=100,color='yellow',label='Observed population',
              linestyle=' ',marker='o',ms=10,mec='k')
 
 ##Fit y as function of x
 #x, y = r_band_magnitudes_selected, bhmass_selected
-#fit=scipy.optimize.curve_fit(lfit,x, y)
-#fit_err=np.sqrt(np.diag(fit[1]))
+#fit_1=scipy.optimize.curve_fit(lfit,x, y)
+#fit_err_1=np.sqrt(np.diag(fit_1[1]))
 #x_space=np.linspace(-26,-18,100)
-#y_space=lfit(x_space,fit[0][0],fit[0][1])
+#y_space=lfit(x_space,fit_1[0][0],fit_1[0][1])
 #plt.plot(x_space,y_space,color='red',linewidth=3)
-#lmbh_space_ub=lfit(x_space,fit[0][0]-fit_err[0]/2,fit[0][1]+fit_err[1]/2)
-#lmbh_space_lb=lfit(x_space,fit[0][0]+fit_err[0]/2,fit[0][1]-fit_err[1]/2)
+#lmbh_space_ub=lfit(x_space,fit_1[0][0]-fit_err_1[0]/2,fit_1[0][1]+fit_err_1[1]/2)
+#lmbh_space_lb=lfit(x_space,fit_1[0][0]+fit_err_1[0]/2,fit_1[0][1]-fit_err_1[1]/2)
 #plt.fill_between(x_space,lmbh_space_lb,lmbh_space_ub,color='red',alpha=0.15)
-#def lfit_fixm(x,c):
-#    return fit[0][0]*x+c
-#fit_fixm=scipy.optimize.curve_fit(lfit_fixm,M_r_obs, bh_mass_obs)
-##fit_err=np.sqrt(np.diag(fit[1]))
-#lmbh_space=lfit_fixm(x_space,fit_fixm[0])
+#def lfit_fixm_1(x,c):
+#    return fit_1[0][0]*x+c
+#fit_fixm_1=scipy.optimize.curve_fit(lfit_fixm_1,M_r_obs, bh_mass_obs)
+##fit_err_1=np.sqrt(np.diag(fit_1[1]))
+#lmbh_space=lfit_fixm_1(x_space,fit_fixm_1[0])
 #plt.plot(x_space,lmbh_space,color='green',linewidth=3)
-#print "mismatch:", fit_fixm[0]- fit[0][1]
+#print "mismatch:", fit_fixm_1[0]- fit_1[0][1]
 #Fit x as function of y
 x, y = r_band_magnitudes_selected, bhmass_selected
-fit=scipy.optimize.curve_fit(lfit,y, x)
-fit_err=np.sqrt(np.diag(fit[1]))
+fit_1=scipy.optimize.curve_fit(lfit,y, x)
+fit_err_1=np.sqrt(np.diag(fit_1[1]))
 y_space=np.linspace(5,13,100)
-x_space=lfit(y_space,fit[0][0],fit[0][1])
+x_space=lfit(y_space,fit_1[0][0],fit_1[0][1])
 plt.plot(x_space,y_space,color='red',linewidth=3)
-x_space_ub=lfit(y_space,fit[0][0]+fit_err[0]/2,fit[0][1]+fit_err[1]/2)
-x_space_lb=lfit(y_space,fit[0][0]-fit_err[0]/2,fit[0][1]-fit_err[1]/2)
+x_space_ub=lfit(y_space,fit_1[0][0]+fit_err_1[0]/2,fit_1[0][1]+fit_err_1[1]/2)
+x_space_lb=lfit(y_space,fit_1[0][0]-fit_err_1[0]/2,fit_1[0][1]-fit_err_1[1]/2)
 plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='red',alpha=0.15)
-def lfit_fixm(y,c):
-    return fit[0][0]*y+c
+def lfit_fixm_1(y,c):
+    return fit_1[0][0]*y+c
 x_obs, y_obs = M_r_obs, bh_mass_obs
-fit_fixm=scipy.optimize.curve_fit(lfit_fixm, y_obs, x_obs)
-#fit_err=np.sqrt(np.diag(fit[1]))
-x_space_obs=lfit_fixm(y_space,fit_fixm[0])
+fit_fixm_1=scipy.optimize.curve_fit(lfit_fixm_1, y_obs, x_obs)
+#fit_err_1=np.sqrt(np.diag(fit_1[1]))
+x_space_obs=lfit_fixm_1(y_space,fit_fixm_1[0])
 plt.plot(x_space_obs,y_space,color='green',linewidth=3)
 
 print "\n\nPlot M-Mag relation:"
-print "mismatch:", fit_fixm[0]- fit[0][1]
+print "mismatch:", fit_fixm_1[0]- fit_1[0][1]
 
 obj.set_yticks([7.5,8.0,8.5,9.0])
 obj.set_xticks([-18, -20,-22,-24,-26])
@@ -345,9 +345,9 @@ plt.show()
 
 #%%Plot the 1-D scatter for ML.
 plt.figure(figsize=(8,7))
-plt.hist(M_r_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]), histtype=u'step',normed=True,
+plt.hist(M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]), histtype=u'step',normed=True,
          label=('HST sample'), linewidth = 2, color='orange')
-plt.hist(r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
+plt.hist(r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1]),histtype=u'step',normed=True,
          label=('MBII sample'), linewidth = 2, color='green')
 plt.title(r"The offset comparison for the M$_{\rm BH}$-mag relation", fontsize = 20)
 plt.tick_params(labelsize=20)
@@ -357,10 +357,10 @@ plt.xlabel(r"$\Delta$magnitude",fontsize=30)
 #plt.savefig('comp_scatter_ML.pdf')
 plt.show()
 
-print "obs scatter:", np.std(r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]))
-print "sim scatter:", np.std(M_r_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))
-print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,fit[0][0],fit[0][1])),
-                                    (M_r_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]))).pvalue
+print "obs scatter:", np.std(r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1]))
+print "sim scatter:", np.std(M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]))
+print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1])),
+                                    (M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]))).pvalue
 
 
 
@@ -415,3 +415,8 @@ print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_se
 #plt.scatter(x, y)
 #plt.plot(xs, ys, color='red',linewidth=3)
 #print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
+
+                                    
+#%%To save the data and plot together with SAM                                    
+MBII_scatter_ML = r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1])
+MBII_scatter_MM = mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1])
