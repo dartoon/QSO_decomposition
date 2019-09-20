@@ -96,10 +96,6 @@ z_range = [1.2,1.7]
 
 z_cut = ((results[:,0]>z_range[0]) * (results[:,0]<z_range[1]))
 
-#ssfr_break =-10.5
-ssfr_break =100
-
-
 def logR_mstar(mstar, logA, alpha):
     """
     The R_Mstar relation in
@@ -112,13 +108,16 @@ def logR_mstar(mstar, logA, alpha):
     logr = np.log10(r)
     return logr
 
-#blue_galaxy = ([results[:,5]>ssfr_break])[0]
-all_galaxy = ([results[:,5]<ssfr_break])[0]  #As all galaxy
+
+ssfr_break =-10.5
+blue_galaxy = ([results[:,5]>ssfr_break])[0]
+red_galaxy = ([results[:,5]<ssfr_break])[0]
+all_galaxy = ([results[:,5]<100])[0]  #As all galaxy
 #z_cut = ([results[:,0]>0]) 
 
-cmap_r = matplotlib.cm.get_cmap('jet')
+cmap_r = matplotlib.cm.get_cmap('RdBu_r')
 
-plt.figure(figsize=(12, 11))
+fig, ax = plt.subplots(figsize=(14, 11))
 Reff_kpc = da_result * 10 **3 * (results[:,1]/3600./180.*np.pi)
 mstar_cut = [(results[:,3]>9.5) * (results[:,3]<11.5)][0]
 if relation == 0:
@@ -128,12 +127,18 @@ if relation == 0:
 #    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.155 , alpha=0.76), 'r')
 #    mstar_line = np.linspace(9,11.5,20)
 #    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.675 , alpha=0.23), 'b')
-    plt.scatter(results[:,3][z_cut* all_galaxy],np.log10(Reff_kpc[z_cut * all_galaxy]),
-                c='darkgrey',s=280,marker=".",zorder=-90, alpha=0.6, edgecolors='white', cmap=cmap_r, label='inactive sample from CANDLES')
+    plt.scatter(results[:,3][z_cut* blue_galaxy],Reff_kpc[z_cut * blue_galaxy],
+                c='lightskyblue',s=280,marker=".",zorder=-90, alpha=0.6, edgecolors='white', cmap=cmap_r, label='CANDELS galaxy, star-forming')
+    plt.scatter(results[:,3][z_cut* red_galaxy],Reff_kpc[z_cut * red_galaxy],
+                c='darksalmon',s=280,marker=".",zorder=-90, alpha=0.6, edgecolors='white', cmap=cmap_r, label='CANDELS galaxy, quiescent')
     mstar_line = np.linspace(10.5,11.5,20)
-    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.155 , alpha=0.76), 'r',linewidth=3)
+    plt.plot(mstar_line, 10**(logR_mstar(mstar_line,logA=0.155 , alpha=0.76)), 'r',linewidth=3)
     mstar_line = np.linspace(9,11.5,20)
-    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.675 , alpha=0.23), 'b',linewidth=3)    
+    plt.plot(mstar_line, 10**(logR_mstar(mstar_line,logA=0.675 , alpha=0.23)), 'b',linewidth=3)   
+    mstar_line = np.linspace(9,11.5,20)
+    plt.plot(mstar_line, 10**(0.54+ 0.57*(mstar_line-11.)), 'r--',linewidth=2,alpha=0.8)
+    plt.text(9.56, 10**(-0.34), 'z = 0.06', color='red', fontsize=35)    
+
     
 elif relation == 1:
     plt.scatter(results[:,3][z_cut* all_galaxy],(results[:,7][z_cut* all_galaxy]/results[:,8][z_cut * all_galaxy]),
@@ -208,17 +213,26 @@ if relation == 0:
     b11_l = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
     b11_local_Reff = b11_l[:,-1]
     b11_local_mstar = b11_l[:,4]
-    plt.scatter(b11_local_mstar,np.log10(b11_local_Reff),s=180, c ='black',
-                marker="o",zorder=100, vmin=0, vmax=7, edgecolors='white', label='local AGN sample by VB2011')     
-    plt.scatter(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],s=200, c ='firebrick',
-                marker="D",zorder=101, vmin=0, vmax=7, edgecolors='white', label='our AGN sample, 1.2<z<1.7')    
-    plt.errorbar(Mstar[host_flux_ACS>0],np.log10(ID_Reff_kpc)[host_flux_ACS>0],
-             yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS>0],
-             color='k',ecolor='k', fmt='.',markersize=1, zorder = 99)  
-    plt.scatter(Mstar[host_flux_ACS<0],np.log10(ID_Reff_kpc)[host_flux_ACS<0],s=200, c ='firebrick',
-                marker="D",zorder=101, vmin=0, vmax=7, edgecolors='white')
-    plt.errorbar(Mstar[host_flux_ACS<0],np.log10(ID_Reff_kpc)[host_flux_ACS<0],
-             yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS<0],
+    plt.scatter(b11_local_mstar,b11_local_Reff,s=180, c ='black',
+                marker="o",zorder=100, vmin=0.5, vmax=5, edgecolors='white', label='local AGN (VB2011)')     
+   
+    plt.scatter(Mstar[host_flux_ACS>0],ID_Reff_kpc[host_flux_ACS>0],s=200, linewidth='2', c =indexs[host_flux_ACS>0],
+                marker="D",zorder=101, vmin=0.5, vmax=5, edgecolors='black', label='our AGN sample, 1.2<z<1.7',cmap=cmap_r)    
+    log_Rerr = (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))
+    low_err = ID_Reff_kpc - 10**(np.log10(ID_Reff_kpc)-log_Rerr)
+    up_err = 10**(np.log10(ID_Reff_kpc)+log_Rerr) - ID_Reff_kpc
+    plt.errorbar(Mstar[host_flux_ACS>0],ID_Reff_kpc[host_flux_ACS>0],
+                 yerr=  [low_err[host_flux_ACS>0],
+                         up_err[host_flux_ACS>0]],
+#                 yerr= 10**(np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e)) [host_flux_ACS>0],
+                 color='k',ecolor='k', fmt='.',markersize=1, zorder = 99)  
+    
+    plt.scatter(Mstar[host_flux_ACS<0],ID_Reff_kpc[host_flux_ACS<0],s=200, linewidth='2', c =indexs[host_flux_ACS<0],
+                marker="D",zorder=101, vmin=0.5, vmax=5, edgecolors='black',cmap=cmap_r)
+    plt.errorbar(Mstar[host_flux_ACS<0],ID_Reff_kpc[host_flux_ACS<0],
+                 yerr=  [low_err[host_flux_ACS<0],
+                         up_err[host_flux_ACS<0]],                 
+#             yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS<0],
              color='k',ecolor='k', fmt='.',markersize=1, zorder = 99)  
 elif relation ==1:
     plt.scatter(Mstar[host_flux_ACS>0],(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],s=680, c =(host_flux_WFC3/host_flux_ACS)[host_flux_ACS>0],
@@ -259,11 +273,22 @@ plt.xlabel("log(M$_*$/M$_{\odot})$",fontsize=35)
 plt.tick_params(labelsize=25)
 plt.legend(loc='upper right',fontsize=21,numpoints=1)
 if relation ==0:
-    plt.ylabel(r"log(R$_{\rm eff}$) (kpc)",fontsize=35)
+    plt.ylabel(r"R$_{\rm eff}$ (kpc)",fontsize=35)
 #    plt.title(r"M$_*$ - R$_{eff}$ relation, sample redshift range {0}".format(z_range), fontsize = 25)
-    plt.title(r"M$_*$ - R$_{\rm eff}$ relation"+', sample redshift range {0}'.format(z_range), fontsize = 25)
-    plt.ylim([-0.5, 1.5])
-    plt.savefig('Mstar-Reff_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))
+#    plt.title(r"M$_*$ - R$_{\rm eff}$ relation"+', sample redshift range {0}'.format(z_range), fontsize = 25)
+    plt.ylim([0.3, 31.5])
+#    labels = [item.get_text() for item in ax.get_yticklabels()]
+#    labels[1] = 'Testing'
+#    ax.set_xticklabels(labels)
+    plt.yscale('log')
+    ax.tick_params(axis='both', which='major', length=10)
+    ax.tick_params(axis='y', which='minor', length=5)
+    ax.tick_params(axis='y', which='both', width=1.5)
+    cbar = plt.colorbar()
+    cbar.ax.tick_params(labelsize=20)
+    cbar.ax.set_ylabel('Sersic index', rotation=270, fontsize = 25, labelpad=25)
+    plt.savefig('Mstar-Reff.pdf')
+#    plt.savefig('Mstar-Reff_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))
 elif relation ==1:
     plt.ylabel("filter flux ratio, WFC3 / ACS",fontsize=35)
     plt.title('$M_* -$ color relation, sample redshift range {0}'.format(z_range), fontsize = 25)
