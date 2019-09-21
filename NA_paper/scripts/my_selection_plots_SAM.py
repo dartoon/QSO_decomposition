@@ -188,7 +188,7 @@ x_obs, y_obs = stellar_mass_obs, bh_mass_obs
 fit_fixm=scipy.optimize.curve_fit(lfit_fixm, y_obs, x_obs)
 #fit_err=np.sqrt(np.diag(fit[1]))
 x_obs_space=lfit_fixm(y_space,fit_fixm[0])
-plt.plot(x_obs_space,y_space,color='green',linewidth=3)
+plt.plot(x_obs_space,y_space,color='yellow',linewidth=3)
 print "mismatch:", fit_fixm[0]- fit[0][1]  #In BH mass offset space
 
 
@@ -316,7 +316,7 @@ x_obs, y_obs = M_r_obs, bh_mass_obs
 fit_fixm_1=scipy.optimize.curve_fit(lfit_fixm_1, y_obs, x_obs)
 #fit_err_1=np.sqrt(np.diag(fit_1[1]))
 x_space_obs=lfit_fixm_1(y_space,fit_fixm_1[0])
-plt.plot(x_space_obs,y_space,color='green',linewidth=3)
+plt.plot(x_space_obs,y_space,color='yellow',linewidth=3)
 
 print "\n\nPlot M-Mag relation:"
 print "mismatch:", fit_fixm_1[0]- fit_1[0][1]
