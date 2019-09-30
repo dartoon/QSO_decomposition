@@ -33,11 +33,11 @@ Aklant_ratio = np.loadtxt('../../Aklant/host_ratio/host_total_ratio.txt')
 
 plt.figure(figsize=(10,8))
 high1, x1, _ = plt.hist(WFC3_ratio[:,0],normed=True, histtype=u'step',
-         label=('Observed sample'), linewidth = 2, color='green', zorder = 100)
+         label=('Observed sample'), linewidth = 2, color='orange', zorder = 100)
 high2, x2, _ = plt.hist(Aklant_ratio*100.,normed=True, histtype=u'step',
          label=('MBII simulation'), linewidth = 2, color='steelblue')
 high0, x0, _ = plt.hist(Nicola_ratio*100.,normed=True, histtype=u'step',
-         label=('SAM model'), linewidth = 2, color='orange')
+         label=('SAM model'), linewidth = 2, color='green')
 
 x0_m = np.median(Nicola_ratio*100.)
 high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]-1]
@@ -47,13 +47,13 @@ x2_m = np.median(Aklant_ratio*100.)
 high_m2 = high2[np.where(abs(x2_m-x2) == abs(x2_m-x2).min())[0][0]]
 
 
-plt.plot(np.linspace(0,high_m0)*0+np.median(x0_m) , np.linspace(0,high_m0),'--' , linewidth = 2,color='orange')
-plt.plot(np.linspace(0,high_m1)*0+np.median(x1_m) , np.linspace(0,high_m1),'--' , linewidth = 2, color='green')
-plt.plot(np.linspace(0,high_m2)*0+np.median(x2_m) , np.linspace(0,high_m2),'--' , linewidth = 2, color='steelblue')
+plt.plot(np.linspace(0,high_m1)*0+np.median(x1_m) , np.linspace(0,high_m1),'--' , linewidth = 2.3, color='orange')
+plt.plot(np.linspace(0,high_m2)*0+np.median(x2_m)-0.5 , np.linspace(0,high_m2),'--' , linewidth = 2.3, color='steelblue')  # -0.5 to show the top-overlapped part
+plt.plot(np.linspace(0,high_m0)*0+np.median(x0_m) , np.linspace(0,high_m0),'--' , linewidth = 2.3,color='green')
 
-plt.text(np.median(x0_m)-0.2, high_m0*0.25, '{0}%'.format(round(np.median(x0_m),1)), color='orange',fontsize=25)
-plt.text(np.median(x1_m)-0.2, high_m1*1.03, '{0}%'.format(round(np.median(x1_m),1)), color='green',fontsize=25)
+plt.text(np.median(x1_m)-0.2, high_m1*1.03, '{0}%'.format(round(np.median(x1_m),1)), color='orange',fontsize=25)
 plt.text(np.median(x2_m)-12, high_m2*0.35, '{0}%'.format(round(np.median(x2_m),1)), color='steelblue',fontsize=25)
+plt.text(np.median(x0_m)-0.2, high_m0*0.25, '{0}%'.format(round(np.median(x0_m),1)), color='green',fontsize=25)
 
 plt.xlabel("Host flux ratio (%)",fontsize=27)
 plt.ylabel("Number Density",fontsize=27)

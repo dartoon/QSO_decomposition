@@ -16,6 +16,8 @@ import copy
 from load_result import load_MBH, load_host_p, load_err, load_Lbol
 import matplotlib as mpl
 from scipy import stats
+import matplotlib as mat
+mat.rcParams['font.family'] = 'STIXGeneral'
 np.random.seed(5)  #12345
 
 data_overall = np.loadtxt('../Nicola/realization/lagn_lhost1.dat')
@@ -59,7 +61,7 @@ plt.errorbar(bhmass_overall, Eddr_overall, c='gray',linestyle=' ',marker='.',ms=
 
 cbar = plt.colorbar()
 cbar.ax.tick_params(labelsize=30) 
-plt.errorbar(bhmass_select_noi, Eddr_select_noi, c='red',linestyle=' ',marker='o',ms=10,mec='k')
+plt.errorbar(bhmass_select_noi, Eddr_select_noi, c='green',linestyle=' ',marker='o',ms=10,mec='k')
 xspace = np.linspace(6,10)
 plt.plot(xspace, 0*xspace,'k--',linewidth=3)
 plt.plot(xspace, 0*xspace-1.5,'k--',linewidth=3)
@@ -100,7 +102,7 @@ logLbol_obs = load_Lbol(ID=tab_list, folder = '../../')
 logLedd_obs = 38. + np.log10(1.2) + bh_mass_obs
 logEddR_obs = logLbol_obs - logLedd_obs
 
-plt.errorbar(bh_mass_obs, logEddR_obs, c='yellow',linestyle=' ',marker='o',ms=10,mec='k')
+plt.errorbar(bh_mass_obs, logEddR_obs, c='orange',linestyle=' ',marker='o',ms=10,mec='k')
 plt.xlim([7.15,9.15])
 plt.ylim([-3,1])
 xfill = np.linspace(7.7, 8.6)
@@ -108,7 +110,7 @@ yfill_sline = -1.1*(xfill-7.5) -0.5
 y_sline1 = xfill*0
 y_sline2 = xfill*0-1.5
 y4 = np.maximum(yfill_sline, y_sline2)
-plt.fill_between(xfill, y4, y2=0, color='red', alpha='0.5', zorder=-1)
+plt.fill_between(xfill, y4, y2=0, color='green', alpha='0.5', zorder=-1)
 plt.tick_params(labelsize=30)
 plt.ylabel(r"log(L$_{\rm bol}$/L$_{\rm Edd}$)",fontsize=30)
 plt.xlabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
@@ -145,10 +147,10 @@ cbar=f.colorbar(panel2[3],ax=obj)
 cbar.ax.tick_params(labelsize=30) 
 
 obj.errorbar(mstar_selected,bhmass_selected,zorder=1,
-             color='red',label='SAM population',linestyle=' ',marker='o',ms=10,mec='k')
+             color='green',label='SAM population',linestyle=' ',marker='o',ms=10,mec='k')
 obj.errorbar(stellar_mass_obs,bh_mass_obs, 
 #             xerr = [abs(M_r_obs_err[:,0]),abs(M_r_obs_err[:,1])], yerr=np.ones(len(bh_mass_obs))*0.4, 
-             zorder=100,color='yellow',label='Observed population',
+             zorder=100,color='orange',label='Observed population',
              linestyle=' ',marker='o',ms=10,mec='k')
 
 ##Fit y as function of x
@@ -157,10 +159,10 @@ obj.errorbar(stellar_mass_obs,bh_mass_obs,
 #fit_err=np.sqrt(np.diag(fit[1]))
 #x_space=np.linspace(-50,50,100)
 #y_space=lfit(x_space,fit[0][0],fit[0][1])
-#plt.plot(x_space,y_space,color='red',linewidth=3)
+#plt.plot(x_space,y_space,color='green',linewidth=3)
 #y_space_ub=lfit(x_space,fit[0][0]-fit_err[0]/2,fit[0][1]-fit_err[1]/2)
 #y_space_lb=lfit(x_space,fit[0][0]+fit_err[0]/2,fit[0][1]+fit_err[1]/2)
-#plt.fill_between(x_space,y_space_lb,y_space_ub,color='red',alpha=0.15)
+#plt.fill_between(x_space,y_space_lb,y_space_ub,color='green',alpha=0.15)
 #def lfit_fixm(x,c):
 #    m_0 = fit[0][0]
 #    return m_0*x+c
@@ -177,10 +179,10 @@ fit=scipy.optimize.curve_fit(lfit, y, x)
 fit_err=np.sqrt(np.diag(fit[1]))
 y_space=np.linspace(-50,50,100)
 x_space=lfit(y_space,fit[0][0],fit[0][1])   #y_space become to x_space
-plt.plot(x_space, y_space, color='red',linewidth=3)
+plt.plot(x_space, y_space, color='green',linewidth=3)
 x_space_ub=lfit(y_space,fit[0][0]+fit_err[0]/2,fit[0][1]+fit_err[1]/2)
 x_space_lb=lfit(y_space,fit[0][0]-fit_err[0]/2,fit[0][1]-fit_err[1]/2)
-plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='red',alpha=0.15)
+plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='green',alpha=0.15)
 def lfit_fixm(y,c):
     m_0 = fit[0][0]
     return m_0*y+c
@@ -188,7 +190,7 @@ x_obs, y_obs = stellar_mass_obs, bh_mass_obs
 fit_fixm=scipy.optimize.curve_fit(lfit_fixm, y_obs, x_obs)
 #fit_err=np.sqrt(np.diag(fit[1]))
 x_obs_space=lfit_fixm(y_space,fit_fixm[0])
-plt.plot(x_obs_space,y_space,color='yellow',linewidth=3)
+plt.plot(x_obs_space,y_space,color='orange',linewidth=3)
 print "mismatch:", fit_fixm[0]- fit[0][1]  #In BH mass offset space
 
 
@@ -218,7 +220,7 @@ alpha = lm.chain['alpha'].mean()
 beta = lm.chain['beta'].mean()
 xs = np.arange(-26,-19)
 ys = alpha + xs * beta
-#plt.plot(xs, ys, color='red',linewidth=3)
+#plt.plot(xs, ys, color='green',linewidth=3)
 print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
 ##Don't know how to fix the slope value...
 x = stellar_mass_obs
@@ -277,10 +279,10 @@ cbar=f.colorbar(panel2[3],ax=obj)
 cbar.ax.tick_params(labelsize=30) 
 
 obj.errorbar(r_band_magnitudes_selected,bhmass_selected,zorder=1,
-             color='red',label='SAM population',linestyle=' ',marker='o',ms=10,mec='k')
+             color='green',label='SAM population',linestyle=' ',marker='o',ms=10,mec='k')
 obj.errorbar(M_r_obs,bh_mass_obs, 
 #             xerr = [abs(M_r_obs_err[:,0]),abs(M_r_obs_err[:,1])], yerr=np.ones(len(bh_mass_obs))*0.4, 
-             zorder=100,color='yellow',label='Observed population',
+             zorder=100,color='orange',label='Observed population',
              linestyle=' ',marker='o',ms=10,mec='k')
 
 ##Fit y as function of x
@@ -289,10 +291,10 @@ obj.errorbar(M_r_obs,bh_mass_obs,
 #fit_err_1=np.sqrt(np.diag(fit_1[1]))
 #x_space=np.linspace(-26,-18,100)
 #y_space=lfit(x_space,fit_1[0][0],fit_1[0][1])
-#plt.plot(x_space,y_space,color='red',linewidth=3)
+#plt.plot(x_space,y_space,color='green',linewidth=3)
 #lmbh_space_ub=lfit(x_space,fit_1[0][0]-fit_err_1[0]/2,fit_1[0][1]+fit_err_1[1]/2)
 #lmbh_space_lb=lfit(x_space,fit_1[0][0]+fit_err_1[0]/2,fit_1[0][1]-fit_err_1[1]/2)
-#plt.fill_between(x_space,lmbh_space_lb,lmbh_space_ub,color='red',alpha=0.15)
+#plt.fill_between(x_space,lmbh_space_lb,lmbh_space_ub,color='green',alpha=0.15)
 #def lfit_fixm_1(x,c):
 #    return fit_1[0][0]*x+c
 #fit_fixm_1=scipy.optimize.curve_fit(lfit_fixm_1,M_r_obs, bh_mass_obs)
@@ -306,17 +308,17 @@ fit_1=scipy.optimize.curve_fit(lfit,y, x)
 fit_err_1=np.sqrt(np.diag(fit_1[1]))
 y_space=np.linspace(5,13,100)
 x_space=lfit(y_space,fit_1[0][0],fit_1[0][1])
-plt.plot(x_space,y_space,color='red',linewidth=3)
+plt.plot(x_space,y_space,color='green',linewidth=3)
 x_space_ub=lfit(y_space,fit_1[0][0]+fit_err_1[0]/2,fit_1[0][1]+fit_err_1[1]/2)
 x_space_lb=lfit(y_space,fit_1[0][0]-fit_err_1[0]/2,fit_1[0][1]-fit_err_1[1]/2)
-plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='red',alpha=0.15)
+plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='green',alpha=0.15)
 def lfit_fixm_1(y,c):
     return fit_1[0][0]*y+c
 x_obs, y_obs = M_r_obs, bh_mass_obs
 fit_fixm_1=scipy.optimize.curve_fit(lfit_fixm_1, y_obs, x_obs)
 #fit_err_1=np.sqrt(np.diag(fit_1[1]))
 x_space_obs=lfit_fixm_1(y_space,fit_fixm_1[0])
-plt.plot(x_space_obs,y_space,color='yellow',linewidth=3)
+plt.plot(x_space_obs,y_space,color='orange',linewidth=3)
 
 print "\n\nPlot M-Mag relation:"
 print "mismatch:", fit_fixm_1[0]- fit_1[0][1]
@@ -405,39 +407,39 @@ print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_se
 #xs = np.arange(5,15)
 #ys = alpha + xs * beta
 #plt.scatter(x, y)
-#plt.plot(xs, ys, color='red',linewidth=3)
+#plt.plot(xs, ys, color='green',linewidth=3)
 #print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
 
 #%%To plot data and plot together with MBII
 
-plt.figure(figsize=(8,7))
-plt.hist(M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]), histtype=u'step',normed=True,
-         label=('Observed sample'), linewidth = 2, color='green')
-plt.hist(MBII_scatter_ML,histtype=u'step',normed=True,  #Run the "my_selection_plots_MBII.py" first
-         label=('MBII sample'), linewidth = 2, color='steelblue')
-plt.hist(r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1]),histtype=u'step',normed=True,
-         label=('SAM sample'), linewidth = 2, color='orange')
-plt.title(r"Scatter comparison for the M$_{\rm BH}$-mag relation", fontsize = 20)
-plt.tick_params(labelsize=20)
-plt.legend(prop={'size':20})
-plt.yticks([])
-plt.xlabel(r"$\Delta$magnitude",fontsize=30)
-plt.savefig('comp_scatter_ML.pdf')
-plt.show()
-
-
-
-plt.figure(figsize=(8,7))
-plt.hist(stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]), histtype=u'step',normed=True,
-         label=('Observed sample'), linewidth = 2, color='green')
-plt.hist(MBII_scatter_MM,histtype=u'step',normed=True,  #Run the "my_selection_plots_MBII.py" first
-         label=('MBII sample'), linewidth = 2, color='steelblue')
-plt.hist(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
-         label=('SAM sample'), linewidth = 2, color='orange')
-plt.title(r"Scatter comparison for the M$_{\rm BH}$-M$_{*}$ relation", fontsize = 20)
-plt.tick_params(labelsize=20)
-plt.legend(prop={'size':20},loc=2)
-plt.yticks([])
-plt.xlabel('$\Delta$log(M$_{*}$/M$_{\odot}$)',fontsize=30)
-plt.savefig('comp_scatter_MM.pdf')
-plt.show()
+#plt.figure(figsize=(8,7))
+#plt.hist(M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]), histtype=u'step',normed=True,
+#         label=('Observed sample'), linewidth = 2, color='orange')
+#plt.hist(MBII_scatter_ML,histtype=u'step',normed=True,  #Run the "my_selection_plots_MBII.py" first
+#         label=('MBII sample'), linewidth = 2, color='steelblue')
+#plt.hist(r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1]),histtype=u'step',normed=True,
+#         label=('SAM sample'), linewidth = 2, color='green')
+#plt.title(r"Scatter comparison for the M$_{\rm BH}$-mag relation", fontsize = 20)
+#plt.tick_params(labelsize=20)
+#plt.legend(prop={'size':20})
+#plt.yticks([])
+#plt.xlabel(r"$\Delta$magnitude",fontsize=30)
+#plt.savefig('comp_scatter_ML.pdf')
+#plt.show()
+#
+#
+#
+#plt.figure(figsize=(8,7))
+#plt.hist(stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]), histtype=u'step',normed=True,
+#         label=('Observed sample'), linewidth = 2, color='orange')
+#plt.hist(MBII_scatter_MM,histtype=u'step',normed=True,  #Run the "my_selection_plots_MBII.py" first
+#         label=('MBII sample'), linewidth = 2, color='steelblue')
+#plt.hist(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
+#         label=('SAM sample'), linewidth = 2, color='green')
+#plt.title(r"Scatter comparison for the M$_{\rm BH}$-M$_{*}$ relation", fontsize = 20)
+#plt.tick_params(labelsize=20)
+#plt.legend(prop={'size':20},loc=2)
+#plt.yticks([])
+#plt.xlabel('$\Delta$log(M$_{*}$/M$_{\odot}$)',fontsize=30)
+#plt.savefig('comp_scatter_MM.pdf')
+#plt.show()
