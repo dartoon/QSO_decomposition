@@ -21,15 +21,11 @@ from filter_info import filt_info, redshift_info
 #'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
 #]
 
-#ID = ['CID216']
-#ID = ['CID255']
-#ID = ['CID237']
-ID = ['SXDS-X717']
-ID = ['CID3242']
-ID = ['CDFS-1']
-ID = ['CDFS-229']
-ID = ['CDFS-724']
+#ID = ['SXDS-X969']
+#ID = ['CDFS-724']
 
+#folder = 'analysis'
+folder = 'Reff_lowlimt0.2_analysis/'
 
 import pickle
 ratio_results, Re_results, n_results, total_flux_results, host_amp_results = [], [], [], [], []
@@ -44,7 +40,7 @@ for j in range(len(ID)):
     elif filt == "F814w":
         zp = 25.94333    
 #    f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
-    f = open("{0}/analysis/fit_result_each/each_PSF_fit_qso.txt".format(ID[j]),"r")
+    f = open("{0}/{1}/fit_result_each/each_PSF_fit_qso.txt".format(ID[j],folder),"r")
     string = f.read()
     PSF_id = re.findall(r"by PSF(.*?):",string)  # The PSF id as noted in the result files.
     S_n_list = re.findall(r"n_sersic':(.*?),",string)
@@ -128,4 +124,5 @@ for j in range(len(ID)):
     chisq_list.append(Chisq_best)
     inf_list.append(inf_alp)
 
+print "Reff", Re_results
 print "Total flux, AGN flux", round(weighted_total_flux,1), round(weighted_total_flux-weighted_host_flux,1)
