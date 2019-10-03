@@ -95,7 +95,7 @@ tab_sub_list = copy.deepcopy(tab_list)
 for i in range(len(tab_sub_list)):
     if tab_sub_list[i] in ext_ID.keys():
         tab_sub_list[i] = ext_ID[tab_sub_list[i]]
-Lr, M_star, M_r = load_host_p(tab_list,temp='1Gyrs', folder = '../../')  # M_star by Chabrier 
+Lr, M_star, M_r = load_host_p(tab_list, folder = '../../')  # M_star by Chabrier 
 
 M_r_obs= M_r
 M_r_obs_err = load_err(prop='LR', ID=tab_list) / 0.4
@@ -121,7 +121,7 @@ plt.tick_params(labelsize=30)
 plt.ylabel(r"log(L$_{\rm bol}$/L$_{\rm Edd}$)",fontsize=30)
 plt.xlabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 plt.legend(loc='upper right',fontsize=21,numpoints=1)
-plt.savefig('MBII_selectfunc.pdf')
+#plt.savefig('MBII_selectfunc.pdf')
 plt.show()
 
 #%%Plot MM data
@@ -211,7 +211,7 @@ obj.tick_params(labelsize=30)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('log(M$_{*}$/M$_{\odot}$)',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("MBII_MM.pdf")
+#plt.savefig("MBII_MM.pdf")
 plt.show()
 
 #%%
@@ -341,7 +341,7 @@ obj.tick_params(labelsize=30)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('R band magnitude',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("MBII_ML.pdf")
+#plt.savefig("MBII_ML.pdf")
 plt.show()
 
 #%%Plot the 1-D scatter for ML.

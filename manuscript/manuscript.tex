@@ -37,6 +37,8 @@
 \newcommand{\Civ}{C$_{\rm IV}$}
 \newcommand{\sint}{$\sigma_{\rm int}$}
 \newcommand{\angstrom}{\text{\normalfont\AA}}
+\newcommand{\ding}[1]{\textcolor{red}{[{\bf Xuheng}: #1]}} 
+
 \makeatletter
 \newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}  %For share same footnote
 \makeatother
@@ -89,14 +91,13 @@ We utilize a sample size of 32 broad-line (FWHM$>2000$ km s$^{-1}$; type-1) AGNs
 
 \item Black hole mass estimates (\mbh) are based on Balmer lines (i.e., \halpha) which avoids potential systematic uncertainties in UV-based estimators \citep{Greene2005}.
 
-\item Black holes masses fall below the knee of the black hole mass function to minimize the selection biases.
+\item {\bf Black holes masses all meet the criteria that \mbh/$M_{\odot}\lesssim8.7$, which is below the knee of the black hole mass function to minimize the selection biases (see Figure~\ref{fig:selection}, top panel).} %fall below the knee of the black hole mass function to minimize the selection biases.
 
-\item Eddington ratios are typically above 1\% for most of the sample to further ensure homogeneity.
+\item {\bf Eddington ratios are all above $5\%$} to further ensure homogeneity.
 
-\item The lower nuclear-to-host ratios of our sample facilitates the galaxy mass measurements, given that they are 
-X-ray selected.
+\item {\bf The host-to-total flux ratios typically above $30\%$ which facilitates the galaxy mass measurements, given that they are X-ray selected sample}. %The lower nuclear-to-host ratios of our sample facilitates the galaxy mass measurements, given that they are X-ray selected.
 
-\item \hst/WFC3 imaging of the host galaxy is above the 4000~\angstrom\ break and does not include the broad \halpha\ line (6563~\angstrom). This ensures sensitivity to the total stellar mass content. This is somewhat coupled to the previous item in this list.
+\item \hst/WFC3 imaging of the host galaxy {\bf at rest-frame wavelength $\sim5500$~\angstrom, which} is above the $4000$~\angstrom\ break and does not include the broad \halpha\ line ($6563$~\angstrom{\bf ), which ensures} sensitivity to the total stellar mass content. This is somewhat coupled to the previous item in this list.
 
 \item A large fraction of the sample has additional \hst\ imaging (i.e., ACS), providing color information to achieve reliable K-corrections and stellar mass determinations. 
 \end{itemize}
@@ -111,7 +112,9 @@ X-ray selected.
 
 \subsection{Sample selection}\label{sec:target_selection}
 
-The 32 AGNs are initially selected by the X-ray observations of the COSMOS~\citep{Civano2016}, (E)-CDFS-S~\citep{Lehmer2005, Xue2011}, and SXDS~\citep{Ueda2008} fields. In most cases, the X-ray sources are first identified as broad-line AGNs through optical spectroscopic campaigns with the VLT, Keck, and Magellan. Follow-up near-infrared spectroscopic observations of the AGNs in these fields are carried out with Subaru's Fiber Multi-Object Spectrograph~\citep[FMOS, ][]{Kimura2010, Nobuta2012,Matsuoka2013}, covering the wavelength range 0.9-1.8~$\mu m$ which provides the favorable \halpha\ and \hbeta\ lines out to $z\sim1.7$ to estimates the \mbh. Recently, \citet{Schulze2018} present near-IR spectroscopy of a large compilation of 243 X-ray AGN in these fields. It is from this catalog that we primarily select our targets. We refer the reader to that paper for the details of continuum fitting and emission-line modeling. Note that three CDFS objects (i.e., CDFS-1, CDFS-229 and CDFS-724) are not included in \citet{Schulze2018}; their infrared spectra are provided by \citet{Suh2015}.
+The 32 AGNs are initially selected by the X-ray observations of the COSMOS~\citep{Civano2016}, (E)-CDFS-S~\citep{Lehmer2005, Xue2011}, and SXDS~\citep{Ueda2008} fields. In most cases, the X-ray sources are first identified as broad-line AGNs through optical spectroscopic campaigns with the VLT, Keck, and Magellan. Follow-up near-infrared spectroscopic observations of the AGNs in these fields are carried out with Subaru's Fiber Multi-Object Spectrograph~\citep[FMOS, ][]{Kimura2010, Nobuta2012,Matsuoka2013}, covering the wavelength range 0.9-1.8~$\mu m$ which provides the favorable \halpha\ and \hbeta\ lines out to $z\sim1.7$ to estimates the \mbh. Recently, \citet{Schulze2018} present near-IR spectroscopy of a large compilation of 243 X-ray AGN in these fields. It is from this catalog that we primarily select our targets. 
+{\bf The continuum fitting and emission-line modeling are also provided by this work through a common procedure for spectral model fits. This approach first correct the spectra for galactic extinction and shift to the rest-frame. The spectral regions in the near-IR were are strongly affected by OH emission, and thus they are masked while fitting. The spectrum are modeled by both a narrow-line and a broad-line AGN template, and the emission line information is inferred based on the $\chi^2$ value. We refer the reader to that paper for more details.}
+Note that three CDFS objects (i.e., CDFS-1, CDFS-229 and CDFS-724) are not included in \citet{Schulze2018}; their infrared spectra are provided by \citet{Suh2015} {\bf using a similar approach}.
 
 Using the \mbh\ estimates as described below (Section~\ref{mbh}), we select targets with masses between $7.5 \lesssim {\rm log}$~(\mbh/$M_{\odot})\lesssim8.5$. The bolometric luminosities are measured from the broad AGN lines by \citet[][Section 3.3]{Schulze2018}, which are used to calculate their Eddington ratio $\lambda = L_{\rm bol}/L_{\rm Edd}$. The flux-limited nature of the sample results in a slightly higher Eddington ratio distribution at lower \mbh\, as shown in Figure~\ref{fig:selection}. Moreover, we have a higher preference to select targets which have rest-frame UV images (i.e., \hst/ACS) as provided by \citet{Scoville2007} and \citet{Koekemoer2007} in the COSMOS field. We list the 32 AGNs observed with \hst/WFC3 and analyzed in this work in Table~\ref{tab:objlist} sorted by field and redshift.
 
@@ -165,7 +168,11 @@ We include in our analysis published samples at intermediate redshifts to unders
 High spatial resolution imaging is required for the decomposition of the nuclear and host emission to accurately estimate the luminosity and stellar mass of the host galaxy. For this purpose, we observed the sample of 32 AGNs, as described above, with the \hst/WFC3 infrared channel, through the \hst\ program GO-15115 (PI: John Silverman). We selected to use the filters F125W $(1.2<z<1.44)$ and F140W $(1.44<z<1.7)$ according to the redshift of the targets so that the rest-frame spectral window is well above the 4000~\angstrom\ break. This selection further ensures that the broad \halpha\ line is not present in the bandpass so as not to contaminate the host emissions due to the broad wings of the PSF.
 
 %Drizzling, background noise...
-For each target, we obtained six separate exposures of 399s (i.e., total exposure time 2394s). The six exposures were dithered and combined with the {\sc astrodrizzle} software package following standard procedures, and resulted in an output pixel scale of 0\farcs{0642} by setting \texttt{pixfrac} parameter as 0.8 and using a \texttt{gaussian} kernel\footnote{\label{note1}For CID255, 3/6 of the dither WFC3 images are corrupted. We achieve to analyze this sample using the same approach, taking the 3 available frames.}. We use the {\sc photutils} tools to accurately estimate the background light which could come from both the sky and the detector. In Table~\ref{tab:objlist}, we list the details of the individual observations.
+For each target, we obtained six separate exposures of 399s (i.e., total exposure time 2394s). The six exposures were dithered and combined with the {\sc astrodrizzle} software package following standard procedures, and resulted in an output pixel scale of 0\farcs{0642} by setting \texttt{pixfrac} parameter as 0.8 and using a \texttt{gaussian} kernel\footnote{\label{note1}For CID255, 3/6 of the dither WFC3 images are corrupted. We achieve to analyze this sample using the same approach, taking the 3 available frames.}. In Table~\ref{tab:objlist}, we list the details of the individual observations.
+
+{\bf Obtaining the \hst\ image,  we first account for the background light which could come from both the sky and the detector. In this step, we adopt the {\sc photutils} by Python and model the global background light in 2D based on the \texttt{SExtractor} algorithm. Then, we remove the globe sky background light to obtain the clean image. To ensure the background light has been accurately subtracted, we investigate the surface brightness at the sampled empty area to ensure it is neither positive nor negative.} 
+
+We carefully test the surface brightness at the empty area to ensure the 
 
 Multi-band information provides the SED at a more precise level. A substantial fraction (21/32) of our objects have rest-frame UV images for those in COSMOS \citep{Koekemoer2007}. Here, we utilize images taken with ACS/F814W filter. The final image is drizzled to 0\farcs{03} pixel scale. Given the multi-band images for our AGN, we are able to infer their host color and assess the contribution of both the young and old stellar population which ensures an accurate inference of rest-frame R-band luminosity (including a K-correction) and stellar mass \citep{Gallazzi2009}. 
 
@@ -196,7 +203,7 @@ We use the image modeling tool \lenstronomy~\citep{Birrer2015, lenstronomy} to p
 Its flexibility enables us to turn off the lensing channel and focus on the AGN and host decomposition\footnote{As a check, we compared the results from \lenstronomy\ to the commonly used galaxy modeling software {\sc Galfit} and confirmed that the results are consistent between the two.}. The main advantage of \lenstronomy\ is that it returns the full posterior distribution of each parameter (i.e., not just the best fit model) and the Laplace approximation of the uncertainties. The input ingredients to \lenstronomy\ include:
 \begin{enumerate}
 \item AGN imaging data. \\
--- Using aperture photometry, we find that an aperture size with radius $\sim1\farcs{}5$ sufficiently covers the AGN emission of our sample. By default, we extract an image of $61\times61$ pixels (i.e., $4''\times 4''$). If needed, a larger box size would be sufficient to include nearby objects. 
+-- Using aperture photometry, we find that an aperture size with radius $\sim1\farcs{}5$ sufficiently covers the AGN emission of our sample\footnote{\bf In this aperture photometry process, we measure the AGN total flux in the aperture. By keep extending the aperture size, we note that the $1\farcs{}5$ is the limit region, beyond which the total light would not increase with the extending of aperture radius.}. By default, we extract an image of $61\times61$ pixels (i.e., $4''\times 4''$). If needed, a larger box size would be {\bf selected to sufficiently} include nearby objects. 
 \item Noise level map.\\
 -- The origin of the noise in each pixel stems from the read noise, background noise, and Poisson noise from the astronomical sources themselves. We measure these directly from the empty regions of the data. We then calculate the effective exposure time of each pixel based on the drizzled \texttt{WHT} array maps to infer the Poisson noise level. A final noise map includes all of these sources of error. 
   
@@ -233,7 +240,7 @@ Note that since each AGN was observed at a different location of the detector an
 where $N$ is the number of the ranking PSF, i.e., $N=8$.
 \noindent In Figure~\ref{fig:AGN_decomp}, we demonstrate the best-fit result for COSMOS-CID1174. The adopted weights are listed in Table~\ref{tab:weight_CID1174}. 
 
-We apply this approach to all AGNs to determine the global characteristics of the hosts of type-1 AGNs at these high redshifts. We measure the effective radius (\Reff), \sersic\ index, and host-to-total flux ratio and describe each of these in the following section. We recognize that these measurements are weighted by the eight top-ranked PSFs. The limited number of top-ranked PSFs may underestimate actual uncertainties. To gauge how the number of top-ranked PSF affects our results, we compare results when also using five and ten top-ranked PSFs. As shown in Figure~\ref{fig:hist_compare}, the results are consistent. For each AGN, we check the position of the top-ranked PSFs and find that they are unrelated to the AGN's position, which highlights the necessity of decomposing the AGN using all the available PSF-stars from the entire program.
+We apply this approach to all AGNs to determine the global characteristics of the hosts of type-1 AGNs at these high redshifts. We measure the effective radius (\Reff), \sersic\ index, and host-to-total flux ratio and describe each of these in the following section. We recognize that these measurements are weighted by the eight top-ranked PSFs. The limited number of top-ranked PSFs may underestimate actual uncertainties. To gauge how the number of top-ranked PSF affects our results, we compare results when also using five and ten top-ranked PSFs. As shown in Figure~\ref{fig:hist_compare}, the results are consistent. For each AGN, we check the {\bf location on the detector for the top-ranked PSFs} and find that they are unrelated to the AGN's {\bf location in the detector. This is against the intuition that it is the PSFs who locates closer to the AGN that have better performance which} highlights the necessity of decomposing the AGN using all the available PSF-stars from the entire program.
 
 \begin{figure}
 \centering
@@ -252,11 +259,11 @@ We carry out a similar analysis for 21/32 AGNs in the COSMOS field which have AC
 \section{Results}
 \label{sec:result}
 
-From our image decomposition, we detect the host galaxy essentially in all cases. \hst/WFC3 images with the AGN component removed are presented in the third panel (i.e., the ``data-point source'' stamps) of Figure~\ref{fig:AGN_decomp} and in Appendix~\ref{sec:restsample} for the remaining cases. While some of the galaxies have nearby neighbors, most are isolated and do not show strong signs of interaction or ongoing mergers, which indicates the fueling mechanism of AGNs may not be from major mergers for our sample. This is also relevant for model fitting with smooth \sersic\ profiles and the subsequent determination of the stellar mass. In the following subsections, we describe the properties of our ensemble of type-1 AGN host galaxies.
+From our image decomposition, we detect the {\bf host galaxy in all cases at a distinguished level, expect one case (i.e., SXDS-X763) that has host-to-total flux ratios lower than $15\%$}. \hst/WFC3 images with the AGN component removed are presented in the third panel (i.e., the ``data$-$point source'' stamps) of Figure~\ref{fig:AGN_decomp} and in Appendix~\ref{sec:restsample} for the remaining cases. While some of the galaxies have nearby neighbors, most are isolated and do not show strong signs of interaction or ongoing mergers, which indicates the fueling mechanism of AGNs may not be from major mergers for our sample. This is also relevant for model fitting with smooth \sersic\ profiles and the subsequent determination of the stellar mass. In the following subsections, we describe the properties of our ensemble of type-1 AGN host galaxies.
  
 \subsection{Host galaxy properties}
 \label{sec:result-hosts}
-As shown in Figure~\ref{fig:hist_compare}, the host-to-total flux ratio (total=host+nuclear) of the sample spans a wide range from $10\%$ to $90\%$ with most of the sample concentrated between $20\%$ to $50\%$ (median value $37\%$). Those with flux ratios above $\sim20\%$ have a higher degree of significance with respect to the detection of the host galaxy, while the very few cases around 10\% should be considered as marginal detections. 
+As shown in Figure~\ref{fig:hist_compare}, the host-to-total flux ratio (total$=$host$+$nuclear) of the sample spans a wide range from $10\%$ to $90\%$ with most of the sample concentrated between $20\%$ to $50\%$ (median value $37\%$). Those with flux ratios above $\sim20\%$ have a higher degree of significance with respect to the detection of the host galaxy, while the {\bf five sample (i.e., CID255, CID50, LID360, CDFS-229, SXDS-X763) which have host-to-total flux ratios lower than $20\%$} should be considered as marginal detections. 
 
 The distributions of effective radius \Reff\ and \sersic\ index are shown in Figure~\ref{fig:hist_rn}. These values are distributed within the allowed range and not concentrated on either the upper or lower bound. The \Reff\ of our sample are between $\sim1-7$~kpc (peaked at $\sim2.2$~kpc). Nearly half ($15/32$) of our systems have \sersic\ index $n<2$, indicating they have a significant disk component, likely in addition to the presence of a bulge. Five systems had a high \sersic\ index ($n>4.5$) for the first run; we use $n\in[1,4]$ as prior to re-fit these systems and find that the changes on the inference of their host luminosity are very limited ($<0.03$ dex). The inferred \Reff\ for systems (CID543, XID2202, and SXDS-X1136) have hit the lower limit (i.e., $0\farcs{}1$), and thus the scatter on the parameter is formally zero. This means the size inference of these three systems should really be considered an upper limit, rather than a measurement. However, the inference of their host luminosities and stellar masses are still reliable given the small scatter in the host flux ($<10\%$).
 
@@ -278,7 +285,7 @@ For $21/32$ AGNs, we have multi-band host magnitudes that enable us to select an
 \begin{figure*}
 \centering
 \begin{tabular}{c c}
-{\includegraphics[height=0.4\textwidth]{fig/comp_gtemp_1Gyrs.pdf}}&
+{\includegraphics[height=0.4\textwidth]{fig/comp_gtemp.pdf}}&
 {\includegraphics[height=0.4\textwidth]{fig/colorVSz.pdf}}\\
 \end{tabular}
 \caption{\label{fig:compare_temp} 
@@ -351,7 +358,7 @@ Black hole mass vs. stellar mass relation ( \mbh -- \smass\ ). The best-fit loca
  {\it Left}: Offset in  $\log($\mbh$)$ (vs. \smass) as a function of redshift. The orange band is the intrinsic scatter of local linear relation. The red line and gray band are the best-fit and $1\sigma$ offset fitting by Equation~\ref{eq:offset} using our 32 high-$z$ AGNs, with slope value $\gamma  = 0.78 \pm 0.26$. {\it Right}: \mbh/\smass\ as a function of redshift. In both panels, we use blue open circles to show the expected bias of the median value for $\Delta \log$\mbh. We use framework of \citet{Schulze2011,Schulze2014} to show that even with no evolution selection effects would shift the expectation higher towards the measured values as indicated by the small arrow (Section~\ref{sec:sf_framework}.)}
 \end{figure*} 
 
-As shown in these panels, the scatter of the high-$z$ correlation presents a similarity to the local relation. To quantitively make this comparison, we calculate the intrinsic scatter of their offset value, based on Equation~\ref{eq:infer_value}, and obtain $0.33$ for high-$z$ and $0.40$ for local samples, respectively. The fact that the intrinsic scatter for the high-$z$ sample is no larger than the local one may pose a challenge for explanations of scaling relations where random mergers are the origin of the correlation \citep{Peng2007,Jahnke2011}, indicating that there may likely be a connection between the SMBHs and their host galaxies during their formation.
+As shown in these panels, the scatter of the high-$z$ correlation presents a similarity to the local relation. To quantitively make this comparison, we calculate the intrinsic scatter of their offset value, based on Equation~\ref{eq:infer_value}, and \ding{(This needs to be rewritten:) obtain $0.25$ for high-$z$ and $0.35$ for local samples}, respectively. The fact that the intrinsic scatter for the high-$z$ sample is no larger than the local one may pose a challenge for explanations of scaling relations where random mergers are the origin of the correlation \citep{Peng2007,Jahnke2011}, indicating that there may likely be a connection between the SMBHs and their host galaxies during their formation.
 
 \subsection{Taking into account the selection function}
 \label{select_eff}
@@ -397,7 +404,7 @@ Constraining the evolution factor $\gamma$ of \mbh-\smass\ relation (Equation~\r
 
 The local sample of inactive galaxies used in this analysis is mainly comprised of bulge-dominated galaxies, and the entire local \smass\ we adopted are their bulge masses. That is, in previous sections, we are comparing the \mbh-\smass$_{\rm ,total}$ relations in the distant universe to the \mbh-\smass$_{\rm ,bulge}$ relations locally. Considering that a significant stellar component of the high-$z$ AGNs have a disk component (i.e., AGN hosts with fitted \sersic\ index close to 1),  \smass$_{\rm , bulge}$ must be smaller than \smass$_{\rm ,total}$. Given that the structures of our AGN hosts are similar to inactive galaxies at equivalent redshifts and stellar masses (Section~\ref{sec:result-hosts}), we expect their B/T ratios to follow a similar distribution that can be estimated using a single-\sersic\ index \citep{Bruce2014}. We can then infer the bulge stellar mass of our AGN hosts based on the inferred B/T ratios. 
 
-First, we establish a relation between the single-\sersic\ index and the B/T ratio using inactive galaxies from CANDELS at similar redshifts and stellar masses (Figure~\ref{fig:BT-n_relation}; \smass$\in [9.0, 11.5]$) using the B/T measurements of \citet{Dimauro2018}. In the figure, the red line indicates the average B/T ratio at a given \sersic\ index. We then implement a Monte Carlo approach by randomly sampling a Gaussian \sersic\ distribution for each AGN in our sample based on our measurements with 1$\sigma$ errors (Table~\ref{tab:result_sersic}). Next, we randomly sample the associated B/T ratio for a given \sersic\ index. To avoid the case of an unphysical faint bulge flux, we set the lower limit for B/T ratio as $0.1$. In each realization, we compare the \smass$_{\rm, bulge}$ to that of the \mbh\ and estimate the offset and $\gamma$.  We use 10,000 realizations to make sure the distribution of random samples is stable. Note that the Monte Carlo approach would take the scatter into account, including the \sersic\ index and its relation with the B/T ratio. We list the resulting bulge masses \bmass\ in Table~\ref{tab:result_sersic}.
+First, we establish a relation between the single-\sersic\ index and the B/T ratio using inactive galaxies from CANDELS at similar redshifts and stellar masses (Figure~\ref{fig:BT-n_relation}; \smass$\in~[9.0, 11.5]$) using the B/T measurements of \citet{Dimauro2018}. In the figure, the red line indicates the average B/T ratio at a given \sersic\ index. We then implement a Monte Carlo approach by randomly sampling a Gaussian \sersic\ distribution for each AGN in our sample based on our measurements with 1$\sigma$ errors (Table~\ref{tab:result_sersic}). Next, we randomly sample the associated B/T ratio for a given \sersic\ index. To avoid the case of an unphysical faint bulge flux, we set the lower limit for B/T ratio as $0.1$. In each realization, we compare the \smass$_{\rm, bulge}$ to that of the \mbh\ and estimate the offset and $\gamma$.  We use 10,000 realizations to make sure the distribution of random samples is stable. Note that the Monte Carlo approach would take the scatter into account, including the \sersic\ index and its relation with the B/T ratio. We list the resulting bulge masses \bmass\ in Table~\ref{tab:result_sersic}.
 
 As expected, we find a stronger offset of
 $\Delta \log \mathcal M_{\rm BH}^{bulge} = 0.77\pm0.08$~dex in \mbh/\smass$_{\rm, bulge}$ with respect to the
@@ -458,7 +465,7 @@ Same as Figure~\ref{fig:MM-vz}, but for \mbh-\bmass\ relations. The intermediate
 
 In this work, we use state-of-the-art techniques to measure the host galaxy flux, separating it from that of the point source. The fidelity of the host galaxy magnitude is high as demonstrated by the robustness with respect to the choice of PSF, which is the primary source of uncertainty. However, we introduce some uncertainty by adopting a simple stellar population template to derive the rest-frame R-band luminosity and stellar mass for the full population. In principle, if we had more information on the color, we could improve on this source of uncertainty by adopting a specific stellar population model for each target. However, considering that the host magnitude in the \hst/ACS band is faint (host-to-total flux ratio $< 30\%$), the individual color that we measure is insufficient to further discriminate between templates, and thus we adopt a single one for simplicity and to facilitate reproduction of our work.
 
-In any case, we stress that the uncertainty in the scaling relations is dominated by the single epoch black hole mass estimates, and not by uncertainties in the photometry or stellar mass estimates. Thus, the choice of template is a subdominant source of error. A posteriori, the fact that the intrinsic scatter we observe is not larger than the one in the local universe is consistent with this statement.
+In any case, we stress that the uncertainty in the scaling relations is dominated by the single epoch black hole mass estimates, and not by uncertainties in the photometry or stellar mass estimates. Thus, the choice of template is a subdominant source of error. {\bf Note that large uncertainties of \mbh\ is not apparent in our figures, since we only select the AGN sample that have {\it measured} \mbh\ falls into our selection window. The detailed analysis on this effect is beyond the scope. In our forthcoming paper, we focus on the sample scatter.} A posteriori, the fact that the intrinsic scatter we observe is not larger than the one in the local universe is consistent with this statement.
 
 \subsection{Systematic errors related to the choice of local anchor}
 \label{sec:local_sys}
@@ -619,9 +626,9 @@ The inferred $\gamma$ here could have large systematics given the following limi
 \centering
 \begin{tabular}{c c}
 \subfloat[\mbh-\lhost\ relation, evolution-corrected]
-{\includegraphics[height=0.5\textwidth]{fig/MBH-L_ev.pdf}}&
+{\includegraphics[height=0.45\textwidth]{fig/MBH-L_ev.pdf}}&
 \subfloat[offset in  $\log($\mbh$)$ (VS. \lhost) as a function of redshift]
-{\includegraphics[height=0.5\textwidth]{fig/MBH-L-vz.pdf}}\\
+{\includegraphics[height=0.45\textwidth]{fig/MBH-L-vz.pdf}}\\
 \subfloat[\mbh-\lhost, flat prior]
 {\includegraphics[width=0.5\textwidth]{fig/ML_MC_seleff_flatprior.pdf}}&
 \subfloat[\mbh-\lhost, lognormal prior]
@@ -631,7 +638,7 @@ The inferred $\gamma$ here could have large systematics given the following limi
 Same as previous figures but for \mbh-\lhost\ relation, considering the passive evolution correction for host galaxy luminosity.}
 \end{figure*} 
 
-\begin{deluxetable*}{llccccc}
+\begin{deluxetable*}{llcccc}
 \tablecolumns{7}
 \tablewidth{0pt}
 \tablecaption{Details of Observation} 
@@ -641,52 +648,50 @@ Same as previous figures but for \mbh-\lhost\ relation, considering the passive 
 \colhead{WFC3/Filter} &
 \colhead{$RA$}&
 \colhead{$DEC$}&
-\colhead{Observing date}&
-\colhead{Exposure time (s)}
+\colhead{Observing date}
 \\ 
 \colhead{(1)} &
 \colhead{(2)} &
 \colhead{(3)} &
 \colhead{(4)} &
 \colhead{(5)} &
-\colhead{(6)} &
-\colhead{(7)}
+\colhead{(6)} 
 } 
 \startdata
 %\multicolumn{5}{c}{Sample presented in \citet{Treu+07}}\\
 %\\
-COSMOS-CID50 & 1.239 & F125W & 150.2080 & 2.0833 & 2017-10-23 & 2395.4\\
-COSMOS-CID3570 & 1.244 & F125W & 149.6411 & 2.1076 & 2017-10-27 & 2395.4\\
-COSMOS-CID597 & 1.272 & F125W & 150.5262 & 2.2449 & 2018-11-25 & 2395.4\\
-COSMOS-CID607 & 1.294 & F125W & 150.6097 & 2.3231 & 2017-10-25 & 2395.4\\
-COSMOS-CID543 & 1.301 & F125W & 150.4519 & 2.1448 & 2018-04-30 & 2395.4\\
-COSMOS-CID452 & 1.407 & F125W & 150.0045 & 2.2371 & 2017-10-25 & 2395.4\\
-COSMOS-CID1281 & 1.445 & F140W & 150.4160 & 2.5258 & 2018-11-26 & 2395.4\\
-COSMOS-CID454 & 1.478 & F140W & 149.8681 & 2.3307 & 2018-02-26 & 2395.4\\
-COSMOS-CID206 & 1.483 & F140W & 149.8371 & 2.0088 & 2017-10-23 & 2395.4\\
-COSMOS-XID2202 & 1.516 & F140W & 150.6530 & 1.9969 & 2017-11-05 & 2395.4\\
-COSMOS-LID1538 & 1.527 & F140W & 150.6215 & 2.1588 & 2018-05-01 & 2395.4\\
-COSMOS-CID3242 & 1.532 & F140W & 149.7113 & 2.1452 & 2017-10-26 & 2395.4\\
-COSMOS-XID2138 & 1.551 & F140W & 149.7036 & 2.5781 & 2017-11-01 & 2395.4\\
-COSMOS-CID1174 & 1.552 & F140W & 150.2789 & 1.9595 & 2017-10-26 & 2395.4\\
-COSMOS-CID216 & 1.567 & F140W & 149.7918 & 1.8729 & 2017-10-23 & 2395.4\\
-COSMOS-LID360 & 1.579 & F140W & 150.1251 & 2.8617 & 2017-10-30 & 2395.4\\
-COSMOS-XID2396 & 1.600 & F140W & 149.4779 & 2.6425 & 2017-11-12& 2395.4\\
-COSMOS-LID1273 & 1.617 & F140W & 150.0565 & 1.6275 & 2017-10-31 & 2395.4\\
-COSMOS-CID237 & 1.618 & F140W & 149.9916 & 1.7243 & 2018-06-03 & 2395.4\\
-COSMOS-CID255\footnoteref{note1} & 1.664 & F140W & 150.1017 & 1.8483 & 2019-03-16 & 2395.4\\
-COSMOS-CID70 & 1.667 & F140W & 150.4051 & 2.2701 & 2017-10-27 & 2395.4\\
-CDFS-229 & 1.326 & F125W & 53.0680 & -27.6580 & 2018-04-04 & 2395.4\\ 
-CDFS-724 & 1.337 & F125W & 53.2870 & -27.6940 & 2018-04-05 & 2395.4\\ 
-CDFS-321 & 1.570 & F140W & 53.0486 & -27.6239 & 2018-08-18& 2395.4\\ 
-ECDFS-358 & 1.626 & F140W & 53.0850 & -28.0370 & 2018-02-09& 2395.4\\ 
-CDFS-1 & 1.630 & F140W & 52.8990 & -27.8600 & 2018-04-03 & 2395.4\\
-SXDS-X717 & 1.276 & F125W & 34.5400 & -5.0334 & 2018-07-02 & 2395.4\\ 
-SXDS-X1136 & 1.325 & F125W & 34.8925 & -5.1498 & 2018-01-29& 2395.4\\ 
-SXDS-X50 & 1.411 & F125W & 34.0267 & -5.0602 & 2018-03-01& 2395.4\\ 
-SXDS-X763 & 1.412 & F125W & 34.5849 & -4.7864 & 2018-07-03 & 2395.4\\ 
-SXDS-X735 & 1.447 & F140W & 34.5581 & -4.8781 & 2017-11-14 & 2395.4\\ 
-SXDS-X969 & 1.585 & F140W & 34.7594 & -5.4291 & 2018-07-02 & 2395.4\\ 
+COSMOS-CID50 & 1.239 & F125W & 150.2080 & 2.0833 & 2017-10-23 \\
+COSMOS-CID3570 & 1.244 & F125W & 149.6411 & 2.1076 & 2017-10-27 \\
+COSMOS-CID597 & 1.272 & F125W & 150.5262 & 2.2449 & 2018-11-25 \\
+COSMOS-CID607 & 1.294 & F125W & 150.6097 & 2.3231 & 2017-10-25 \\
+COSMOS-CID543 & 1.301 & F125W & 150.4519 & 2.1448 & 2018-04-30 \\
+COSMOS-CID452 & 1.407 & F125W & 150.0045 & 2.2371 & 2017-10-25 \\
+COSMOS-CID1281 & 1.445 & F140W & 150.4160 & 2.5258 & 2018-11-26 \\
+COSMOS-CID454 & 1.478 & F140W & 149.8681 & 2.3307 & 2018-02-26 \\
+COSMOS-CID206 & 1.483 & F140W & 149.8371 & 2.0088 & 2017-10-23 \\
+COSMOS-XID2202 & 1.516 & F140W & 150.6530 & 1.9969 & 2017-11-05 \\
+COSMOS-LID1538 & 1.527 & F140W & 150.6215 & 2.1588 & 2018-05-01 \\
+COSMOS-CID3242 & 1.532 & F140W & 149.7113 & 2.1452 & 2017-10-26 \\
+COSMOS-XID2138 & 1.551 & F140W & 149.7036 & 2.5781 & 2017-11-01 \\
+COSMOS-CID1174 & 1.552 & F140W & 150.2789 & 1.9595 & 2017-10-26 \\
+COSMOS-CID216 & 1.567 & F140W & 149.7918 & 1.8729 & 2017-10-23 \\
+COSMOS-LID360 & 1.579 & F140W & 150.1251 & 2.8617 & 2017-10-30 \\
+COSMOS-XID2396 & 1.600 & F140W & 149.4779 & 2.6425 & 2017-11-12\\
+COSMOS-LID1273 & 1.617 & F140W & 150.0565 & 1.6275 & 2017-10-31 \\
+COSMOS-CID237 & 1.618 & F140W & 149.9916 & 1.7243 & 2018-06-03 \\
+COSMOS-CID255\footnoteref{note1} & 1.664 & F140W & 150.1017 & 1.8483 & 2019-03-16 \\
+COSMOS-CID70 & 1.667 & F140W & 150.4051 & 2.2701 & 2017-10-27 \\
+CDFS-229 & 1.326 & F125W & 53.0680 & -27.6580 & 2018-04-04 \\ 
+CDFS-724 & 1.337 & F125W & 53.2870 & -27.6940 & 2018-04-05 \\ 
+CDFS-321 & 1.570 & F140W & 53.0486 & -27.6239 & 2018-08-18\\ 
+ECDFS-358 & 1.626 & F140W & 53.0850 & -28.0370 & 2018-02-09\\ 
+CDFS-1 & 1.630 & F140W & 52.8990 & -27.8600 & 2018-04-03 \\
+SXDS-X717 & 1.276 & F125W & 34.5400 & -5.0334 & 2018-07-02 \\ 
+SXDS-X1136 & 1.325 & F125W & 34.8925 & -5.1498 & 2018-01-29\\ 
+SXDS-X50 & 1.411 & F125W & 34.0267 & -5.0602 & 2018-03-01\\ 
+SXDS-X763 & 1.412 & F125W & 34.5849 & -4.7864 & 2018-07-03 \\ 
+SXDS-X735 & 1.447 & F140W & 34.5581 & -4.8781 & 2017-11-14 \\ 
+SXDS-X969 & 1.585 & F140W & 34.7594 & -5.4291 & 2018-07-02 \\ 
 \enddata
 \label{tab:objlist}
 \tablecomments{
@@ -695,12 +700,12 @@ Column 2: Spectroscopic redshift.
 Column 3: WFC3 filter. Note that the targets from the COSMOS field also have ACS imaging.
 Column 4 and 5: J2000 $RA$ and $DEC$ coordinates.
 Column 6: The observing start date.
-Column 7: Total exposure time.
+{\bf The total exposure time of each target is 2394s.}
 }
 \end{deluxetable*}
 
 \begin{deluxetable*}
-{@{\extracolsep{4pt}}lcccccccc}   % need for the gap between the clines.
+{@{\extracolsep{0pt}}lcccccccc}   % need for the gap between the clines.
 \tablecolumns{9}
 \tablewidth{0pt}
 \tablecaption{AGN properties} 
@@ -715,9 +720,9 @@ Column 7: Total exposure time.
 \colhead{FWHM(5100)}& \colhead{$\log( \rm L _{\lambda5100})$}& \colhead{$\log$\mbh}& Eddington ratio \\
 \colhead{}& 
 \colhead{(\kms)}& \colhead{(${\rm erg~s^{-1}}$)}& 
-\colhead{(M$_{\odot}$)}& (log$\lambda$)&
+\colhead{(M$_{\odot}$)}& (log$( L_{\rm Bol}/L_{\rm Edd})$)&
 \colhead{(\kms)}& 
-\colhead{(${\rm erg~s^{-1}}$)}&\colhead{(M$_{\odot}$)} & (log$\lambda$)\\
+\colhead{(${\rm erg~s^{-1}}$)}&\colhead{(M$_{\odot}$)} & (log$(L_{\rm Bol}/L_{\rm Edd})$)\\
 \colhead{(1)}& 
 \colhead{(2)}& \colhead{(3)}& 
 \colhead{(4)}& \colhead{(5)}& 
@@ -761,9 +766,9 @@ SXDS-X969 & 2296 & 43.50 & 8.20 & -0.61 & 1696 & 45.05 & 7.90& -0.08 \\
 \label{tab:result_mbh}
 \tablecomments{
 Column 1: Object ID.
-Column 2-5: \halpha\ emission line width (FWHM), continuum luminosity, inferred \mbh\ and Eddington ratio.
+Column 2-5: \halpha\ emission line width (FWHM), {\bf \halpha\ luminosity}, inferred \mbh\ and Eddington ratio. %(or continuum line at $\rm L _{\lambda5100}$)
 Column 6-9: \hbeta\ emission line BH properties. 
-The typical uncertainty level for FWHM and $\log( \rm L _{\lambda})$ are $15\%$ and $\pm0.01$, respectively. The inferred uncertainty level for \mbh\ are assumed as 0.4 dex.
+The typical uncertainty level for {\bf FWHM is $15\%$, and fo $\log( \rm L _{\lambda})$ is in-between $0.01\sim0.2$~dex}, respectively. The inferred uncertainty level for \mbh\ are assumed as 0.4 dex.
 }
 \end{deluxetable*}
 

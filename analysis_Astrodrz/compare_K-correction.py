@@ -148,8 +148,11 @@ mags_obs_UV, mag_UV_err = load_result(ID, count_rank=8, cam = 'ACS')
 zs = np.array([redshift_info[ID[i]] for i in range(len(ID))])
 dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
 dm_k_IR, dm_k_UV = [],[]
-galay_temp = '1Gyrs'
 for i in range(len(ID)):
+    if redshift_info[ID[i]]<1.44:
+        galay_temp = '1Gyrs'
+    else:
+        galay_temp = '0.625Gyrs'        
     dm_k_IR.append(k_corr_R(redshift_info[ID[i]],filt_info[ID[i]], galaxy_age = galay_temp))
     dm_k_UV.append(k_corr_R(redshift_info[ID[i]],'F814w', galaxy_age = galay_temp))
 dm_k_IR = np.asarray(dm_k_IR)   # Get the k-correction for each target as an array
@@ -168,7 +171,7 @@ plt.errorbar(mag_k_corrected_IR, mag_k_corrected_UV,xerr= mag_IR_err.T, yerr=mag
 #adjust_text(texts, arrowprops=dict(arrowstyle='->', color='red'))
 x=np.linspace(-26,-20,15)
 y = x
-plt.plot(x,y,'b',linewidth=4.0,alpha=0.5)
+plt.plot(x,y,'black',linewidth=4.0,alpha=0.5)
 #plt.title('Galaxy age: '+galay_temp, fontsize=24)
 plt.xlabel('Absolute rest-frame R mag by WFC3',fontsize=30)
 plt.ylabel('Absolute rest-frame R mag by ACS', fontsize=30)
@@ -188,14 +191,34 @@ z_d = np.linspace(1.1,1.8,200)
 k_c_140_5gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '5Gyrs')
 k_c_814_5gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '5Gyrs')
 k_c_125_5gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '5Gyrs')
+plt.plot(z_d[z_d>1.44],(k_c_140_5gy-k_c_814_5gy)[z_d>1.44], 'r', label = '5 Gyr template', linewidth=3.0,alpha=0.4)
+plt.plot(z_d[z_d<1.44],(k_c_125_5gy-k_c_814_5gy)[z_d<1.44], 'r', linewidth=3.0,alpha=0.4)
+
 k_c_140_1gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '1Gyrs')
 k_c_814_1gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '1Gyrs')
 k_c_125_1gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '1Gyrs')
-plt.plot(z_d[z_d>1.44],(k_c_140_5gy-k_c_814_5gy)[z_d>1.44], 'r--', label = '5 Gyr template', linewidth=3.0,alpha=0.4)
-plt.plot(z_d[z_d<1.44],(k_c_125_5gy-k_c_814_5gy)[z_d<1.44], 'r--', linewidth=3.0,alpha=0.4)
 plt.plot(z_d[z_d>1.44],(k_c_140_1gy-k_c_814_1gy)[z_d>1.44], label = '1 Gyr template', c='b', linewidth=4.0,alpha=0.5)
 plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], c='b', linewidth=4.0,alpha=0.5)
-plt.legend(fontsize=20)
+
+#k_c_140_1gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '0.75Gyrs')
+#k_c_814_1gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '0.75Gyrs')
+#k_c_125_1gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '0.75Gyrs')
+#plt.plot(z_d[z_d>1.44],(k_c_140_1gy-k_c_814_1gy)[z_d>1.44], label = '0.75 Gyr template', c='darkred', linewidth=4.0,alpha=0.5)
+#plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], c='darkred', linewidth=4.0,alpha=0.5)
+#
+#k_c_140_1gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '0.875Gyrs')
+#k_c_814_1gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '0.875Gyrs')
+#k_c_125_1gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '0.875Gyrs')
+#plt.plot(z_d[z_d>1.44],(k_c_140_1gy-k_c_814_1gy)[z_d>1.44], label = '0.875 Gyr template', c='r', linewidth=4.0,alpha=0.5)
+#plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], c='r', linewidth=4.0,alpha=0.5)
+
+
+k_c_140_1gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '0.625Gyrs')
+k_c_814_1gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '0.625Gyrs')
+k_c_125_1gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '0.625Gyrs')
+plt.plot(z_d[z_d>1.44],(k_c_140_1gy-k_c_814_1gy)[z_d>1.44], label = '0.625 Gyr template', c='g', linewidth=4.0,alpha=0.5)
+plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], c='g', linewidth=4.0,alpha=0.5)
+
 texts = []
 for i in range(len(ID)):
     if zs[i] > 1.44 :
@@ -212,8 +235,9 @@ for i in range(len(ID)):
         
 #    texts.append(plt.text(zs[i], mags_obs_UV[i] - mags_obs_IR[i], ID[i], fontsize=17))
 #adjust_text(texts, arrowprops=dict(arrowstyle='->', color='green'))  
-plt.xlabel('$z$',fontsize=35)
+plt.xlabel('z',fontsize=35)
 plt.ylabel('mag(ACS) - mag(WFC3)', fontsize=30)
+plt.legend(fontsize=20)#, ncol=2)
 plt.tick_params(labelsize=20)   
 #plt.savefig('colorVSz.pdf') 
 plt.show()

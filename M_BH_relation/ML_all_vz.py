@@ -217,8 +217,8 @@ value,sig=round(b_ml,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile
 #value,sig = 0.66, 0.18
 #plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 ##
-plt.xlabel("log$(1+z)$",fontsize=35)
-plt.ylabel("$\Delta$log$M_{BH}$ (vs $L_R$)",fontsize=35)
+plt.xlabel("log(1+z)",fontsize=45)
+plt.ylabel(r"$\Delta$logM$_{\rm BH}$ (vs L$_{\rm R}$)",fontsize=45)
 
 new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=20,markeredgecolor='k')
 
@@ -229,14 +229,14 @@ xl=-0.01
 xh=np.log10(1+2.5)
 plt.axis([xl,xh,-2.0,3.5])
 plt.grid()
-plt.tick_params(labelsize=25)
+plt.tick_params(labelsize=35)
 
 ax2=ax.twiny()
 tticks=np.array([10**xl-1,0.5,1,1.5,2,10**xh-1])
 ax2.set_xticks([np.log(t+1) for t in tticks])  # for the entire scale
 ax2.set_xticklabels([0,0.5,1,1.5,2,2.5])  # 0 actuall is corresponds to 10**-0.01-1
-ax2.set_xlabel('$z$',fontsize=35)
-plt.tick_params(labelsize=25)
+ax2.set_xlabel('z',fontsize=45)
+plt.tick_params(labelsize=35)
 
 #if inp_peng == 1:
 #    plt.legend([HE0435,RXJ1131,park,SS13,Mg,H,C,unlens,Pkc, new_sample],['HE0435',\
@@ -256,5 +256,5 @@ plt.legend([Pkc, park, new_sample],[
 "Intermediate redshift AGNs",
 "This work"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':30},ncol=2,handletextpad=0)
-#plt.savefig("MBH-L-vz.pdf")
+plt.savefig("MBH-L-vz.pdf")
 plt.show()

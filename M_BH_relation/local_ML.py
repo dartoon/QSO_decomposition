@@ -96,7 +96,7 @@ for i in range(100):
     rec[i,0],rec[i,1]=m,b
     plt.plot(xl, m*xl+b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1000)
 sm,sb=(np.amax(rec[:,0])-np.amin(rec[:,0]))/2,(np.amax(rec[:,1])-np.amin(rec[:,1]))/2
-plt.text(9.4, 6.5, "log$(M_{BH}/10^{7}M_{\odot})$=%s+%slog$(L_{R}/10^{10}L_{\odot})$"%(round(b_ml+m_ml*10-7,2),round(m_ml,2)),color='blue',fontsize=25)
+plt.text(9.4, 6.5, r"log(M$_{\rm BH}/$10$^{7}$M$_{\odot})$=%s+%slog(L$_{\rm R}/$10$^{10}$L$_{\odot}$)"%(round(b_ml+m_ml*10-7,2),round(m_ml,2)),color='blue',fontsize=25)
 #plt.text(9.4, 6.5, "$log(M_{BH}/10^{7}M_{\odot})$=%s+%s$log(L_{R}/10^{10}L_{\odot})$"%(0.33,0.95),color='blue',fontsize=25)
 '''
 if host == 0:

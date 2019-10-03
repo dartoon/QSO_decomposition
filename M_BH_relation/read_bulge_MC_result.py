@@ -16,7 +16,7 @@ import matplotlib.lines as mlines
 from matplotlib import colors
 import pickle
 
-gamma,Mstar_samp = pickle.load(open('gamma_Mbulge_result_(BT_min_0.1)_exclude6outliers.pkl','rb'))
+gamma,Mstar_samp = pickle.load(open('gamma_Mbulge_result_(BT_min_0.1)_201910.pkl','rb'))
 Mstar_samp = np.asarray(Mstar_samp)
 hist_value = gamma #Mstar_samp[:,1]
 plt.figure(figsize=(10,8))
@@ -36,7 +36,7 @@ plt.xlabel('$\gamma$',fontsize=35)
 plt.ylabel('PDF',fontsize=35)
 plt.tick_params(labelsize=25)
 plt.yticks([])
-#plt.savefig("gamma_hist.pdf")
+plt.savefig("gamma_hist.pdf")
 plt.show()
 
 #%%
@@ -194,9 +194,9 @@ if style ==1:
     plt.errorbar(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),
                  yerr= yerr_highz,
                  color='tomato',ecolor='orange', fmt='.',markersize=1)  
-plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(1.86,0.30),color='blue',fontsize=25)
+#plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(1.86,0.30),color='blue',fontsize=25)
 
-plt.xlabel("log$(1+z)$",fontsize=35)
+plt.xlabel("log(1+z)",fontsize=45)
 new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=20,markeredgecolor='k')
 plt.xticks(np.arange(-0.1,1,0.1))
 xl=-0.01
@@ -204,20 +204,20 @@ xh=np.log10(1+2.5)
 if style ==0:
     ax.set_yscale('log')
     plt.axis([xl,xh,0,0.7])
-    plt.ylabel("$M_{BH}/M_{*,bulge}$",fontsize=35)
+    plt.ylabel(r"M$_{\rm BH}$/M$_{*, {\rm bulge}}$",fontsize=45)
 if style ==1:
     plt.yticks(np.arange(-5.5,6,0.5))
     plt.axis([xl,xh,-2.0,3.5])
     plt.ylim([-2.0,3.5])
-    plt.ylabel("$\Delta$log$M_{BH}$ (vs $ M_{*,bulge}$)",fontsize=35)
+    plt.ylabel(r"$\Delta$logM$_{\rm BH}$ (vs  M$_{*, {\rm bulge}}$)",fontsize=45)
 plt.grid()
-plt.tick_params(labelsize=25)
+plt.tick_params(labelsize=35)
 ax2=ax.twiny()
 tticks=np.array([10**xl-1,0.5,1,1.5,2,10**xh-1])
 ax2.set_xticks([np.log(t+1) for t in tticks])  # for the entire scale
 ax2.set_xticklabels([0,0.5,1,1.5,2,2.5])  # 0 actuall is corresponds to 10**-0.01-1
-ax2.set_xlabel('$z$',fontsize=35)
-plt.tick_params(labelsize=25)
+ax2.set_xlabel('z',fontsize=45)
+plt.tick_params(labelsize=35)
 SS13 = mlines.Line2D([], [], color='darkseagreen', ls='', marker='^', markersize=8)
 plt.legend([Bkc, Hkc, SS13, new_sample],[
 'Local by Bennert+11',\
@@ -225,7 +225,7 @@ plt.legend([Bkc, Hkc, SS13, new_sample],[
 "Intermediate redshift AGNs",
 "High-z bulge"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
-#plt.savefig("MBH-Mbulge-style{0}.pdf".format(style))
+plt.savefig("MBH-Mbulge-style{0}.pdf".format(style))
 plt.show()
 
  #%%
@@ -264,7 +264,7 @@ high_m1 = high1[np.where(abs(x1_m-x1) == abs(x1_m-x1).min())[0][0]-1]
 #plt.text(np.median(x0_m)-0.2, high_m0*1.05, '{0}'.format(round(np.median(x0_m),1)), color='orange',fontsize=25)
 #plt.text(np.median(x1_m)-0.2, high_m1*1.05, '{0}'.format(round(np.median(x1_m),1)), color='green',fontsize=25)
 
-plt.xlabel("$M_{BH}/M_{*,bulge}$",fontsize=40)
+plt.xlabel(r"M$_{\rm BH}$/M$_{*, {\rm bulge}}$",fontsize=40)
 plt.ylabel("PDF",fontsize=40)
 plt.tick_params(labelsize=30)
 plt.legend(prop={'size':30})

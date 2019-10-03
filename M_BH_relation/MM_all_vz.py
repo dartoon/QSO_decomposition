@@ -148,10 +148,10 @@ if style ==1:
     yerr_cis = np.zeros(len(z_cis)) + (0.4**2+(m_ml*0.35)**2)**0.5 
     yerr = np.concatenate((yerr_imd,yerr_cis, yerr_hz),axis=0)
     
-#    #if consider 32 AGN only:
-#    z=z_cosmos
-#    y=y_cosmos
-#    yerr = yerr_hz    
+    #if consider 32 AGN only:
+    z=z_cosmos
+    y=y_cosmos
+    yerr = yerr_hz    
     
     yerr = np.sqrt(yerr**2 + sint_ml**2)
     #### fit with emcee ###############
@@ -210,10 +210,10 @@ if style ==1:
     #####################
     value,sig=round(b_ml_offset,2),round((np.percentile(samples,84,axis=0)[0]-np.percentile(samples,16,axis=0)[0])/2,2)
     print value,sig
-    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
+#    plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(value,sig),color='blue',fontsize=25)
 
 
-plt.xlabel("log$(1+z)$",fontsize=35)
+plt.xlabel(r"log(1+z)",fontsize=45)
 new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=20,markeredgecolor='k')
 
 plt.xticks(np.arange(-0.1,1,0.1))
@@ -222,21 +222,21 @@ xh=np.log10(1+2.5)
 if style ==0:
     ax.set_yscale('log')
     plt.axis([xl,xh,0,0.5])
-    plt.ylabel("$M_{BH}/M_*$",fontsize=35)
+    plt.ylabel(r"M$_{\rm BH}$/M$_*$",fontsize=45)
 if style ==1:
     plt.yticks(np.arange(-5.5,6,0.5))
     plt.axis([xl,xh,-2.0,3.5])
     plt.ylim([-2.0,3.5])
-    plt.ylabel("$\Delta$log$M_{BH}$ (vs $M_*$)",fontsize=35)
+    plt.ylabel(r"$\Delta$logM$_{\rm BH}$ (vs M$_*$)",fontsize=45)
 plt.grid()
-plt.tick_params(labelsize=25)
+plt.tick_params(labelsize=35)
 
 ax2=ax.twiny()
 tticks=np.array([10**xl-1,0.5,1,1.5,2,10**xh-1])
 ax2.set_xticks([np.log(t+1) for t in tticks])  # for the entire scale
 ax2.set_xticklabels([0,0.5,1,1.5,2,2.5])  # 0 actuall is corresponds to 10**-0.01-1
-ax2.set_xlabel('$z$',fontsize=35)
-plt.tick_params(labelsize=25)
+ax2.set_xlabel('z',fontsize=45)
+plt.tick_params(labelsize=35)
 
 SS13 = mlines.Line2D([], [], color='darkseagreen', ls='', marker='^', markersize=8)
 
@@ -246,5 +246,5 @@ plt.legend([Bkc, Hkc, SS13, new_sample],[
 "Intermediate redshift AGNs",
 "This work"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
-#plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
+plt.savefig("MBH-Mstar-vz_style{0}.pdf".format(style))
 plt.show()

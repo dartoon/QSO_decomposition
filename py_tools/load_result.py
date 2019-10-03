@@ -226,7 +226,7 @@ def EE(z):
       return quad(EZ, 0, z , args=(om))[0]
 vec_EE=np.vectorize(EE)
 
-def load_host_p(ID, folder='../', temp='1Gyrs', dm = 0):
+def load_host_p(ID, folder='../', temp=['1Gyrs','0.625Gyrs'], dm = 0):
     '''
     Return the host properties including
     1. host LR, 2. M_star, 3. Host Rest frame R absolute mags
@@ -236,25 +236,32 @@ def load_host_p(ID, folder='../', temp='1Gyrs', dm = 0):
     from dmag import k_corr_R
     from filter_info import filt_info
     dm_k_R = []
-    if temp != '3Gyrs':
-        for i in range(len(zs)):
-            dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = temp))
-        dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
-    else:
-        for i in range(len(zs)):
+    
+    for i in range(len(zs)):
+        if zs[i]<=1.44:
+            galaxy_age = temp[0]
+        elif zs[i]>1.44:
+            galaxy_age = temp[1]
+        if galaxy_age != '3Gyrs':
+            dm_k_R.append(k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = galaxy_age))
+        else:
             dm_k_R.append( (k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '1Gyrs')+k_corr_R(zs[i],filt_info[ID[i]], galaxy_age = '5Gyrs'))/2. )
-        dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
+    dm_k_R = np.asarray(dm_k_R) # Get the k-correction for each target as an array
     dl=(1+zs)*c*vec_EE(zs)/h0 *10**6   #in pc
     host_Mags = mags -5*(np.log10(dl)-1) + dm_k_R + dm*pass_dmag(zs) # This is in AB system
     host_LR = np.log10(10 ** (0.4*(4.61-host_Mags))) #LR in AB
     host_Mags_Vega = host_Mags - 0.21  # Transfer to Vega system
     host_LR_Vega = 10 ** (0.4*(4.43-host_Mags_Vega)) #LR in Vega
-    if temp =='1Gyrs':
-        Mstar = np.log10(host_LR_Vega * 0.54 * 0.684 * 1.4191)  
-    elif temp=='5Gyrs':
-        Mstar = np.log10(host_LR_Vega * 2.32 * 0.59 * 1.4191)
-    if temp =='3Gyrs':
-        Mstar = np.log10(host_LR_Vega * 1.50 * 0.60 * 1.4191)      
+    Mstar = np.zeros(len(ID))
+#    Calculate temp =='1Gyrs':
+    Mstar[zs<1.44] = np.log10(host_LR_Vega[zs<1.44] * 0.54 * 0.684 * 1.4191)  
+#    Calculate temp =='0.625Gyrs':
+    Mstar[zs>1.44] = np.log10(host_LR_Vega[zs>1.44] * 0.388 * 0.74  * 1.4191)
+    
+#    elif temp=='5Gyrs':
+#        Mstar = np.log10(host_LR_Vega * 2.32 * 0.59 * 1.4191)
+#    if temp =='3Gyrs':
+#        Mstar = np.log10(host_LR_Vega * 1.50 * 0.60 * 1.4191)  
     return host_LR, Mstar, host_Mags
 
 def load_MBH(ID, MB_ID, if_reportHb=0,folder = '..', return_line = 0):

@@ -139,12 +139,12 @@ plt.errorbar(lumi_s,MBs, xerr=[np.abs(LR_err)[:,0], np.abs(LR_err)[:,1]], yerr=0
 #cl.ax.tick_params(labelsize=30)   #the labe size
 
 if dm ==0:
-    plt.title("$M_{BH}-L_{host}$ relation",fontsize=35)
+    plt.title(r"M$_{\rm BH}-$L$_{\rm host}$ relation",fontsize=35)
 #elif dm ==1:
 #    plt.title("Evolution-corrected $M_{BH}-L_{host}$ relation",fontsize=35)
 
-plt.xlabel("log$(L_{R,host}/L_{\odot})$",fontsize=35)
-plt.ylabel("log$(M_{BH}/M_{\odot})$",fontsize=35)
+plt.xlabel(r"log(L$_{\rm R,host}$/L$_{\odot})$",fontsize=35)
+plt.ylabel(r"log(M$_{\rm BH}$/M$_{\odot})$",fontsize=35)
 plt.xticks(np.arange(5,16.5,0.5))
 plt.yticks(np.arange(6,16.5,0.5))
 plt.axis([9.0,12.,6.25,10.25])

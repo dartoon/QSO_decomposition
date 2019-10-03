@@ -76,28 +76,28 @@ def find_n(array,value):           #get the corresponding b for a given m
 #==============================================================================
 from load_result import load_host_p, load_MBH, load_err
 from load_result import load_zs, load_n
-#ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
-#'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
-#'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
-#'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-#'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
-#MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID1174',\
-#'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
-#'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
-#'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','LID1820','LID1622',\
-#'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
+ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
+'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
+'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
+'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
+MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID1174',\
+'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
+'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
+'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','LID1820','LID1622',\
+'LID1878', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281','CID255']
 
-#exclude 6 outliers: X763, CID543, LID360, XID2396, CDFS-229 and CDFS-724.
-ID = ['CDFS-1', 'CID70',  'SXDS-X735', 'CDFS-321', 'CID1174',\
-'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
-'CID50','CID607','LID1273', 'LID1538','SXDS-X1136',\
-'SXDS-X50', 'SXDS-X717','SXDS-X969','XID2138','XID2202',\
- 'CID206', 'ECDFS-358', 'CID597','CID1281','CID255']
-MB_ID = ['CDFS-1', 'CID70',  'SXDS-X735', 'ECDFS-321', 'CID1174',\
-'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
-'CID50','CID607','LID1273', 'LID1538','SXDS-X1136',\
-'SXDS-X50', 'SXDS-X717','SXDS-X969','LID1820','LID1622',\
-'CID206', 'ECDFS-358', 'CID597','CID1281','CID255']
+##exclude 6 outliers: X763, CID543, LID360, XID2396, CDFS-229 and CDFS-724.
+#ID = ['CDFS-1', 'CID70',  'SXDS-X735', 'CDFS-321', 'CID1174',\
+#'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
+#'CID50','CID607','LID1273', 'LID1538','SXDS-X1136',\
+#'SXDS-X50', 'SXDS-X717','SXDS-X969','XID2138','XID2202',\
+# 'CID206', 'ECDFS-358', 'CID597','CID1281','CID255']
+#MB_ID = ['CDFS-1', 'CID70',  'SXDS-X735', 'ECDFS-321', 'CID1174',\
+#'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
+#'CID50','CID607','LID1273', 'LID1538','SXDS-X1136',\
+#'SXDS-X50', 'SXDS-X717','SXDS-X969','LID1820','LID1622',\
+#'CID206', 'ECDFS-358', 'CID597','CID1281','CID255']
 
 zs = np.asarray(load_zs(ID))
 host_n_inf = np.array(load_n(ID, folder = '../'))
@@ -205,10 +205,11 @@ plt.legend([Bkc, Hkc, new_sample],[
 #plt.savefig("MBH-Mbulge-style{0}.pdf".format(style))
 plt.show()
 
-pickle.dump([gamma,Mstar_samp], open("gamma_Mbulge_result_(BT_min_0.1)_exclude6outliers.pkl", 'wb'))
+filename = "gamma_Mbulge_result_(BT_min_0.1)_201910.pkl"
+pickle.dump([gamma,Mstar_samp], open(filename, 'wb'))
 
 #%%
-gamma,Mstar_samp = pickle.load(open('gamma_Mbulge_result_(BT_min_0.1)_exclude6outliers.pkl','rb'))
+gamma,Mstar_samp = pickle.load(open(filename,'rb'))
 Mstar_samp = np.asarray(Mstar_samp)
 hist_value = gamma#Mstar_samp[:,1]
 plt.figure(figsize=(10,8))

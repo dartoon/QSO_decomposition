@@ -92,7 +92,7 @@ for i in range(100):
     b=samples[:,1][samples[:,0]==find_n(samples[:,0],m)][0]   #may find out many numbers
     plt.plot(xl, m*xl+b, color="lightgray", alpha=0.2,linewidth=7.0,zorder=-1000)
 
-plt.text(9.3, 6.24, "log$(M_{BH}/10^{7}M_{\odot})$=%s+%slog$(M_*/10^{10}M_{\odot})$"%(round(b_ml+m_ml*10-7,2),round(m_ml,2)),color='blue',fontsize=25)
+plt.text(9.3, 6.24, r"log(M$_{\rm BH}/$10$^{7}$M$_{\odot}$)=%s+%slog(M$_*/$10$^{10}$M$_{\odot}$)"%(round(b_ml+m_ml*10-7,2),round(m_ml,2)),color='blue',fontsize=25)
 
 #import corner
 #fig = corner.corner(samples, labels=["$m$", "$b$", "$sint$"],

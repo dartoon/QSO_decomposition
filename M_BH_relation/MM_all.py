@@ -102,9 +102,9 @@ plt.errorbar(Mstar,MBs, xerr=[np.abs(Mstar_err)[:,0], np.abs(Mstar_err)[:,1]], y
 #cl.ax.get_yaxis().labelpad=35     #the distance of the colorbar titel from bar
 #cl.ax.tick_params(labelsize=30)   #the labe size
 
-plt.title("$M_{BH}-M_*$ relation",fontsize=35)
-plt.xlabel("log$(M_*/M_{\odot})$",fontsize=35)
-plt.ylabel("log$(M_{BH}/M_{\odot})$",fontsize=35)
+plt.title(r"M$_{\rm BH}-$M$_*$ relation",fontsize=35)
+plt.xlabel(r"log(M$_*$/M$_{\odot})$",fontsize=35)
+plt.ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=35)
 #plt.xticks(np.arange(5,16.5,0.5))
 #plt.yticks(np.arange(6,16.5,0.5))
 plt.xlim(9,12.5)

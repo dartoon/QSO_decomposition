@@ -89,7 +89,7 @@ tab_sub_list = copy.deepcopy(tab_list)
 for i in range(len(tab_sub_list)):
     if tab_sub_list[i] in ext_ID.keys():
         tab_sub_list[i] = ext_ID[tab_sub_list[i]]
-Lr, M_star, M_r = load_host_p(tab_list,temp='1Gyrs', folder = '../../')  # M_star by Chabrier 
+Lr, M_star, M_r = load_host_p(tab_list, folder = '../../')  # M_star by Chabrier 
 
 M_r_obs= M_r
 M_r_obs_err = load_err(prop='LR', ID=tab_list) / 0.4

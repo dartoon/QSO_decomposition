@@ -65,9 +65,9 @@ plt.figure(figsize=(8,6))
 #high0, x0, _ = plt.hist(local_offset,normed=True, histtype=u'step', linestyle=('dashed'),
 #         label=('local sample'), linewidth = 2, color='gray')
 plt.hist(local_offset_bloc,normed=True, histtype=u'step', linestyle=('dashed'),
-         label=('Local by Bennert+11'), linewidth = 2, color='gray')
+         label=('Local, Bennert+11'), linewidth = 2, color='gray')
 plt.hist(local_offset_hloc,normed=True, histtype=u'step', linestyle=(':'),
-         label=("Local by H&R"), linewidth = 2, color='gray')
+         label=("Local, H&R"), linewidth = 2, color='gray')
 high1, x1, _ = plt.hist(highz_offset,normed=True, histtype=u'step',
          label=('High z sample'), linewidth = 2, color='black')
 
@@ -92,14 +92,14 @@ plt.plot(np.linspace(0,high_m1)*0 + 0.21 , np.linspace(0,high_m1)*2,
          linewidth = 2, color='red',alpha=0.5)
 
 
-plt.text((x1_m)*0.85+0.05, 0.15, '{0}'.format(round(x1_m,2)), color='gray',fontsize=18)
+plt.text((x1_m)*0.85+0.05, 0.1, '{0}'.format(round(x1_m,2)), color='gray',fontsize=18)
 plt.text((x1_m)*0+0.02, 0.15, '0.21', color='red',fontsize=18,alpha=0.5)
 #plt.text(np.median(x1_m)-0.21, 0.25, '{0}'.format(round(np.median(x1_m)-0.21,2)), color='red',fontsize=18)
-plt.xlabel("$\Delta$log($M_{BH}$)",fontsize=27)
+plt.xlabel(r"$\Delta$log(M$_{\rm BH}$)",fontsize=27)
 plt.ylabel("Number Density",fontsize=27)
-plt.ylim([0, 1.8])
+plt.ylim([0, 2.5])
 plt.tick_params(labelsize=20)
-plt.legend(prop={'size':14})
-#plt.savefig('hist_offset.pdf')
+plt.legend(prop={'size':16},loc=2)
+plt.savefig('hist_offset.pdf')
 plt.show()
 
