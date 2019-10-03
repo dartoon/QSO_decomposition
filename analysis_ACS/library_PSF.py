@@ -24,7 +24,7 @@ PSFs_dict = {}
 QSOs_dict = {}
 for key in IDs:
     ID = key
-    PSFs, QSOs=pickle.load(open('{0}/{0}_PSFs_QSO'.format(ID),'rb'))
+    PSFs, QSOs=pickle.load(open('{0}/first_analysis/{0}_PSFs_QSO'.format(ID),'rb'))
     PSFs_dict.update({'{0}'.format(ID):PSFs})
     QSOs_dict.update({'{0}'.format(ID):QSOs})
 
@@ -207,4 +207,8 @@ for i in range(len(PSF_list)):
 import pickle
 filename='PSFs_lib_dict'.format(ID)
 PSFs_lib = [flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict]
-pickle.dump(PSFs_lib, open(filename, 'wb'))
+#pickle.dump(PSFs_lib, open(filename, 'wb'))
+
+#%% Save them as Fits file to send to Nancy
+for i in range(len(PSF_list)):
+    pyfits.PrimaryHDU(PSF_list[i][0]).writeto('PSF_stamp/{0}.fits'.format(PSF_id[i]),overwrite=True)
