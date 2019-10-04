@@ -54,18 +54,24 @@ tab_list = ['CID1174', 'CID1281', 'CID206', 'CID216', 'CID237', 'CID255', 'CID32
 Mstar_err = []
 Mstar = []
 #plot the estimated bulge relation:
-for target in tab_list:
-    i = [i for i in range(len(ID)) if target == ID[i]][0]
+for i in range(len(ID)):
     hist_value = Mstar_samp[:,i]
     l =np.percentile(hist_value,16,axis=0)
     m =np.percentile(hist_value,50,axis=0)
     h =np.percentile(hist_value,84,axis=0)
     Mstar.append(m)
     Mstar_err.append([m-l, h-m])
-#    print "${0}\substack{+{1}\\-{2}}$".format(round(m,2), round(h-m,2), round(m-l,2))
 Mstar = np.asarray(Mstar)
 Mstar_err = np.asarray(Mstar_err)
-    
+
+for target in tab_list:
+    i = [i for i in range(len(ID)) if target == ID[i]][0]
+    hist_value = Mstar_samp[:,i]
+    l =np.percentile(hist_value,16,axis=0)
+    m =np.percentile(hist_value,50,axis=0)
+    h =np.percentile(hist_value,84,axis=0)
+#    print target, "{0}\substack+{1}-{2}".format(round(m,2), round(h-m,2), round(m-l,2))
+ 
 #%% Plot the bulge offset for BH relation
 host=plt.figure(figsize=(14.5,12))
 ax=host.add_subplot(111)   #to get the log(1+z) and z label
@@ -195,6 +201,8 @@ if style ==1:
                  yerr= yerr_highz,
                  color='tomato',ecolor='orange', fmt='.',markersize=1)  
 #plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(1.86,0.30),color='blue',fontsize=25)
+    value,sig=np.percentile(gamma,50,axis=0),round((np.percentile(gamma,84,axis=0)-np.percentile(gamma,16,axis=0))/2,2)
+#    print value, sig
 
 plt.xlabel("log(1+z)",fontsize=45)
 new_sample = mlines.Line2D([], [], color='tomato', ls='', marker='*', markersize=20,markeredgecolor='k')
@@ -229,11 +237,11 @@ plt.savefig("MBH-Mbulge-style{0}.pdf".format(style))
 plt.show()
 
  #%%
-#calcualte the mean offset:
-weighted_offset = np.sum(np.asarray(MBs-(m_ml*Mstar+b_ml))*yerr_highz) / np.sum(yerr_highz)                              
-rms_offset = np.sqrt(np.sum((np.asarray(MBs-(m_ml*Mstar+b_ml))-weighted_offset)**2*yerr_highz) / np.sum(yerr_highz))
-#rms_offset = np.sqrt(np.mean((np.asarray(y_cosmos)-weighted_offset)**2)) #No error bar
-print weighted_offset, rms_offset/np.sqrt(32.)
+##calcualte the mean offset, need to run something?#!!!
+#weighted_offset = np.sum(np.asarray(MBs-(m_ml*Mstar+b_ml))*yerr_highz) / np.sum(yerr_highz)                              
+#rms_offset = np.sqrt(np.sum((np.asarray(MBs-(m_ml*Mstar+b_ml))-weighted_offset)**2*yerr_highz) / np.sum(yerr_highz))
+##rms_offset = np.sqrt(np.mean((np.asarray(y_cosmos)-weighted_offset)**2)) #No error bar
+#print weighted_offset, rms_offset/np.sqrt(32.)
 
 
 #%% Plot Figure12-b:

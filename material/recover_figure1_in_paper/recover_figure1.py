@@ -93,10 +93,10 @@ ax.plot(x_cline, y_line_1,'k--')
 y_cline = np.linspace(-20, 20, 10)
 x_line = y_cline*0 + 8.6
 ax.plot(x_line, y_cline,'k--')
-ax.plot(y_cline*0 + 7.7, y_cline,'k--')
+#ax.plot(y_cline*0 + 7.7, y_cline,'k--')
 x_cline = np.linspace(7.1, 8.5)
 y_line_3 = -1.1*(x_cline-7.5) -0.5
-ax.plot(x_cline, y_line_3,'k--')  #
+#ax.plot(x_cline, y_line_3,'k--')  #
 plt.xlabel(r"log(M$_{\rm BH}$/M$_{\odot})$",fontsize=25)
 plt.ylabel(r"log(L$_{\rm bol}$/L$_{\rm Edd}$)", fontsize=25) 
 plt.tick_params(labelsize=15)

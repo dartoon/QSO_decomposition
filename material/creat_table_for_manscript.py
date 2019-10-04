@@ -318,7 +318,7 @@ from load_result import load_host_p, load_MBH
 #    print ID, round(result[0],2), round(result[1],2)
 def roots(a,b):
     return np.sqrt(a**2+b**2)
-lumi_s = load_host_p(tab_list, dm = 0, temp='1Gyrs')[0] #!!! This dm is important 
+lumi_s = load_host_p(tab_list, dm = 0)[0] #!!! This dm is important 
 print "LR:"
 for i in range(len(tab_list)):
     print(tab_list[i], 

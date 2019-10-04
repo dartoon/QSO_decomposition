@@ -191,8 +191,8 @@ z_d = np.linspace(1.1,1.8,200)
 k_c_140_5gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '5Gyrs')
 k_c_814_5gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '5Gyrs')
 k_c_125_5gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '5Gyrs')
-plt.plot(z_d[z_d>1.44],(k_c_140_5gy-k_c_814_5gy)[z_d>1.44], 'r', label = '5 Gyr template', linewidth=3.0,alpha=0.4)
-plt.plot(z_d[z_d<1.44],(k_c_125_5gy-k_c_814_5gy)[z_d<1.44], 'r', linewidth=3.0,alpha=0.4)
+plt.plot(z_d[z_d>1.44],(k_c_140_5gy-k_c_814_5gy)[z_d>1.44], 'r--', label = '5 Gyr template', linewidth=3.0,alpha=0.4)
+plt.plot(z_d[z_d<1.44],(k_c_125_5gy-k_c_814_5gy)[z_d<1.44], 'r--', linewidth=3.0,alpha=0.4)
 
 k_c_140_1gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '1Gyrs')
 k_c_814_1gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '1Gyrs')
@@ -216,8 +216,8 @@ plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], c='b', linewidth=4.0
 k_c_140_1gy = k_corr_R(z_d, filt = 'F140w', galaxy_age = '0.625Gyrs')
 k_c_814_1gy = k_corr_R(z_d, filt = 'F814w', galaxy_age = '0.625Gyrs')
 k_c_125_1gy = k_corr_R(z_d, filt = 'F125w', galaxy_age = '0.625Gyrs')
-plt.plot(z_d[z_d>1.44],(k_c_140_1gy-k_c_814_1gy)[z_d>1.44], label = '0.625 Gyr template', c='g', linewidth=4.0,alpha=0.5)
-plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], c='g', linewidth=4.0,alpha=0.5)
+plt.plot(z_d[z_d>1.44],(k_c_140_1gy-k_c_814_1gy)[z_d>1.44], 'g-.', label = '0.625 Gyr template', linewidth=4.0,alpha=0.5)
+plt.plot(z_d[z_d<1.44],(k_c_125_1gy-k_c_814_1gy)[z_d<1.44], 'g-.', linewidth=4.0,alpha=0.5)
 
 texts = []
 for i in range(len(ID)):
@@ -239,6 +239,6 @@ plt.xlabel('z',fontsize=35)
 plt.ylabel('mag(ACS) - mag(WFC3)', fontsize=30)
 plt.legend(fontsize=20)#, ncol=2)
 plt.tick_params(labelsize=20)   
-#plt.savefig('colorVSz.pdf') 
+plt.savefig('colorVSz.pdf') 
 plt.show()
     

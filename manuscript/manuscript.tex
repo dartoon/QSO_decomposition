@@ -61,7 +61,7 @@
 \altaffiltext{11}{Institute for Astronomy, University of Hawaii, 2680 Woodlawn Drive, Honolulu, HI 96822, USA}
 \begin{abstract}
 
-Correlations between the mass of a supermassive black hole (SMBH) and the properties of its host galaxy (e.g., stellar mass \smass, luminosity \lhost) suggest an evolutionary connection. A powerful test of a co-evolution scenario is to measure the relations \mbh-\lhost\ and \mbh-\smass~at high redshift and compare with local estimates. For this purpose, we acquired multi-band {\it Hubble Space Telescope} imaging with WFC3 of 32 \hbox{X-ray-selected} broad-line (type-1) AGN at $1.2<z<1.7$ in deep survey fields. By applying state-of-the-art tools to decompose the \hst\ images, we measured the host galaxy luminosity and stellar mass along with other properties through the 2D model fitting. The black hole mass (\mbh) was determined using the broad \halpha~line, detected in the near-infrared with Subaru/FMOS, which potentially minimizes systematic effects using other indicators. We find the {\it observed} ratio of \mbh/\smass~to be $2.0\times$ larger at $z\sim1.5$ than in the local universe, while the scatter is equivalent between the two epochs. However, an {\it intrinsic} non-evolving mass ratio is consistent with the data at the 95\% confidence level when accounting for selection effects (estimated using two independent and complementary methods). The relationship between \mbh\ and host galaxy total luminosity paints a similar picture. Therefore, our results are in agreement, considering the uncertainties, with a scenario where SMBHs and their total host stellar mass and luminosity proceed in lockstep or the growth of the former somewhat predates the latter. Based on an inference of the bulge-to-total mass fraction, the ratio \mbh/\bmass~is significantly offset from the local value by a factor of $+5.5$ which persists even after accounting for selection effects. Taken together, these observations are consistent with a scenario in which stellar mass is subsequently transferred from an angular momentum supported component of the galaxy to the pressure supported one through secular processes or minor mergers at a faster rate than mass accretion onto the SMBH.
+Correlations between the mass of a supermassive black hole (SMBH) and the properties of its host galaxy (e.g., stellar mass \smass, luminosity \lhost) suggest an evolutionary connection. A powerful test of a co-evolution scenario is to measure the relations \mbh-\lhost\ and \mbh-\smass~at high redshift and compare with local estimates. For this purpose, we acquired multi-band {\it Hubble Space Telescope} imaging with WFC3 of 32 \hbox{X-ray-selected} broad-line (type-1) AGN at $1.2<z<1.7$ in deep survey fields. By applying state-of-the-art tools to decompose the \hst\ images, we measured the host galaxy luminosity and stellar mass along with other properties through the 2D model fitting. The black hole mass (\mbh) was determined using the broad \halpha~line, detected in the near-infrared with Subaru/FMOS, which potentially minimizes systematic effects using other indicators. We find the {\it observed} ratio of \mbh/\smass~to {\bf be $2.5\times$ larger at $z\sim1.5$ than in} the local universe, while the scatter is equivalent between the two epochs. \ding{TBC: However, an {\it intrinsic} non-evolving mass ratio is consistent with the data at the 95\% confidence level when accounting for selection effects (estimated using two independent and complementary methods).} The relationship between \mbh\ and host galaxy total luminosity paints a similar picture. Therefore, our results are in agreement, considering the uncertainties, with a scenario where SMBHs and their total host stellar mass and luminosity proceed in lockstep or the growth of the former somewhat predates the latter. Based on an inference of the bulge-to-total mass fraction, the ratio \mbh/\bmass~is significantly offset from the local value {\bf by a factor of $+6.8$ which} persists even after accounting for selection effects. Taken together, these observations are consistent with a scenario in which stellar mass is subsequently transferred from an angular momentum supported component of the galaxy to the pressure supported one through secular processes or minor mergers at a faster rate than mass accretion onto the SMBH.
 
 \end{abstract}
 
@@ -95,7 +95,7 @@ We utilize a sample size of 32 broad-line (FWHM$>2000$ km s$^{-1}$; type-1) AGNs
 
 \item {\bf Eddington ratios are all above $5\%$} to further ensure homogeneity.
 
-\item {\bf The host-to-total flux ratios typically above $30\%$ which facilitates the galaxy mass measurements, given that they are X-ray selected sample}. %The lower nuclear-to-host ratios of our sample facilitates the galaxy mass measurements, given that they are X-ray selected.
+\item {\bf X-ray selected sample has host-to-total flux ratios typically above $30\%$ which facilitates the galaxy mass measurements.}. %The lower nuclear-to-host ratios of our sample facilitates the galaxy mass measurements, given that they are X-ray selected.
 
 \item \hst/WFC3 imaging of the host galaxy {\bf at rest-frame wavelength $\sim5500$~\angstrom, which} is above the $4000$~\angstrom\ break and does not include the broad \halpha\ line ($6563$~\angstrom{\bf ), which ensures} sensitivity to the total stellar mass content. This is somewhat coupled to the previous item in this list.
 
@@ -203,7 +203,7 @@ We use the image modeling tool \lenstronomy~\citep{Birrer2015, lenstronomy} to p
 Its flexibility enables us to turn off the lensing channel and focus on the AGN and host decomposition\footnote{As a check, we compared the results from \lenstronomy\ to the commonly used galaxy modeling software {\sc Galfit} and confirmed that the results are consistent between the two.}. The main advantage of \lenstronomy\ is that it returns the full posterior distribution of each parameter (i.e., not just the best fit model) and the Laplace approximation of the uncertainties. The input ingredients to \lenstronomy\ include:
 \begin{enumerate}
 \item AGN imaging data. \\
--- Using aperture photometry, we find that an aperture size with radius $\sim1\farcs{}5$ sufficiently covers the AGN emission of our sample\footnote{\bf In this aperture photometry process, we measure the AGN total flux in the aperture. By keep extending the aperture size, we note that the $1\farcs{}5$ is the limit region, beyond which the total light would not increase with the extending of aperture radius.}. By default, we extract an image of $61\times61$ pixels (i.e., $4''\times 4''$). If needed, a larger box size would be {\bf selected to sufficiently} include nearby objects. 
+-- Using aperture photometry, we find that an aperture size with radius $\sim1\farcs{}5$ sufficiently covers the AGN emission of our sample\footnote{\bf In this photometry process, we measure the AGN total flux in the aperture. By keep extending the aperture size, we note that the $1\farcs{}5$ is the limit region, beyond which the total aperture flux would not increase with the extending of aperture radius.}. By default, we extract an image of $61\times61$ pixels (i.e., $4''\times 4''$). If needed, a larger box size would be {\bf selected to sufficiently} include nearby objects. 
 \item Noise level map.\\
 -- The origin of the noise in each pixel stems from the read noise, background noise, and Poisson noise from the astronomical sources themselves. We measure these directly from the empty regions of the data. We then calculate the effective exposure time of each pixel based on the drizzled \texttt{WHT} array maps to infer the Poisson noise level. A final noise map includes all of these sources of error. 
   
@@ -280,16 +280,19 @@ The comparison of the histogram of the \Reff\ (top panel) and \sersic\ $n_s$ (bo
 
 \subsection{Rest-frame colors}
 
-For $21/32$ AGNs, we have multi-band host magnitudes that enable us to select an appropriate stellar population template to determine rest-frame luminosities and stellar masses for the overall sample. To minimize the uncertainty associated with these corrections, we use this template to interpolate to the rest-frame R band which is very close to the observed wavelengths.  We find that a $1$~Gyr stellar population with solar metallicity and a Chabrier IMF~\citep{Bruzual2003} provides an excellent match to the observed colors of our sample (see Figure~\ref{fig:compare_temp}). We note that the choice is not unique, and other combinations of ages and metallicities and star formation history could match the observed colors and would provide very similar R-band magnitudes, and also stellar masses \citep{Bell2000, Bell2001}. 
+For $21/32$ AGNs, we have multi-band host magnitudes that enable us to select {\bf the appropriate stellar population templates} to determine rest-frame luminosities and stellar masses for the overall sample.  We find {\bf that the $1$~Gyr and the $0.625$~Gyr} stellar population with solar metallicity and a Chabrier IMF~\citep{Bruzual2003} provides {\bf the excellent matches} to the observed colors of our sample {\bf at $z<1.44$ and $z>1.44$, respectively}  (see Figure~\ref{fig:compare_temp}). {\bf To minimize the uncertainty associated with these corrections, we adopt these two templates correspondingly to interpolate to the rest-frame R band which is very close to the observed wavelengths}. We note that the choice is not unique, and other combinations of ages and metallicities and star formation history could match the observed colors and would provide very similar R-band magnitudes, and also stellar masses \citep{Bell2000, Bell2001}. 
 
 \begin{figure*}
 \centering
 \begin{tabular}{c c}
-{\includegraphics[height=0.4\textwidth]{fig/comp_gtemp.pdf}}&
-{\includegraphics[height=0.4\textwidth]{fig/colorVSz.pdf}}\\
+{\includegraphics[height=0.4\textwidth]{fig/colorVSz.pdf}}&
+{\includegraphics[height=0.4\textwidth]{fig/comp_gtemp.pdf}}\\
 \end{tabular}
 \caption{\label{fig:compare_temp} 
- {\it Left}: Comparison of the inferred rest-frame R band magnitude based on the adopted stellar population, using $21/32$ AGNs which have both WFC3 and ACS imaging data.  {\it Right}: The observed color as a function of redshift. Note that the filter WFC3/F125W and WFC3/F140W are adopted for sample at $z<1.44$ and $z>1.44$, respectively. The blue curve is the predicted model by the $1$~Gyr stellar population. For comparison, we plot the predicted model for a $5$~Gyr stellar population that is definitely ruled out by our data.
+{\bf {\it Left}: The observed color as a function of redshift, based on $21/32$ AGNs which have both WFC3 and ACS imaging data. Note that the filter WFC3/F125W and WFC3/F140W are adopted for sample at $z<1.44$ and $z>1.44$, respectively. 
+We also plot three predicted models including $5$~Gyr, $1$~Gyr and $0.625$~Gyr. Clearly, the $5$~Gyr stellar population is ruled out by our data, and we adopt the $1$~Gyr and $0.625$~Gyr for sample at $z<1.44$ and $z>1.44$, respectively.
+ {\it Right}: Comparison of the inferred rest-frame R band magnitude, based on the adopted stellar populations.
+ }
 }
 \end{figure*} 
 
@@ -297,7 +300,7 @@ For $21/32$ AGNs, we have multi-band host magnitudes that enable us to select an
  
 \subsection{\mbh-\lhost\ relation}\label{sec:ml}
 
-Adopting the $1$~Gyr stellar population, we perform a K-correction to derive the rest-frame R-band magnitude of our sample. As mentioned above, since the WFC3 filter is already close to the rest-frame R-band, we expect the $M_R$ uncertainty introduced by this K-correction to be within $0.05$~mag. We derive the rest-frame R band luminosity from $\log L_R/L_{R, \odot} = 0.4\times(M_{R, \odot}-M_R)$, where $M_{R, \odot}=4.61$~\citep{Blanton07}. $L_R$ ranges between $\log L_R \in [9.5, 11.5]$ ($L_{\odot,R}$) with individual values listed in Table~\ref{tab:result_sersic}. 
+Adopting {\bf the $1$~Gyr and $0.625$~Gyr} stellar population, we perform a K-correction to derive the rest-frame R-band magnitude of our sample{\bf, based on the host inference at WFC3 band}. As mentioned above, since the WFC3 filter is already close to the rest-frame R-band, we expect the $M_R$ uncertainty introduced by this K-correction to be within $0.05$~mag. We derive the rest-frame R band luminosity from $\log L_R/L_{R, \odot} = 0.4\times(M_{R, \odot}-M_R)$, where $M_{R, \odot}=4.61$~\citep{Blanton07}. $L_R$ ranges between $\log L_R \in [9.5, 11.5]$ ($L_{\odot,R}$) with individual values listed in Table~\ref{tab:result_sersic}. 
 
 We show the relation between \mbh\ and \lhost\ in Figure~\ref{fig:ML} with comparison samples. For reference, we fit the local data with a linear relation,
 
@@ -320,7 +323,7 @@ The {\it observed} black hole mass vs. R-band luminosity relation. The black lin
 
 \subsection{\mbh-\smass\ relation}\label{sec:mm}
 
-Using the NIR imaging with \hst, we take the host luminosity along with color information to estimate the stellar mass content of each host galaxy based on the mass-to-light ratio of the adopted  $1$~Gyr stellar population. The uncertainty level associated with the stellar mass is expected to be of order $0.1$~dex (changing the IMF would affect all our stellar masses systematically). We find $M_*$ ranges between $\log M_* \in [9.7, 11.3]$ ($M_{\odot}$). These values are listed in Table~\ref{tab:result_sersic}. 
+Using the NIR imaging with \hst, we take the host luminosity along with color information to estimate the stellar mass content of each host galaxy based on the mass-to-light ratio of the adopted  {\bf stellar populations}. The uncertainty level associated with the stellar mass is expected to be of order $0.1$~dex (changing the IMF would affect all our stellar masses systematically). We find $M_*$ ranges {\bf between $\log (M_*/M_{\odot}) \in [9.7, 11.3]$}. These values are listed in Table~\ref{tab:result_sersic}. 
 
 In Figure~\ref{fig:MM}, we plot the our \mbh -- \smass\ measurements and find that the distributions in this plane for the four samples are similar. However, there is a slight shift of the high-$z$ data towards higher black hole masses at a fixed host mass. In Figure~\ref{fig:MM-vz}, we plot the mass ratio as a function of redshift ({\it right} panel) and the mass ratio difference ($\Delta \log \mathcal M_{\rm BH} = \log \big( \frac{\mathcal M_{\rm  BH}}{10^{7}M_{\odot}}) -\alpha-\beta\log(\frac{M_*}{10^{10}M_{\odot}})$ which is considered as the difference between the high redshift data and the best-fit local relation; {\it left} panel). For our high-$z$ sample, we find the averaged $\Delta \log \mathcal M_{\rm BH}$ to be $0.32$, a factor of two higher than the local mass ratio as indicated by the top blue circle in Figure~\ref{fig:MM-vz}.
 
@@ -336,7 +339,7 @@ As with Equation~\ref{eq:MLlocal}, we fit the \mbh-\smass\ data with a linear re
 \label{eq:offset}
 \Delta \log \mathcal M_{\rm BH}= \gamma \log (1 + z).
 \end{eqnarray} 
-Performing such a fit based on the {\it observed} data (i.e., no correction for selection effects), we obtain $\gamma  = 0.78 \pm 0.26$ that may be tentatively considered as evidence for evolution. Even with the exclusion of the few outliers, there is an evolution in the correlation with $\gamma  = 0.65 \pm 0.27$. The best-fit {\it observed} evolution model is shown in Figure~\ref{fig:MM-vz}.
+Performing such a fit based on the {\it observed} data (i.e., no correction for selection effects), {\bf we obtain $\gamma  = 1.01 \pm 0.26$ that} may be tentatively considered as evidence for evolution. Even with the exclusion of the few outliers, there is an evolution in the {\bf correlation with $\gamma  = 0.89 \pm 0.27$}. The best-fit {\it observed} evolution model is shown in Figure~\ref{fig:MM-vz}.
 
 \begin{figure}
 \centering
@@ -384,7 +387,7 @@ Combining the 32 AGNs together with the intermediate redshift sample, we present
 When relaxing the prior on \sint\ we find that the scatter is consistent with being as low as in the local samples, with a one-sided interval including zero and $1\sigma$ upper limit at around $0.5$~dex. 
 We also study the selection effect by only considering the new 32 AGNs, resulting in a higher evolutionary trend with a higher value of $\gamma$. We show all the result of the $\gamma$ and \sint\ in Table~\ref{table:gamma_sf}.
 
-A simple check using our prior estimate of the bias yields a similar result. The mean offset of the sample of 32 objects from the local relationship is $0.32\pm0.06$ dex, which would correspond to $\gamma=0.80\pm0.15$. However, after correcting for the selection bias ($0.21$~dex, see Section~\ref{sec:sf_framework}), the offset reduces to $0.11\pm0.06$ and thus $\gamma=0.28\pm0.15$, mildly positive but not significantly so, and consistent with the a posteriori method within the error bars and the uncertainty in the correction. We also note that the distribution of offsets shown in Figure~\ref{fig:offset_hist} displays a positive asymmetric tail. Whereas we expect the negative tail to be suppressed by our selection function, and thus it should be accounted for in our treatment.
+A simple check using our prior estimate of the bias yields a similar result. The mean offset of the sample of 32 objects from the local {\bf relationship is $0.42\pm0.06$ dex, which would correspond to $\gamma=1.06\pm0.15$}. However, after correcting for the selection bias ($0.21$~dex, see Section~\ref{sec:sf_framework}), {\bf the offset reduces to $0.20\pm0.06$ and thus $\gamma=0.50\pm0.15$, }mildly positive but not significantly so, and consistent with the a posteriori method within the error bars and the uncertainty in the correction. We also note that the distribution of offsets shown in Figure~\ref{fig:offset_hist} displays a positive asymmetric tail. Whereas we expect the negative tail to be suppressed by our selection function, and thus it should be accounted for in our treatment.
 If one computes the median offset instead of the mean, the offset is almost completely consistent with the expected bias. Larger samples with different selection function are needed to establish whether the positive tail is real or due to small sample statistics. 
 
 \begin{figure*}
@@ -406,12 +409,12 @@ The local sample of inactive galaxies used in this analysis is mainly comprised 
 
 First, we establish a relation between the single-\sersic\ index and the B/T ratio using inactive galaxies from CANDELS at similar redshifts and stellar masses (Figure~\ref{fig:BT-n_relation}; \smass$\in~[9.0, 11.5]$) using the B/T measurements of \citet{Dimauro2018}. In the figure, the red line indicates the average B/T ratio at a given \sersic\ index. We then implement a Monte Carlo approach by randomly sampling a Gaussian \sersic\ distribution for each AGN in our sample based on our measurements with 1$\sigma$ errors (Table~\ref{tab:result_sersic}). Next, we randomly sample the associated B/T ratio for a given \sersic\ index. To avoid the case of an unphysical faint bulge flux, we set the lower limit for B/T ratio as $0.1$. In each realization, we compare the \smass$_{\rm, bulge}$ to that of the \mbh\ and estimate the offset and $\gamma$.  We use 10,000 realizations to make sure the distribution of random samples is stable. Note that the Monte Carlo approach would take the scatter into account, including the \sersic\ index and its relation with the B/T ratio. We list the resulting bulge masses \bmass\ in Table~\ref{tab:result_sersic}.
 
-As expected, we find a stronger offset of
-$\Delta \log \mathcal M_{\rm BH}^{bulge} = 0.77\pm0.08$~dex in \mbh/\smass$_{\rm, bulge}$ with respect to the
-local relation, which corresponds to an evolutionary trend with
-$\gamma = 1.86\pm0.30$. Since selection effects are independent of B/T in
-our framework, we can apply our prior estimate of the correction for selection effects by removing $0.21$~dex, leaving still a significant offset
-of $0.56$~dex. We show the histogram of  \mbh/\smass\ and $\gamma$ inferred by
+As expected, {\bf we find a stronger offset of
+$\Delta \log \mathcal M_{\rm BH}^{bulge} = 0.87\pm0.07$~dex } in \mbh/\smass$_{\rm, bulge}$ with respect to the
+local relation, which corresponds to an {\bf evolutionary trend with
+$\gamma = 2.09\pm0.30$}. Since selection effects are independent of B/T in
+our framework, we can apply our prior estimate of the correction for selection effects by removing $0.21$~dex, leaving still a {\bf significant offset
+of $0.67$~dex.} We show the histogram of  \mbh/\smass\ and $\gamma$ inferred by
 the Monte Carlo approach in Figure~\ref{fig:gamma_hist} and illustrate the offset between bulge and BH
 as a function of redshift in Figure~\ref{fig:MM_bulge-vz}.
 
@@ -481,13 +484,13 @@ In conclusion, whereas the uncertainty in the local anchor does not affect our m
 
 \section{Conclusions} \label{sec:sum}
 
-We studied the evolution of the correlations between the supermassive black hole and their host galaxies using new measurements of 32 X-ray selected AGNs at $1.2<z<1.7$. Near-infrared spectroscopic observations with Subaru/FMOS of the \halpha\ emission line are available that provide reliable BH masses. To obtain the properties of the AGN host galaxies, we performed an image decomposition using state-of-the-art techniques on \hst/WFC3 IR data to obtain high-resolution imaging of the AGN and its host. This required us to collect PSF-stars across all the fields to build a library of PSFs. Using state-of-the-art image modeling tool \lenstronomy, we decomposed the AGN image in the 2-D plane taking each PSF in the library. We obtained the host properties (i.e., host flux, effective radius, \sersic\ index) using a weighted arithmetic mean based on the inference from the eight top-ranked PSFs. With additional \hst/ACS image in the optical, we identified the appropriate stellar population and derived the rest-frame R-band luminosity (\lhost) and stellar mass (\smass) of the host with the corresponding mass-to-light ratio.
+We studied the evolution of the correlations between the supermassive black hole and their host galaxies using new measurements of 32 X-ray selected AGNs at $1.2<z<1.7$. Near-infrared spectroscopic observations with Subaru/FMOS of the \halpha\ emission line are available that provide reliable BH masses. To obtain the properties of the AGN host galaxies, we performed an image decomposition using state-of-the-art techniques on \hst/WFC3 IR data to obtain high-resolution imaging of the AGN and its host. This required us to collect PSF-stars across all the fields to build a library of PSFs. Using state-of-the-art image modeling tool \lenstronomy, we decomposed the AGN image in the 2D plane taking each PSF in the library. We obtained the host properties (i.e., host flux, effective radius, \sersic\ index) using a weighted arithmetic mean based on the inference from the eight top-ranked PSFs. With additional \hst/ACS image in the optical, we identified the appropriate {\bf stellar populations} and derived the rest-frame R-band luminosity (\lhost) and stellar mass (\smass) of the host with the corresponding mass-to-light ratio.
 We then determine the mass relations at high-$z$ and establish any signs of evolution by combining our high-$z$ measurements with local and intermediate redshift samples from the literature~\citep{Park15, Bennert11, SS13, Cisternas2011}. 
 
-We find the average "observed" ratio between the mass of a SMBH and either their total host luminosity or total stellar mass is larger at $z\sim1.5$, by a factor of $\sim2.5$ and $\sim2.0$ respectively, as compared to that in the local universe. However, taking into account selection bias, these correlations are consistent with those in the local universe within the 95\% confidence limits. 
+We find the average ``observed" ratio between the mass of a SMBH and either their total host luminosity or total stellar mass is larger at $z\sim1.5$, {\bf by a factor of $\sim2.7$ and $\sim2.5$ respectively}, as compared to that in the local universe. \ding{TBC: However, taking into account selection bias, these correlations are consistent with those in the local universe within the 95\% confidence limits. }
 Even with the remaining uncertainties in the corrections for selection, we are confident that any evolution in the \mbh/\smass\ relation is at the most a factor of two with the case of no evolution entirely plausible.
 
-Considering the bulge component \citep{Bennert11, Woo++08} separately, we find that our high-$z$ AGN sample has significantly lower mass/luminosity bulges at fixed black hole mass than in the local universe. Comparing to their \mbh, we find evolution with the ratio evolving as $(1+z)^{1.86\pm0.30}$, which is significant even when accounting for selection effects. We caution that the evolution of the bulge component is more uncertain than our measurement of the total galaxy components, since it is based on an estimate of the B/T ratio from the measured \sersic\ index based on a matched sample of inactive galaxies. Nevertheless, since the signal is stronger than for the integrated quantities, the measurement is more significant even given larger uncertainties.
+Considering the bulge component \citep{Bennert11, Woo++08} separately, we find that our high-$z$ AGN sample has significantly lower mass/luminosity bulges at fixed black hole mass than in the local universe. Comparing to their \mbh, we find evolution with the {\bf ratio evolving as $(1+z)^{2.09\pm0.30}$,} which is significant even when accounting for selection effects. We caution that the evolution of the bulge component is more uncertain than our measurement of the total galaxy components, since it is based on an estimate of the B/T ratio from the measured \sersic\ index based on a matched sample of inactive galaxies. Nevertheless, since the signal is stronger than for the integrated quantities, the measurement is more significant even given larger uncertainties.
 Thus, we can conclude that the BHs $8-10$~Gyrs ago reside in bulges which are less massive/luminous than today \citep[see also][]{Bennert11,Park15}, even though a proper measure of the bulge mass at high-$z$ may need to wait for the next generation ground-based 20-30m class telescopes. 
 
 Given that the \smass$_{\rm ,total}$-\mbh\ relation is closer to or consistent with the local relation, the inferred evolution of the \bmass-\mbh\ correlations is qualitatively consistent with a scenario where the assembly of the black hole predates that of the bulge, which is processed by the transfer of stellar mass from the disk via mergers or secular processes \citep{Croton2006}. The stellar mass need to build the bulge appears to be present in the disk component at high-$z$.
@@ -618,7 +621,7 @@ $d{\rm mag}_{\rm R}\sim~d\log(1+z)$, i.e.,
 \end{eqnarray} 
 This formalism is more accurate to fit a broad range redshift comparing to a single slope as $d$mag$/dz$. We refer the interested readers to \citet[][section 5.4]{Ding2017b} for more details.
 
-Having transferred the \lhost\ to today, we find that, as showing in Figure~\ref{fig:ML-vz}-(a), at fixed mass, the BH in the more distant universe tends to reside in less luminous hosts, which is consistent to the \mbh-\smass\ relation. We fit the offset as a function of redshift in form as Equation~\ref{eq:offset} and obtain $\gamma = 0.60 \pm 0.18$, as showing in Figure~\ref{fig:ML-vz}-(b). We further consider the selection effect using the previous approach as introduced in Section~\ref{select_eff}, and obtain $\gamma = 0.5\pm0.5$ and $\gamma = 0.6\pm0.3$, with flat and lognormal prior, respectively, as showing in Figure~\ref{fig:ML-vz}-(c), (d).
+Having transferred the \lhost\ to today, we find that, as showing in Figure~\ref{fig:ML-vz}-(a), at fixed mass, the BH in the more distant universe tends to reside in less luminous hosts, which is consistent to the \mbh-\smass\ relation. We fit the offset as a function of redshift in form as Equation~\ref{eq:offset} and {\bf obtain $\gamma = 0.64 \pm 0.17$, } as showing in Figure~\ref{fig:ML-vz}-(b). We further consider the selection effect using the previous approach as introduced in Section~\ref{select_eff}, and \ding{ TBD: obtain $\gamma = 0.5\pm0.5$ and $\gamma = 0.6\pm0.3$, with} flat and lognormal prior, respectively, as showing in Figure~\ref{fig:ML-vz}-(c), (d).
 
 The inferred $\gamma$ here could have large systematics given the following limitations. First, the passive evolution is based on a simplified correction; after all, we are not clear exactly how the host evolves to $z=0$. Moreover, we only consider the evolution of the host galaxy and assume the \mbh\ does not change much. %Moreover, in the literature, the correlation of the \mbh-\smass\ is considered as more fundamental which would be more efficient to understand their co-evolution.
 
@@ -660,37 +663,37 @@ Same as previous figures but for \mbh-\lhost\ relation, considering the passive 
 \startdata
 %\multicolumn{5}{c}{Sample presented in \citet{Treu+07}}\\
 %\\
-COSMOS-CID50 & 1.239 & F125W & 150.2080 & 2.0833 & 2017-10-23 \\
-COSMOS-CID3570 & 1.244 & F125W & 149.6411 & 2.1076 & 2017-10-27 \\
-COSMOS-CID597 & 1.272 & F125W & 150.5262 & 2.2449 & 2018-11-25 \\
-COSMOS-CID607 & 1.294 & F125W & 150.6097 & 2.3231 & 2017-10-25 \\
-COSMOS-CID543 & 1.301 & F125W & 150.4519 & 2.1448 & 2018-04-30 \\
-COSMOS-CID452 & 1.407 & F125W & 150.0045 & 2.2371 & 2017-10-25 \\
-COSMOS-CID1281 & 1.445 & F140W & 150.4160 & 2.5258 & 2018-11-26 \\
-COSMOS-CID454 & 1.478 & F140W & 149.8681 & 2.3307 & 2018-02-26 \\
-COSMOS-CID206 & 1.483 & F140W & 149.8371 & 2.0088 & 2017-10-23 \\
-COSMOS-XID2202 & 1.516 & F140W & 150.6530 & 1.9969 & 2017-11-05 \\
-COSMOS-LID1538 & 1.527 & F140W & 150.6215 & 2.1588 & 2018-05-01 \\
-COSMOS-CID3242 & 1.532 & F140W & 149.7113 & 2.1452 & 2017-10-26 \\
-COSMOS-XID2138 & 1.551 & F140W & 149.7036 & 2.5781 & 2017-11-01 \\
 COSMOS-CID1174 & 1.552 & F140W & 150.2789 & 1.9595 & 2017-10-26 \\
+COSMOS-CID1281 & 1.445 & F140W & 150.4160 & 2.5258 & 2018-11-26 \\
+COSMOS-CID206 & 1.483 & F140W & 149.8371 & 2.0088 & 2017-10-23 \\
 COSMOS-CID216 & 1.567 & F140W & 149.7918 & 1.8729 & 2017-10-23 \\
-COSMOS-LID360 & 1.579 & F140W & 150.1251 & 2.8617 & 2017-10-30 \\
-COSMOS-XID2396 & 1.600 & F140W & 149.4779 & 2.6425 & 2017-11-12\\
-COSMOS-LID1273 & 1.617 & F140W & 150.0565 & 1.6275 & 2017-10-31 \\
 COSMOS-CID237 & 1.618 & F140W & 149.9916 & 1.7243 & 2018-06-03 \\
 COSMOS-CID255\footnoteref{note1} & 1.664 & F140W & 150.1017 & 1.8483 & 2019-03-16 \\
+COSMOS-CID3242 & 1.532 & F140W & 149.7113 & 2.1452 & 2017-10-26 \\
+COSMOS-CID3570 & 1.244 & F125W & 149.6411 & 2.1076 & 2017-10-27 \\
+COSMOS-CID452 & 1.407 & F125W & 150.0045 & 2.2371 & 2017-10-25 \\
+COSMOS-CID454 & 1.478 & F140W & 149.8681 & 2.3307 & 2018-02-26 \\
+COSMOS-CID50 & 1.239 & F125W & 150.2080 & 2.0833 & 2017-10-23 \\
+COSMOS-CID543 & 1.301 & F125W & 150.4519 & 2.1448 & 2018-04-30 \\
+COSMOS-CID597 & 1.272 & F125W & 150.5262 & 2.2449 & 2018-11-25 \\
+COSMOS-CID607 & 1.294 & F125W & 150.6097 & 2.3231 & 2017-10-25 \\
 COSMOS-CID70 & 1.667 & F140W & 150.4051 & 2.2701 & 2017-10-27 \\
-CDFS-229 & 1.326 & F125W & 53.0680 & -27.6580 & 2018-04-04 \\ 
-CDFS-724 & 1.337 & F125W & 53.2870 & -27.6940 & 2018-04-05 \\ 
-CDFS-321 & 1.570 & F140W & 53.0486 & -27.6239 & 2018-08-18\\ 
-ECDFS-358 & 1.626 & F140W & 53.0850 & -28.0370 & 2018-02-09\\ 
+COSMOS-LID1273 & 1.617 & F140W & 150.0565 & 1.6275 & 2017-10-31 \\
+COSMOS-LID1538 & 1.527 & F140W & 150.6215 & 2.1588 & 2018-05-01 \\
+COSMOS-LID360 & 1.579 & F140W & 150.1251 & 2.8617 & 2017-10-30 \\
+COSMOS-XID2138 & 1.551 & F140W & 149.7036 & 2.5781 & 2017-11-01 \\
+COSMOS-XID2202 & 1.516 & F140W & 150.6530 & 1.9969 & 2017-11-05 \\
+COSMOS-XID2396 & 1.600 & F140W & 149.4779 & 2.6425 & 2017-11-12\\
 CDFS-1 & 1.630 & F140W & 52.8990 & -27.8600 & 2018-04-03 \\
-SXDS-X717 & 1.276 & F125W & 34.5400 & -5.0334 & 2018-07-02 \\ 
+CDFS-229 & 1.326 & F125W & 53.0680 & -27.6580 & 2018-04-04 \\ 
+CDFS-321 & 1.570 & F140W & 53.0486 & -27.6239 & 2018-08-18\\ 
+CDFS-724 & 1.337 & F125W & 53.2870 & -27.6940 & 2018-04-05 \\ 
+ECDFS-358 & 1.626 & F140W & 53.0850 & -28.0370 & 2018-02-09\\ 
 SXDS-X1136 & 1.325 & F125W & 34.8925 & -5.1498 & 2018-01-29\\ 
 SXDS-X50 & 1.411 & F125W & 34.0267 & -5.0602 & 2018-03-01\\ 
-SXDS-X763 & 1.412 & F125W & 34.5849 & -4.7864 & 2018-07-03 \\ 
+SXDS-X717 & 1.276 & F125W & 34.5400 & -5.0334 & 2018-07-02 \\ 
 SXDS-X735 & 1.447 & F140W & 34.5581 & -4.8781 & 2017-11-14 \\ 
+SXDS-X763 & 1.412 & F125W & 34.5849 & -4.7864 & 2018-07-03 \\ 
 SXDS-X969 & 1.585 & F140W & 34.7594 & -5.4291 & 2018-07-02 \\ 
 \enddata
 \label{tab:objlist}
@@ -768,7 +771,7 @@ SXDS-X969 & 2296 & 43.50 & 8.20 & -0.61 & 1696 & 45.05 & 7.90& -0.08 \\
 Column 1: Object ID.
 Column 2-5: \halpha\ emission line width (FWHM), {\bf \halpha\ luminosity}, inferred \mbh\ and Eddington ratio. %(or continuum line at $\rm L _{\lambda5100}$)
 Column 6-9: \hbeta\ emission line BH properties. 
-The typical uncertainty level for {\bf FWHM is $15\%$, and fo $\log( \rm L _{\lambda})$ is in-between $0.01\sim0.2$~dex}, respectively. The inferred uncertainty level for \mbh\ are assumed as 0.4 dex.
+The typical uncertainty level for {\bf FWHM is $15\%$, and for $\log( \rm L _{\lambda})$ is in-between $0.01\sim0.2$~dex}, respectively. The inferred uncertainty level for \mbh\ are assumed as 0.4 dex.
 }
 \end{deluxetable*}
 
@@ -852,38 +855,38 @@ For this sample, the inflation parameter $\alpha$ calculated by Equation~\ref{eq
 \setlength{\tabcolsep}{20pt}
 \renewcommand{\arraystretch}{1.5}
 \startdata 
-CID1174 & $2.307$ & $42\%\pm12\%$ & $0\farcs{}31\pm0\farcs{}07$ & $1.9\pm1.3$ & $21.48\substack{+0.37\\-0.28}$ & $2.496$ & $11\%\pm1\%$ & $23.21\substack{+0.11\\-0.10}$ & $11.05\substack{+0.15\\-0.11}$ &$10.78\substack{+0.18\\-0.15}$ & $10.36\substack{+0.41\\-0.54}$ \\[3pt]
-CID1281 & $1.322$ & $49\%\pm14\%$ & $0\farcs{}24\pm0\farcs{}09$ & $3.2\pm1.5$ & $22.88\substack{+0.36\\-0.27}$ & $1.378$ & $19\%\pm8\%$ & $24.83\substack{+0.60\\-0.38}$ & $10.41\substack{+0.15\\-0.11}$ &$10.14\substack{+0.18\\-0.15}$ & $9.91\substack{+0.28\\-0.50}$ \\[3pt]
-CID206 & $2.054$ & $35\%\pm24\%$ & $0\farcs{}29\pm0\farcs{}15$ & $3.1\pm2.5$ & $21.82\substack{+1.30\\-0.58}$ & $1.903$ & $8\%\pm2\%$ & $23.67\substack{+0.40\\-0.29}$ & $10.86\substack{+0.52\\-0.23}$ &$10.59\substack{+0.53\\-0.25}$ & $10.27\substack{+0.54\\-0.61}$ \\[3pt]
-CID216 & $1.514$ & $94\%\pm5\%$ & $0\farcs{}25\pm0\farcs{}06$ & $6.2\pm1.2$ & $21.51\substack{+0.05\\-0.05}$ & $1.425$ & $35\%\pm2\%$ & $23.45\substack{+0.05\\-0.05}$ & $11.05\substack{+0.03\\-0.03}$ &$10.78\substack{+0.10\\-0.10}$ & $10.66\substack{+0.15\\-0.25}$ \\[3pt]
-CID237 & $2.349$ & $30\%\pm6\%$ & $0\farcs{}87\pm0\farcs{}17$ & $4.7\pm1.7$ & $21.28\substack{+0.26\\-0.21}$ & $2.354$ & $3\%\pm2\%$ & $23.72\substack{+1.04\\-0.52}$ & $11.18\substack{+0.11\\-0.09}$ &$10.91\substack{+0.14\\-0.13}$ & $10.77\substack{+0.20\\-0.34}$ \\[3pt]
-CID255 & $1.625$ & $19\%\pm5\%$ & $0\farcs{}19\pm0\farcs{}06$ & $4.2\pm1.5$ & $21.61\substack{+0.37\\-0.28}$ & 2.858 & $4\%\pm2\%$ & $22.89\substack{+0.60\\-0.39} $& $11.08\substack{+0.15\\-0.11}$ &$10.81\substack{+0.18\\-0.15}$ & $10.65\substack{+0.23\\-0.36}$ \\[3pt]
-CID3242 & $2.751$ & $46\%\pm13\%$ & $0\farcs{}20\pm0\farcs{}16$ & $6.1\pm1.9$ & $21.16\substack{+0.35\\-0.26}$ & $2.596$ & $5\%\pm1\%$ & $23.60\substack{+0.34\\-0.26}$ & $11.16\substack{+0.14\\-0.11}$ &$10.89\substack{+0.17\\-0.15}$ & $10.76\substack{+0.21\\-0.28}$ \\[3pt]
+CID1174 & $2.307$ & $42\%\pm12\%$ & $0\farcs{}31\pm0\farcs{}07$ & $1.9\pm1.3$ & $21.48\substack{+0.37\\-0.28}$ & $2.496$ & $11\%\pm1\%$ & $23.21\substack{+0.11\\-0.10}$ & $11.01\substack{+0.15\\-0.11}$ &$10.63\substack{+0.18\\-0.15}$ & $10.21\substack{+0.40\\-0.53}$ \\[3pt]
+CID1281 & $1.322$ & $49\%\pm14\%$ & $0\farcs{}24\pm0\farcs{}09$ & $3.2\pm1.5$ & $22.88\substack{+0.36\\-0.27}$ & $1.378$ & $19\%\pm8\%$ & $24.83\substack{+0.60\\-0.38}$ & $10.38\substack{+0.15\\-0.11}$ &$10.00\substack{+0.18\\-0.15}$ & $9.77\substack{+0.28\\-0.51}$ \\[3pt]
+CID206 & $2.054$ & $35\%\pm24\%$ & $0\farcs{}29\pm0\farcs{}15$ & $3.1\pm2.5$ & $21.82\substack{+1.30\\-0.58}$ & $1.903$ & $8\%\pm2\%$ & $23.67\substack{+0.40\\-0.29}$ & $10.83\substack{+0.52\\-0.23}$ &$10.45\substack{+0.53\\-0.25}$ & $10.14\substack{+0.52\\-0.62}$ \\[3pt]
+CID216 & $1.514$ & $94\%\pm5\%$ & $0\farcs{}25\pm0\farcs{}06$ & $6.2\pm1.2$ & $21.51\substack{+0.05\\-0.05}$ & $1.425$ & $35\%\pm2\%$ & $23.45\substack{+0.05\\-0.05}$ & $11.01\substack{+0.03\\-0.03}$ &$10.63\substack{+0.10\\-0.10}$ & $10.52\substack{+0.15\\-0.25}$ \\[3pt]
+CID237 & $2.349$ & $30\%\pm6\%$ & $0\farcs{}87\pm0\farcs{}17$ & $4.7\pm1.7$ & $21.28\substack{+0.26\\-0.21}$ & $2.354$ & $3\%\pm2\%$ & $23.72\substack{+1.04\\-0.52}$ & $11.13\substack{+0.11\\-0.09}$ &$10.75\substack{+0.14\\-0.13}$ & $10.60\substack{+0.20\\-0.34}$ \\[3pt]
+CID255 & $1.625$ & $19\%\pm5\%$ & $0\farcs{}19\pm0\farcs{}06$ & $4.2\pm1.5$ & $21.61\substack{+0.37\\-0.28}$ & 2.858 & $4\%\pm2\%$ & $22.89\substack{+0.60\\-0.39} $& $11.03\substack{+0.15\\-0.11}$ &$10.65\substack{+0.18\\-0.15}$ & $10.48\substack{+0.23\\-0.35}$ \\[3pt]
+CID3242 & $2.751$ & $46\%\pm13\%$ & $0\farcs{}20\pm0\farcs{}16$ & $6.1\pm1.9$ & $21.16\substack{+0.35\\-0.26}$ & $2.596$ & $5\%\pm1\%$ & $23.60\substack{+0.34\\-0.26}$ & $11.12\substack{+0.14\\-0.11}$ &$10.75\substack{+0.17\\-0.15}$ & $10.62\substack{+0.19\\-0.29}$ \\[3pt]
 CID3570 & $1.665$ & $77\%\pm2\%$ & $0\farcs{}70\pm0\farcs{}01$ & $0.7\pm0.1$ & $21.16\substack{+0.02\\-0.02}$ & $1.332$ & $86\%\pm2\%$ & $22.97\substack{+0.01\\-0.01}$ & $10.98\substack{+0.02\\-0.02}$ &$10.71\substack{+0.10\\-0.10}$ & $9.78\substack{+0.68\\-0.13}$ \\[3pt]
-CID452 & $1.684$ & $75\%\pm4\%$ & $0\farcs{}37\pm0\farcs{}02$ & $1.4\pm0.2$ & $21.18\substack{+0.06\\-0.06}$ & $1.452$ & $38\%\pm1\%$ & $22.73\substack{+0.02\\-0.02}$ & $11.13\substack{+0.03\\-0.03}$ &$10.86\substack{+0.10\\-0.10}$ & $10.14\substack{+0.48\\-0.30}$ \\[3pt]
-CID454 & $2.203$ & $36\%\pm3\%$ & $0\farcs{}39\pm0\farcs{}02$ & $0.6\pm0.1$ & $21.20\substack{+0.08\\-0.07}$ & $1.291$ & $9\%\pm1\%$ & $23.35\substack{+0.06\\-0.06}$ & $11.11\substack{+0.04\\-0.04}$ &$10.84\substack{+0.10\\-0.10}$ & $9.91\substack{+0.74\\-0.14}$ \\[3pt]
-CID50 & $5.576$ & $17\%\pm9\%$ & $0\farcs{}16\pm0\farcs{}11$ & $3.2\pm2.2$ & $20.93\substack{+0.86\\-0.48}$ & $4.940$ & $5\%\pm3\%$ & $22.50\substack{+1.15\\-0.55}$ & $11.07\substack{+0.35\\-0.19}$ &$10.80\substack{+0.36\\-0.21}$ & $10.51\substack{+0.4\\-0.57}$ \\[3pt]
-CID543 & $1.902$ & $31\%\pm10\%$ & $0\farcs{}10\pm0\farcs{}00$ & $0.5\pm0.3$ & $21.99\substack{+0.41\\-0.30}$ & $1.435$ & $5\%\pm2\%$ & $23.77\substack{+0.53\\-0.36}$ & $10.70\substack{+0.16\\-0.12}$ &$10.43\substack{+0.19\\-0.15}$ & $9.55\substack{+0.63\\-0.23}$ \\[3pt]
-CID597 & $1.565$ & $42\%\pm17\%$ & $0\farcs{}17\pm0\farcs{}06$ & $1.8\pm0.8$ & $21.87\substack{+0.54\\-0.36}$ & $1.254$ & $12\%\pm1\%$ & $23.56\substack{+0.13\\-0.11}$ & $10.73\substack{+0.22\\-0.15}$ &$10.46\substack{+0.24\\-0.18}$ & $9.97\substack{+0.44\\-0.49}$ \\[3pt]
-CID607 & $1.692$ & $44\%\pm18\%$ & $0\farcs{}21\pm0\farcs{}09$ & $3.4\pm1.1$ & $21.19\substack{+0.58\\-0.37}$ & $2.590$ & $5\%\pm2\%$ & $23.57\substack{+0.51\\-0.35}$ & $11.02\substack{+0.23\\-0.15}$ &$10.75\substack{+0.25\\-0.18}$ & $10.55\substack{+0.29\\-0.40}$ \\[3pt]
-CID70 & $2.041$ & $20\%\pm5\%$ & $0\farcs{}42\pm0\farcs{}10$ & $3.6\pm1.0$ & $21.86\substack{+0.30\\-0.24}$ & $2.361$ & $2\%\pm1\%$ & $24.63\substack{+0.68\\-0.41}$ & $10.98\substack{+0.12\\-0.10}$ &$10.72\substack{+0.16\\-0.14}$ & $10.54\substack{+0.22\\-0.36}$ \\[3pt]
-LID1273 & $1.697$ & $53\%\pm9\%$ & $0\farcs{}30\pm0\farcs{}04$ & $1.2\pm0.5$ & $20.94\substack{+0.21\\-0.18}$ & $2.137$ & $6\%\pm1\%$ & $23.29\substack{+0.15\\-0.13}$ & $11.32\substack{+0.09\\-0.07}$ &$11.05\substack{+0.13\\-0.12}$ & $10.29\substack{+0.58\\-0.28}$ \\[3pt]
-LID1538 & $2.362$ & $44\%\pm8\%$ & $0\farcs{}18\pm0\farcs{}04$ & $2.8\pm0.5$ & $21.25\substack{+0.22\\-0.18}$ & $2.173$ & $8\%\pm1\%$ & $23.09\substack{+0.19\\-0.16}$ & $11.12\substack{+0.09\\-0.08}$ &$10.86\substack{+0.13\\-0.12}$ & $10.66\substack{+0.23\\-0.38}$ \\[3pt]
-LID360 & $3.918$ & $18\%\pm2\%$ & $0\farcs{}63\pm0\farcs{}02$ & $0.8\pm0.4$ & $21.46\substack{+0.14\\-0.12}$ & $4.914$ & $4\%\pm1\%$ & $23.25\substack{+0.17\\-0.15}$ & $11.08\substack{+0.06\\-0.05}$ &$10.81\substack{+0.11\\-0.11}$ & $9.91\substack{+0.67\\-0.16}$ \\[3pt]
-XID2138 & $1.597$ & $39\%\pm6\%$ & $0\farcs{}50\pm0\farcs{}03$ & $1.2\pm0.4$ & $21.87\substack{+0.17\\-0.15}$ & $2.731$ & $5\%\pm1\%$ & $23.90\substack{+0.31\\-0.24}$ & $10.89\substack{+0.07\\-0.06}$ &$10.63\substack{+0.12\\-0.12}$ & $9.85\substack{+0.57\\-0.27}$ \\[3pt]
-XID2202 & $3.23$ & $33\%\pm8\%$ & $0\farcs{}10\pm0\farcs{}00$ & $4.0\pm1.0$ & $21.16\substack{+0.30\\-0.24}$ & $3.852$ & $8\%\pm2\%$ & $22.59\substack{+0.29\\-0.23}$ & $11.15\substack{+0.12\\-0.10}$ &$10.88\substack{+0.16\\-0.14}$ & $10.73\substack{+0.21\\-0.32}$ \\[3pt]
-XID2396 & $3.669$ & $24\%\pm11\%$ & $0\farcs{}58\pm0\farcs{}09$ & $0.8\pm1.4$ & $21.40\substack{+0.65\\-0.40}$ & $5.346$ & $2\%\pm1\%$ & $23.36\substack{+0.24\\-0.20}$ & $11.12\substack{+0.26\\-0.16}$ &$10.85\substack{+0.28\\-0.19}$ & $10.15\substack{+0.59\\-0.41}$ \\[3pt]
-CDFS-1 & $1.358$ & $65\%\pm20\%$ & $0\farcs{}14\pm0\farcs{}07$ & $4.8\pm1.1$ & $22.47\substack{+0.40\\-0.29}$ & ... & ... & ... & $10.71\substack{+0.16\\-0.12}$ &$10.45\substack{+0.19\\-0.15}$ & $10.30\substack{+0.22\\-0.30}$ \\[3pt]
-CDFS-229 & $4.329$ & $18\%\pm2\%$ & $0\farcs{}51\pm0\farcs{}03$ & $0.5\pm0.2$ & $21.57\substack{+0.14\\-0.13}$ & ... & ... & ... & $10.90\substack{+0.06\\-0.05}$ &$10.63\substack{+0.12\\-0.11}$ & $9.70\substack{+0.69\\-0.16}$ \\[3pt]
-CDFS-321 & $3.998$ & $25\%\pm12\%$ & $0\farcs{}38\pm0\farcs{}12$ & $2.3\pm2.0$ & $20.34\substack{+0.70\\-0.42}$ & ... & ... & ... & $11.52\substack{+0.28\\-0.17}$ &$11.25\substack{+0.30\\-0.20}$ & $10.88\substack{+0.42\\-0.58}$ \\[3pt]
-CDFS-724 & $1.355$ & $35\%\pm15\%$ & $0\farcs{}12\pm0\farcs{}03$ & $1.6\pm1.1$ & $23.70\substack{+0.58\\-0.38}$ & ... & ... & ... & $10.06\substack{+0.23\\-0.15}$ &$9.79\substack{+0.25\\-0.18}$ & $9.27\substack{+0.48\\-0.51}$ \\[3pt]
-ECDFS-358 & $2.012$ & $56\%\pm14\%$ & $0\farcs{}36\pm0\farcs{}04$ & $1.7\pm0.5$ & $21.34\substack{+0.30\\-0.24}$ & ... & ... & ... & $11.16\substack{+0.12\\-0.10}$ &$10.89\substack{+0.16\\-0.14}$ & $10.37\substack{+0.44\\-0.46}$ \\[3pt]
-SXDS-X1136 & $1.937$ & $41\%\pm8\%$ & $0\farcs{}10\pm0\farcs{}00$ & $2.0\pm0.5$ & $21.92\substack{+0.23\\-0.19}$ & ... & ... & ... & $10.75\substack{+0.09\\-0.08}$ &$10.49\substack{+0.14\\-0.13}$ & $10.11\substack{+0.35\\-0.50}$ \\[3pt]
-SXDS-X50 & $1.423$ & $41\%\pm9\%$ & $0\farcs{}19\pm0\farcs{}04$ & $1.7\pm0.6$ & $21.99\substack{+0.27\\-0.21}$ & ... & ... & ... & $10.80\substack{+0.11\\-0.09}$ &$10.54\substack{+0.15\\-0.13}$ & $10.02\substack{+0.44\\-0.46}$ \\[3pt]
-SXDS-X717 & $1.426$ & $61\%\pm9\%$ & $0\farcs{}26\pm0\farcs{}07$ & $5.6\pm1.4$ & $21.76\substack{+0.18\\-0.15}$ & ... & ... & ... & $10.77\substack{+0.07\\-0.06}$ &$10.51\substack{+0.12\\-0.12}$ & $10.38\substack{+0.17\\-0.28}$ \\[3pt]
-SXDS-X735 & $2.203$ & $32\%\pm9\%$ & $0\farcs{}22\pm0\farcs{}06$ & $2.0\pm1.0$ & $20.92\substack{+0.33\\-0.25}$ & ... & ... & ... & $11.19\substack{+0.13\\-0.10}$ &$10.92\substack{+0.17\\-0.14}$ & $10.54\substack{+0.38\\-0.55}$ \\[3pt]
-SXDS-X763 & $2.376$ & $6\%\pm4\%$ & $0\farcs{}69\pm0\farcs{}53$ & $2.4\pm0.8$ & $24.13\substack{+1.17\\-0.55}$ & ... & ... & ... & $9.95\substack{+0.47\\-0.22}$ &$9.68\substack{+0.48\\-0.24}$ & $9.36\substack{+0.48\\-0.54}$ \\[3pt]
-SXDS-X969 & $1.613$ & $29\%\pm11\%$ & $0\farcs{}11\pm0\farcs{}02$ & $2.1\pm1.1$ & $21.59\substack{+0.52\\-0.35}$ & ... & ... & ... & $11.03\substack{+0.21\\-0.14}$ &$10.76\substack{+0.23\\-0.17}$ & $10.37\substack{+0.40\\-0.53}$ \\[3pt]
+CID452 & $1.684$ & $75\%\pm4\%$ & $0\farcs{}37\pm0\farcs{}02$ & $1.4\pm0.2$ & $21.18\substack{+0.06\\-0.06}$ & $1.452$ & $38\%\pm1\%$ & $22.73\substack{+0.02\\-0.02}$ & $11.13\substack{+0.03\\-0.03}$ &$10.86\substack{+0.10\\-0.10}$ & $10.13\substack{+0.48\\-0.29}$ \\[3pt]
+CID454 & $2.203$ & $36\%\pm3\%$ & $0\farcs{}39\pm0\farcs{}02$ & $0.6\pm0.1$ & $21.20\substack{+0.08\\-0.07}$ & $1.291$ & $9\%\pm1\%$ & $23.35\substack{+0.06\\-0.06}$ & $11.07\substack{+0.04\\-0.04}$ &$10.70\substack{+0.10\\-0.10}$ & $9.77\substack{+0.74\\-0.15}$ \\[3pt]
+CID50 & $5.576$ & $17\%\pm9\%$ & $0\farcs{}16\pm0\farcs{}11$ & $3.2\pm2.2$ & $20.93\substack{+0.86\\-0.48}$ & $4.940$ & $5\%\pm3\%$ & $22.50\substack{+1.15\\-0.55}$ & $11.07\substack{+0.35\\-0.19}$ &$10.80\substack{+0.36\\-0.21}$ & $10.51\substack{+0.41\\-0.56}$ \\[3pt]
+CID543 & $1.902$ & $31\%\pm10\%$ & $0\farcs{}10\pm0\farcs{}00$ & $0.5\pm0.3$ & $21.99\substack{+0.41\\-0.30}$ & $1.435$ & $5\%\pm2\%$ & $23.77\substack{+0.53\\-0.36}$ & $10.70\substack{+0.16\\-0.12}$ &$10.43\substack{+0.19\\-0.15}$ & $9.55\substack{+0.64\\-0.24}$ \\[3pt]
+CID597 & $1.565$ & $42\%\pm17\%$ & $0\farcs{}17\pm0\farcs{}06$ & $1.8\pm0.8$ & $21.87\substack{+0.54\\-0.36}$ & $1.254$ & $12\%\pm1\%$ & $23.56\substack{+0.13\\-0.11}$ & $10.73\substack{+0.22\\-0.15}$ &$10.46\substack{+0.24\\-0.18}$ & $9.98\substack{+0.44\\-0.49}$ \\[3pt]
+CID607 & $1.692$ & $44\%\pm18\%$ & $0\farcs{}21\pm0\farcs{}09$ & $3.4\pm1.1$ & $21.19\substack{+0.58\\-0.37}$ & $2.590$ & $5\%\pm2\%$ & $23.57\substack{+0.51\\-0.35}$ & $11.02\substack{+0.23\\-0.15}$ &$10.75\substack{+0.25\\-0.18}$ & $10.57\substack{+0.29\\-0.41}$ \\[3pt]
+CID70 & $2.041$ & $20\%\pm5\%$ & $0\farcs{}42\pm0\farcs{}10$ & $3.6\pm1.0$ & $21.86\substack{+0.30\\-0.24}$ & $2.361$ & $2\%\pm1\%$ & $24.63\substack{+0.68\\-0.41}$ & $10.93\substack{+0.12\\-0.10}$ &$10.55\substack{+0.16\\-0.14}$ & $10.38\substack{+0.22\\-0.34}$ \\[3pt]
+LID1273 & $1.697$ & $53\%\pm9\%$ & $0\farcs{}30\pm0\farcs{}04$ & $1.2\pm0.5$ & $20.94\substack{+0.21\\-0.18}$ & $2.137$ & $6\%\pm1\%$ & $23.29\substack{+0.15\\-0.13}$ & $11.27\substack{+0.09\\-0.07}$ &$10.89\substack{+0.13\\-0.12}$ & $10.13\substack{+0.58\\-0.28}$ \\[3pt]
+LID1538 & $2.362$ & $44\%\pm8\%$ & $0\farcs{}18\pm0\farcs{}04$ & $2.8\pm0.5$ & $21.25\substack{+0.22\\-0.18}$ & $2.173$ & $8\%\pm1\%$ & $23.09\substack{+0.19\\-0.16}$ & $11.09\substack{+0.09\\-0.08}$ &$10.71\substack{+0.13\\-0.12}$ & $10.52\substack{+0.22\\-0.37}$ \\[3pt]
+LID360 & $3.918$ & $18\%\pm2\%$ & $0\farcs{}63\pm0\farcs{}02$ & $0.8\pm0.4$ & $21.46\substack{+0.14\\-0.12}$ & $4.914$ & $4\%\pm1\%$ & $23.25\substack{+0.17\\-0.15}$ & $11.04\substack{+0.06\\-0.05}$ &$10.66\substack{+0.11\\-0.11}$ & $9.76\substack{+0.65\\-0.16}$ \\[3pt]
+XID2138 & $1.597$ & $39\%\pm6\%$ & $0\farcs{}50\pm0\farcs{}03$ & $1.2\pm0.4$ & $21.87\substack{+0.17\\-0.15}$ & $2.731$ & $5\%\pm1\%$ & $23.90\substack{+0.31\\-0.24}$ & $10.85\substack{+0.07\\-0.06}$ &$10.48\substack{+0.12\\-0.12}$ & $9.71\substack{+0.57\\-0.28}$ \\[3pt]
+XID2202 & $3.23$ & $33\%\pm8\%$ & $0\farcs{}10\pm0\farcs{}00$ & $4.0\pm1.0$ & $21.16\substack{+0.30\\-0.24}$ & $3.852$ & $8\%\pm2\%$ & $22.59\substack{+0.29\\-0.23}$ & $11.11\substack{+0.12\\-0.10}$ &$10.74\substack{+0.16\\-0.14}$ & $10.58\substack{+0.21\\-0.33}$ \\[3pt]
+XID2396 & $3.669$ & $24\%\pm11\%$ & $0\farcs{}58\pm0\farcs{}09$ & $0.8\pm1.4$ & $21.40\substack{+0.65\\-0.40}$ & $5.346$ & $2\%\pm1\%$ & $23.36\substack{+0.24\\-0.20}$ & $11.07\substack{+0.26\\-0.16}$ &$10.69\substack{+0.28\\-0.19}$ & $10.00\substack{+0.58\\-0.40}$ \\[3pt]
+CDFS-1 & $1.358$ & $65\%\pm20\%$ & $0\farcs{}14\pm0\farcs{}07$ & $4.8\pm1.1$ & $22.47\substack{+0.40\\-0.29}$ & ... & ... & ... & $10.66\substack{+0.16\\-0.12}$ &$10.29\substack{+0.19\\-0.15}$ & $10.14\substack{+0.22\\-0.31}$ \\[3pt]
+CDFS-229 & $4.329$ & $18\%\pm2\%$ & $0\farcs{}51\pm0\farcs{}03$ & $0.5\pm0.2$ & $21.57\substack{+0.14\\-0.13}$ & ... & ... & ... & $10.90\substack{+0.06\\-0.05}$ &$10.63\substack{+0.12\\-0.11}$ & $9.71\substack{+0.70\\-0.16}$ \\[3pt]
+CDFS-321 & $3.998$ & $25\%\pm12\%$ & $0\farcs{}38\pm0\farcs{}12$ & $2.3\pm2.0$ & $20.34\substack{+0.70\\-0.42}$ & ... & ... & ... & $11.48\substack{+0.28\\-0.17}$ &$11.10\substack{+0.30\\-0.20}$ & $10.72\substack{+0.42\\-0.58}$ \\[3pt]
+CDFS-724 & $1.355$ & $35\%\pm15\%$ & $0\farcs{}12\pm0\farcs{}03$ & $1.6\pm1.1$ & $23.70\substack{+0.58\\-0.38}$ & ... & ... & ... & $10.06\substack{+0.23\\-0.15}$ &$9.79\substack{+0.25\\-0.18}$ & $9.25\substack{+0.48\\-0.48}$ \\[3pt]
+ECDFS-358 & $2.012$ & $56\%\pm14\%$ & $0\farcs{}36\pm0\farcs{}04$ & $1.7\pm0.5$ & $21.34\substack{+0.30\\-0.24}$ & ... & ... & ... & $11.11\substack{+0.12\\-0.10}$ &$10.73\substack{+0.16\\-0.14}$ & $10.22\substack{+0.44\\-0.47}$ \\[3pt]
+SXDS-X1136 & $1.937$ & $41\%\pm8\%$ & $0\farcs{}10\pm0\farcs{}00$ & $2.0\pm0.5$ & $21.92\substack{+0.23\\-0.19}$ & ... & ... & ... & $10.75\substack{+0.09\\-0.08}$ &$10.49\substack{+0.14\\-0.13}$ & $10.10\substack{+0.36\\-0.48}$ \\[3pt]
+SXDS-X50 & $1.423$ & $41\%\pm9\%$ & $0\farcs{}19\pm0\farcs{}04$ & $1.7\pm0.6$ & $21.99\substack{+0.27\\-0.21}$ & ... & ... & ... & $10.80\substack{+0.11\\-0.09}$ &$10.54\substack{+0.15\\-0.13}$ & $10.01\substack{+0.45\\-0.46}$ \\[3pt]
+SXDS-X717 & $1.426$ & $61\%\pm9\%$ & $0\farcs{}26\pm0\farcs{}07$ & $5.6\pm1.4$ & $21.76\substack{+0.18\\-0.15}$ & ... & ... & ... & $10.77\substack{+0.07\\-0.06}$ &$10.51\substack{+0.12\\-0.12}$ & $10.38\substack{+0.18\\-0.29}$ \\[3pt]
+SXDS-X735 & $2.203$ & $32\%\pm9\%$ & $0\farcs{}22\pm0\farcs{}06$ & $2.0\pm1.0$ & $20.92\substack{+0.33\\-0.25}$ & ... & ... & ... & $11.16\substack{+0.13\\-0.10}$ &$10.78\substack{+0.17\\-0.14}$ & $10.42\substack{+0.36\\-0.56}$ \\[3pt]
+SXDS-X763 & $2.376$ & $6\%\pm4\%$ & $0\farcs{}69\pm0\farcs{}53$ & $2.4\pm0.8$ & $24.13\substack{+1.17\\-0.55}$ & ... & ... & ... & $9.95\substack{+0.47\\-0.22}$ &$9.68\substack{+0.48\\-0.24}$ & $9.35\substack{+0.48\\-0.56}$ \\[3pt]
+SXDS-X969 & $1.613$ & $29\%\pm11\%$ & $0\farcs{}11\pm0\farcs{}02$ & $2.1\pm1.1$ & $21.59\substack{+0.52\\-0.35}$ & ... & ... & ... & $10.99\substack{+0.21\\-0.14}$ &$10.61\substack{+0.23\\-0.17}$ & $10.21\substack{+0.40\\-0.54}$ \\[3pt]
 \enddata
 \label{tab:result_sersic}
 \tablecomments{
@@ -907,10 +910,10 @@ Column~12: Bulge stellar mass, using \sersic\ index as B/T proxy, see Section~\r
      Sample & Selection effects &  \mbh-\smass & \mbh-\lhost \\
      &&&\\
      \hline\hline
-32 AGNs + intermediate & No &  0.58$\pm$0.20 & 0.61$\pm$0.18 \\
-32 AGNs + intermediate& Yes & 0.80$\pm$0.40 & 0.50 $\pm$ 0.50 \\
-32 AGNs & No & 0.78$\pm$0.26  & 0.99$\pm$0.23\\
-32 AGNs& Yes & 1.20$\pm$0.80 & 1.60$\pm$0.80 \\
+32 AGNs + intermediate & No &  0.72$\pm$0.20 & 0.64$\pm$0.17 \\
+32 AGNs + intermediate& \ding{TBD: Yes} & 0.80$\pm$0.40 & 0.50 $\pm$ 0.50 \\
+32 AGNs & No & 1.01$\pm$0.26 & 1.07$\pm$0.23\\
+32 AGNs& \ding{TBD: Yes} & 1.20$\pm$0.80 & 1.60$\pm$0.80 \\
      \hline
      \end{tabular}}
     \tablecomments{
@@ -928,10 +931,10 @@ The results of selection effects used the uniform (flat) prior of \sint.
      Sample combination & $\gamma$ \\
      &\\
      \hline\hline
-32 AGNs & 0.78$\pm$0.26\\    
-30 AGNs (excluded outliers) & 0.65$\pm$0.27\\    
-32 AGNs + intermediate &  0.58$\pm$0.20\\
-32 AGNs bulge only & 1.86$\pm$0.30\\
+32 AGNs & 1.01$\pm$0.26\\    
+30 AGNs (excluded outliers) & 0.89$\pm$0.27\\    
+32 AGNs + intermediate &  0.72$\pm$0.20\\
+32 AGNs bulge only & 2.09$\pm$0.30\\
      \hline
      \end{tabular}}
 \tablecomments{These values are directly inference for the observation, which haven't yet taken the selection effect into account.}

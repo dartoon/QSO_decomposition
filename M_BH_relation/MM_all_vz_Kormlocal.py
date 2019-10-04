@@ -24,7 +24,7 @@ sys.path.insert(0,'../py_tools')
 #==============================================================================
 # The seleting for dm and host_total and dmag are in this local
 #==============================================================================
-from local_MM_vz import *
+from local_MM_vz_Kormlocal import *
 #==============================================================================
 #input Park's data 
 #==============================================================================
@@ -34,15 +34,19 @@ from local_MM_vz import *
 #######in AB system, V band#######
 f0 ='data/SS13_MM.txt'
 ss = np.loadtxt(f0)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
+ss[:,2] = ss[:,2] + 0.3  #!!!
 
 f1 ='data/B11_MM.txt'
 b11 = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
+b11[:,2] = b11[:,2] + 0.3  #!!!
 
 f2 = 'data/Cisternas_data.txt'
 cis11 = np.loadtxt(f2)  #0 redshift;
+cis11[:,1] = cis11[:,1] + 0.3  #!!!
 
-f3 = 'data/high_edd_agn.txt'
-Knud = np.loadtxt(f3)[:,2:]  # 0 redshift; 1 L_bol; 2 M_BH; 3 M_acc; 4 M_*
+#f3 = 'data/high_edd_agn.txt'
+#Knud = np.loadtxt(f3)[:,2:]  # 0 redshift; 1 L_bol; 2 M_BH; 3 M_acc; 4 M_*
+#Knud[:,2] =  Knud[:,2]+ 0.3  #!!!
 
 
 #%%
@@ -64,7 +68,7 @@ MB_ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'ECDFS-321', 'CID
 zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
-MBs = load_MBH(ID,MB_ID,if_reportHb=0)
+MBs = load_MBH(ID,MB_ID,if_reportHb=0)  + 0.3  #!!!
 Mstar_err = load_err(prop = 'Mstar', ID=ID)
 yerr_highz = [((m_ml*Mstar_err[:,0])**2+0.4**2)**0.5, ((m_ml*Mstar_err[:,1])**2+0.4**2)**0.5]
 
@@ -91,11 +95,11 @@ if style ==0:
 #    plt.arrow(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]), 0,  -0.0013, zorder=900, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
 #    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]-0.21),facecolors='none',
 #                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)   
-    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(hloc[:,3]-hloc[:,1]),10**(bloc[:,3]-bloc[:,1])])),
+    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(kocb[:,3]-kocb[:,1]),10**(kor_e[:,3]-kor_e[:,1])])),
                 facecolors='none', s=280,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='blue', linewidth='6', alpha=0.5)       
-    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(hloc[:,3]-hloc[:,1]+0.21),10**(bloc[:,3]-bloc[:,1]+0.21)])),
+    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(kocb[:,3]-kocb[:,1]+0.21),10**(kor_e[:,3]-kor_e[:,1]+0.21)])),
                 facecolors='none', s=280,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='blue', linewidth='6', alpha=0.5)      
-    plt.arrow(np.log10(1+zs[9]),np.median(np.concatenate([10**(hloc[:,3]-hloc[:,1]),10**(bloc[:,3]-bloc[:,1])])), 0, +0.0009,
+    plt.arrow(np.log10(1+zs[9]),np.median(np.concatenate([10**(kocb[:,3]-kocb[:,1]),10**(kor_e[:,3]-kor_e[:,1])])), 0, +0.0009,
               zorder=800, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
     
 #    
@@ -240,7 +244,7 @@ plt.tick_params(labelsize=35)
 
 SS13 = mlines.Line2D([], [], color='darkseagreen', ls='', marker='^', markersize=8)
 
-plt.legend([Bkc, Hkc, SS13, new_sample],[
+plt.legend([Kor_ell, Kocb, SS13, new_sample],[
 'Local by Bennert+11',\
 "Local by H&R",
 "Intermediate redshift AGNs",

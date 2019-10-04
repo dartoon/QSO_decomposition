@@ -256,5 +256,5 @@ plt.legend([Pkc, park, new_sample],[
 "Intermediate redshift AGNs",
 "This work"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':30},ncol=2,handletextpad=0)
-plt.savefig("MBH-L-vz.pdf")
+#plt.savefig("MBH-L-vz.pdf")
 plt.show()
