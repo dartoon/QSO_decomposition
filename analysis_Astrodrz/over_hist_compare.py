@@ -125,6 +125,14 @@ ratio_results_1 = np.asarray(load_result(ID, count_rank=8)[0])
 ratio_results_2 = np.asarray(load_result(ID, count_rank=10)[0])
 #ratio_results_3 = np.asarray(load_result(ID, count_rank=8, sort_PSF_by = 'fit_ps_each')[0])
 
+reff_results_0 = np.asarray(load_result(ID, count_rank=5)[1])
+reff_results_1 = np.asarray(load_result(ID, count_rank=8)[1])
+reff_results_2 = np.asarray(load_result(ID, count_rank=10)[1])
+#ratio_results_3 = np.asarray(load_result(ID, count_rank=8, sort_PSF_by = 'fit_ps_each')[0])
+
+
+
+#%%
 
 import matplotlib as matt
 matt.rcParams['font.family'] = 'STIXGeneral'
@@ -137,9 +145,19 @@ plt.xlabel('Host flux ratio (%)',fontsize=25)
 plt.ylabel('#', fontsize=25)
 plt.tick_params(labelsize=25)
 plt.legend(fontsize=25)
-#plt.savefig('hist_compare.pdf')
+plt.savefig('hist_f_ratio_compare.pdf')
 plt.show()
 
 
+#%%
+plt.figure(figsize=(10,6))
+common_params = dict(label=('Rank 5 PSFs','Rank 8 PSFs','Rank 10 PSFs'))
+plt.hist((reff_results_0[:,0], reff_results_1[:,0], reff_results_2[:,0]), **common_params)
+plt.xlabel('effective radius (arcsec)',fontsize=25)
+plt.ylabel('#', fontsize=25)
+plt.tick_params(labelsize=25)
+plt.legend(fontsize=25)
+plt.savefig('hist_Reff_compare.pdf')
+plt.show()
 
 #print ratio_results

@@ -127,67 +127,19 @@ if style ==0:
     plt.scatter(np.log10(1+zs), 10**(MBs-Mstar),c='tomato',
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
 
-#    #Plot the median circle.
-#    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]),facecolors='none',
-#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-#    plt.arrow(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]), 0,  -0.0013, zorder=900, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
-#    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]-0.21),facecolors='none',
-#                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)    
-
+    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(hloc[:,3]-hloc[:,1]),10**(bloc[:,3]-bloc[:,1])])),
+                facecolors='none', s=280,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='blue', linewidth='6', alpha=0.5)       
+    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(hloc[:,3]-hloc[:,1]+0.21),10**(bloc[:,3]-bloc[:,1]+0.21)])),
+                facecolors='none', s=280,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='blue', linewidth='6', alpha=0.5)      
+    plt.arrow(np.log10(1+zs[9]),np.median(np.concatenate([10**(hloc[:,3]-hloc[:,1]),10**(bloc[:,3]-bloc[:,1])])), 0, +0.0009,
+              zorder=800, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
+    
+#    
 if style ==1:  
     plt.errorbar(np.log10(1+ss[:,0]),ss[:,2]-(m_ml* np.log10(10**(ss[:,1])*ss[:,3]) +b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)
     plt.errorbar(np.log10(1+b11[:,0]),b11[:,2]-(m_ml*b11[:,3]+b_ml),yerr=(0.4**2+0.2**2)**0.5,fmt='^',color='darkseagreen',markersize=9)  
     samples = gamma
-#    import emcee
-#    def lnlike(theta, x, y, yerr):
-#        b, sint= theta
-#        model = b*x
-#        sigma2 = (yerr**2 + sint**2)
-#        if sint>=0 :
-#          return -0.5*(np.sum((y-model)**2/sigma2)+np.sum(np.log(2*np.pi*sigma2)))
-#        else:
-#          return -np.inf
-#    def lnprior(theta):
-#        b, sint	 = theta
-#        if -10 < b < 10.0 and 0 < sint < 10:
-#            return 0.0
-#        return -np.inf
-#    def lnprob(theta, x, y, yerr):
-#        lp = lnprior(theta)
-#        if not np.isfinite(lp):
-#            return -np.inf
-#        return lp + lnlike(theta, x, y, yerr)
-#    import scipy.optimize as op
-#    import emcee
-#    def find_n(array,value):           #get the corresponding b for a given m 
-#        idx= (np.abs(array-value)).argmin()
-#        return array[idx]    
-#    z_cosmos, y_cosmos = zs, MBs-(m_ml*Mstar+b_ml)
-#    z=z_cosmos
-#    y=y_cosmos
-#    yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
-#    yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
-#    yerr = yerr_hz    
-#    yerr = np.sqrt(yerr**2 + sint_ml**2)
-#    #### fit with emcee ###############
-#    x=np.log10(1+z)
-#    y=y
-#    nll = lambda *args: -lnlike(*args)
-#    result = op.minimize(nll, [1.8, 0.3], args=(x, y, yerr))
-#    b_ml_offset,_= result["x"]
-#    xp = np.array([5, 13])
-#    ndim, nwalkers = 2, 100
-#    pos = [result["x"] + 1e-4*np.random.randn(ndim) for i in range(nwalkers)]
-#    sampler = emcee.EnsembleSampler(nwalkers, ndim, lnprob, args=(x, y, yerr))
-#    sampler.run_mcmc(pos, 500)
-#    samples = sampler.chain[:, 50:, :].reshape((-1, ndim))
-##    b_ml_offset=np.percentile(samples, 50,axis=0)[0]
-#    #print "lnlike=",lnlike(theta=[b_ml_offset, sint_mid],x=x, y=y, yerr=yerr)
-#    xl = np.linspace(0, 5, 100)
-#    b=np.percentile(samples,50,axis=0)[0]
-#    #print samples[:,1][samples[:,0]==find_n(samples[:,0],m)]
-#    plt.plot(xl, xl*0+xl*b_ml_offset, color="red", linewidth=4.0,zorder=0)
-    
+
     yerr_highz = [(Mstar_err[:,0]**2+0.4**2)**0.5, (Mstar_err[:,1]**2+0.4**2)**0.5]
     for i in range(100):
         posi=np.random.uniform(16,84)
@@ -199,7 +151,15 @@ if style ==1:
                 s=580,marker="*",zorder=300, vmin=0.3, vmax=5, edgecolors='k')
     plt.errorbar(np.log10(1+zs),MBs-(m_ml*Mstar+b_ml),
                  yerr= yerr_highz,
-                 color='tomato',ecolor='orange', fmt='.',markersize=1)  
+                 color='tomato',ecolor='orange', fmt='.',markersize=1) 
+    
+    
+    plt.scatter(np.log10(1+zs[9]),0,facecolors='none',
+                s=280,marker="o",zorder=900, edgecolors='blue', linewidth='6', alpha=0.5)    
+    plt.scatter(np.log10(1+zs[9]),0+0.21,facecolors='none',
+                s=280,marker="o",zorder=900, edgecolors='blue', linewidth='6', alpha=0.5)    
+    plt.arrow(np.log10(1+zs[9]),0, 0, +0.19, zorder=800, head_length=0.05,head_width=0.005,fc='k',ec='k')
+       
 #plt.text(0.15, -1.75, "$\Delta$log$M_{BH}$=$(%s\pm%s)$log$(1+z)$"%(1.86,0.30),color='blue',fontsize=25)
     value,sig=np.percentile(gamma,50,axis=0),round((np.percentile(gamma,84,axis=0)-np.percentile(gamma,16,axis=0))/2,2)
 #    print value, sig

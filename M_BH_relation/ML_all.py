@@ -42,7 +42,7 @@ pk[:,2]=4.83-pk[:,2]/0.4  # tansfer from L to Magnitude
 pk[:,2]=pk[:,2]-0.46  # transfer from V to R; 0.46 is the mean value of the data from Taka
 pk[:,2]=pk[:,2]+dm*pass_dmag(pk[:,0])  #evolution of stellar population makes the mag fainter.
 pk[:,2]=0.4*(4.61-pk[:,2])
-plt.scatter(pk[:,2],pk[:,1],c='darkseagreen',marker="^",s=80,zorder=100, alpha = 0.7, edgecolors='white')
+plt.scatter(pk[:,2],pk[:,1],c='darkseagreen',marker="^",s=180,zorder=100, alpha = 0.7, edgecolors='white')
 tx, ty = 9.05,9.1
 plt.text(tx, ty, "intermediate\n  sample\nuncertainties",  fontsize=20)
 plt.errorbar(tx+0.2,ty-0.05, xerr=0.2, yerr=0.4, color='darkseagreen',ecolor='black', fmt='^',zorder=-500,markersize=10)
@@ -172,6 +172,6 @@ plt.legend([Pkc, park, new_sample],[
 #    ],scatterpoints=1,numpoints=1,loc=2,prop={'size':24},ncol=2)
 if dm ==0:
     plt.savefig("MBH-L_obs.pdf")
-#elif dm ==1:
-#     plt.savefig("MBH-L_ev.pdf")
+elif dm ==1:
+     plt.savefig("MBH-L_ev.pdf")
 plt.show()

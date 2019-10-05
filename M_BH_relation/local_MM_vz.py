@@ -54,10 +54,11 @@ def solve_z(lum_dis, om=0.3, h0=70):
     func = lambda z : (lum_dis-dl(z,om=om, h0=h0))
     zs = fsolve(func,2)
     return zs[0]
+#Mpc from H+R04. http://adsabs.harvard.edu/abs/2004ApJ...604L..89H
 Mpc = np.array([16.1, 15.0, 10.6, 18.4, 31.6, 106.0, 58.7, 15.5, 24.1, 29.2, 0.76, 0.81, 11.4, 22.9, 9.7, 20.9, 11.2, 11.6, 23.0, 26.2, 15.3, 15.7, 15.0, 9.8, 16.8, 11.7, 25.9, 23.0, 13.2, 0.1])
 solve_z = np.vectorize(solve_z)  #Calculate the redshift using the distance
 zs =  solve_z(Mpc)
-hloc[:,-1] = zs
+hloc[:,0] = zs
 # +  np.log10(Haring04[:,4] * 10 ** Haring04[:,5]))/2 #Sigma LgMBH
 #plt.errorbar(hloc[:,1],hloc[:,3], xerr=hloc[:,2] ,yerr=hloc[:,4],fmt='.',color='black',markersize=15)
 #plt.plot(hloc[:,1],hloc[:,3], '.',color='black',markersize=15)

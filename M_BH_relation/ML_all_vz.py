@@ -147,10 +147,10 @@ yerr_pk=z_pk*0+(0.4**2+0.2**2)**0.5   # the error for the fitting
 yerr_hz = (yerr_highz[0]+ yerr_highz[1])/2
 yerr = np.concatenate((yerr_pk, yerr_hz),axis=0)
 
-##if consider 32 AGN only:
-#z=z_cosmos
-#y=y_cosmos
-#yerr = yerr_hz
+#if consider 32 AGN only:
+z=z_cosmos
+y=y_cosmos
+yerr = yerr_hz
 yerr = np.sqrt(yerr**2 + sint_ml**2)
 
 #### fit with emcee ###############
@@ -256,5 +256,5 @@ plt.legend([Pkc, park, new_sample],[
 "Intermediate redshift AGNs",
 "This work"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':30},ncol=2,handletextpad=0)
-#plt.savefig("MBH-L-vz.pdf")
+plt.savefig("MBH-L-vz.pdf")
 plt.show()
