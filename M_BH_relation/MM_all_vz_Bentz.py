@@ -24,7 +24,7 @@ sys.path.insert(0,'../py_tools')
 #==============================================================================
 # The seleting for dm and host_total and dmag are in this local
 #==============================================================================
-from local_MM_vz_Kormlocal import *
+from local_MM_vz_Bentz import *
 #==============================================================================
 #input Park's data 
 #==============================================================================
@@ -95,12 +95,6 @@ if style ==0:
 #    plt.arrow(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]), 0,  -0.0013, zorder=900, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
 #    plt.scatter(np.log10(1+zs[9]),10**( MBs[9]- Mstar[9]-0.21),facecolors='none',
 #                s=180,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='green', linewidth='4',)   
-    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(kocb[:,3]-kocb[:,1]),10**(kor_e[:,3]-kor_e[:,1])])),
-                facecolors='none', s=280,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='blue', linewidth='6', alpha=0.5)       
-    plt.scatter(np.log10(1+zs[9]), np.median(np.concatenate([10**(kocb[:,3]-kocb[:,1]+0.21),10**(kor_e[:,3]-kor_e[:,1]+0.21)])),
-                facecolors='none', s=280,marker="o",zorder=900, vmin=0.3, vmax=5, edgecolors='blue', linewidth='6', alpha=0.5)      
-    plt.arrow(np.log10(1+zs[9]),np.median(np.concatenate([10**(kocb[:,3]-kocb[:,1]),10**(kor_e[:,3]-kor_e[:,1])])), 0, +0.0009,
-              zorder=800, head_length= 0.001374/8,head_width= 0.005,fc='k',ec='k')
     
 #    
 #    
@@ -244,9 +238,8 @@ plt.tick_params(labelsize=35)
 
 SS13 = mlines.Line2D([], [], color='darkseagreen', ls='', marker='^', markersize=8)
 
-plt.legend([Kor_ell, Kocb, SS13, new_sample],[
-'Local elliptical by K13',\
-"Local classic bulge by K13",
+plt.legend([ben, SS13, new_sample],[
+'Local bulge by Ben',
 "Intermediate redshift AGNs",
 "This work"
 ],scatterpoints=1,numpoints=1,loc=2,prop={'size':28},ncol=2,handletextpad=0)
