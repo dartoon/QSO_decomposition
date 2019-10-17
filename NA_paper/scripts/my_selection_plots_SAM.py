@@ -353,46 +353,46 @@ plt.show()
 
 print "sim scatter:", np.std(r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1]))
 print "obs scatter:", np.std(M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]))
-print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1])),
+print "KS:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1])),
                                     (M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]))).pvalue
 
 
 
-##%%Plot the 1-D hist for Mstar, R_Mag and MBH and do the K-S test in 1D.
-#
-#plt.figure(figsize=(8,6))
-#plt.hist(bhmass_selected ,histtype=u'step',normed=True,
-#         label=('SAM BH sample'), linewidth = 2, color='orange')
-#plt.hist(bh_mass_obs , histtype=u'step',normed=True,
-#         label=('HST BH sample'), linewidth = 2, color='green')
-#plt.tick_params(labelsize=20)
-#plt.legend(prop={'size':20})
-#plt.yticks([])
-#plt.show()
-#print stats.ks_2samp(bhmass_selected, bh_mass_obs).pvalue
-#
-#plt.figure(figsize=(8,6))
-#plt.hist(mstar_selected ,histtype=u'step',normed=True,
-#         label=('SAM M* sample'), linewidth = 2, color='orange')
-#plt.hist(stellar_mass_obs , histtype=u'step',normed=True,
-#         label=('HST M* sample'), linewidth = 2, color='green')
-#plt.tick_params(labelsize=20)
-#plt.legend(prop={'size':20})
-#plt.yticks([])
-#plt.show()
-#print stats.ks_2samp(mstar_selected, stellar_mass_obs).pvalue
-#
-#plt.figure(figsize=(8,6))
-#plt.hist(r_band_magnitudes_selected ,histtype=u'step',normed=True,
-#         label=('SAM MagR sample'), linewidth = 2, color='orange')
-#plt.hist(M_r_obs , histtype=u'step',normed=True,
-#         label=('HST MagR sample'), linewidth = 2, color='green')
-#plt.tick_params(labelsize=20)
-#plt.legend(prop={'size':20})
-#plt.yticks([])
-#plt.show()
-#print stats.ks_2samp(r_band_magnitudes_selected, M_r_obs).pvalue
-#
+#%%Plot the 1-D hist for Mstar, R_Mag and MBH and do the K-S test in 1D.
+
+plt.figure(figsize=(8,6))
+plt.hist(bhmass_selected ,histtype=u'step',normed=True,
+         label=('SAM BH sample'), linewidth = 2, color='orange')
+plt.hist(bh_mass_obs , histtype=u'step',normed=True,
+         label=('HST BH sample'), linewidth = 2, color='green')
+plt.tick_params(labelsize=20)
+plt.legend(prop={'size':20})
+plt.yticks([])
+plt.show()
+print stats.ks_2samp(bhmass_selected, bh_mass_obs).pvalue
+
+plt.figure(figsize=(8,6))
+plt.hist(mstar_selected ,histtype=u'step',normed=True,
+         label=('SAM M* sample'), linewidth = 2, color='orange')
+plt.hist(stellar_mass_obs , histtype=u'step',normed=True,
+         label=('HST M* sample'), linewidth = 2, color='green')
+plt.tick_params(labelsize=20)
+plt.legend(prop={'size':20})
+plt.yticks([])
+plt.show()
+print stats.ks_2samp(mstar_selected, stellar_mass_obs).pvalue
+
+plt.figure(figsize=(8,6))
+plt.hist(r_band_magnitudes_selected ,histtype=u'step',normed=True,
+         label=('SAM MagR sample'), linewidth = 2, color='orange')
+plt.hist(M_r_obs , histtype=u'step',normed=True,
+         label=('HST MagR sample'), linewidth = 2, color='green')
+plt.tick_params(labelsize=20)
+plt.legend(prop={'size':20})
+plt.yticks([])
+plt.show()
+print stats.ks_2samp(r_band_magnitudes_selected, M_r_obs).pvalue
+
 
 ##%% Estiamte the in
 #import linmix
@@ -409,9 +409,9 @@ print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_se
 #plt.scatter(x, y)
 #plt.plot(xs, ys, color='green',linewidth=3)
 #print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
-
-#%%To plot data and plot together with MBII
-
+#
+##%%To plot data and plot together with MBII
+#
 #plt.figure(figsize=(8,7))
 #plt.hist(M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]), histtype=u'step',normed=True,
 #         label=('Observed sample'), linewidth = 2, color='orange')

@@ -214,6 +214,7 @@ obj.legend(loc='upper left',fontsize=21,numpoints=1)
 #plt.savefig("MBII_MM.pdf")
 plt.show()
 
+
 #%%
 '''
 import linmix
@@ -341,7 +342,7 @@ obj.tick_params(labelsize=30)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('R band magnitude',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-#plt.savefig("MBII_ML.pdf")
+plt.savefig("MBII_ML.pdf")
 plt.show()
 
 #%%Plot the 1-D scatter for ML.
@@ -360,7 +361,7 @@ plt.show()
 
 print "obs scatter:", np.std(r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1]))
 print "sim scatter:", np.std(M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]))
-print "KS scatter:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1])),
+print "KS:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1])),
                                     (M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]))).pvalue
 
 
