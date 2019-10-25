@@ -166,7 +166,7 @@ ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174
 'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
 'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
 'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281']
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597','CID1281', 'CID255']
 zs = np.asarray(load_zs(ID))
 mags = np.array(load_mag(ID, folder = '../')[0])
 Reffs = np.array(load_re(ID, folder = '../'))[:,0]
@@ -316,3 +316,49 @@ elif relation ==4:
 
 #cl.ax.tick_params(labelsize=15)   #the labe size
 plt.show()
+
+#%%KS test for their relations.
+Reff_highz = np.log10(ID_Reff_kpc)
+
+Mstar_blue, Reff_blue = results[:,3][z_cut* blue_galaxy],np.log10(Reff_kpc[z_cut * blue_galaxy])
+Mstar_red, Reff_red = results[:,3][z_cut* red_galaxy],np.log10(Reff_kpc[z_cut * red_galaxy])
+Reff_blue = Reff_blue[(Mstar_blue>10.2) * (Mstar_blue<11)]
+Reff_red = Reff_red[(Mstar_red>10.2) * (Mstar_red<11)]
+
+fig, ax = plt.subplots(figsize=(9,7))
+high0, x0, _ = plt.hist(Reff_highz,normed=True, histtype=u'step',
+         label=('high-z galaxy'), linewidth = 2, color='firebrick')
+high1, x1, _ = plt.hist(Reff_blue,normed=True, histtype=u'step',
+         label=('star-forming galaxy'), linewidth = 2, color='lightskyblue')
+high2, x2, _ = plt.hist(Reff_red,normed=True, histtype=u'step',
+         label=('quiescent galaxy'), linewidth = 2, color='darksalmon')
+x0_m = np.median(Reff_highz)
+high_m0 = high0[np.where(abs(x0_m-x0) == abs(x0_m-x0).min())[0][0]]
+x1_m = np.median(Reff_blue)
+high_m1 = high1[np.where(abs(x1_m-x1) == abs(x1_m-x1).min())[0][0]-1]
+x2_m = np.median(Reff_red)
+high_m2 = high2[np.where(abs(x2_m-x2) == abs(x2_m-x2).min())[0][0]-1]
+
+plt.plot(np.linspace(0,high_m0)*0+np.median(x0_m) , np.linspace(0,high_m0), linewidth = 4,color='firebrick')
+plt.plot(np.linspace(0,high_m1)*0+np.median(x1_m) , np.linspace(0,high_m1), linewidth = 4, color='lightskyblue')
+plt.plot(np.linspace(0,high_m2)*0+np.median(x2_m) , np.linspace(0,high_m2), linewidth = 4, color='darksalmon')
+plt.text(np.median(x0_m)-0.1, high_m0*1.05, '{0}'.format(round(np.median(x0_m),2)), color='firebrick',fontsize=25)
+plt.text(np.median(x1_m)-0.2, high_m1*1.05, '{0}'.format(round(np.median(x1_m),2)), color='lightskyblue',fontsize=25)
+plt.text(np.median(x2_m)-0.2, high_m2*1.05, '{0}'.format(round(np.median(x2_m),2)), color='darksalmon',fontsize=25)
+fig.canvas.draw()
+labels = [item.get_text().encode('ascii', 'replace').replace('?','-') for item in ax.get_xticklabels()]
+print labels
+for i in range(len(labels)-2):
+    labels[i+1] = '10$^{'+ labels[i+1] + '}$'
+ax.set_xticklabels(labels)
+
+plt.ylim([0,3])
+plt.xlabel("log(Reff) kpc",fontsize=27)
+plt.ylabel("Density",fontsize=27)
+plt.tick_params(labelsize=20)
+plt.legend(prop={'size':20})
+plt.show()
+
+from scipy import stats
+print "p-value: high_z VS star-forming:", round(stats.ks_2samp(Reff_highz, Reff_blue).pvalue,3)
+print "p-value: high_z VS quiesent:", round(stats.ks_2samp(Reff_highz, Reff_red).pvalue,3)
