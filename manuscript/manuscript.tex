@@ -40,6 +40,10 @@
 \newcommand{\angstrom}{\text{\normalfont\AA}}
 \newcommand{\ding}[1]{\textcolor{red}{[{\bf Xuheng}: #1]}} 
 
+\newcommand{\red}[1]{{\bf \textcolor{red}{[#1]}}} 
+\newcommand{\blue}[1]{{\bf \textcolor{blue}{[#1]}}} 
+
+
 \makeatletter
 \newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}  %For share same footnote
 \makeatother
@@ -192,7 +196,7 @@ To minimize the impact of such mismatches, we build a PSF library by selecting a
 %\hspace{-5.5em}
 {
 \includegraphics[height=0.25\textwidth]{fig/best_fit_CID1174_SB_profile.pdf}
-\caption{\label{fig:AGN_decomp} AGN-host galaxy decomposition of COSMOS-CID1174 based on the \hst/WFC3 F140W image.The panels from left to right are as follows: (1) observed data, (2) best-fit model (AGN$+$host), (3) data minus the model PSF (i.e., host galaxy free of the AGN), (4) residuals divided by the variance and (5)~1-D surface brightness profiles (top) and the corresponding residual (bottom). The 1-D profiles indicate the surface brightness including the data (open circles), the best-fit model (blue line), the AGN (orange line), and the model for the extended sources (green line, i.e., host and other objects). Note that the 1-D surface brightness profiles are only for illustration purposes. The actual fitting is based on the two-dimensional images. The remaining 31 objects in the sample are shown in Appendix~\ref{sec:restsample}.
+\caption{\label{fig:AGN_decomp} AGN-host galaxy decomposition of COSMOS-CID1174 based on the \hst/WFC3 F140W image. The panels from left to right are as follows: (1) observed data, (2) best-fit model (AGN$+$host), (3) data minus the model PSF (i.e., host galaxy free of the AGN), (4) residuals divided by the variance and (5)~1-D surface brightness profiles (top) and the corresponding residual (bottom). The 1-D profiles indicate the surface brightness including the data (open circles), the best-fit model (blue line), the AGN (orange line), and the model for the extended sources (green line, i.e., host and other objects). Note that the 1-D surface brightness profiles are only for illustration purposes. The actual fitting is based on the two-dimensional images. The remaining 31 objects in the sample are shown in Appendix~\ref{sec:restsample}.
 }}
 \end{figure*} 
 
@@ -275,7 +279,7 @@ The distributions of effective radius \Reff\ {\bf are shown in Figure~\ref{fig:h
 {\bf Seven systems have effective radius \Reff$<0\farcs18$, i.e., smaller than 3 pixels. In order to check whether this affects our conclusions,  we re-fit them with a \Reff\ $\in[0\farcs{}2,1\farcs{0}]$ prior and find that the inferred host flux barely changes ($<1\%$). In particular, the}
 inferred \Reff\ for {\bf three} systems (CID543, XID2202, and SXDS-X1136) have hit the lower limit (i.e., $0\farcs{}1$), and thus the scatter on the parameter is formally zero. This means the size inference of these three systems should really be considered an upper limit, rather than a measurement. However, the inference of their host luminosities and stellar masses are still reliable given {\bf the consistency of the re-fitting results and} the small scatter in the host flux ($<10\%$).
 
-We compare the morphology of AGNs host galaxies to inactive galaxies from the CANDELS imaging survey. We identify 4401 inactive galaxies within a redshift range ($1.2<z<1.7$), comparable to our AGN sample, whose \sersic\ measurements are provided by \citet{VDwel++2012} using \galfit. Their stellar masses are derived based on the 3-D-\hst/CANDELS spectroscopic survey~\citep{Momcheva2016, Brammer2012} and comparable to our AGN hosts ($9.5< \log (M_* /M_{\odot})< 11.5$; Section~\ref{sec:mm}). We compare the histogram of the inferred \Reff\ and \sersic\ index to the inactive galaxies in Figure~\ref{fig:hist_rn}, where we find no significant difference between their distributions and median value. We also test whether the distributions can be drawn from the same parent population using a Kolmogorov-Smirnov test and determining the p-value to be 0.42 and 0.04 for \Reff\ and $n$, respectively. We conclude that the host galaxies of our AGN sample are representative of the overall population of galaxies, with a significant disk component, at comparable luminosity and stellar mass at the same redshift. In Section~\ref{sec:bh_bulge}, we use this information to infer the likely bulge masses, hence the \mbh\ -- \bmass\ relation.
+We compare the morphology of AGNs host galaxies to inactive galaxies from the \textcolor{red}{CANDELS survey~\citep{Grogin2011, Koekemoer2011}.} We identify 4401 inactive galaxies within a redshift range ($1.2<z<1.7$), comparable to our AGN sample, whose \sersic\ measurements are provided by \citet{VDwel++2012} using \galfit. Their stellar masses are derived based on the \textcolor{red}{3-D-\hst\ spectroscopic survey}~\citep{Momcheva2016, Brammer2012} and comparable to our AGN hosts ($9.5< \log (M_* /M_{\odot})< 11.5$; Section~\ref{sec:mm}). We compare the histogram of the inferred \Reff\ and \sersic\ index to the inactive galaxies in Figure~\ref{fig:hist_rn}, where we find no significant difference between their distributions and median value. We also test whether the distributions can be drawn from the same parent population using a Kolmogorov-Smirnov test and determining the p-value to be 0.42 and 0.04 for \Reff\ and $n$, respectively. We conclude that the host galaxies of our AGN sample are representative of the overall population of galaxies, with a significant disk component, at comparable luminosity and stellar mass at the same redshift. In Section~\ref{sec:bh_bulge}, we use this information to infer the likely bulge masses, hence the \mbh\ -- \bmass\ relation.
 
 
 \begin{figure}[ht]
