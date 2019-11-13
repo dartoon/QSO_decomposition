@@ -257,7 +257,6 @@ def load_host_p(ID, folder='../', temp=['1Gyrs','0.625Gyrs'], dm = 0):
     Mstar[zs<1.44] = np.log10(host_LR_Vega[zs<1.44] * 0.54 * 0.684 * 1.4191)  
 #    Calculate temp =='0.625Gyrs':
     Mstar[zs>1.44] = np.log10(host_LR_Vega[zs>1.44] * 0.388 * 0.74  * 1.4191)
-    
 #    elif temp=='5Gyrs':
 #        Mstar = np.log10(host_LR_Vega * 2.32 * 0.59 * 1.4191)
 #    if temp =='3Gyrs':

@@ -42,7 +42,7 @@ Eddr_overall = Lbol_overall-logLedd_overall
 
 ###Add noise to the data: 
 #Noise level: MBH 0.4dex, mag_R 0.3mag, M* 0.17dex, Lbol 0.03dex
-dMBH, dmag, dMstar, dLbol= 0.4, 0.3, 0.17, 0.03
+dMBH, dmag, dMstar, dLbol= 0.4, 0.3, 0.17, 0.1
 #dMBH, dmag, dMstar, dLbol= 0.00004, 0.00003, 0.000017, 0.000003
 
 bhmass_overall_noi = bhmass_overall + np.random.normal(0, dMBH, size=bhmass_overall.shape)
@@ -199,6 +199,19 @@ fit_fixm=scipy.optimize.curve_fit(lfit_fixm, y_obs, x_obs)
 x_obs_space=lfit_fixm(y_space,fit_fixm[0])
 plt.plot(x_obs_space,y_space,color='orange',linewidth=3)
 print "mismatch:", fit_fixm[0]- fit[0][1]  #In BH mass offset space
+
+## Plot the fitting scatter 
+#plt.plot(x_space, y_space, color='steelblue',linewidth=3)
+#x_space_ub=lfit(y_space,fit[0][0],fit[0][1]+0.297)
+#x_space_lb=lfit(y_space,fit[0][0],fit[0][1]-0.297)
+#plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='steelblue',alpha=0.35)
+#
+#plt.plot(x_obs_space,y_space,color='orange',linewidth=3)
+##print "mismatch:", fit_fixm[0]- fit[0][1]  #In BH mass offset space
+#x_space_ub=lfit_fixm(y_space,fit_fixm[0]+0.27)
+#x_space_lb=lfit_fixm(y_space,fit_fixm[0]-0.27)
+#plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='orange',alpha=0.35)
+#
 
 
 obj.set_yticks([7.5,8.0,8.5,9.0])

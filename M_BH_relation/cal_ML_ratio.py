@@ -35,3 +35,4 @@ zs = np.asarray(load_zs(ID))
 host_n = np.array(load_n(ID, folder = '../'))[:,0]
 Mstar = load_host_p(ID)[1]
 lumi_s = load_host_p(ID, dm = 0)[0] #!!! This dm is important 
+print 10**Mstar/10**lumi_s
