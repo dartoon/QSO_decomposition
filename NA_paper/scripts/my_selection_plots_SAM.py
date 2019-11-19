@@ -21,6 +21,7 @@ mat.rcParams['font.family'] = 'STIXGeneral'
 np.random.seed(5)  #12345
 
 data_overall = np.loadtxt('../Nicola/realization/lagn_lhost1.dat')
+#data_overall = np.loadtxt('../Nicola/realization/lagn_lhost_2D.dat')
 
 bhmass_overall=data_overall[:,-1]
 Lbol_overall=np.log10(data_overall[:,-2]*10**45.)
@@ -182,7 +183,7 @@ x_space=lfit(y_space,fit[0][0],fit[0][1])   #y_space become to x_space
 plt.plot(x_space, y_space, color='green',linewidth=3)
 x_space_ub=lfit(y_space,fit[0][0]+fit_err[0]/2,fit[0][1]+fit_err[1]/2)
 x_space_lb=lfit(y_space,fit[0][0]-fit_err[0]/2,fit[0][1]-fit_err[1]/2)
-plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='green',alpha=0.15)
+#plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='green',alpha=0.15)
 def lfit_fixm(y,c):
     m_0 = fit[0][0]
     return m_0*y+c
@@ -193,6 +194,14 @@ x_obs_space=lfit_fixm(y_space,fit_fixm[0])
 plt.plot(x_obs_space,y_space,color='orange',linewidth=3)
 print "mismatch:", fit_fixm[0]- fit[0][1]  #In BH mass offset space
 
+# Plot the fitting scatter 
+x_space_ub=lfit(y_space,fit[0][0],fit[0][1]+0.72)     #Values are measured in the next box
+x_space_lb=lfit(y_space,fit[0][0],fit[0][1]-0.72)
+plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='green',alpha=0.35)
+#print "mismatch:", fit_fixm[0]- fit[0][1]  #In BH mass offset space
+x_space_ub=lfit_fixm(y_space,fit_fixm[0]+0.3247)
+x_space_lb=lfit_fixm(y_space,fit_fixm[0]-0.3247)
+plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='orange',alpha=0.35)
 
 obj.set_yticks([7.5,8.0,8.5,9.0])
 obj.set_xticks([10,10.5,11,11.5,12])
@@ -204,7 +213,7 @@ obj.tick_params(labelsize=30)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('log(M$_{*}$/M$_{\odot}$)',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("SAM_MM_consider_nois.pdf")
+#plt.savefig("SAM_MM_consider_nois.pdf")
 plt.show()
 
 #%%
@@ -311,7 +320,7 @@ x_space=lfit(y_space,fit_1[0][0],fit_1[0][1])
 plt.plot(x_space,y_space,color='green',linewidth=3)
 x_space_ub=lfit(y_space,fit_1[0][0]+fit_err_1[0]/2,fit_1[0][1]+fit_err_1[1]/2)
 x_space_lb=lfit(y_space,fit_1[0][0]-fit_err_1[0]/2,fit_1[0][1]-fit_err_1[1]/2)
-plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='green',alpha=0.15)
+#plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='green',alpha=0.15)
 def lfit_fixm_1(y,c):
     return fit_1[0][0]*y+c
 x_obs, y_obs = M_r_obs, bh_mass_obs
@@ -319,6 +328,17 @@ fit_fixm_1=scipy.optimize.curve_fit(lfit_fixm_1, y_obs, x_obs)
 #fit_err_1=np.sqrt(np.diag(fit_1[1]))
 x_space_obs=lfit_fixm_1(y_space,fit_fixm_1[0])
 plt.plot(x_space_obs,y_space,color='orange',linewidth=3)
+
+# Plot the fitting scatter 
+#plt.plot(x_space, y_space, color='steelblue',linewidth=3)
+x_space_ub=lfit(y_space,fit_1[0][0],fit_1[0][1]+1.47775)
+x_space_lb=lfit(y_space,fit_1[0][0],fit_1[0][1]-1.47775)
+plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='green',alpha=0.35)
+#print "mismatch:", fit_fixm[0]- fit[0][1]  #In BH mass offset space
+x_space_ub=lfit_fixm_1(y_space,fit_fixm_1[0]+0.7222)
+x_space_lb=lfit_fixm_1(y_space,fit_fixm_1[0]-0.7222)
+plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='orange',alpha=0.35)
+
 
 print "\n\nPlot M-Mag relation:"
 print "mismatch:", fit_fixm_1[0]- fit_1[0][1]
@@ -334,7 +354,7 @@ obj.tick_params(labelsize=30)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('R band magnitude',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("SAM_ML_consider_nois.pdf")
+#plt.savefig("SAM_ML_consider_nois.pdf")
 plt.show()
 
 #%%Plot the 1-D scatter for ML.
