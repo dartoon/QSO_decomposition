@@ -144,7 +144,7 @@ and
 \begin{eqnarray}
 \label{eq:Hb}
 \log \left(\frac{\mathcal M_{\rm BH}(H\beta) }{M_{\odot}}\right)&~=~& 6.91+0.50\log \left(\frac{ \rm L _{\lambda_{5100}}}{10^{44}{\rm erg~s^{-1}}}\right) \nonumber\\
-&~+~& 2.0 \log \left(\frac{\rm FWHM({\bf H\beta })}{1000 ~{\rm km~s^{-1}}}\right) .
+&~+~& 2.0 \log \left(\frac{\rm FWHM(H\beta)}{1000 ~{\rm km~s^{-1}}}\right) .
 \end {eqnarray}
 
 Note that these recipes are first provided by \citet{Vestergaard2006}. Using these recipes, we estimate \mbh\ by adopting the emission-line properties as measured by \citet{Schulze2018} for all 32 AGNs. While fourteen AGNs have emission line properties for both \halpha\ and \hbeta, we adopt the value of \mbh\ based on the \halpha\ emission line to have consistency across the sample. While most recipes are calibrated against \hbeta\, the line is typically weaker than H$\alpha$, hence lower signal-to-noise. We provide the \mbh\ measurements together with the properties of the emission lines in Table~\ref{tab:result_mbh}.    
@@ -279,7 +279,7 @@ The distributions of effective radius \Reff\ are shown in Figure~\ref{fig:hist_c
 Seven systems have effective radius \Reff$<0\farcs18$, i.e., smaller than 3 pixels. In order to check whether this affects our conclusions,  we re-fit them with a \Reff\ $\in[0\farcs{}2,1\farcs{0}]$ prior and find that the inferred host flux barely changes ($<1\%$). In particular, the
 inferred \Reff\ for three systems (CID543, XID2202, and SXDS-X1136) have hit the lower limit (i.e., $0\farcs{}1$), and thus the scatter on the parameter is formally zero. This means the size inference of these three systems should really be considered an upper limit, rather than a measurement. However, the inference of their host luminosities and stellar masses are still reliable given the consistency of the re-fitting results and the small scatter in the host flux ($<10\%$).
 
-We compare the morphology of AGNs host galaxies to inactive galaxies from the {\bf CANDELS survey~\citep{Grogin2011, Koekemoer2011}.} We identify 4401 inactive galaxies within a redshift range ($1.2<z<1.7$), comparable to our AGN sample, whose \sersic\ measurements are provided by \citet{VDwel++2012} using \galfit. Their stellar masses are derived based on the {\bf 3-D-\hst\ spectroscopic survey~\citep{Momcheva2016, Brammer2012} } and comparable to our AGN hosts ($9.5< \log (M_* /M_{\odot})< 11.5$; Section~\ref{sec:mm}). We compare the histogram of the inferred \Reff\ and \sersic\ index to the inactive galaxies in Figure~\ref{fig:hist_rn}, where we find no significant difference between their distributions and median value. We also test whether the distributions can be drawn from the same parent population using a Kolmogorov-Smirnov test and determining the p-value to be 0.42 and 0.04 for \Reff\ and $n$, respectively. We conclude that the host galaxies of our AGN sample are representative of the overall population of galaxies, with a significant disk component, at comparable luminosity and stellar mass at the same redshift. In Section~\ref{sec:bh_bulge}, we use this information to infer the likely bulge masses, hence the \mbh\ -- \bmass\ relation.
+We compare the morphology of AGNs host galaxies to inactive galaxies from the CANDELS survey~\citep{Grogin2011, Koekemoer2011}. We identify 4401 inactive galaxies within a redshift range ($1.2<z<1.7$), comparable to our AGN sample, whose \sersic\ measurements are provided by \citet{VDwel++2012} using \galfit. Their stellar masses are derived based on the 3-D-\hst\ spectroscopic survey~\citep{Momcheva2016, Brammer2012} and comparable to our AGN hosts ($9.5< \log (M_* /M_{\odot})< 11.5$; Section~\ref{sec:mm}). We compare the histogram of the inferred \Reff\ and \sersic\ index to the inactive galaxies in Figure~\ref{fig:hist_rn}, where we find no significant difference between their distributions and median value. We also test whether the distributions can be drawn from the same parent population using a Kolmogorov-Smirnov test and determining the p-value to be 0.42 and 0.04 for \Reff\ and $n$, respectively. We conclude that the host galaxies of our AGN sample are representative of the overall population of galaxies, with a significant disk component, at comparable luminosity and stellar mass at the same redshift. In Section~\ref{sec:bh_bulge}, we use this information to infer the likely bulge masses, hence the \mbh\ -- \bmass\ relation.
 
 
 
@@ -536,8 +536,8 @@ This work has made use of \lenstronomy~\citep{lenstronomy}, {\sc Astropy}~\citep
 and standard Python libraries.
 
 \bibliographystyle{apj.bst}
-%\bibliography{references}
-\input{manuscript.bbl}
+\bibliography{references}
+%\input{manuscript.bbl}
 
 \newpage
 
@@ -750,8 +750,8 @@ The total exposure time of each target is 2394s.
   \multicolumn{4}{c}{\hbeta ~emission line} \\
   \cline{2-5}  \cline{6-9} \\
 \colhead{}& 
-\colhead{{\bf FWHM($H\alpha$)}}& \colhead{$\log( \rm L _{H\alpha}$)}& \colhead{$\log$\mbh}& Eddington ratio &
-\colhead{{\bf FWHM($H\beta$)}}& \colhead{$\log( \rm L _{\lambda5100})$}& \colhead{$\log$\mbh}& Eddington ratio \\
+\colhead{FWHM($H\alpha$)}& \colhead{$\log( \rm L _{H\alpha}$)}& \colhead{$\log$\mbh}& Eddington ratio &
+\colhead{FWHM($H\beta$)}& \colhead{$\log( \rm L _{\lambda5100})$}& \colhead{$\log$\mbh}& Eddington ratio \\
 \colhead{}& 
 \colhead{(\kms)}& \colhead{(${\rm erg~s^{-1}}$)}& 
 \colhead{(M$_{\odot}$)}& (log$( L_{\rm Bol}/L_{\rm Edd})$)&
