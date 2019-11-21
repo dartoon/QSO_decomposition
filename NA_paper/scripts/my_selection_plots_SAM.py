@@ -206,7 +206,7 @@ plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='orange',alpha=0.35)
 obj.set_yticks([7.5,8.0,8.5,9.0])
 obj.set_xticks([10,10.5,11,11.5,12])
 #obj.set_xticklabels(['-18','-20','-22','-24','-26'])
-ax.set_xlim(9.5,12.3)  #
+ax.set_xlim(9.7,11.9)  #
 ax.set_ylim(7.2, 9.4)  #
 obj.tick_params(labelsize=30)
 #ax.set_rasterized(True)
@@ -344,9 +344,9 @@ print "\n\nPlot M-Mag relation:"
 print "mismatch:", fit_fixm_1[0]- fit_1[0][1]
 
 obj.set_yticks([7.5,8.0,8.5,9.0])
-obj.set_xticks([-18, -20,-22,-24,-26])
+obj.set_xticks([-20,-21, -22, -23, -24, -25])
 #obj.set_xticklabels(['-18','-20','-22','-24','-26'])
-ax.set_xlim(-19.8, -26)  # 
+ax.set_xlim(-19.8, -25.5)  # 
 ax.set_ylim(7.2, 9.4)  # 
 
 obj.tick_params(labelsize=30)
@@ -378,40 +378,40 @@ print "KS:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,f
 
 
 
-#%%Plot the 1-D hist for Mstar, R_Mag and MBH and do the K-S test in 1D.
-
-plt.figure(figsize=(8,6))
-plt.hist(bhmass_selected ,histtype=u'step',normed=True,
-         label=('SAM BH sample'), linewidth = 2, color='orange')
-plt.hist(bh_mass_obs , histtype=u'step',normed=True,
-         label=('HST BH sample'), linewidth = 2, color='green')
-plt.tick_params(labelsize=20)
-plt.legend(prop={'size':20})
-plt.yticks([])
-plt.show()
-print stats.ks_2samp(bhmass_selected, bh_mass_obs).pvalue
-
-plt.figure(figsize=(8,6))
-plt.hist(mstar_selected ,histtype=u'step',normed=True,
-         label=('SAM M* sample'), linewidth = 2, color='orange')
-plt.hist(stellar_mass_obs , histtype=u'step',normed=True,
-         label=('HST M* sample'), linewidth = 2, color='green')
-plt.tick_params(labelsize=20)
-plt.legend(prop={'size':20})
-plt.yticks([])
-plt.show()
-print stats.ks_2samp(mstar_selected, stellar_mass_obs).pvalue
-
-plt.figure(figsize=(8,6))
-plt.hist(r_band_magnitudes_selected ,histtype=u'step',normed=True,
-         label=('SAM MagR sample'), linewidth = 2, color='orange')
-plt.hist(M_r_obs , histtype=u'step',normed=True,
-         label=('HST MagR sample'), linewidth = 2, color='green')
-plt.tick_params(labelsize=20)
-plt.legend(prop={'size':20})
-plt.yticks([])
-plt.show()
-print stats.ks_2samp(r_band_magnitudes_selected, M_r_obs).pvalue
+##%%Plot the 1-D hist for Mstar, R_Mag and MBH and do the K-S test in 1D.
+#
+#plt.figure(figsize=(8,6))
+#plt.hist(bhmass_selected ,histtype=u'step',normed=True,
+#         label=('SAM BH sample'), linewidth = 2, color='orange')
+#plt.hist(bh_mass_obs , histtype=u'step',normed=True,
+#         label=('HST BH sample'), linewidth = 2, color='green')
+#plt.tick_params(labelsize=20)
+#plt.legend(prop={'size':20})
+#plt.yticks([])
+#plt.show()
+#print stats.ks_2samp(bhmass_selected, bh_mass_obs).pvalue
+#
+#plt.figure(figsize=(8,6))
+#plt.hist(mstar_selected ,histtype=u'step',normed=True,
+#         label=('SAM M* sample'), linewidth = 2, color='orange')
+#plt.hist(stellar_mass_obs , histtype=u'step',normed=True,
+#         label=('HST M* sample'), linewidth = 2, color='green')
+#plt.tick_params(labelsize=20)
+#plt.legend(prop={'size':20})
+#plt.yticks([])
+#plt.show()
+#print stats.ks_2samp(mstar_selected, stellar_mass_obs).pvalue
+#
+#plt.figure(figsize=(8,6))
+#plt.hist(r_band_magnitudes_selected ,histtype=u'step',normed=True,
+#         label=('SAM MagR sample'), linewidth = 2, color='orange')
+#plt.hist(M_r_obs , histtype=u'step',normed=True,
+#         label=('HST MagR sample'), linewidth = 2, color='green')
+#plt.tick_params(labelsize=20)
+#plt.legend(prop={'size':20})
+#plt.yticks([])
+#plt.show()
+#print stats.ks_2samp(r_band_magnitudes_selected, M_r_obs).pvalue
 
 
 ##%% Estiamte the in

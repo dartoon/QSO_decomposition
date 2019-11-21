@@ -26,7 +26,8 @@ h=0.7
 bhmass_overall=np.loadtxt('../Aklant/new_sample_half_Reff/log10_bh_mass_full_population.txt') - np.log10(h) 
 #bhmass_selected=np.loadtxt('../Aklant/new_sample/log10_bh_mass_selected_population.txt') - np.log10(h) 
 
-mstar_overall=np.loadtxt('../Aklant/new_sample_half_Reff/log10_stellar_mass_full_population_within_half_light.txt') - np.log10(h) 
+#mstar_overall=np.loadtxt('../Aklant/new_sample_half_Reff/log10_stellar_mass_full_population_within_half_light.txt') - np.log10(h) 
+mstar_overall=np.loadtxt('../Aklant/new_sample_30kpc/log10_stellar_mass_full_population_within_30kpc.txt') - np.log10(h) 
 #mstar_selected=np.loadtxt('../Aklant/new_sample/log10_stellar_mass_selected_population.txt') - np.log10(h) 
 
 magr_overall=np.loadtxt('../Aklant/new_sample_half_Reff/log10_host_r_mag_full_population.txt')
@@ -215,7 +216,7 @@ plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='orange',alpha=0.35,zorder
 obj.set_yticks([7.5,8.0,8.5,9.0])
 obj.set_xticks([10,10.5,11,11.5,12])
 #obj.set_xticklabels(['-18','-20','-22','-24','-26'])
-ax.set_xlim(9.5,12.3)  #
+ax.set_xlim(9.7,11.9)  #
 ax.set_ylim(7.2, 9.4)  #
 obj.tick_params(labelsize=30)
 #ax.set_rasterized(True)
@@ -228,6 +229,7 @@ plt.show()
 
 #%%
 '''
+#This is the estimation for the selected sample, not the OVERALL sample.
 import linmix
 x = mstar_selected
 xsig = np.zeros(len(bhmass_selected))+dMstar
@@ -354,9 +356,9 @@ print "\n\nPlot M-Mag relation:"
 print "mismatch:", fit_fixm_1[0]- fit_1[0][1]
 
 obj.set_yticks([7.5,8.0,8.5,9.0])
-obj.set_xticks([-18, -20,-22,-24,-26])
+obj.set_xticks([-20,-21, -22, -23, -24, -25])
 #obj.set_xticklabels(['-18','-20','-22','-24','-26'])
-ax.set_xlim(-19.8, -26)  # 
+ax.set_xlim(-19.8, -25.5)  # 
 ax.set_ylim(7.2, 9.4)  # 
 
 obj.tick_params(labelsize=30)
@@ -439,10 +441,10 @@ print "KS:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,f
 #plt.scatter(x, y)
 #plt.plot(xs, ys, color='steelblue',linewidth=3)
 #print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
-
-                                    
-#%%To save the data and plot together with SAM                                    
-MBII_scatter_ML = r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1])
-MBII_scatter_MM = mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1])
+#
+#                                    
+##%%To save the data and plot together with SAM                                    
+#MBII_scatter_ML = r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1])
+#MBII_scatter_MM = mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1])
 
 #%%
