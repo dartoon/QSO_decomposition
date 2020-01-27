@@ -217,7 +217,7 @@ if relation == 0:
 #    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.155 , alpha=0.76), 'r')
 #    mstar_line = np.linspace(9,11.5,20)
 #    plt.plot(mstar_line, logR_mstar(mstar_line,logA=0.675 , alpha=0.23), 'b')
-    plt.scatter(Mstar_candels[z_cut* blue_galaxy],Reff_kpc[z_cut * blue_galaxy],
+    plt.scatter(Mstar_candels[z_cut* blue_galaxy],Reff_kpc[z_cut * blue_galaxy],   #!!!Dont need to care about the mstar_cut as would show in the figure.
                 c='lightskyblue',s=280,marker=".",zorder=-90, alpha=0.6, edgecolors='white', cmap=cmap_r, label='CANDELS galaxy, star-forming')
     plt.scatter(Mstar_candels[z_cut* red_galaxy],Reff_kpc[z_cut * red_galaxy],
                 c='darksalmon',s=280,marker=".",zorder=-90, alpha=0.6, edgecolors='white', cmap=cmap_r, label='CANDELS galaxy, quiescent')
@@ -299,7 +299,7 @@ if relation == 0:
         if Reffs[i]-0.1 < 0.009:
             plt.arrow(Mstar[i], ID_Reff_kpc[i], 0, -0.3, length_includes_head=True,
                   head_width=0.08, head_length=0.05, zorder=102, color='black', linewidth='1.2')
-    
+   
     log_Rerr = (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))
     low_err = ID_Reff_kpc - 10**(np.log10(ID_Reff_kpc)-log_Rerr)
     up_err = 10**(np.log10(ID_Reff_kpc)+log_Rerr) - ID_Reff_kpc
@@ -349,8 +349,8 @@ elif relation ==4:
              yerr= (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))[host_flux_ACS<0],
              color='k',ecolor='orange', fmt='.',markersize=1, zorder = 10)  
    
-plt.xlim([9.5, 12.0])
-plt.xlabel("log(M$_*$/M$_{\odot})$",fontsize=35)
+plt.xlim([9.5, 11.7])
+plt.xlabel("log (M$_*$; units of M$_{\odot}$)",fontsize=35)
 plt.tick_params(labelsize=25)
 plt.legend(loc='upper right',fontsize=21,numpoints=1)
 if relation ==0:
@@ -362,12 +362,15 @@ if relation ==0:
 #    labels[1] = 'Testing'
 #    ax.set_xticklabels(labels)
     plt.yscale('log')
-    ax.tick_params(axis='both', which='major', length=10)
-    ax.tick_params(axis='y', which='minor', length=5)
-    ax.tick_params(axis='y', which='both', width=1.5)
+    ax.tick_params(axis='both', which='major', length=12 , width = 2)
+    ax.tick_params(axis='y', which='minor', length=7, width=2)
+    ax.tick_params(axis='y', which='major', length=12, width=2)
+    ax.tick_params(axis='both', which='both', direction='in')
     cbar = plt.colorbar()
     cbar.ax.tick_params(labelsize=20)
     cbar.ax.set_ylabel('Sersic index', rotation=270, fontsize = 25, labelpad=25)
+    cbar.ax.tick_params(axis='both', which='both', direction='in')
+    cbar.ax.tick_params(axis='y', which='major', length=7, width=2)
     plt.savefig('Mstar-Reff.pdf')
 #    plt.savefig('Mstar-Reff_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))
 elif relation ==1:
