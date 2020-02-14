@@ -306,7 +306,7 @@ def load_MBH(ID, MB_ID, if_reportHb=0,folder = '..', return_line = 0):
             FWHMa_list.append(FWHM_a)
         if ser!=-99 and float(samples[ser][21]) != 0 and if_reportHb==1:
 #            if if_reportHb ==1:
-            print "use Hb for", ID[tar_in]
+            print("use Hb for", ID[tar_in])
             FWHM_b = float(samples[ser][19])
             logL5100dr = float(samples[ser][16])
             cal_logMb = 6.91+0.5*(logL5100dr-44)+2.*np.log10(FWHM_b/1000)  # as used in Andreas #!!!

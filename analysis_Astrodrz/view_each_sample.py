@@ -4,6 +4,7 @@
 Created on Sun Oct 21 14:47:47 2018
 
 @author: dxh
+
 """
 import numpy as np
 import astropy.io.fits as pyfits
@@ -14,23 +15,24 @@ from adjustText import adjust_text   # avoid the overlapping while ploting
 import sys
 sys.path.insert(0,'../py_tools')
 from filter_info import filt_info, redshift_info
-#ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
-#'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
-#'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
-#'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
-#'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
-#]
+ID =['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
+'CID216', 'CID237','CID3242','CID3570','CID452', 'CID454',\
+'CID50','CID607','LID1273', 'LID1538','LID360','SXDS-X1136',\
+'SXDS-X50', 'SXDS-X717','SXDS-X763','SXDS-X969','XID2138','XID2202',\
+'XID2396', 'CID206', 'ECDFS-358', 'CDFS-724', 'CID597', 'CID1281'\
+]
 
 #ID = ['SXDS-X969']
 #ID = ['CDFS-724']
 
-#folder = 'analysis'
-folder = 'Reff_lowlimt0.2_analysis/'
+folder = 'analysis'
+# folder = 'Reff_lowlimt0.2_analysis/'
 
 import pickle
 ratio_results, Re_results, n_results, total_flux_results, host_amp_results = [], [], [], [], []
 chisq_list, inf_list, best_PSF_id = [],[], []
-flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PSFs_lib_dict','rb'))
+flux_dict, FWHM_dict, locs_dict, filter_dict, id_stars_dict=pickle.load(open('PSFs_lib_dict','rb'),encoding='latin1') 
+redshift_list, Mstar_list, filter_list, f_nu_list = [], [], [], []
 for j in range(len(ID)):
     filt = filt_info[ID[j]]
     if filt == "F140w":
@@ -101,7 +103,7 @@ for j in range(len(ID)):
     mag = -2.5*np.log10(weighted_host_flux) + zp
 #    print "magnitude:", round(mag,3)
     
-    zs = redshift_info[ID[0]]
+    zs = redshift_info[ID[j]]
     from dmag import k_corr_R
     from load_result import EE
     vec_EE=np.vectorize(EE)
@@ -116,6 +118,7 @@ for j in range(len(ID)):
     host_LR_Vega = 10 ** (0.4*(4.43-host_Mags_Vega)) #LR in Vega
     Mstar = np.log10(host_LR_Vega * 0.54 * 0.684 * 1.4191)  
 #    print "Mstar:", round(Mstar,3)
+    redshift_list.append(zs)
     ratio_results.append([round(weighted_host_ratio,3), round(rms_host_ratio,3)])
     Re_results.append([round(weighted_Re,3), round(rms_Re,3)])
     n_results.append([round(weighted_index,3),round(rms_index,3)])
@@ -123,6 +126,17 @@ for j in range(len(ID)):
     total_flux_results.append([round(weighted_total_flux,3), round(rms_total_flux,3)])
     chisq_list.append(Chisq_best)
     inf_list.append(inf_alp)
+    Mstar_list.append(Mstar)
+    filter_list.append(filt)
+    f_nu_list.append(10**((mag-25)/(-2.5)) )
 
-print "Reff", Re_results
-print "Total flux, AGN flux", round(weighted_total_flux,1), round(weighted_total_flux-weighted_host_flux,1)
+
+#!!! The stellar mass is based on 1Gyrs!!!!
+# print(ID)
+# # print("Reff", Re_results)
+# print("HOST_flux", host_amp_results)
+# print(redshift_list)
+# print(Mstar_list)
+for i in range(len(ID)):
+    print(ID[i], host_amp_results[i], redshift_list[i], filter_list[i], round(Mstar_list[i],3), round(f_nu_list[i],3))
+# print("Total flux, AGN flux", round(weighted_total_flux,1), round(weighted_total_flux-weighted_host_flux,1))
