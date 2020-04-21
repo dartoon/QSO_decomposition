@@ -1,0 +1,101 @@
+Title: Testing the fidelity of simulations of black hole - galaxy co-evolution at z ∼ 1.5 with observations
+
+Dear Dr. Ding,
+
+I have received the reviewer's report on your above submission to The Astrophysical Journal, and is appended below. As you will see, the reviewer thinks that your manuscript is interesting and that it will merit publication once you have addressed the issues raised in the report.
+
+When you resubmit, please outline the revisions you have made in response to each of the reviewer's comments using plain text in the field provided when you upload the revised manuscript. Citing each of the reviewer's comments immediately followed by your response would be particularly helpful.
+
+Click the link below to upload your revised manuscript; 
+https://aas.msubmit.net/cgi-bin/main.plex?el=A7KO1BiB1A2Cekl1J5A9ftdJSODSHhL1sWNnA8NtI6jDwZ
+Alternatively, you may also log into your account at the EJ Press web site, http://apj.msubmit.net. Please use your user's login name: xuhengding. You can then ask for a new password via the Unknown/Forgotten Password link if you have forgotten your password. 
+
+Reviewers find it helpful if the changes in the text of the manuscript are easily distinguishable from the rest of the text. We ask you to highlight the changes in bold. The highlighting can be removed easily after the review process.
+
+The AAS Journals have adopted a policy that manuscript files become inactive, and are considered to have been withdrawn six months after the most recent reviewer's report us sent to the authors.
+
+If you have any questions, feel free to contact me.
+
+Sincerely,
+Lee Armus
+AAS Scientific Editor
+California Institute of Technology
+lee.armus@aas.org
+---------------------------------------------------------------------- 
+Reviewer Report 
+Reviewer's Comments:
+Dear Editor,
+
+I have reviewed the paper "Testing the fidelity of simulations of
+black hole - galaxy co-evolution at z ∼ 1.5 with observations", by 
+X. Ding et al., submitted for the ApJ.
+
+The paper examines scaling relations of supermassive black holes for
+new measurements of 32 AGN in the redshift range 1.2 < z < 1.7 and
+compares the results to the MassiveBlackII cosmological hydrodynamical
+simulation and a semi-analytic model. While both models are broadly
+consistent with the data, the scatter in the semi-analytic model is
+considerably larger. The authors find that the observed scatter is
+consistent in magnitude with the one found locally, which they
+interpret as evidence against a central limit origin of the scaling
+relations from hierarchical merging, where the scatter should go down
+with time.
+
+Overall the paper represents an interesting contribution to the study
+of the origin of the SMBH scaling relations, even though its
+conclusions are fairly tentative, and the interpretation should be
+taken with a grain of salt. I point out a number of issues that should 
+be clarified in the paper. Once addressed, it may then become publishable in the ApJ.
+
+
+- I don't quite understand what is meant with the sentence "The 
+redshift range of our targets is chosen to be high enough (z > 1) 
+when most of the SMBHs acquired their mass thus sensitive to initial 
+conditions and growth mechanisms, possibly allowing an 
+identification of inaccurate or missing physics in the models." at 
+the top right of page 2. Do the authors argue here that the results 
+are sensitive or insensitive to the initial conditions? 
+
+- In the description of the MBII simulation (page 3, before 2.2.1), it 
+is stated that "The large simulation volume enables the model 
+galaxies and SMBHs to evolve independently". I don't understand this 
+- isn't the point of MBII that galaxies and their embedded SMBHs 
+coevolve, mutually influencing each other? 
+
+- When the Bondi accretion in the MBII simulation is described, isn't 
+the accretion rate boosted by an ad-hoc factor alpha in this model 
+to account for resolution limitations? If true, this should be 
+properly included. (Aside: The referee thinks SUBFIND is described 
+in a paper by Springel from 2001, not 2005.) 
+
+- What about the intrinsic scatter of the MBII? How much of the 
+scatter is coming from the random injection of noise to mimic 
+observational measurement errors? Since scatter is used in this work 
+as the main diagnostic tool, the different components entering the 
+scatter in the analysis of the theoretical model need to be 
+disentangled more clearly and transparently. 
+
+- It is unclear what the grey and orange cells in the background of 
+the right panel in Fig 2 refer to. And in particular, for the green 
+SAM points, it is unclear whether the slope that is used for the SAM 
+power-law (the green line) is realistic at all to describe the SAM 
+results... Couldn't the SAM be excluded simply already because it 
+fails to reproduce the observed slope of the M_BH-M_star relation? 
+
+- The authors correctly point out that the redshift evolution is a key 
+further diagnostic. There is some interesting discussion of this 
+towards the end of the paper, but unfortunately not much 
+quantitative analysis in the paper. Why not consider the redshift 
+trend of the models over the interval z=1.2 to z=1.7 instead of just 
+looking at z=1.5 alone? There should be enough statistics for this, 
+and this would offer the chance to arrive at somewhat stronger 
+conclusions. 
+
+- Btw, since the SAM can be easily modified and rerun, why not 
+modifying some of the modelling assumptions to better clarify the 
+origin of the scatter it shows? 
+
+- I note that all the figures have only barely visible tick marks on 
+their axes, and no minor tick marks at all, making quantitative 
+interpretation unnecessarily hard. This is really a bad axes style 
+and must be fixed.
