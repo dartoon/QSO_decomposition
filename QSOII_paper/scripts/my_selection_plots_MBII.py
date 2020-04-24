@@ -64,7 +64,7 @@ Lbol_select_noi = Lbol_overall_noi[select_window]
 Eddr_select_noi = Eddr_overall_noi[select_window]
 
 #Now can just plot the figure1 from figures_producer.py
-plt.figure(figsize=(11,9))
+fig, ax = plt.subplots(figsize=(11,9))
 plt.hist2d(bhmass_overall,Eddr_overall,norm=mpl.colors.LogNorm(),cmap='copper',bins=50,zorder=0,alpha=0.5)
 cbar = plt.colorbar()
 cbar.ax.tick_params(labelsize=30) 
@@ -119,10 +119,17 @@ y_sline2 = xfill*0-1.5
 y4 = np.maximum(yfill_sline, y_sline2)
 plt.fill_between(xfill, y4, y2=0, color='steelblue', alpha='0.5', zorder=-1)
 plt.tick_params(labelsize=30)
+
+from matplotlib.ticker import AutoMinorLocator
+ax.xaxis.set_minor_locator(AutoMinorLocator())
+plt.tick_params(which='both', width=2, top=True, right=True,direction='in')
+plt.tick_params(which='major', length=10)
+plt.tick_params(which='minor', length=6)#, color='r’)
+
 plt.ylabel(r"log(L$_{\rm bol}$/L$_{\rm Edd}$)",fontsize=30)
 plt.xlabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 plt.legend(loc='upper right',fontsize=21,numpoints=1)
-#plt.savefig('MBII_selectfunc.pdf')
+plt.savefig('MBII_selectfunc.pdf')
 plt.show()
 
 #%%Plot MM data
@@ -170,7 +177,7 @@ x_obs_space=lfit_fixm(y_space,fit_fixm[0])
 print "mismatch:", fit_fixm[0]- fit[0][1]  #In BH mass offset space
 
 #Plot the 1-D scatter for MM.
-plt.figure(figsize=(8,7))
+fig, ax = plt.subplots(figsize=(8,7))
 plt.hist(stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]), histtype=u'step',normed=True,
          label=('HST sample'), linewidth = 2, color='orange')
 plt.hist(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
@@ -179,8 +186,14 @@ plt.title(r"The offset comparison for the M$_{\rm BH}$-M$_{*}$ relation", fontsi
 plt.tick_params(labelsize=20)
 plt.legend(prop={'size':20})
 plt.yticks([])
+
+ax.xaxis.set_minor_locator(AutoMinorLocator())
+plt.tick_params(which='both', width=2, top=True,direction='in')
+plt.tick_params(which='major', length=10)
+plt.tick_params(which='minor', length=6)#, color='r’)
+
 plt.xlabel('$\Delta$log(M$_{*}$/M$_{\odot}$)',fontsize=30)
-#plt.savefig('comp_scatter_MM.pdf')
+#plt.savefig('comp_scatter_MM_MBIIonly.pdf')
 plt.show()
 
 sim_scatter = np.std(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]))
@@ -218,11 +231,18 @@ obj.set_xticks([10,10.5,11,11.5,12])
 ax.set_xlim(9.7,11.9)  #
 ax.set_ylim(7.2, 9.4)  #
 obj.tick_params(labelsize=30)
+
+ax.xaxis.set_minor_locator(AutoMinorLocator())
+ax.yaxis.set_minor_locator(AutoMinorLocator())
+plt.tick_params(which='both', width=2, top=True, right=True,direction='in')
+plt.tick_params(which='major', length=10)
+plt.tick_params(which='minor', length=6)#, color='r’)
+
 #ax.set_rasterized(True)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('log(M$_{*}$/M$_{\odot}$)',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-#plt.savefig("MBII_MM.pdf")
+plt.savefig("MBII_MM.png")
 plt.show()
                                     
 #%%Study the slope uncertainty and the relation to the scatter:
@@ -273,17 +293,24 @@ x_obs, y_obs = M_r_obs, bh_mass_obs
 fit_fixm_1=scipy.optimize.curve_fit(lfit_fixm_1, y_obs, x_obs)
 
 #Plot the 1-D scatter for ML.
-plt.figure(figsize=(8,7))
+fig, ax = plt.subplots(figsize=(8,7))
 plt.hist(M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]), histtype=u'step',normed=True,
          label=('HST sample'), linewidth = 2, color='orange')
 plt.hist(r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1]),histtype=u'step',normed=True,
          label=('MBII sample'), linewidth = 2, color='green')
 plt.title(r"The offset comparison for the M$_{\rm BH}$-mag relation", fontsize = 20)
 plt.tick_params(labelsize=20)
+
+ax.xaxis.set_minor_locator(AutoMinorLocator())
+ax.yaxis.set_minor_locator(AutoMinorLocator())
+plt.tick_params(which='both', width=2, top=True,direction='in')
+plt.tick_params(which='major', length=10)
+plt.tick_params(which='minor', length=6)#, color='r’)
+plt.xlim(-2.2,3)
 plt.legend(prop={'size':20})
 plt.yticks([])
 plt.xlabel(r"$\Delta$magnitude",fontsize=30)
-#plt.savefig('comp_scatter_ML.pdf')
+#plt.savefig('comp_scatter_ML_MBIIonly.pdf')
 plt.show()
 
 
@@ -296,9 +323,10 @@ print "KS:", stats.ks_2samp((r_band_magnitudes_selected - lfit(bhmass_selected,f
 
 print "\n\nPlot M-Mag relation:"
 print "mismatch:", fit_fixm_1[0]- fit_1[0][1]
+
+#%%
 # Plot the fitting scatter 
 f,ax=plt.subplots(1,1,figsize=(11,10))
-
 obj=ax
 panel2=obj.hist2d(magr_overall,bhmass_overall,
                   norm=mpl.colors.LogNorm(),cmap='copper',bins=50,zorder=0,alpha=0.5)
@@ -327,9 +355,14 @@ x_space_ub=lfit_fixm_1(y_space,fit_fixm_1[0]+obs_scatter_1)
 x_space_lb=lfit_fixm_1(y_space,fit_fixm_1[0]-obs_scatter_1)
 plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='orange',alpha=0.35, zorder = 1)
 
+ax.xaxis.set_minor_locator(AutoMinorLocator())
+ax.yaxis.set_minor_locator(AutoMinorLocator())
+plt.tick_params(which='both', width=2, top=True, right=True,direction='in')
+plt.tick_params(which='major', length=10)
+plt.tick_params(which='minor', length=6)#, color='r’)
+
 obj.set_yticks([7.5,8.0,8.5,9.0])
-obj.set_xticks([-20,-21, -22, -23, -24, -25])
-#obj.set_xticklabels(['-18','-20','-22','-24','-26'])
+#obj.set_xticks([-20,-21, -22, -23, -24, -25])
 ax.set_xlim(-19.8, -25.5)  # 
 ax.set_ylim(7.2, 9.4)  # 
 
@@ -337,8 +370,10 @@ obj.tick_params(labelsize=30)
 #ax.set_rasterized(True)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('R band magnitude',fontsize=30)
+
+
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-#plt.savefig("MBII_ML.pdf")
+plt.savefig("MBII_ML.png")
 plt.show()
 
 #%%Study the slope uncertainty and the relation to the scatter:

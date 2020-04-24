@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import sys
 sys.path.insert(0,'../../../py_tools')
 import matplotlib as matt
+from matplotlib.ticker import AutoMinorLocator
 matt.rcParams['font.family'] = 'STIXGeneral'
 
 ID = ['CDFS-1', 'CID543','CID70',  'SXDS-X735', 'CDFS-229', 'CDFS-321', 'CID1174',\
@@ -31,7 +32,7 @@ Nicola_ratio = host_f/(agn_f+host_f)
 Aklant_ratio = np.loadtxt('../../Aklant/host_ratio/host_total_ratio.txt')
 
 
-plt.figure(figsize=(10,8))
+fig, ax = plt.subplots(figsize=(10,8))
 high1, x1, _ = plt.hist(WFC3_ratio[:,0],normed=True, histtype=u'step',
          label=('Observed sample'), linewidth = 2, color='orange', zorder = 100)
 high2, x2, _ = plt.hist(Aklant_ratio*100.,normed=True, histtype=u'step',
@@ -62,6 +63,11 @@ plt.legend(prop={'size':20})
 
 plt.ylim(0,0.033)
 plt.yticks([])
+ax.xaxis.set_minor_locator(AutoMinorLocator())
+plt.tick_params(which='both', width=2, top=True, right=True,direction='in')
+plt.tick_params(which='major', length=10)
+plt.tick_params(which='minor', length=6)#, color='r’)
+
 #plt.savefig('comp_host_ratio.pdf')
 plt.show()
 

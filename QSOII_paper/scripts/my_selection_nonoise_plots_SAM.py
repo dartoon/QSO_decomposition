@@ -34,9 +34,8 @@ logLedd_overall = 38. + np.log10(1.2) + bhmass_overall
 Eddr_overall = Lbol_overall-logLedd_overall
 
 ###Add noise to the data: 
-#Noise level: MBH 0.4dex, mag_R 0.3mag, M* 0.17dex, Lbol 0.03dex
-dMBH, dmag, dMstar, dLbol= 0.4, 0.3, 0.17, 0.03
-#dMBH, dmag, dMstar, dLbol= 0.00004, 0.00003, 0.000017, 0.000003
+#dMBH, dmag, dMstar, dLbol= 0.4, 0.3, 0.17, 0.03
+dMBH, dmag, dMstar, dLbol= 0,0,0,0
 
 bhmass_overall_noi = bhmass_overall + np.random.normal(0, dMBH, size=bhmass_overall.shape)
 mstar_overall_noi = mstar_overall + np.random.normal(0, dMstar, size=mstar_overall.shape)
@@ -170,7 +169,7 @@ plt.tick_params(labelsize=20)
 plt.legend(prop={'size':20})
 plt.yticks([])
 plt.xlabel('$\Delta$log(M$_{*}$/M$_{\odot}$)',fontsize=30)
-#plt.savefig('comp_scatter_MM_SAMonly.pdf')
+#plt.savefig('comp_scatter_MM.pdf')
 plt.show()
 
 sim_scatter = np.std(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]))
@@ -205,13 +204,6 @@ x_space_ub=lfit_fixm(y_space,fit_fixm[0]+obs_scatter)
 x_space_lb=lfit_fixm(y_space,fit_fixm[0]-obs_scatter)
 plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='orange',alpha=0.35)
 
-from matplotlib.ticker import AutoMinorLocator
-ax.xaxis.set_minor_locator(AutoMinorLocator())
-ax.yaxis.set_minor_locator(AutoMinorLocator())
-plt.tick_params(which='both', width=2, top=True, right=True,direction='in')
-plt.tick_params(which='major', length=10)
-plt.tick_params(which='minor', length=6)#, color='r’)
-
 obj.set_yticks([7.5,8.0,8.5,9.0])
 obj.set_xticks([10,10.5,11,11.5,12])
 #obj.set_xticklabels(['-18','-20','-22','-24','-26'])
@@ -222,9 +214,11 @@ obj.tick_params(labelsize=30)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('log(M$_{*}$/M$_{\odot}$)',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("SAM_MM_consider_nois.png")
+#plt.savefig("SAM_MM_consider_nois.pdf")
 plt.show()                                    
 
+
+"""
 #%%Plot ML data
 
 ##Fit y as function of x
@@ -266,7 +260,7 @@ plt.tick_params(labelsize=20)
 plt.legend(prop={'size':20})
 plt.yticks([])
 plt.xlabel(r"$\Delta$magnitude",fontsize=30)
-#plt.savefig('comp_scatter_ML_SAMonly.pdf')
+#plt.savefig('comp_scatter_ML.pdf')
 plt.show()
 
 sim_scatter_1 = np.std(r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1]))
@@ -310,115 +304,17 @@ plt.fill_betweenx(y_space,x_space_lb,x_space_ub,color='orange',alpha=0.35)
 print "mismatch:", fit_fixm_1[0]- fit_1[0][1]
 
 obj.set_yticks([7.5,8.0,8.5,9.0])
-#obj.set_xticks([-20,-21, -22, -23, -24, -25])
+obj.set_xticks([-20,-21, -22, -23, -24, -25])
 #obj.set_xticklabels(['-18','-20','-22','-24','-26'])
 ax.set_xlim(-19.8, -25.5)  # 
 ax.set_ylim(7.2, 9.4)  # 
-
-ax.xaxis.set_minor_locator(AutoMinorLocator())
-ax.yaxis.set_minor_locator(AutoMinorLocator())
-plt.tick_params(which='both', width=2, top=True, right=True,direction='in')
-plt.tick_params(which='major', length=10)
-plt.tick_params(which='minor', length=6)#, color='r’)
 
 obj.tick_params(labelsize=30)
 #ax.set_rasterized(True)
 obj.set_ylabel(r'log(M$_{\rm BH}$/M$_{\odot}$)',fontsize=30)
 obj.set_xlabel('R band magnitude',fontsize=30)
 obj.legend(loc='upper left',fontsize=21,numpoints=1)
-plt.savefig("SAM_ML_consider_nois.png")
+#plt.savefig("SAM_ML_consider_nois.pdf")
 plt.show()
 
-##%%Plot the 1-D hist for Mstar, R_Mag and MBH and do the K-S test in 1D.
-#
-#plt.figure(figsize=(8,6))
-#plt.hist(bhmass_selected ,histtype=u'step',normed=True,
-#         label=('SAM BH sample'), linewidth = 2, color='orange')
-#plt.hist(bh_mass_obs , histtype=u'step',normed=True,
-#         label=('HST BH sample'), linewidth = 2, color='green')
-#plt.tick_params(labelsize=20)
-#plt.legend(prop={'size':20})
-#plt.yticks([])
-#plt.show()
-#print stats.ks_2samp(bhmass_selected, bh_mass_obs).pvalue
-#
-#plt.figure(figsize=(8,6))
-#plt.hist(mstar_selected ,histtype=u'step',normed=True,
-#         label=('SAM M* sample'), linewidth = 2, color='orange')
-#plt.hist(stellar_mass_obs , histtype=u'step',normed=True,
-#         label=('HST M* sample'), linewidth = 2, color='green')
-#plt.tick_params(labelsize=20)
-#plt.legend(prop={'size':20})
-#plt.yticks([])
-#plt.show()
-#print stats.ks_2samp(mstar_selected, stellar_mass_obs).pvalue
-#
-#plt.figure(figsize=(8,6))
-#plt.hist(r_band_magnitudes_selected ,histtype=u'step',normed=True,
-#         label=('SAM MagR sample'), linewidth = 2, color='orange')
-#plt.hist(M_r_obs , histtype=u'step',normed=True,
-#         label=('HST MagR sample'), linewidth = 2, color='green')
-#plt.tick_params(labelsize=20)
-#plt.legend(prop={'size':20})
-#plt.yticks([])
-#plt.show()
-#print stats.ks_2samp(r_band_magnitudes_selected, M_r_obs).pvalue
-
-
-##%% Estiamte the in
-#import linmix
-#x = mstar_overall
-#xsig = np.zeros(len(mstar_overall))
-#y = bhmass_overall
-#ysig = np.zeros(len(mstar_overall))
-#lm = linmix.LinMix(x, y, xsig=xsig, ysig=ysig, K=3)
-#lm.run_mcmc(silent=True)
-#alpha = lm.chain['alpha'].mean()
-#beta = lm.chain['beta'].mean()
-#xs = np.arange(5,15)
-#ys = alpha + xs * beta
-#plt.scatter(x, y)
-#plt.plot(xs, ys, color='green',linewidth=3)
-#print "intrinsic scatter:", np.sqrt(lm.chain['sigsqr'].mean()), np.sqrt(lm.chain['sigsqr'].std())
-#
-#%%To plot data and plot together with MBII
-
-#fig, ax = plt.subplots(figsize=(8,7))
-#plt.hist(M_r_obs - lfit_fixm_1(bh_mass_obs,fit_fixm_1[0]), histtype=u'step',normed=True,
-#         label=('Observed sample'), linewidth = 2, color='orange')
-#plt.hist(MBII_scatter_ML,histtype=u'step',normed=True,  #Run the "my_selection_plots_MBII.py" first
-#         label=('MBII sample'), linewidth = 2, color='steelblue')
-#plt.hist(r_band_magnitudes_selected - lfit(bhmass_selected,fit_1[0][0],fit_1[0][1]),histtype=u'step',normed=True,
-#         label=('SAM sample'), linewidth = 2, color='green')
-#plt.title(r"Scatter comparison for the M$_{\rm BH}$-mag relation", fontsize = 20)
-#plt.tick_params(labelsize=20)
-#plt.legend(prop={'size':20})
-#ax.xaxis.set_minor_locator(AutoMinorLocator())
-#plt.tick_params(which='both', width=2, top=True, right=True,direction='in')
-#plt.tick_params(which='major', length=10)
-#plt.tick_params(which='minor', length=6)#, color='r’)
-#plt.yticks([])
-#plt.xlabel(r"$\Delta$magnitude",fontsize=30)
-#plt.savefig('comp_scatter_ML.pdf')
-#plt.show()
-#
-#
-#
-#fig, ax = plt.subplots(figsize=(8,7))
-#plt.hist(stellar_mass_obs - lfit_fixm(bh_mass_obs,fit_fixm[0]), histtype=u'step',normed=True,
-#         label=('Observed sample'), linewidth = 2, color='orange')
-#plt.hist(MBII_scatter_MM,histtype=u'step',normed=True,  #Run the "my_selection_plots_MBII.py" first
-#         label=('MBII sample'), linewidth = 2, color='steelblue')
-#plt.hist(mstar_selected - lfit(bhmass_selected,fit[0][0],fit[0][1]),histtype=u'step',normed=True,
-#         label=('SAM sample'), linewidth = 2, color='green')
-#plt.title(r"Scatter comparison for the M$_{\rm BH}$-M$_{*}$ relation", fontsize = 20)
-#plt.tick_params(labelsize=20)
-#plt.legend(prop={'size':20},loc=2)
-#ax.xaxis.set_minor_locator(AutoMinorLocator())
-#plt.tick_params(which='both', width=2, top=True, right=True,direction='in')
-#plt.tick_params(which='major', length=10)
-#plt.tick_params(which='minor', length=6)#, color='r’)
-#plt.yticks([])
-#plt.xlabel('$\Delta$log(M$_{*}$/M$_{\odot}$)',fontsize=30)
-#plt.savefig('comp_scatter_MM.pdf')
-#plt.show()
+"""
