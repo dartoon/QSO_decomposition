@@ -21,13 +21,13 @@ data = data_all[data_all[:,3] == 2]
 
 #The COSMOS files in http://www.mpia.de/homes/vdwel/candels.html by van der Wel et al. (2012).
 #   NUMBER         RA        DEC          f        mag       dmag         re        dre          n         dn          q         dq         pa        dpa          sn
-galfit_loc = np.loadtxt('../cos_2epoch_wfc3_f160w_060mas_v1.0_galfit.cat')[:,[1,2]]  #RA, DEC
-galfit = np.loadtxt('../cos_2epoch_wfc3_f160w_060mas_v1.0_galfit.cat')[:,[4,6,8,3]] # mag, re, n, flag
+galfit_loc = np.loadtxt('../CANDELS_data/cos_2epoch_wfc3_f160w_060mas_v1.0_galfit.cat')[:,[1,2]]  #RA, DEC
+galfit = np.loadtxt('../CANDELS_data/cos_2epoch_wfc3_f160w_060mas_v1.0_galfit.cat')[:,[4,6,8,3]] # mag, re, n, flag
 
 ##The data from 3D HST
-stellar_loc = np.loadtxt('../cosmos_3dhst.v4.1.cat')[:,[3,4]]  # RA, DEC
+stellar_loc = np.loadtxt('../CANDELS_data/cosmos_3dhst.v4.1.cat')[:,[3,4]]  # RA, DEC
 #stellar_flux_ap = np.loadtxt('../cosmos_3dhst.v4.1.cat')[:,[69,51,39]]  # flux, F140w, F125w, F814w.
-stellar = np.loadtxt('../cosmos_3dhst.v4.1.fout')[:,[1,6,7]]  # redshift, stellar mass, star formation rate
+stellar = np.loadtxt('../CANDELS_data/cosmos_3dhst.v4.1.fout')[:,[1,6,7]]  # redshift, stellar mass, star formation rate
 
 def find_ind(inp_list, inp_ind, find_list):
     diff = np.sqrt(np.sum((find_list-inp_list[inp_ind])**2,axis=1)) * 3600 # Their difference in arcsec
@@ -146,17 +146,16 @@ plt.xlabel("Sersic index",fontsize=27)
 plt.ylabel("B/T stellar mass ratio",fontsize=27)
 plt.tick_params(labelsize=20)
 plt.legend(prop={'size':28})
-plt.savefig('BT_relation.pdf')
+#plt.savefig('BT_relation.pdf')
 plt.show()
 
+#%%
 #import pickle
 #pickle.dump([n_line,BTR_smooth_mean,BTR_smooth_median], open("n_BT_relation.pkl", 'wb'))
 
 #import pickle
 #pickle.dump([sersic_n_arr,results[:, 0]], open("Sersic_BT_data.pkl", 'wb'))
 
-'''
-#%%Plot B/T , n relation with Reff as color
 from scipy.integrate import quad
 h0=70.             #km/s/Mpc
 om=0.3
@@ -214,4 +213,3 @@ plt.show()
 #plt.tick_params(labelsize=20)
 #plt.legend(prop={'size':28})
 #plt.show()
-'''

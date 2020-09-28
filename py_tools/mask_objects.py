@@ -108,8 +108,6 @@ def mask_obj(img, snr=3.0, exp_sz= 1.2, plt_show = True):
     dis_sq = [np.sqrt((apertures[i].positions[0][0]-center_img)**2+(apertures[i].positions[0][1]-center_img)**2) for i in range(len(apertures))]
     dis_sq = np.asarray(dis_sq)
     c_index= np.where(dis_sq == dis_sq.min())[0][0]
-    #from astropy.visualization.mpl_normalize import ImageNormalize
-    #norm = ImageNormalize(stretch=SqrtStretch())
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 10))
     ax1.imshow(img, origin='lower', cmap=my_cmap, norm=LogNorm(), vmin=vmin, vmax=vmax)
     ax1.set_title('Data')

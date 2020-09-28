@@ -167,7 +167,7 @@ def SB_profile(image, center, radius=35, start_p=1.5, grids=20, gridspace = None
             circle=regions[i].to_mask(mode='exact')
             circle_mask =  circle.cutout(mask)
             if i ==len(r_flux)-1 and mask_plot == True:
-#                print "plt circle_mask"
+#                print("plt circle_mask")
                 plt.imshow((circle_mask),origin='lower')
                 plt.show()
 #                plt.imshow((circle.data),origin='lower') #The circle data is zero at outer circle area is zero
@@ -252,7 +252,7 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
 #    frm_qrt = int(len(QSO)/2.5)
     if include_QSO == True:
         if plt_QSO ==True:
-            print "Plot for QSO:"
+            print("Plot for QSO:")
         center_QSO = np.array([len(QSO)/2,len(QSO)/2])
         r_SB_QSO, r_grids_QSO = SB_profile(QSO, center=center_QSO, start_p=start_p, radius=radius, grids=grids, 
                                            fits_plot=plt_QSO, gridspace=gridspace, if_annuli=if_annuli,
@@ -260,7 +260,7 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
             count = r_grids_QSO <= norm_pix
             idx = count.sum()-1
-#            print "idx:",idx
+#            print("idx:",idx)
             r_SB_QSO /= r_SB_QSO[idx]      #normalize the curves
     psfs_NO = len(psfs)
     center = np.array([len(psfs_not_none)/2,len(psfs_not_none)/2])
@@ -269,15 +269,15 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
             j = plt_which_PSF[i]
             if PSF_mask_img is None:
                 msk_counts, mask_lists = text_in_string_list("PSF{0}_".format(j), psf_mask_list)
-                print "Plot for fits: PSF{0}.fits".format(j)
+                print("Plot for fits: PSF{0}.fits".format(j))
                 if msk_counts == 0:
                     SB_profile(psfs[j], center, start_p=start_p, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace)
                 elif msk_counts >0:
-                    print mask_lists
+                    print(mask_lists)
                     SB_profile(psfs[j], center, start_p=start_p, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
                                            mask_plot = False, mask_list=mask_lists)
             else:
-                print "Plot for fits: PSF{0}.fits".format(j)
+                print("Plot for fits: PSF{0}.fits".format(j))
                 SB_profile(psfs[j], center, start_p=start_p, radius=radius, grids=grids, fits_plot=True, gridspace=gridspace,
                                            mask_plot = False, msk_image=PSF_mask_img[j])
     minorLocator = AutoMinorLocator()
@@ -300,13 +300,13 @@ def QSO_psfs_compare(QSO, psfs,QSO_msk=None, psf_mask_list=None, PSF_mask_img=No
             if isinstance(norm_pix,int) or isinstance(norm_pix,float):
                 count = r_grids <= norm_pix
                 idx = count.sum() -1
-#                print "idx:",idx
+#                print("idx:",idx)
                 r_SB /= r_SB[idx]      #normalize the curves
             if gridspace == None:
                 plt.text(start_p-0.25,r_SB[0],i)
             elif gridspace == 'log':
                 plt.text(start_p-0.1,r_SB[0],i)
-#            print r_grids[idx]
+#            print(r_grids[idx])
             if i not in not_plt:
                 plt.plot(r_grids, r_SB, 'x-', label="PSF{0}".format(i))
                 plt.legend()
@@ -363,7 +363,7 @@ def profiles_compare(prf_list, scal_list, prf_name_list = None, gridspace = None
         if isinstance(norm_pix,int) or isinstance(norm_pix,float):
             count = r_grids <= norm_pix * scale
             idx = count.sum() -1
-#            print "idx:",idx
+#            print("idx:",idx)
             r_SB /= r_SB[idx]      #normalize the curves
         r_grids /= scale
         if prf_name_list == None:
@@ -448,7 +448,7 @@ def cr_mask(image, filename='test_circle.reg', mask_reg_cut = 0.):
         x_r, y_r = reg_info[2:4]  # x_r is the length of the x, y_r is the length of the y
         box = np.zeros([np.int(x_r)+1, np.int(y_r)+1]).T
     else:
-        print reg_string
+        print(reg_string)
         raise ValueError("The input reg is un-defined yet")
     frame_size = image.shape
     box_size = box.shape
@@ -558,7 +558,7 @@ def total_compare(label_list, flux_list,
         for i in range(len(label_SB_list)):
             center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
             if label_SB_list[i] == 'data':
-#                print "data_mask_lists:\t", data_mask_list
+#                print("data_mask_lists:\t", data_mask_list)
                 r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log',
                                            radius= radi, grids = 50, mask_list=data_mask_list,
                                            mask_cut = data_cut, msk_image=msk_image, fits_plot=False)
@@ -613,7 +613,7 @@ def total_compare(label_list, flux_list,
         for i in range(len(label_SB_list)):
             center = len(flux_SB_list[i])/2, len(flux_SB_list[i])/2
             if label_SB_list[i] == 'data':
-                print "data_mask_lists:\t", data_mask_list
+                print("data_mask_lists:\t", data_mask_list)
                 r_SB, r_grids = SB_profile(flux_SB_list[i], center, gridspace = 'log',
                                            radius= radi, grids = 50, mask_list=data_mask_list,
                                            mask_cut = data_cut, msk_image=msk_image, fits_plot=False, if_annuli = if_annuli)
@@ -714,7 +714,7 @@ def cal_bkg_var(sub, img, mask_list=None, test_n = 20):
     value = (t_r_flux[-test_n:][1:]-t_r_flux[-test_n:][:-1]).sum()
     return value
 
-#print cal_bkg_var(sub=0.0017, img=img, mask_list=mask_list)
+#print(cal_bkg_var(sub=0.0017, img=img, mask_list=mask_list))
 
 def min_sub(ini, img, mask_list=None, test_n=20):
     sub_list1=np.linspace(ini-0.01,ini+0.01,20)
