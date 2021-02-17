@@ -289,16 +289,17 @@ host_flux_ACS = np.asarray(host_flux_ACS)
 if relation == 0:
     f1 ='../M_BH_relation/data/Bennert+2011_local.txt'
     b11_l = np.loadtxt(f1)[:,1:]  #0 redshift; 1 M*; 2 BH mass;
-    b11_local_Reff = b11_l[:,-1]
-    b11_local_mstar = b11_l[:,4]
+    b11_local_Reff = b11_l[:,8]
+#    b11_local_mstar = b11_l[:,4]
+    b11_local_mstar = b11_l[:,9]  #!!! Change to total mass
     plt.scatter(b11_local_mstar,b11_local_Reff,s=180, c ='black',
                 marker="o",zorder=100, vmin=0.5, vmax=5, edgecolors='white', label='local AGN (VB2011)')     
-    plt.scatter(Mstar[host_flux_ACS>0],ID_Reff_kpc[host_flux_ACS>0],s=200, linewidth='2', c =indexs[host_flux_ACS>0],
+    plt.scatter(Mstar[host_flux_ACS>0],ID_Reff_kpc[host_flux_ACS>0], s=200, linewidth=1.2, c =indexs[host_flux_ACS>0],
                 marker="D",zorder=101, vmin=0.5, vmax=5, edgecolors='black', label='our AGN sample, 1.2<z<1.7',cmap=cmap_r)    
     for i in range(len(Mstar)):
         if Reffs[i]-0.1 < 0.009:
             plt.arrow(Mstar[i], ID_Reff_kpc[i], 0, -0.3, length_includes_head=True,
-                  head_width=0.08, head_length=0.05, zorder=102, color='black', linewidth='1.2')
+                  head_width=0.08, head_length=0.05, zorder=102, color='black', linewidth=1.2)
    
     log_Rerr = (np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e))
     low_err = ID_Reff_kpc - 10**(np.log10(ID_Reff_kpc)-log_Rerr)
@@ -309,7 +310,7 @@ if relation == 0:
 #                 yerr= 10**(np.log10(ID_Reff_kpc)-np.log10(ID_Reff_kpc-ID_Reff_kpc_e)) [host_flux_ACS>0],
                  color='k',ecolor='k', fmt='.',markersize=1, zorder = 99)  
     
-    plt.scatter(Mstar[host_flux_ACS<0],ID_Reff_kpc[host_flux_ACS<0],s=200, linewidth='2', c =indexs[host_flux_ACS<0],
+    plt.scatter(Mstar[host_flux_ACS<0],ID_Reff_kpc[host_flux_ACS<0],s=200, linewidth=2, c =indexs[host_flux_ACS<0],
                 marker="D",zorder=101, vmin=0.5, vmax=5, edgecolors='black',cmap=cmap_r)
     plt.errorbar(Mstar[host_flux_ACS<0],ID_Reff_kpc[host_flux_ACS<0],
                  yerr=  [low_err[host_flux_ACS<0],
@@ -371,7 +372,7 @@ if relation ==0:
     cbar.ax.set_ylabel('Sersic index', rotation=270, fontsize = 25, labelpad=25)
     cbar.ax.tick_params(axis='both', which='both', direction='in')
     cbar.ax.tick_params(axis='y', which='major', length=7, width=2)
-    plt.savefig('Mstar-Reff.pdf')
+#    plt.savefig('Mstar-Reff.pdf')
 #    plt.savefig('Mstar-Reff_z{0}-{1}.pdf'.format(z_range[0],z_range[1]))
 elif relation ==1:
     plt.ylabel("filter flux ratio, WFC3 / ACS",fontsize=35)
