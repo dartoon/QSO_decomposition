@@ -43,9 +43,10 @@ for i in range(len(my_pos)):
     dis = my_pos[i] - sun_pos
     diff = np.sqrt(dis[:,0]**2 + dis[:,1]**2)
     if diff.min()*3600/0.0642 < 30: #diff.min()*3600/0.0642 is in the pixel scale in 0.0642
-        print my_z[i], sun_z[diff==diff.min()]
-        print MBs[i], sun_MBH[diff==diff.min()]
-        print Mstar[i], sun_Mstar[diff==diff.min()]
+        print(my_z[i], sun_z[diff==diff.min()])
+        print(MBs[i], sun_MBH[diff==diff.min()])
+        print(Mstar[i], sun_Mstar[diff==diff.min()])
+        print(IDs[i])
         plt.scatter(Mstar[i], sun_Mstar[diff==diff.min()])
 #        plt.scatter(MBs[i], Mstar[i], marker="*", c='k')
 #        plt.scatter(sun_MBH[diff==diff.min()], sun_Mstar[diff==diff.min()],marker="o", c='r')

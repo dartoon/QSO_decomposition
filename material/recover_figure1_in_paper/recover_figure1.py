@@ -192,7 +192,7 @@ for tl in ax_y.get_yticklabels():
     tl.set_visible(False) 
 ax.set_xlim([7.4, 9.7])
 ax.set_ylim([-1.9, 0.3])
-plt.savefig("AGN_selection.pdf")
+#plt.savefig("AGN_selection.pdf")
 plt.show()
 
 #%%Print them for Andreas
